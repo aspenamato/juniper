@@ -626,7 +626,7 @@ function juniperHead(o = {}) {
   for (const k of [-1, 1]) {
     const ex = k * 37;
     const eye = `M${ex - 21 * k} -20 C${ex - 20 * k} -44 ${ex + 16 * k} -50 ${ex + 21 * k} -26 C${ex + 22 * k} -8 ${ex + 12 * k} 4 ${ex} 4 C${ex - 12 * k} 4 ${ex - 21 * k} -6 ${ex - 21 * k} -20 Z`;
-    s += P(eye, Wh) + clip(eye, C(ex + 2 * k, -16, 16, c.canela) + C(ex + 2 * k, -16, 8.5, K, 'stroke="none"') + HL(ex + 7 * k, -23, 5.2) + HL(ex - 3 * k, -9, 2.4)) + P(eye, 'none', 'stroke-width="2.6"');
+    s += P(eye, Wh) + clip(eye, C(ex + 2 * k, -16, 16, c.canela) + C(ex + 2 * k, -16, 10, K, 'stroke="none"') + HL(ex + 6 * k, -20, 4.2) + HL(ex - 2 * k, -12, 2)) + P(eye, 'none', 'stroke-width="2.6"');
     // upper lid ink + lashes on the outer corner
     s += INK(`M${ex - 23 * k} -18 C${ex - 22 * k} -48 ${ex + 18 * k} -54 ${ex + 23 * k} -26 C${ex + 16 * k} -44 ${ex - 16 * k} -44 ${ex - 23 * k} -18 Z`);
     s += INK(`M${ex + 20 * k} -34 C${ex + 26 * k} -38 ${ex + 30 * k} -42 ${ex + 32 * k} -48 C${ex + 30 * k} -40 ${ex + 28 * k} -36 ${ex + 22 * k} -30 Z`) + INK(`M${ex + 22 * k} -28 C${ex + 29 * k} -30 ${ex + 33 * k} -32 ${ex + 37 * k} -36 C${ex + 34 * k} -30 ${ex + 30 * k} -27 ${ex + 23 * k} -24 Z`);
@@ -713,7 +713,7 @@ function aspenKid(o = {}) {
   // hazel eyes
   for (const k of [-1, 1]) {
     const ex = k * 21, eye = `M${ex - 13} -110 C${ex - 13} -128 ${ex + 13} -128 ${ex + 13} -110 C${ex + 13} -98 ${ex + 6} -92 ${ex} -92 C${ex - 6} -92 ${ex - 13} -98 ${ex - 13} -110 Z`;
-    s += P(eye, Wh, 'stroke-width="2.4"') + clip(eye, C(ex, -107, 10, c.verde_lima) + C(ex, -107, 5, K, 'stroke="none"') + HL(ex + 3, -112, 3.2) + HL(ex - 3, -101, 1.6));
+    s += P(eye, Wh, 'stroke-width="2.4"') + clip(eye, C(ex, -107, 10, c.verde_lima) + C(ex, -107, 6, K, 'stroke="none"') + HL(ex + 2, -109, 2.6) + HL(ex - 2, -105, 1.3));
     s += INK(`M${ex - 15} -108 C${ex - 14} -130 ${ex + 14} -130 ${ex + 15} -110 C${ex + 10} -124 ${ex - 10} -124 ${ex - 15} -108 Z`) + INK(`M${ex + k * 13} -116 C${ex + k * 18} -120 ${ex + k * 20} -122 ${ex + k * 22} -126 C${ex + k * 21} -118 ${ex + k * 18} -116 ${ex + k * 14} -112 Z`);
     s += INK(`M${ex - 10} -136 C${ex - 4} -141 ${ex + 6} -141 ${ex + 11} -137 C${ex + 4} -138 ${ex - 4} -138 ${ex - 10} -136 Z`);
   }
@@ -731,7 +731,7 @@ Object.assign(A, { cloud, sun: (x, y, r) => sun(x, y, r), tree, foxStand: junipe
 const L = ART.lib, c = ART.parts.c, K = '#222', Wh = c.blanco;
 const { P, E, C, G, HL, INK, clip, fig, n } = L;
 const eye = (x, y, r, iris = c.marron_oscuro) => { const d = `M${x - r} ${y} C${x - r} ${y - r * 1.4} ${x + r} ${y - r * 1.4} ${x + r} ${y} C${x + r} ${y + r * 1.1} ${x - r} ${y + r * 1.1} ${x - r} ${y} Z`;
-  return P(d, Wh, 'stroke-width="2.4"') + clip(d, C(x + r * 0.1, y - r * 0.1, r * 0.75, iris) + C(x + r * 0.1, y - r * 0.1, r * 0.4, K, 'stroke="none"') + HL(x + r * 0.35, y - r * 0.4, r * 0.25) + HL(x - r * 0.2, y + r * 0.3, r * 0.12)) + INK(`M${x - r - 2} ${y} C${x - r} ${y - r * 1.5} ${x + r} ${y - r * 1.5} ${x + r + 2} ${y - 2} C${x + r * 0.6} ${y - r * 1.2} ${x - r * 0.6} ${y - r * 1.2} ${x - r - 2} ${y} Z`); };
+  return P(d, Wh, 'stroke-width="2.4"') + clip(d, C(x + r * 0.1, y - r * 0.1, r * 0.75, iris) + C(x + r * 0.1, y - r * 0.1, r * 0.5, K, 'stroke="none"') + HL(x + r * 0.25, y - r * 0.25, r * 0.2) + HL(x - r * 0.1, y + r * 0.1, r * 0.1)) + INK(`M${x - r - 2} ${y} C${x - r} ${y - r * 1.5} ${x + r} ${y - r * 1.5} ${x + r + 2} ${y - 2} C${x + r * 0.6} ${y - r * 1.2} ${x - r * 0.6} ${y - r * 1.2} ${x - r - 2} ${y} Z`); };
 L.eye = eye;
 // Scramble the squirrel, sitting, holding an acorn. origin at feet, ~ -230..0
 L.squirrelKid = () => {
@@ -758,7 +758,7 @@ L.parrotKid = () => {
   s += P(B, c.verde) + clip(B, P('M-60 -150 C-30 -146 0 -152 20 -164 L20 -200 L-60 -200 Z', c.rojo)) + P(B);
   s += P('M10 -110 C40 -110 56 -80 50 -40 C46 -20 30 -10 16 -14 C24 -40 20 -80 10 -110 Z', c.verde_oscuro) + P('M24 -60 C34 -50 40 -36 40 -24 M30 -86 C40 -76 46 -60 46 -48', 'none', 'stroke-width="2.2"') + P('M30 -30 C38 -10 36 10 28 30 C20 10 20 -10 22 -26 Z', c.azul);
   s += P('M-40 -130 C-64 -128 -70 -110 -60 -96 C-54 -104 -46 -110 -38 -110 Z', c.amarillo) + P('M-60 -96 C-54 -88 -46 -90 -42 -100', 'none', 'stroke-width="2.4"');
-  s += C(-14, -134, 9, Wh, 'stroke-width="2.4"') + C(-14, -134, 5, K, 'stroke="none"') + HL(-12, -137, 2);
+  s += C(-14, -134, 9, Wh, 'stroke-width="2.4"') + C(-14, -134, 6, K, 'stroke="none"') + HL(-12, -136, 2);
   s += P('M-14 -22 L-18 0 M8 -22 L12 0', 'none', 'stroke-width="4"') + P('M-30 0 H30', 'none', 'stroke-width="2.6"');
   return s;
 };
@@ -779,7 +779,7 @@ L.tortoiseKid = () => {
   s += P('M130 -10 C160 -24 180 -54 196 -74 L236 -44 C214 -18 182 2 148 14 Z', c.verde_lima) + P('M160 -24 C170 -18 176 -10 178 -2 M178 -46 C188 -38 194 -30 196 -22', 'none', 'stroke-width="2.4"');
   const HD = 'M186 -82 C186 -126 262 -132 278 -96 C288 -70 268 -44 238 -42 C212 -40 186 -56 186 -82 Z';
   s += P(HD, c.verde_lima);
-  s += P('M222 -96 C222 -114 250 -114 250 -96 C250 -84 242 -78 236 -78 C230 -78 222 -84 222 -96 Z', Wh, 'stroke-width="2.4"') + clip('M222 -96 C222 -114 250 -114 250 -96 C250 -84 242 -78 236 -78 C230 -78 222 -84 222 -96 Z', C(238, -94, 9, c.marron) + C(238, -94, 5, K, 'stroke="none"') + HL(241, -97, 2.4) + P('M216 -120 H256 V-100 C246 -104 230 -104 216 -100 Z', c.verde_lima)) + INK('M218 -98 C228 -106 244 -106 254 -98 C244 -102 228 -102 218 -98 Z');
+  s += P('M222 -96 C222 -114 250 -114 250 -96 C250 -84 242 -78 236 -78 C230 -78 222 -84 222 -96 Z', Wh, 'stroke-width="2.4"') + clip('M222 -96 C222 -114 250 -114 250 -96 C250 -84 242 -78 236 -78 C230 -78 222 -84 222 -96 Z', C(238, -94, 9, c.marron) + C(238, -94, 6, K, 'stroke="none"') + HL(240, -96, 2.2) + P('M216 -120 H256 V-100 C246 -104 230 -104 216 -100 Z', c.verde_lima)) + INK('M218 -98 C228 -106 244 -106 254 -98 C244 -102 228 -102 218 -98 Z');
   s += C(236, -94, 20, 'none', 'stroke-width="3"') + P('M216 -96 C206 -98 198 -96 192 -90', 'none', 'stroke-width="3"') + P('M248 -62 C258 -54 268 -58 274 -68', 'none', 'stroke-width="3"') + P('M266 -84 C268 -82 270 -82 272 -84', 'none', 'stroke-width="2.4"');
   const SH = 'M-158 -2 C-160 -120 -76 -176 8 -176 C100 -176 166 -116 166 -2 Z';
   let sc = '';
@@ -805,7 +805,7 @@ L.owlKid = () => {
   const FD = 'M0 -160 C-14 -150 -30 -146 -48 -148 C-90 -152 -104 -196 -84 -222 C-64 -248 -20 -240 0 -214 C20 -240 64 -248 84 -222 C104 -196 90 -152 48 -148 C30 -146 14 -150 0 -160 Z';
   s += P(FD, c.canela);
   for (const k of [-1, 1]) { const ex = k * 46, ey = -196, d = `M${ex - 30} ${ey} C${ex - 30} ${ey - 40} ${ex + 30} ${ey - 40} ${ex + 30} ${ey} C${ex + 30} ${ey + 38} ${ex - 30} ${ey + 38} ${ex - 30} ${ey} Z`;
-    s += P(d, Wh) + clip(d, C(ex + k * 2, ey + 2, 20, c.amarillo) + C(ex + k * 2, ey + 2, 11, K, 'stroke="none"') + HL(ex + k * 2 + 6, ey - 5, 5) + HL(ex + k * 2 - 5, ey + 9, 2.4)) + P(d, 'none', 'stroke-width="2.6"') + INK(`M${ex - 32} ${ey - 4} C${ex - 28} ${ey - 42} ${ex + 28} ${ey - 42} ${ex + 32} ${ey - 4} C${ex + 22} ${ey - 32} ${ex - 22} ${ey - 32} ${ex - 32} ${ey - 4} Z`); }
+    s += P(d, Wh) + clip(d, C(ex + k * 2, ey + 2, 20, c.amarillo) + C(ex + k * 2, ey + 2, 13, K, 'stroke="none"') + HL(ex + k * 2 + 5, ey - 3, 4.5) + HL(ex + k * 2 - 4, ey + 6, 2.2)) + P(d, 'none', 'stroke-width="2.6"') + INK(`M${ex - 32} ${ey - 4} C${ex - 28} ${ey - 42} ${ex + 28} ${ey - 42} ${ex + 32} ${ey - 4} C${ex + 22} ${ey - 32} ${ex - 22} ${ey - 32} ${ex - 32} ${ey - 4} Z`); }
   s += P('M-12 -176 C-10 -166 -4 -152 0 -146 C4 -152 10 -166 12 -176 C4 -170 -4 -170 -12 -176 Z', c.amarillo);
   // the green carnation
   s += G(70, -120, 1, P('M0 0 C-8 20 -10 40 -6 60', 'none', 'stroke-width="3"') + P(L.lobes(0, -6, 26, 20, 9, 3, 0.6), c.verde_lima) + P(L.lobes(0, -8, 14, 10, 6, 2, 0.6), c.verde) + P('M-4 40 C-20 30 -30 36 -32 42 C-22 48 -12 46 -4 40 Z', c.verde), 20);
@@ -832,7 +832,7 @@ L.coquiKid = () => {
   const B = 'M0 -170 C60 -170 86 -130 84 -80 C82 -30 50 0 0 0 C-50 0 -82 -30 -84 -80 C-86 -130 -60 -170 0 -170 Z';
   s += P(B, c.canela) + clip(B, P('M-50 -70 C-30 -50 30 -50 50 -70 L60 20 L-60 20 Z', c.crema)) + P(B);
   for (const k of [-1, 1]) s += P(`M${k * 26} -40 C${k * 30} -20 ${k * 26} -8 ${k * 18} -2`, 'none', 'stroke-width="3"') + C(k * 22, 0, 6, c.canela) + C(k * 8, 2, 6, c.canela);
-  for (const k of [-1, 1]) { const x = k * 40, y = -164; s += C(x, y, 30, c.canela) + C(x, y, 21, Wh) + C(x, y, 15, c.amarillo, 'stroke-width="2.4"') + C(x, y, 8, K, 'stroke="none"') + HL(x + 5, y - 5, 4) + INK(`M${x - 24} ${y - 14} C${x - 12} ${y - 28} ${x + 12} ${y - 28} ${x + 24} ${y - 14} C${x + 12} ${y - 22} ${x - 12} ${y - 22} ${x - 24} ${y - 14} Z`); }
+  for (const k of [-1, 1]) { const x = k * 40, y = -164; s += C(x, y, 30, c.canela) + C(x, y, 21, Wh) + C(x, y, 15, c.amarillo, 'stroke-width="2.4"') + C(x, y, 9, K, 'stroke="none"') + HL(x + 3, y - 3, 3.5) + INK(`M${x - 24} ${y - 14} C${x - 12} ${y - 28} ${x + 12} ${y - 28} ${x + 24} ${y - 14} C${x + 12} ${y - 22} ${x - 12} ${y - 22} ${x - 24} ${y - 14} Z`); }
   s += P('M-44 -112 C-20 -90 20 -90 44 -112', 'none', 'stroke-width="3.4"') + P('M-6 -130 v2 M6 -130 v2', 'none', 'stroke-width="3"');
   return s;
 };
@@ -1822,7 +1822,7 @@ window.JCP = { S, analyze, openPage, finish, gallery, pages: ART.pages, STICKERS
 })();
 
 // ---------- auto-update: poll cversion.json, reload when a new build is live ----------
-const CBUILD = '20261115194803-3866ca';
+const CBUILD = '20261115194921-d09297';
 function checkUpdate() { if (location.protocol === 'file:') return; fetch('cversion.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.v && j.v !== CBUILD && !document.getElementById('paint').classList.contains('on')) location.reload(); }).catch(() => {}); }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); }); setInterval(checkUpdate, 5 * 60 * 1000); setTimeout(checkUpdate, 3000);
 setTimeout(() => window.JCP && JCP.celebrateScenes(), 600);
