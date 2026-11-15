@@ -5,7 +5,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Juniper Learn">
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#fff7ec">
-<script>window.JBUILD='20261115171345-37a35e';</script>
+<script>window.JBUILD='20261115171705-29649d';</script>
 <title>Juniper's Learning Park</title>
 <style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;height:100%;overflow:hidden;background:#fff7ec;font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold","Nunito","Avenir Next",system-ui,sans-serif;color:#3b2a20;touch-action:manipulation}
@@ -811,6 +811,53 @@ html,body{background:#fff4fb;color:var(--ol)}
 .ic-act{min-width:200px;font-size:22px;padding:10px 20px}
 .unl{cursor:pointer}
 .unl:active{transform:scale(.95)}
+/* ring + aspen avatar */
+.ch-ring .rg-glow{animation:rgGlow 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.ch-ring .rg-gem{animation:rgGem 2.4s linear infinite}
+.ch-ring .rg-tw,.ch-ring .rg-tw2{animation:rgTw 1.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.ch-ring .rg-tw2{animation-delay:.6s}
+@keyframes rgGlow{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:.95;transform:scale(1.25)}}
+@keyframes rgGem{0%,100%{filter:hue-rotate(0)}50%{filter:hue-rotate(60deg) brightness(1.3)}}
+@keyframes rgTw{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:1;transform:scale(1.1) rotate(45deg)}}
+.chr-aspen .asp-sway{animation:aspSway 3.2s ease-in-out infinite;transform-origin:0 150px;transform-box:view-box}
+.chr-aspen .asp-lids{animation:aspBlink 4.2s infinite;transform-box:fill-box;transform-origin:center top;transform:scaleY(0)}
+@keyframes aspSway{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+@keyframes aspBlink{0%,93%,100%{transform:scaleY(0)}96%{transform:scaleY(1)}}
+.chr-aspen .asp-led,.chr-aspen .asp-led2{opacity:.35}
+.aspAv.bounce .asp-led,.aspAv.bounce .asp-led2{animation:aspLed .25s steps(2) infinite;opacity:1}
+.aspAv.bounce{animation:aspBounce .5s ease-in-out 3}
+.aspAv.cheer .asp-armL{animation:aspArmL .6s ease-in-out 2;transform-box:view-box;transform-origin:-34px -48px}
+.aspAv.cheer .asp-armR{animation:aspArmR .6s ease-in-out 2;transform-box:view-box;transform-origin:34px -48px}
+@keyframes aspLed{0%{opacity:1;filter:brightness(1.6)}100%{opacity:.6;filter:hue-rotate(120deg)}}
+@keyframes aspBounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-22px)}}
+@keyframes aspArmL{50%{transform:rotate(140deg)}}
+@keyframes aspArmR{50%{transform:rotate(-140deg)}}
+/* grand hall */
+#trophies{background:linear-gradient(180deg,#fff3e0 0,#f6e3cf 40%,#e9d2bb 100%)}
+.hall{position:relative;height:clamp(300px,38vw,420px);border-radius:28px;overflow:hidden;border:4px solid #fff;box-shadow:0 10px 30px rgba(59,33,71,.25);margin-bottom:14px}
+.hall .hallbg{position:absolute;inset:0;width:100%;height:100%}
+.hallAsp{position:absolute;left:24%;bottom:6%;width:min(22%,170px);cursor:pointer;z-index:2}
+.hallAsp svg{width:100%;height:auto;overflow:visible}
+.hallPed{position:absolute;left:50%;bottom:28%;transform:translateX(-50%);width:min(16%,130px);text-align:center;cursor:pointer;z-index:2}
+.hallPed svg{width:100%;height:auto;animation:pedFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 14px #ffd93b)}
+.hallPed small{position:absolute;left:50%;transform:translateX(-50%);bottom:-62%;white-space:nowrap;font-weight:900;font-size:14px;background:#fff;border-radius:12px;padding:2px 10px;border:3px solid #3b2147}
+.hallCase{position:absolute;left:61.5%;bottom:22%;width:min(7%,62px);cursor:pointer;z-index:2}
+.hallCase svg{width:100%;height:auto}
+.hallCase:not(.got) svg{filter:brightness(0) opacity(.3)}
+.hallCase.got svg{filter:drop-shadow(0 0 10px #ff3fa4)}
+@keyframes pedFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
+.hall .hSpot{animation:hSpot 4s ease-in-out infinite}
+@keyframes hSpot{0%,100%{opacity:.55}50%{opacity:1}}
+.hall .hTw{animation:hTw 1.8s ease-in-out infinite}
+@keyframes hTw{0%,100%{opacity:.2}50%{opacity:1}}
+.hall .hFire{animation:hFire .5s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center bottom}
+@keyframes hFire{0%{transform:scaleY(.9) skewX(-3deg)}100%{transform:scaleY(1.1) skewX(3deg)}}
+.hall .hBan{animation:hBan 3s ease-in-out infinite}
+@keyframes hBan{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.tshelf .tsh-wood{background:linear-gradient(180deg,#b9773f,#7a4a26)!important;height:16px;border-radius:0 0 12px 12px}
+.tshelf.t4{background:linear-gradient(135deg,#ffffff,#f1ece6 40%,#fff 60%,#e9e2da)!important;border-color:#e6d9c8}
+.tshelf.t5::after,.tshelf.t4::after{content:"";position:absolute;inset:0;border-radius:24px;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.35) 38%,transparent 46%);background-size:250% 100%;animation:glassSweep 5s linear infinite}
+@keyframes glassSweep{0%{background-position:150% 0}100%{background-position:-100% 0}}
 </style></head>
 <body>
 <div id="start" class="screen on">
@@ -1876,6 +1923,30 @@ const VILL = {
       zap + vHead(SK) + r(-80, -96, 160, 22, 10, '#5b5f7a') + c(-36, -86, 24, '#7ee8ff') + c(36, -86, 24, '#7ee8ff') + c(-36, -84, 9, '#2a1838') + c(36, -84, 9, '#2a1838') + VBROW(-118) + e(0, -48, 10, 8, '#e8a07a') + smirk(-26) + p('M-40 -20 q40 30 80 0', 'none', 'stroke="#c9b8ff" stroke-width="6"')); },
 };
 Object.entries(VILL).forEach(([k, f]) => { DEF['v' + k] = ['-200 -240 400 420', o => f(o || {}) + spark(-150, -170, .8, '#ffd93b') + spark(160, -140, .7, '#ff3fa4')]; });
+// ---------- cartoon Aspen avatar (stylized, from parent's description: 5yo, hazel eyes, dark-blond braided pigtails, pink princess dress, light-up high-tops) ----------
+function aspenInner(o = {}) { const OLc = '#3b2147', SK = '#ffd9bf', HR = '#c99d57', HD = '#9c7036', DR = '#ff7eb6', DR2 = '#ffb3d6';
+  const braid = (sx) => { let s = ''; for (let i = 0; i < 5; i++) s += `<ellipse cx="${sx * (66 + i * 3)}" cy="${-150 + i * 22}" rx="${15 - i}" ry="13" fill="${i % 2 ? HD : HR}"/>`; return s + `<circle cx="${sx * 70}" cy="${-160}" r="9" fill="#ff3fa4"/><path d="M${sx * 80} ${-46} q${sx * 6} 14 ${sx * -4} 22 q${sx * 14} -2 ${sx * 12} -22 z" fill="${HR}"/><circle cx="${sx * 80}" cy="${-52}" r="7" fill="#ff3fa4"/>`; };
+  let s = `<g class="asp-sway"><ellipse cx="0" cy="150" rx="80" ry="12" fill="#000" opacity=".12" stroke="none"/>`;
+  // sneakers with light-up soles
+  [-1, 1].forEach(sx => { s += `<path d="M${sx * 22} 90 V128" stroke="${SK}" stroke-width="16" stroke-linecap="round"/><path d="M${sx * 6} 120 h${sx * 30} q${sx * 18} 2 ${sx * 20} 18 h${sx * -54} z" fill="#fff"/><path d="M${sx * 8} 118 v-12 h${sx * 24} v12" fill="#ffd1e6"/><path d="M${sx * 14} 126 l${sx * 14} -4 M${sx * 14} 132 l${sx * 14} -4" stroke="#ff3fa4" stroke-width="3"/><rect x="${sx > 0 ? 4 : -60}" y="138" width="56" height="9" rx="4" fill="#ffd93b" class="asp-led"/>${[0, 1, 2, 3].map(k => `<circle cx="${(sx > 0 ? 12 : -52) + k * 13}" cy="142.5" r="3" fill="${['#ff3fa4', '#7ee8ff', '#9be15d', '#ffd93b'][k]}" class="asp-led2" style="animation-delay:${k * .15}s" stroke="none"/>`).join('')}`; });
+  // princess ballgown
+  s += `<path d="M-34 -6 Q-90 60 -96 104 Q0 124 96 104 Q90 60 34 -6 Z" fill="${DR}"/><path d="M-96 104 q12 12 24 0 q12 12 24 0 q12 12 24 0 q12 12 24 0 q12 12 24 0 q12 12 24 0 q12 12 24 0 q12 12 24 0" fill="${DR2}"/><path d="M-20 0 Q-40 60 -50 108 M20 0 Q40 60 50 108 M0 0 V116" fill="none" stroke="#ff5aa2" stroke-width="3"/>`;
+  [[-60, 70], [40, 50], [-20, 90], [66, 92], [-70, 100], [10, 40]].forEach(([x, y]) => s += `<path d="M${x} ${y - 6} l2 4 l4 2 l-4 2 l-2 4 l-2 -4 l-4 -2 l4 -2 z" fill="#fff" stroke="none" opacity=".9"/>`);
+  s += `<path d="M-32 -56 Q0 -64 32 -56 L36 -4 Q0 6 -36 -4 Z" fill="${DR}"/><path d="M-36 -8 Q0 2 36 -8" stroke="#c9a0ff" stroke-width="7" fill="none"/><circle cx="0" cy="-5" r="6" fill="#ffd93b"/>`;
+  // arms + puff sleeves
+  const arm = (sx) => `<g class="asp-arm${sx < 0 ? 'L' : 'R'}"><path d="M${sx * 34} -48 Q${sx * 58} -20 ${sx * 56} 8" stroke="${SK}" stroke-width="14" stroke-linecap="round" fill="none"/><circle cx="${sx * 56}" cy="12" r="9" fill="${SK}"/><ellipse cx="${sx * 36}" cy="-50" rx="17" ry="14" fill="${DR2}"/></g>`;
+  s += arm(-1) + arm(1);
+  // head
+  s += `<g class="asp-head"><path d="M-12 -62 v-10 h24 v10" fill="${SK}"/>${braid(-1)}${braid(1)}<circle cx="0" cy="-120" r="56" fill="${SK}"/>`;
+  s += `<path d="M-58 -116 Q-60 -186 0 -182 Q60 -186 58 -116 Q50 -150 22 -154 Q30 -138 20 -130 Q8 -152 -20 -150 Q-40 -150 -58 -116 Z" fill="${HR}"/><path d="M-30 -168 Q0 -180 30 -168" stroke="#e0b27a" stroke-width="5" fill="none"/>`;
+  // tiara-ish bow? keep a small pink headband
+  s += `<path d="M-50 -150 Q0 -190 50 -150" stroke="#ff3fa4" stroke-width="7" fill="none"/>`;
+  // hazel eyes
+  [-1, 1].forEach(sx => { s += `<ellipse cx="${sx * 22}" cy="-116" rx="12" ry="14" fill="#fff"/><circle cx="${sx * 22}" cy="-114" r="9" fill="#8a7a3a" stroke="none"/><circle cx="${sx * 22}" cy="-114" r="6" fill="#5f8a4a" stroke="none"/><circle cx="${sx * 22}" cy="-114" r="3.5" fill="#2a1838" stroke="none"/><circle cx="${sx * 22 - 3}" cy="-119" r="2.6" fill="#fff" stroke="none"/><path d="M${sx * 12} -132 q${sx * 10} -6 ${sx * 20} 0" stroke="${HD}" stroke-width="3" fill="none"/>`; });
+  s += `<g class="asp-lids"><rect x="-36" y="-131" width="28" height="30" fill="${SK}" stroke="none"/><rect x="8" y="-131" width="28" height="30" fill="${SK}" stroke="none"/></g>`;
+  s += `<ellipse cx="-36" cy="-96" rx="9" ry="5" fill="#ff9ab8" stroke="none" opacity=".7"/><ellipse cx="36" cy="-96" rx="9" ry="5" fill="#ff9ab8" stroke="none" opacity=".7"/><path d="M-3 -104 q3 4 6 0" stroke="#d99a7a" stroke-width="3" fill="none"/><path d="M-12 -90 Q0 -78 12 -90" fill="#e5486b"/></g></g>`;
+  return s; }
+DEF.aspen = ['-130 -200 260 360', o => aspenInner(o)];
 
 DEF.horse = DEF.marengo; DEF.owl = DEF.oscar; DEF.squirrel = DEF.scramble; DEF.pigeon = DEF.pearl; DEF.tortoise = DEF.marcus; DEF.fox = DEF.juniper; DEF.foxhead = DEF.juniperhead;
 function svg(name, o = {}, extra = '') { const d = DEF[name]; if (!d) return null; return wrap(name, o.vb || d[0], d[1](o) + (o.after || ''), extra, o.cls || ''); }
@@ -3295,11 +3366,12 @@ function openTrophies() { setStars(); show('trophies');
     html += `<div class="tshelf t${t}"><div class="tsh-h"><b>${SHELF[t]}</b><span>${got}/${list.length}</span></div><div class="tsh-row">` + list.map(a => { const has = !!ST.trophies[a.id]; const i = AWARDS.indexOf(a); const pr = a.prog ? a.prog() : null;
       return `<div class="troph${has ? ' got' : ' locked'}" data-i="${i}" style="--i:${i % 12}"><span class="ti">${awardArt(a)}</span><span class="tn">${a.name}</span><small>${a.desc}</small>${!has && pr ? `<span class="wbar sm"><i style="width:${Math.round(100 * pr[0] / Math.max(1, pr[1]))}%"></i><em>${pr[0]}/${pr[1]}</em></span>` : ''}</div>`; }).join('') + `</div><div class="tsh-wood"></div></div>`; }
   $('trGrid').innerHTML = html;
+  mountHall();
   const cnt = k => C.A.filter(a => medalOf(a.id) === k).length;
   $('medalRow').innerHTML = ['gold', 'silver', 'bronze'].map((k, i) => `<span class="mc" style="--i:${i}">${medalSvg(k)} ${cnt(k)}</span>`).join('') + `<span style="font-size:18px;font-weight:700;opacity:.75">Play a game 1 time for bronze, 3 times for silver, 5 times for gold.</span>`;
   $('stkGrid').innerHTML = (typeof EXTRA_STICKERS !== 'undefined' ? EXTRA_STICKERS : []).map((st, i) => `<div class="stk${stickerUnlocked(i) ? '' : ' locked'}"><span class="si">${st.svg}</span>${stickerUnlocked(i) ? st.name : `${1 + 2 * i} games`}</div>`).join('');
   $('trGrid').querySelectorAll('.troph').forEach(d => d.onclick = e => { const t = AWARDS[+d.dataset.i]; sparkAt(e.clientX, e.clientY, 10 + t.tier * 4); SND.pop();
-    if (ST.trophies[t.id]) { d.classList.remove('spin'); void d.offsetWidth; d.classList.add('spin'); } else wiggle(d); setTimeout(() => awardCard(t), 260); });
+    if (ST.trophies[t.id]) { d.classList.remove('spin'); void d.offsetWidth; d.classList.add('spin'); } else wiggle(d); if (ST.trophies[t.id]) aspenCheer(); setTimeout(() => awardCard(t), 260); });
   const n = AWARDS.filter(a => ST.trophies[a.id]).length;
   speak(`This is your trophy room, Aspen. You have ${n} award${n === 1 ? '' : 's'}. The fancy ones are for the hardest games!`);
 }
@@ -3673,6 +3745,41 @@ function wireUnlocks() { $('celeUnlocks').querySelectorAll('.unl').forEach(d => 
 // a tap on any real button while a reveal is showing clears the reveals at once so the button works on the first tap
 document.addEventListener('pointerdown', e => { if (!revOn) return; if (e.target.closest && e.target.closest('button,.unl,[role=button]')) { REVQ.length = 0; clearTimeout(REVT); const L = $('reveal'); L.classList.remove('on', 'out'); revOn = false; } }, true);
 $('hGear') && $('hGear').addEventListener('click', () => { SND.tap(); wiggle($('hGear')); });
+// ---------- Trophy Room grand hall + cartoon Aspen ----------
+const HALL_BAN = [['park', '#43a047', 'Park'], ['pr', '#ff7043', 'PR'], ['nyc', '#1e88e5', 'NYC'], ['vail', '#4fa8e0', 'Vail'], ['sc', '#ffb300', 'SC']];
+function hallSvg() { let s = `<svg class="hallbg" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMax slice" stroke="#3b2147" stroke-width="4" stroke-linejoin="round">
+  <defs><linearGradient id="hMar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff8ef"/><stop offset="1" stop-color="#f1e2d0"/></linearGradient><linearGradient id="hFl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c98a52"/><stop offset="1" stop-color="#8f5a30"/></linearGradient>
+  <radialGradient id="hSpot" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#fff6c8" stop-opacity=".85"/><stop offset="1" stop-color="#fff6c8" stop-opacity="0"/></radialGradient><radialGradient id="hRug" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#d81b60"/><stop offset="1" stop-color="#8e0f3f"/></radialGradient></defs>
+  <rect x="0" y="0" width="1000" height="300" fill="url(#hMar)" stroke="none"/>${[0, 1, 2, 3, 4, 5, 6].map(i => `<path d="M${i * 160 + 20} 30 q30 60 -10 120 q40 50 10 140" fill="none" stroke="#e8d6c2" stroke-width="3" opacity=".7"/>`).join('')}
+  <rect x="0" y="300" width="1000" height="120" fill="url(#hFl)" stroke="none"/>${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => `<path d="M${i * 110} 300 L${i * 110 - 60} 420" stroke="#7a4a26" stroke-width="2" opacity=".5"/>`).join('')}
+  <rect x="0" y="290" width="1000" height="14" fill="#7a4a26" stroke="none"/>`;
+  [40, 960].forEach(x => s += `<rect x="${x - 26}" y="0" width="52" height="292" fill="#fffaf2"/>${[0, 1, 2].map(k => `<path d="M${x - 14 + k * 14} 20 V284" stroke="#eadcc8" stroke-width="3"/>`).join('')}<rect x="${x - 34}" y="268" width="68" height="24" fill="#f3e6d4"/>`);
+  // arched window with night sky + stars
+  s += `<path d="M150 260 V110 a70 70 0 0 1 140 0 V260 Z" fill="#26306b"/><path d="M220 40 V260 M150 160 H290" stroke="#fff" stroke-width="6"/>${[[180, 90], [250, 110], [200, 200], [265, 220], [175, 240]].map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="3" fill="#fff" stroke="none" class="hTw" style="animation-delay:${i * .4}s"/>`).join('')}<circle cx="262" cy="74" r="14" fill="#fff6c8" stroke="none"/><path d="M140 262 h160" stroke-width="8"/>`;
+  // fireplace
+  s += `<rect x="700" y="170" width="170" height="122" fill="#e7d3bf"/><rect x="690" y="158" width="190" height="16" rx="4" fill="#c9a98a"/><path d="M730 292 V220 a55 55 0 0 1 110 0 V292 Z" fill="#3b2147"/><g class="hFire"><path d="M760 292 q-6 -40 18 -60 q-4 26 14 34 q4 -20 18 -30 q10 30 -4 56 Z" fill="#ff7a1a"/><path d="M772 292 q0 -24 14 -34 q4 18 12 22 q4 -8 8 -12 q4 16 -6 24 Z" fill="#ffd93b" stroke="none"/></g><path d="M740 292 h90" stroke="#7a4a26" stroke-width="10"/>`;
+  // banners per world
+  HALL_BAN.forEach(([k, col, nm], i) => { const x = 360 + i * 70; const open = k === 'park' || (typeof worldOpen === 'function' && worldOpen(k)); s += `<g class="hBan" style="animation-delay:${i * .3}s;transform-origin:${x}px 56px"><path d="M${x - 24} 56 h48 v100 l-24 -16 l-24 16 Z" fill="${open ? col : '#cfc6d6'}"/><path d="M${x - 30} 56 h60" stroke-width="6"/><circle cx="${x}" cy="96" r="18" fill="#fff" stroke-width="3"/><text x="${x}" y="101" font-size="${nm.length > 3 ? 11 : 13}" font-weight="900" text-anchor="middle" fill="${open ? col : '#9a90a6'}" stroke="none" font-family="Arial">${nm}</text><path d="M${x - 24} 128 l12 6 l12 -6 l12 6 l12 -6" stroke="#ffd93b" stroke-width="3" fill="none"/></g>`; });
+  // spotlights
+  [200, 500, 800].forEach((x, i) => s += `<path class="hSpot" style="animation-delay:${i * .8}s" d="M${x - 12} 0 L${x - 120} 360 H${x + 120} L${x + 12} 0 Z" fill="url(#hSpot)" stroke="none"/>`);
+  // velvet rug
+  s += `<ellipse cx="500" cy="372" rx="330" ry="40" fill="url(#hRug)"/><ellipse cx="500" cy="372" rx="300" ry="30" fill="none" stroke="#ffd93b" stroke-width="4" stroke-dasharray="10 8"/>`;
+  // pedestal
+  s += `<path d="M440 360 h120 l-12 -20 h-96 Z" fill="#f3e6d4"/><rect x="458" y="270" width="84" height="72" fill="#fffaf2"/>${[470, 486, 502, 518, 532].map(x => `<path d="M${x} 274 V338" stroke="#eadcc8" stroke-width="3"/>`).join('')}<rect x="446" y="258" width="108" height="16" rx="4" fill="#f3e6d4"/>`;
+  // glass case
+  s += `<rect x="610" y="236" width="74" height="104" rx="6" fill="#bfe6ff" fill-opacity=".35"/><path d="M622 246 l20 -0 l-14 80" stroke="#fff" stroke-width="5" opacity=".8" fill="none"/><rect x="602" y="338" width="90" height="22" rx="4" fill="#7a4a26"/>`;
+  return s + `</svg>`; }
+function hallHtml() { const got = AWARDS.filter(a => ST.trophies[a.id]).sort((a, b) => ST.trophies[b.id] - ST.trophies[a.id]);
+  const newest = got[0], best = got.filter(a => a.tier >= 4).sort((a, b) => b.tier - a.tier)[0], bestLocked = AWARDS.find(a => a.tier >= 4);
+  const pi = newest ? AWARDS.indexOf(newest) : -1, ci = best ? AWARDS.indexOf(best) : AWARDS.indexOf(bestLocked);
+  return `<div class="hall">${hallSvg()}<div class="hallAsp aspAv" role="button" aria-label="Aspen">${CHARS.svg('aspen')}</div>
+  <div class="hallPed${newest ? ' got' : ''}" role="button" data-i="${pi}">${newest ? awardArt(newest) : ''}<small>${newest ? 'Newest: ' + newest.name : 'Your first award goes here!'}</small></div>
+  <div class="hallCase${best ? ' got' : ''}" role="button" data-i="${ci}">${ci >= 0 ? awardArt(AWARDS[ci]) : ''}</div></div>`; }
+const ASP_CHEER = ['Yay!', 'Woo-hoo!', 'So shiny!', 'I did it!', 'Look at that one!', 'Sparkly!', 'Go Aspen!'];
+function aspenCheer(line) { const a = document.querySelector('.hallAsp'); if (!a) return; a.classList.remove('cheer', 'bounce'); void a.offsetWidth; a.classList.add('cheer', 'bounce'); SND.tada ? SND.tada() : SND.fanfare(); if (typeof bubbleOn === 'function') bubbleOn(a, line || ASP_CHEER[Math.floor(Math.random() * ASP_CHEER.length)]); sparkEl(a, 18); }
+function wireHall() { const a = document.querySelector('.hallAsp'); if (a) a.onclick = () => aspenCheer();
+  document.querySelectorAll('.hallPed,.hallCase').forEach(d => d.onclick = () => { const i = +d.dataset.i; SND.pop(); if (i >= 0) { aspenCheer(); setTimeout(() => awardCard(AWARDS[i]), 300); } else { aspenCheer('Let\u2019s go earn one!'); } }); }
+function mountHall() { let h = $('trHall'); if (!h) { h = document.createElement('div'); h.id = 'trHall'; document.querySelector('#trophies .trophyroom').prepend(h); } h.innerHTML = hallHtml(); wireHall(); }
 
 // ---------- v3: every line the app can say (the build records these) ----------
 function voLines(N = 60) { const out = new Map(); const add = (t, ch = 'juniper', o = {}) => { if (!t) return; VO.need(String(t), ch, o).forEach(([k, v, s]) => { if (!out.has(k)) out.set(k, [k, v, s]); }); };
