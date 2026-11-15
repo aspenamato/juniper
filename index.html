@@ -84,6 +84,24 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;pad
 .empty svg{width:160px;height:160px}
 .toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:#fff;border-radius:20px;padding:8px 14px;box-shadow:0 6px 20px rgba(0,0,0,.18);z-index:30;display:none}
 .toast svg{width:44px;height:44px;display:block}
+
+.card.locked img{filter:grayscale(1) blur(1.5px) opacity(.3)}
+.card.locked::after{content:'🔒';position:absolute;top:34%;left:50%;transform:translate(-50%,-50%);font-size:44px}
+.card.locked .lockcap{font-size:14px;line-height:1.15;color:#6a4a7a}
+.card.nope{animation:nope .4s}
+@keyframes nope{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.card{position:relative}
+.wtag{position:absolute;top:8px;left:8px;font-size:12px;font-weight:900;color:#fff;padding:2px 8px;border-radius:10px;background:#8e24aa}
+.wtag.w-nyc{background:#1e88e5}.wtag.w-vail{background:#26a3c9}.wtag.w-sc{background:#f57c00}.wtag.w-pr{background:#43a047}
+.scene-cele{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(40,20,60,.55)}
+.scene-cele.on{display:flex}
+.sc-card{position:relative;background:#fff;border-radius:30px;border:5px solid #222;padding:22px 26px;display:flex;flex-direction:column;align-items:center;gap:10px;animation:scPop .6s cubic-bezier(.2,1.4,.4,1) both;max-width:86vw}
+.sc-card b{font-size:30px;color:#e91e63}.sc-card img{width:min(60vw,420px);border-radius:18px;border:4px solid #222}.sc-card span{font-weight:800;font-size:20px}
+.sc-go{font:inherit;font-weight:900;font-size:22px;padding:10px 28px;border-radius:24px;border:4px solid #222;background:#fdd835}
+.sc-x{position:absolute;top:10px;right:10px;width:48px;height:48px;border-radius:50%;border:4px solid #222;background:#fff;font-size:22px;font-weight:900}
+.sc-burst{position:absolute;inset:-40px;z-index:-1;border-radius:50%;background:repeating-conic-gradient(#fdd835 0 10deg,#fff0 10deg 20deg);animation:spin 8s linear infinite;opacity:.6}
+@keyframes scPop{0%{transform:scale(.3) rotate(-8deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style></head>
 <body>
 <div id="home" class="screen on">
@@ -464,6 +482,192 @@ return {pages, svg, toLine:s=>s.replace(/fill="#(?!222")[0-9a-fA-F]{3,6}"/g,'fil
   parts:{c,foxHead,foxSit,foxStand,foot,tortoise,owl,squirrel,pigeon,doodle,malshie,horse,nicolo,coqui,acorn,carnation,heart,flower,tree,bush,cloud,sun,starD,scallop,grassTufts}};
 })();
 if(typeof module!=='undefined') module.exports={ART,PALETTE};
+
+// ---------- World scenes (earned in Juniper's Learning Park). Smooth, rounded, chunky shapes: closed regions for fill + color-by-number ----------
+const WORLD_SCENES = [
+  // id, world, title, es, need label (shown on locked card)
+  ['nyc_bridge', 'nyc', 'Brooklyn Bridge', 'El puente de Brooklyn', 'open New York City'],
+  ['nyc_skyline', 'nyc', 'Empire State and Chrysler', 'Los rascacielos', 'do 3 New York stops'],
+  ['nyc_bow', 'nyc', 'Bow Bridge in Central Park', 'El puente Bow', 'beat the Rat King'],
+  ['nyc_liberty', 'nyc', 'Statue of Liberty', 'La Estatua de la Libertad', 'beat the Gargoyle'],
+  ['nyc_rink', 'nyc', 'Skating in New York', 'Patinar en Nueva York', 'beat the Big Smoke Bully'],
+  ['nyc_rat', 'nyc', 'The Rat King', 'El Rey Rata', 'get 10 gold medals or an Epic relic'],
+  ['vail_gondola', 'vail', 'Vail Gondola', 'La góndola de Vail', 'open Vail'],
+  ['vail_clock', 'vail', 'Vail Village Clock Tower', 'La torre del reloj', 'do 3 Vail stops'],
+  ['vail_bridge', 'vail', 'Covered Bridge on Gore Creek', 'El puente cubierto', 'beat the Avalanche Abominable'],
+  ['vail_lift', 'vail', 'Ski Lift with Aspen', 'El telesilla', 'beat the Ice Queen'],
+  ['vail_aspens', 'vail', 'Aspen Trees in the Snow', 'Los álamos temblones', 'beat the Blizzard Bandit'],
+  ['vail_yeti', 'vail', 'The Avalanche Abominable', 'El abominable', 'get 10 gold medals or an Epic relic'],
+  ['ca_gate', 'sc', 'Golden Gate Bridge', 'El puente Golden Gate', 'open Santa Clara'],
+  ['ca_mission', 'sc', 'Mission Santa Clara', 'La Misión Santa Clara', 'do 3 Santa Clara stops'],
+  ['ca_lick', 'sc', 'Lick Observatory', 'El observatorio Lick', 'beat the Glitch Robot'],
+  ['ca_stadium', 'sc', "Levi's Stadium", 'El estadio', 'beat the Orchard Weevil'],
+  ['ca_orchard', 'sc', 'Orange Orchard', 'El huerto de naranjas', 'beat Dr. Static'],
+  ['ca_glitch', 'sc', 'The Glitch Robot', 'El robot Glitch', 'get 10 gold medals or an Epic relic'],
+  ['pr_morro', 'pr', 'El Morro', 'El Morro', 'open Puerto Rico'],
+  ['pr_sanjuan', 'pr', 'Old San Juan', 'El Viejo San Juan', 'do 3 Puerto Rico stops'],
+  ['pr_yunque', 'pr', 'La Coca Falls in El Yunque', 'La Coca en El Yunque', 'beat El Cuco Cloud'],
+  ['pr_beach', 'pr', 'Beach Day with Lola', 'Un día de playa', 'beat Captain Barnacle'],
+  ['pr_flamboyan', 'pr', 'The Flamboyán Tree', 'El flamboyán', 'beat the Hurricán Hag'],
+  ['pr_cuco', 'pr', 'El Cuco Cloud', 'La nube Cuco', 'get 10 gold medals or an Epic relic'],
+];
+(() => {
+const A = ART.parts, c = A.c, K = '#222', Wh = c.blanco, scallop = A.scallop, starD = A.starD;
+const n = v => Math.round(v * 10) / 10;
+const E = (cx, cy, rx, ry, f = Wh, x = '') => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${f}" ${x}/>`;
+const C = (cx, cy, r, f = Wh, x = '') => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${f}" ${x}/>`;
+const P = (d, f = 'none', x = '') => `<path d="${d}" fill="${f}" ${x}/>`;
+const R = (x, y, w, h, r, f = Wh, ex = '') => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${f}" ${ex}/>`;
+const G = (tx, ty, s, inner, flip = false) => `<g transform="translate(${tx} ${ty}) scale(${flip ? -s : s} ${s})">${inner}</g>`;
+const HL = (cx, cy, r) => C(cx, cy, r, Wh, 'stroke="none"');
+const frame = sky => R(6, 6, 1012, 756, 28, sky);
+const ground = (y, f, amp = 24) => P(`M6 ${y} Q 256 ${y - amp} 512 ${y} T 1018 ${y} L1018 734 Q1018 762 990 762 L34 762 Q6 762 6 734 Z`, f);
+const cloud = A.cloud, sun = A.sun, tree = A.tree;
+const eyes = (x, y, s = 1, iris = K) => [-1, 1].map(k => E(x + k * 14 * s, y, 9 * s, 11 * s, Wh) + C(x + k * 14 * s, y + 2 * s, 5.5 * s, iris, 'stroke="none"') + HL(x + k * 14 * s - 2 * s, y - 2 * s, 2.2 * s)).join('');
+const sparkle = (x, y, s = 1, f = c.amarillo) => P(`M${x} ${y - 22 * s} Q${x + 3 * s} ${y - 3 * s} ${x + 22 * s} ${y} Q${x + 3 * s} ${y + 3 * s} ${x} ${y + 22 * s} Q${x - 3 * s} ${y + 3 * s} ${x - 22 * s} ${y} Q${x - 3 * s} ${y - 3 * s} ${x} ${y - 22 * s} Z`, f);
+// ---- friends ----
+const parrot = () => P('M0 -90 C46 -92 62 -50 54 0 C48 50 20 80 0 84 C-22 80 -50 50 -54 0 C-60 -52 -40 -90 0 -90 Z', c.verde) + P('M-34 -78 C-20 -100 22 -100 36 -78 C20 -70 -20 -70 -34 -78 Z', c.rojo) + P('M30 -30 C70 -10 74 40 44 70 C30 40 26 10 30 -30 Z', c.azul) + P('M-8 -44 Q-30 -40 -32 -20 Q-14 -24 -8 -36 Z', c.amarillo) + eyes(4, -52, 0.9) + P('M-6 84 L-14 120 M8 84 L14 120') + P('M-20 84 Q0 140 20 84 Z', c.turquesa);
+const hare = () => P('M-26 -120 C-44 -210 -20 -230 -8 -150 Z', Wh) + P('M-24 -130 C-34 -190 -22 -200 -14 -150 Z', c.rosa) + P('M26 -120 C44 -210 20 -230 8 -150 Z', Wh) + P('M24 -130 C34 -190 22 -200 14 -150 Z', c.rosa) + E(0, 30, 62, 74, Wh) + E(0, 40, 34, 44, c.crema) + C(0, -90, 52, Wh) + eyes(0, -96, 1.1) + P('M-6 -72 Q0 -66 6 -72 Q0 -78 -6 -72 Z', c.rosa) + P('M-46 -54 Q0 -30 46 -54 L46 -36 Q0 -12 -46 -36 Z', c.turquesa) + R(14, -40, 22, 60, 9, c.turquesa) + E(-30, 104, 30, 14, Wh) + E(30, 104, 30, 14, Wh);
+const quail = () => P('M-10 -110 C-20 -160 20 -170 24 -150 C10 -150 0 -134 2 -110 Z', c.marron_oscuro) + E(0, 10, 82, 70, c.gris) + P('M-60 -10 C-40 30 30 40 70 0 C60 50 -40 60 -60 -10 Z', c.canela) + C(-6, -66, 46, c.gris) + P('M-36 -70 Q-6 -40 26 -70 Q-6 -20 -36 -70 Z', c.crema) + eyes(-6, -80, 0.85) + P('M-50 -66 L-74 -58 L-50 -54 Z', c.marron_oscuro) + P('M-16 80 L-20 110 M16 80 L20 110');
+const aspenKid = () => { let s = '';
+  for (const k of [-1, 1]) for (let i = 0; i < 4; i++) s += E(k * (66 + i * 2), -150 + i * 24, 15 - i, 14, i % 2 ? c.canela : c.amarillo);
+  s += P('M-40 -6 Q-110 70 -116 120 Q0 146 116 120 Q110 70 40 -6 Z', c.rosa) + P('M-116 120 q15 16 29 0 q15 16 29 0 q15 16 29 0 q15 16 29 0 q15 16 29 0 q15 16 29 0 q15 16 29 0 q15 16 29 0 Z', c.fucsia);
+  s += P('M-36 -60 Q0 -70 36 -60 L42 -2 Q0 8 -42 -2 Z', c.rosa) + P('M-42 -6 Q0 6 42 -6', 'none', 'stroke-width="9"') + E(-40, -56, 20, 15, c.lila) + E(40, -56, 20, 15, c.lila);
+  s += P('M-56 -40 Q-74 -10 -66 18', 'none', `stroke="${K}" stroke-width="20"`) + P('M-56 -40 Q-74 -10 -66 18', 'none', `stroke="${c.melocoton}" stroke-width="12"`) + P('M56 -40 Q74 -10 66 18', 'none', `stroke="${K}" stroke-width="20"`) + P('M56 -40 Q74 -10 66 18', 'none', `stroke="${c.melocoton}" stroke-width="12"`);
+  for (const k of [-1, 1]) s += P(`M${k * 10} 138 h${k * 36} q${k * 18} 2 ${k * 18} 16 v8 h${k * -54} Z`, Wh) + R(k > 0 ? 8 : -64, 160, 56, 10, 5, c.turquesa);
+  s += C(0, -118, 58, c.melocoton) + P('M-60 -112 Q-62 -190 0 -186 Q62 -190 60 -112 Q48 -152 18 -156 Q24 -138 14 -130 Q4 -154 -24 -152 Q-44 -150 -60 -112 Z', c.amarillo) + P('M-52 -150 Q0 -192 52 -150', 'none', 'stroke-width="9"');
+  s += eyes(0, -112, 1.2, c.verde) + P('M-14 -84 Q0 -72 14 -84 Q0 -78 -14 -84 Z', c.rojo) ;
+  return s; };
+// ---- villains (mischievous, not scary) ----
+const smirk = (x, y, s = 1) => P(`M${x - 20 * s} ${y} Q${x} ${y + 18 * s} ${x + 24 * s} ${y - 6 * s}`, 'none', 'stroke-width="6"');
+const vbrows = (x, y, s = 1) => P(`M${x - 30 * s} ${y - 6 * s} L${x - 6 * s} ${y + 4 * s} M${x + 30 * s} ${y - 6 * s} L${x + 6 * s} ${y + 4 * s}`, 'none', 'stroke-width="7"');
+const ratKing = () => P('M60 60 C140 80 150 0 120 -20', 'none', 'stroke-width="12"') + P('M-60 -20 Q-90 90 -70 130 H70 Q90 90 60 -20 Z', c.morado) + E(0, 40, 60, 80, c.gris) + E(0, 50, 36, 50, c.gris_claro) + C(-48, -110, 30, c.gris) + C(48, -110, 30, c.gris) + C(-48, -110, 16, c.rosa) + C(48, -110, 16, c.rosa) + E(0, -70, 60, 54, c.gris) + P('M-10 -30 Q0 -14 10 -30 Q0 -40 -10 -30 Z', c.rosa) + eyes(0, -78, 0.9, c.rojo) + vbrows(0, -96, .8) + smirk(0, -22, .8) + P('M-40 -124 L-46 -170 L-20 -146 L0 -180 L20 -146 L46 -170 L40 -124 Q0 -136 -40 -124 Z', c.amarillo) + C(0, -150, 8, c.rojo);
+const yeti = () => P(scallop(0, 20, 110, 130, 16, 0.12), Wh) + E(0, -40, 60, 52, c.celeste) + eyes(0, -52, 1.1) + vbrows(0, -74) + P('M-30 -14 Q0 10 30 -14 Q0 0 -30 -14 Z', c.azul_marino) + P('M-16 -12 v10 h10 v-8', Wh) + P(scallop(-120, 40, 34, 40, 8, .15), Wh) + P(scallop(120, -10, 34, 40, 8, .15), Wh) + E(-50, 150, 44, 22, c.celeste) + E(50, 150, 44, 22, c.celeste);
+const glitch = () => R(-8, -200, 16, 50, 6, c.gris) + C(0, -206, 16, c.rojo) + R(-90, -150, 180, 140, 30, c.gris_claro) + R(-66, -128, 132, 90, 18, c.turquesa) + P('M-44 -96 h22 M22 -96 h22', 'none', 'stroke-width="8"') + P('M-30 -64 l12 -8 l12 8 l12 -8 l12 8 l12 -8', 'none', 'stroke-width="6"') + R(-70, 0, 140, 120, 26, c.gris) + R(-40, 24, 80, 50, 12, c.amarillo) + C(-20, 49, 10, c.rojo) + C(20, 49, 10, c.verde) + R(-130, 10, 56, 26, 13, c.gris) + R(74, -30, 56, 26, 13, c.gris) + R(-56, 120, 40, 40, 12, c.gris_claro) + R(16, 120, 40, 40, 12, c.gris_claro) + P('M120 -60 l10 -16 l6 12 l10 -18', 'none', 'stroke-width="6"');
+const cuco = () => P(scallop(0, 0, 180, 90, 11, 0.18), c.gris) + eyes(0, -10, 1.4) + vbrows(0, -40, 1.3) + smirk(0, 30, 1.3) + [-120, -60, 0, 60, 120].map((x, i) => P(`M${x} ${130 + (i % 2) * 30} q-14 22 0 30 q14 -8 0 -30 Z`, c.celeste)).join('') + P('M150 60 l-24 50 h30 l-20 50', 'none', 'stroke-width="7"');
+// ---- landmarks ----
+const pine = (x, y, s = 1) => G(x, y, s, R(-10, -30, 20, 30, 4, c.marron) + P('M0 -200 L-56 -110 H-30 L-76 -30 H76 L30 -110 H56 Z', c.verde_oscuro) + P('M0 -200 L-22 -164 Q0 -156 22 -164 Z', Wh));
+const aspenT = (x, y, s = 1, leaf = c.amarillo) => G(x, y, s, R(-18, -170, 36, 170, 12, Wh) + E(-4, -100, 7, 3.5, K) + P(scallop(0, -210, 70, 60, 9, 0.18), leaf));
+const palm = (x, y, s = 1) => G(x, y, s, P('M-12 0 Q-26 -120 4 -240 L26 -236 Q2 -120 12 0 Z', c.canela) + [[-150, -200], [-120, -280], [0, -320], [130, -280], [150, -200]].map(([a, b]) => P(`M14 -240 Q${(14 + a) / 2} ${b - 40} ${a} ${b} Q${(14 + a) / 2} ${b - 10} 14 -240 Z`, c.verde)).join('') + C(4, -232, 16, c.marron));
+const mountains = (y, f = c.lila) => P(`M6 ${y} L180 ${y - 260} L300 ${y - 150} L470 ${y - 330} L640 ${y - 160} L800 ${y - 290} L1018 ${y - 80} V${y} Z`, f) + P(`M130 ${y - 190} L180 ${y - 260} L230 ${y - 190} L200 ${y - 200} L180 ${y - 180} L160 ${y - 200} Z M410 ${y - 250} L470 ${y - 330} L530 ${y - 250} L500 ${y - 262} L470 ${y - 238} L440 ${y - 262} Z M750 ${y - 225} L800 ${y - 290} L860 ${y - 220} L825 ${y - 232} L800 ${y - 210} L775 ${y - 232} Z`, Wh);
+const chalet = (x, y, s = 1, f = c.marron) => G(x, y, s, R(-80, -100, 160, 100, 6, f) + P('M-110 -92 L0 -196 L110 -92 Z', Wh) + P('M-76 -100 L0 -150 L76 -100 Z', c.marron_oscuro) + R(-20, -60, 40, 60, 6, c.rojo) + R(-66, -80, 32, 28, 4, c.amarillo) + R(34, -80, 32, 28, 4, c.amarillo));
+const house = (x, y, f, door = c.verde_oscuro) => R(x, y - 160, 130, 160, 6, f) + R(x - 8, y - 176, 146, 20, 6, Wh) + R(x + 18, y - 130, 36, 50, 8, c.turquesa) + R(x + 76, y - 130, 36, 50, 8, c.turquesa) + P(`M${x + 10} ${y - 72} h110`, 'none', 'stroke-width="6"') + R(x + 44, y - 60, 42, 60, 20, door);
+const garita = (x, y, s = 1) => G(x, y, s, R(-60, -170, 120, 170, 10, c.melocoton) + P('M-70 -170 Q0 -270 70 -170 Z', c.melocoton) + C(0, -262, 14, c.canela) + R(-18, -140, 36, 56, 18, c.marron_oscuro) + R(-80, -20, 160, 30, 6, c.canela));
+const waves = y => P(`M6 ${y} q42 -26 84 0 t84 0 t84 0 t84 0 t84 0 t84 0 t84 0 t84 0 t84 0 t84 0 t84 0 t84 0 V${y + 200} H6 Z`, c.azul);
+const taxi = (x, y, s = 1) => G(x, y, s, R(-110, -70, 220, 60, 22, c.amarillo) + P('M-66 -70 L-42 -120 H42 L66 -70 Z', c.amarillo) + R(-34, -112, 30, 34, 6, c.celeste) + R(6, -112, 30, 34, 6, c.celeste) + R(-26, -142, 52, 20, 6, Wh) + C(-62, -10, 24, c.negro) + C(62, -10, 24, c.negro) + C(-62, -10, 9, c.gris_claro) + C(62, -10, 9, c.gris_claro));
+const skyscraper = (x, y, w, h, f, top = '') => R(x - w / 2, y - h, w, h, 6, f) + top + Array.from({ length: Math.floor(h / 70) }, (_, i) => R(x - w / 2 + 14, y - h + 20 + i * 70, w - 28, 34, 8, c.celeste)).join('');
+const fox = (x, y, s = 1, o = {}, flip = false) => { const k = s < 0.6 ? 1.3 : 1; return G(x, n(y - 128 * s * (k - 1)), n(s * k), A.foxStand(o), flip); };
+// ---- scenes ----
+const S = {};
+S.nyc_bridge = () => { let s = frame(c.celeste) + sun(900, 100, 40) + cloud(200, 90);
+  s += P('M6 420 H1018 V560 H6 Z', c.azul) + R(6, 400, 1012, 30, 6, c.marron);
+  for (const tx of [260, 760]) s += R(tx - 50, 120, 100, 290, 8, c.canela) + R(tx - 34, 170, 28, 100, 14, c.marron_oscuro) + R(tx + 6, 170, 28, 100, 14, c.marron_oscuro) + R(tx - 60, 110, 120, 24, 6, c.canela);
+  s += P('M6 330 Q130 330 260 140', 'none', 'stroke-width="8"') + P('M260 140 Q510 360 760 140', 'none', 'stroke-width="8"') + P('M760 140 Q890 330 1018 330', 'none', 'stroke-width="8"');
+  s += ground(600, c.verde, 10) + fox(380, 450, 0.75, { armL: -40, armR: 40 }) + G(640, 560, 0.85, A.squirrel()) + sparkle(520, 250, 1, c.amarillo);
+  return s; };
+S.nyc_skyline = () => { let s = frame(c.celeste) + cloud(500, 80) + sun(110, 100, 40);
+  s += skyscraper(260, 620, 130, 430, c.gris_claro, R(225, 150, 70, 50, 6, c.gris_claro) + R(250, 90, 20, 62, 4, c.gris)) + skyscraper(560, 620, 120, 360, c.gris_claro, P('M500 260 Q560 140 620 260 Z', c.gris) + P('M520 220 Q560 160 600 220', 'none') + P('M560 150 V80', 'none', 'stroke-width="6"'));
+  s += skyscraper(820, 620, 110, 280, c.lila) + skyscraper(100, 620, 90, 240, c.rosa);
+  s += P('M6 600 H1018 V734 Q1018 762 990 762 H34 Q6 762 6 734 Z', c.gris) + [60, 220, 380, 540, 860].map(x => R(x, 672, 80, 16, 6, Wh)).join('') + taxi(700, 700, 1.05) + aspenG(330, 700, 0.6) + fox(150, 650, 0.5, {});
+  return s; };
+const aspenG = (x, y, s) => { const k = s < 0.55 ? 1.3 : 1; return G(x, n(y - 170 * s * (k - 1)), n(s * k), aspenKid()); };
+S.nyc_bow = () => { let s = frame(c.celeste) + cloud(180, 90) + cloud(780, 110, 0.8);
+  s += skyscraper(150, 360, 80, 200, c.gris_claro) + skyscraper(860, 360, 90, 240, c.gris_claro) + skyscraper(720, 360, 70, 160, c.lila);
+  s += P('M6 360 H1018 V460 H6 Z', c.verde) + P('M6 460 H1018 V600 H6 Z', c.celeste) + P('M220 480 Q512 290 804 480 L804 500 Q512 330 220 500 Z', c.crema) + P('M260 470 V500 M330 420 V470 M420 385 V445 M512 375 V430 M604 385 V445 M694 420 V470 M764 470 V500', 'none', 'stroke-width="6"');
+  s += ground(600, c.verde_lima, 10) + tree(100, 600, 0.9) + tree(930, 610, 0.8) + G(512, 660, 0.7, A.pigeon()) + G(320, 690, 0.6, A.owl()) + fox(720, 620, 0.5, { armL: -50, armR: 30 });
+  return s; };
+S.nyc_liberty = () => { let s = frame(c.celeste) + sun(880, 100, 40) + cloud(240, 100);
+  s += waves(470) + E(650, 500, 160, 40, c.verde) + R(590, 360, 120, 120, 8, c.canela);
+  s += P('M610 360 Q600 200 650 170 Q700 200 690 360 Z', c.turquesa) + C(650, 150, 30, c.turquesa) + P('M626 128 l-10 -24 M650 120 v-28 M674 128 l10 -24', 'none', 'stroke-width="9"') + P('M690 230 L730 110', 'none', 'stroke-width="16"') + P('M730 110 q-20 -30 0 -50 q20 20 0 50 Z', c.amarillo) + R(612, 260, 40, 50, 6, c.gris_claro);
+  s += P('M120 600 L400 600 L360 680 L160 680 Z', c.rojo) + R(200, 520, 140, 80, 10, Wh) + C(240, 560, 16, c.celeste) + C(300, 560, 16, c.celeste) + aspenG(260, 470, 0.45) + fox(170, 470, 0.4, { armL: -60, armR: 40 });
+  return s; };
+S.nyc_rink = () => { let s = frame(c.azul_marino) + [[100, 80], [300, 140], [880, 90], [700, 60]].map(([x, y]) => sparkle(x, y, 0.8, Wh)).join('');
+  s += skyscraper(130, 420, 120, 340, c.gris) + skyscraper(890, 420, 120, 360, c.gris);
+  s += P('M512 60 L380 400 H644 Z', c.verde_oscuro) + P(starD(512, 60, 40, 18), c.amarillo) + [[470, 200, c.rojo], [550, 260, c.celeste], [450, 330, c.amarillo], [580, 350, c.fucsia]].map(([x, y, f]) => C(x, y, 16, f)).join('') + R(490, 400, 44, 30, 4, c.marron);
+  s += E(512, 600, 480, 150, c.celeste) + fox(360, 540, 0.65, { feet: 'skate', armL: -10, armR: 60 }) + aspenG(680, 560, 0.6);
+  return s; };
+S.nyc_rat = () => { let s = frame(c.amarillo) + R(6, 520, 1012, 242, 0, c.gris_claro) + R(6, 500, 1012, 30, 6, c.gris) + P('M80 120 H940 V420 H80 Z', c.crema) + R(120, 160, 240, 120, 20, c.rojo) + R(400, 160, 240, 120, 20, c.verde) + R(680, 160, 220, 120, 20, c.azul) + C(240, 220, 40, Wh) + C(520, 220, 40, Wh) + C(790, 220, 40, Wh);
+  s += G(512, 560, 1.15, ratKing()) + fox(150, 600, 0.55, { armL: -70, armR: 20 }) + aspenG(880, 590, 0.62) + sparkle(380, 460, 1, c.amarillo);
+  return s; };
+S.vail_gondola = () => { let s = frame(c.celeste) + mountains(560) + cloud(840, 80, 0.8);
+  s += P('M6 160 L1018 420', 'none', 'stroke-width="7"') + G(330, 244, 1, P('M0 0 V40', 'none', 'stroke-width="7"') + R(-70, 40, 140, 120, 30, c.rojo) + R(-50, 60, 100, 50, 12, c.celeste)) + G(760, 354, 0.8, P('M0 0 V40', 'none', 'stroke-width="7"') + R(-70, 40, 140, 120, 30, c.amarillo) + R(-50, 60, 100, 50, 12, c.celeste));
+  s += ground(600, Wh, 20) + pine(100, 640, 0.9) + pine(930, 650, 1) + aspenT(200, 680, 0.85) + chalet(560, 690, 0.8) + G(800, 680, 0.6, hare());
+  return s; };
+S.vail_clock = () => { let s = frame(c.celeste) + mountains(420, c.lila) + cloud(160, 90);
+  s += R(440, 160, 140, 460, 8, c.crema) + P('M420 160 L510 40 L600 160 Z', c.verde_oscuro) + C(510, 240, 44, Wh) + P('M510 240 V210 M510 240 H534', 'none', 'stroke-width="6"') + R(480, 520, 60, 100, 26, c.marron_oscuro);
+  s += chalet(240, 620, 1, c.marron) + chalet(800, 620, 1, c.canela) + ground(620, Wh, 10) + G(330, 690, 0.65, hare()) + fox(700, 650, 0.5, { scarf: c.rojo, armL: -60, armR: 30 });
+  return s; };
+S.vail_bridge = () => { let s = frame(c.celeste) + mountains(380, c.lila);
+  s += ground(400, Wh, 10) + P('M6 520 Q300 470 512 520 T1018 500 V620 Q700 590 512 630 T6 620 Z', c.celeste) + R(300, 380, 420, 150, 8, c.rojo) + P('M280 386 L512 260 L744 386 Z', Wh) + R(420, 420, 180, 110, 40, c.marron_oscuro);
+  s += aspenT(120, 520, 0.8) + aspenT(900, 520, 0.8, c.verde) + pine(220, 500, 0.6) + pine(800, 500, 0.7) + fox(200, 690, 0.45, {}) + G(770, 620, 0.62, A.horse());
+  return s; };
+S.vail_lift = () => { let s = frame(c.celeste) + mountains(700, c.lila) + cloud(800, 80, 0.8);
+  s += P('M6 600 L1018 140', 'none', 'stroke-width="7"') + R(140, 540, 24, 220, 6, c.gris) + R(840, 220, 24, 540, 6, c.gris);
+  s += G(470, 390, 1, P('M0 0 V60', 'none', 'stroke-width="7"') + R(-140, 60, 280, 30, 12, c.azul) + R(-140, 90, 280, 20, 8, c.azul_marino) + G(-60, 30, 0.5, aspenKid()) + G(70, 20, 0.36, A.foxStand({ helmet: c.turquesa, armL: -60, armR: 60 })));
+  s += pine(80, 760, 0.8) + pine(960, 760, 0.7) + aspenT(700, 730, 0.6);
+  return s; };
+S.vail_aspens = () => { let s = frame(c.celeste) + sun(880, 100, 40) + mountains(420, c.lila);
+  s += ground(440, Wh, 14) + [120, 260, 400, 640, 780, 920].map((x, i) => aspenT(x, 560 + (i % 2) * 40, 0.9, i % 3 ? c.amarillo : c.naranja)).join('');
+  s += fox(512, 660, 0.55, { scarf: c.rojo, armL: -50, armR: 50 }) + G(300, 700, 0.5, hare()) + G(720, 710, 0.6, A.malshie());
+  return s; };
+S.vail_yeti = () => { let s = frame(c.celeste) + mountains(520, c.lila) + ground(540, Wh, 10) + pine(100, 620, 0.9) + pine(920, 620, 0.9);
+  s += G(512, 450, 1.2, yeti()) + fox(200, 690, 0.45, { helmet: c.turquesa }) + aspenG(840, 690, 0.45) + [[300, 160], [700, 120], [860, 300]].map(([x, y]) => P(scallop(x, y, 18, 18, 6, .3), Wh)).join('');
+  return s; };
+S.ca_gate = () => { let s = frame(c.celeste) + cloud(160, 100) + sun(880, 100, 40) + P('M6 300 Q200 240 400 300 T1018 280 V420 H6 Z', c.verde);
+  s += P('M6 420 H1018 V620 H6 Z', c.azul);
+  for (const tx of [300, 740]) s += R(tx - 34, 120, 68, 360, 6, c.rojo) + R(tx - 44, 170, 88, 24, 6, c.rojo) + R(tx - 44, 260, 88, 24, 6, c.rojo);
+  s += R(6, 380, 1012, 28, 6, c.rojo) + P('M6 300 Q150 300 300 130 Q520 380 740 130 Q890 300 1018 300', 'none', `stroke="${K}" stroke-width="8"`);
+  s += ground(640, c.canela, 10) + G(200, 700, 0.6, quail()) + fox(520, 690, 0.45, { armL: -60, armR: 60 }) + aspenG(800, 700, 0.45);
+  return s; };
+S.ca_mission = () => { let s = frame(c.celeste) + sun(110, 100, 40) + cloud(700, 90);
+  s += R(300, 260, 320, 320, 6, c.crema) + P('M300 260 Q380 170 460 160 Q540 170 620 260 Z', c.crema) + R(620, 120, 120, 460, 6, c.crema) + P('M610 120 L680 60 L750 120 Z', c.naranja) + R(656, 150, 48, 60, 24, c.marron_oscuro) + R(420, 450, 80, 130, 40, c.marron) + C(460, 330, 30, c.celeste) + P('M460 160 V110 M440 128 H480', 'none', 'stroke-width="8"');
+  s += ground(590, c.verde_lima, 10) + palm(150, 640, 0.8) + palm(880, 650, 0.7) + fox(260, 690, 0.45, {}) + G(600, 470, 1, A.nicolo());
+  return s; };
+S.ca_lick = () => { let s = frame(c.azul_marino) + [[90, 90], [240, 150], [420, 70], [760, 100], [930, 180], [600, 160]].map(([x, y]) => P(starD(x, y, 18, 8), c.amarillo)).join('') + C(860, 100, 40, c.crema);
+  s += P('M6 620 Q300 320 512 330 Q724 320 1018 620 Z', c.canela) + R(420, 260, 180, 80, 6, Wh) + P('M420 260 A90 90 0 0 1 600 260 Z', c.gris_claro) + R(500, 190, 30, 60, 4, c.gris);
+  s += ground(620, c.verde, 10) + fox(300, 690, 0.45, { armL: -80, armR: 30 }) + G(560, 700, 0.5, quail()) + aspenG(760, 700, 0.45);
+  return s; };
+S.ca_stadium = () => { let s = frame(c.celeste) + cloud(200, 90) + cloud(780, 120, 0.8);
+  s += P('M120 520 V320 Q512 220 904 320 V520 Z', c.gris_claro) + P('M120 320 Q512 220 904 320', 'none', `stroke="${K}" stroke-width="10"`) + R(120, 380, 784, 40, 0, c.rojo) + [200, 360, 512, 664, 824].map(x => R(x - 6, 180, 12, 110, 4, c.gris) + R(x - 34, 160, 68, 30, 8, c.amarillo)).join('');
+  s += ground(540, c.verde, 10) + aspenG(260, 650, 0.62) + G(500, 700, 0.6, A.doodle(c.canela)) + fox(760, 690, 0.45, { armL: -70, armR: 70 });
+  return s; };
+S.ca_orchard = () => { let s = frame(c.celeste) + sun(880, 100, 40) + P('M6 320 Q250 230 520 300 T1018 280 V420 H6 Z', c.verde_lima);
+  for (const [x, y, sc] of [[140, 520, 0.8], [380, 500, 0.7], [640, 520, 0.8], [880, 500, 0.7]]) s += G(x, y, sc, R(-14, -100, 28, 100, 8, c.marron) + P(scallop(0, -160, 90, 76, 9, 0.16), c.verde) + [[-40, -170], [30, -190], [10, -130], [-20, -110], [50, -140]].map(([a, b]) => C(a, b, 14, c.naranja)).join(''));
+  s += ground(560, c.canela, 10) + G(300, 660, 0.72, A.squirrel()) + fox(560, 680, 0.45, {}) + G(780, 700, 0.55, quail());
+  return s; };
+S.ca_glitch = () => { let s = frame(c.lila) + R(60, 120, 260, 200, 20, c.celeste) + R(704, 120, 260, 200, 20, c.celeste) + P('M90 160 H290 M90 210 H250 M734 160 H934 M734 210 H880', 'none', 'stroke-width="8"');
+  s += ground(560, c.gris_claro, 10) + G(512, 450, 1.25, glitch()) + fox(160, 680, 0.45, { armL: -70, armR: 30 }) + aspenG(860, 690, 0.45) + sparkle(330, 420, 1, c.amarillo);
+  return s; };
+S.pr_morro = () => { let s = frame(c.celeste) + sun(880, 100, 40) + cloud(200, 90) + waves(500);
+  s += P('M6 420 H700 L760 520 H6 Z', c.melocoton) + garita(560, 430, 1.1) + R(6, 400, 700, 24, 6, c.canela) + P('M40 400 v-20 h40 v20 M140 400 v-20 h40 v20 M240 400 v-20 h40 v20', c.canela);
+  s += ground(620, c.verde, 10) + G(200, 690, 0.7, parrot()) + fox(420, 690, 0.45, {}) + palm(900, 720, 0.6);
+  return s; };
+S.pr_sanjuan = () => { let s = frame(c.celeste) + cloud(500, 80);
+  s += house(30, 520, c.rosa) + house(180, 520, c.amarillo) + house(330, 520, c.celeste) + house(480, 520, c.verde_lima) + house(630, 520, c.lila) + house(780, 520, c.naranja);
+  s += P('M6 520 H1018 V734 Q1018 762 990 762 H34 Q6 762 6 734 Z', c.azul) + [0, 1, 2, 3, 4, 5, 6, 7].map(i => E(70 + i * 125, 600, 50, 18, c.celeste) + E(130 + i * 125, 680, 50, 18, c.celeste)).join('');
+  s += aspenG(300, 660, 0.45) + fox(560, 640, 0.42, { armL: -60, armR: 40 }) + G(800, 650, 0.55, parrot());
+  return s; };
+S.pr_yunque = () => { let s = frame(c.celeste) + P('M6 520 Q160 160 400 220 Q560 100 720 230 Q900 160 1018 400 V520 Z', c.verde_oscuro);
+  s += P('M440 200 Q512 170 584 200 V560 H440 Z', c.celeste) + R(462, 230, 16, 300, 8, Wh) + R(504, 220, 16, 310, 8, Wh) + R(546, 230, 16, 300, 8, Wh) + E(512, 580, 180, 40, c.celeste);
+  s += ground(620, c.verde, 10) + [[110, 620], [920, 620]].map(([x, y]) => G(x, y, 1, [-60, -20, 20, 60].map(a => P(`M0 0 Q${a} -80 ${a * 1.8} -140`, 'none', `stroke="${K}" stroke-width="18"`) + P(`M0 0 Q${a} -80 ${a * 1.8} -140`, 'none', `stroke="${c.verde_lima}" stroke-width="10"`)).join(''))).join('');
+  s += G(300, 690, 0.9, A.coqui()) + fox(700, 690, 0.42, {}) + G(860, 380, 0.5, parrot());
+  return s; };
+S.pr_beach = () => { let s = frame(c.celeste) + sun(140, 110, 46) + cloud(640, 90) + waves(360) + P('M6 520 Q512 460 1018 520 V734 Q1018 762 990 762 H34 Q6 762 6 734 Z', c.crema);
+  s += palm(110, 620, 0.8) + palm(920, 600, 0.7) + P('M560 520 L700 400 L720 520 Z', c.fucsia) + P('M560 520 H740', 'none', 'stroke-width="8"') + C(780, 660, 34, c.rojo) + P('M760 640 q20 10 40 0', 'none', 'stroke-width="5"');
+  s += fox(380, 650, 0.45, { armL: -60, armR: 60 }) + G(600, 640, 0.6, parrot()) + aspenG(240, 680, 0.42);
+  return s; };
+S.pr_flamboyan = () => { let s = frame(c.celeste) + sun(880, 100, 40);
+  s += ground(520, c.verde, 16) + R(470, 280, 60, 260, 20, c.marron) + P('M500 320 Q400 260 330 270 M500 320 Q600 260 680 270', 'none', 'stroke-width="18"') + P(scallop(512, 220, 360, 120, 14, 0.12), c.rojo) + [[340, 200], [440, 160], [580, 170], [680, 220], [512, 260]].map(([x, y]) => C(x, y, 16, c.naranja)).join('');
+  s += G(250, 650, 0.72, A.doodle(c.crema)) + G(760, 690, 0.6, A.malshie()) + fox(512, 680, 0.42, {});
+  return s; };
+S.pr_cuco = () => { let s = frame(c.lila) + P('M6 560 Q160 360 400 420 Q560 320 720 420 Q900 360 1018 500 V560 Z', c.verde_oscuro);
+  s += G(512, 240, 1.2, cuco()) + ground(600, c.verde, 10) + G(200, 660, 1, A.coqui()) + fox(512, 690, 0.42, { armL: -70, armR: 20 }) + aspenG(820, 700, 0.42);
+  return s; };
+// install before 'blank'
+const bi = ART.pages.findIndex(p => p.id === 'blank');
+const add = WORLD_SCENES.map(([id, world, title, es, need]) => ({ id, world, title, es, need, svg: ART.svg(S[id]()) }));
+ART.pages.splice(bi < 0 ? ART.pages.length : bi, 0, ...add);
+})();
 </script>
 <script>// Reward stickers unlocked in Juniper's Learning Park (shared by both apps, same origin).
 // Unlock list lives in localStorage key 'juniperRewards' as {v:1, stickers:[ids...]}.
@@ -815,13 +1019,23 @@ function numDone(num) { if (!S.an || !S.filled) return false; return S.an.reg.ev
 
 // ---------- home ----------
 function thumb(page) { return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(ART.toLine(page.svg)); }
+// ---------- world scenes earned in Juniper's Learning Park ----------
+function rewardScenes() { try { const r = JSON.parse(localStorage.getItem('juniperRewards') || 'null'); return r && Array.isArray(r.scenes) ? r.scenes : []; } catch (e) { return []; } }
+const sceneOpen = pg => !pg.world || rewardScenes().includes(pg.id);
+function celebrateScenes() { const seen = LS.get('jcp_seenScenes', null); const now = ART.pages.filter(p => p.world && sceneOpen(p)).map(p => p.id);
+  const fresh = now.filter(id => !(seen || []).includes(id)); if (!fresh.length) return; LS.set('jcp_seenScenes', now);
+  const pg = ART.pages.find(p => p.id === fresh[0]); let ov = $('sceneCele'); if (!ov) { ov = document.createElement('div'); ov.id = 'sceneCele'; ov.className = 'scene-cele'; document.body.appendChild(ov); }
+  ov.innerHTML = `<div class="sc-card"><div class="sc-burst"></div><b>New coloring page${fresh.length > 1 ? 's' : ''}!</b><img src="${thumb(pg)}" alt=""><span>${pg.title}${fresh.length > 1 ? ` + ${fresh.length - 1} more` : ''}</span><button class="sc-go">Color it!</button><button class="sc-x" aria-label="Close">✕</button></div>`;
+  ov.classList.add('on'); try { SND.yay ? SND.yay() : SND.tick(); } catch (e) {}
+  ov.querySelector('.sc-go').onclick = () => { ov.classList.remove('on'); openPage(pg); }; ov.querySelector('.sc-x').onclick = () => ov.classList.remove('on'); if (typeof buildHome === 'function') buildHome(); }
 function buildHome() {
   $('modeFree').classList.toggle('sel', S.mode === 'free'); $('modeNum').classList.toggle('sel', S.mode === 'num');
   const g = $('pageGrid'); g.innerHTML = '';
   ART.pages.forEach(pg => { if (S.mode === 'num' && pg.id === 'blank') return;
     const b = document.createElement('button'); b.className = 'card'; b.dataset.page = pg.id; b.setAttribute('aria-label', pg.title);
-    b.innerHTML = `<img src="${thumb(pg)}" alt=""><div class="cap">${pg.es}</div>` + (S.mode === 'num' ? `<span class="badge">${ICON.num}</span>` : '');
-    b.onclick = () => openPage(pg); g.appendChild(b); });
+    const open = sceneOpen(pg); if (!open) b.classList.add('locked');
+    b.innerHTML = `<img src="${thumb(pg)}" alt="">` + (open ? `<div class="cap">${pg.es}</div>` : `<div class="cap lockcap">Earn me in Juniper Learn: ${pg.need}</div>`) + (S.mode === 'num' && open ? `<span class="badge">${ICON.num}</span>` : '') + (pg.world ? `<span class="wtag w-${pg.world}">${{ nyc: 'NYC', vail: 'Vail', sc: 'California', pr: 'Puerto Rico' }[pg.world]}</span>` : '');
+    b.onclick = () => { if (!open) { try { SND.tick(); } catch (e) {} b.classList.remove('nope'); void b.offsetWidth; b.classList.add('nope'); const t = $('toast'); if (t) { t.textContent = 'Earn me in Juniper Learn: ' + pg.need + '!'; t.style.display = 'flex'; clearTimeout(b._t); b._t = setTimeout(() => { t.style.display = 'none'; }, 2600); } return; } openPage(pg); }; g.appendChild(b); });
 }
 $('modeFree').onclick = () => { S.mode = prefs.mode = 'free'; savePrefs(); SND.tick(); buildHome(); };
 $('modeNum').onclick = () => { S.mode = prefs.mode = 'num'; savePrefs(); SND.tick(); buildHome(); };
@@ -947,9 +1161,15 @@ function sparkleBurst(p, n) { const r = board.getBoundingClientRect(); const x =
   for (let i = 0; i < n; i++) { const a = Math.random() * 6.283, v = 2 + Math.random() * 4; parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, g: 0.05, rot: 0, vr: 0.2, s: 5 + Math.random() * 6, c: CONF[(Math.random() * 8) | 0], life: 30 + Math.random() * 20, star: true }); } kick(); }
 // ---------- start ----------
 updToggles(); buildHome();
-const _rw = () => applyRewards(true); document.addEventListener('visibilitychange', () => { if (!document.hidden) _rw(); }); window.addEventListener('pageshow', _rw); window.addEventListener('storage', e => { if (e.key === 'juniperRewards') _rw(); });
+const _rw = () => { applyRewards(true); celebrateScenes(); }; document.addEventListener('visibilitychange', () => { if (!document.hidden) _rw(); }); window.addEventListener('pageshow', _rw); window.addEventListener('storage', e => { if (e.key === 'juniperRewards') _rw(); });
 if ($('toLearn')) { $('toLearn').innerHTML = `<img src="learn/apple-touch-icon.png" alt="" style="width:56px;height:56px;border-radius:14px">`; }
-window.JCP = { S, analyze, openPage, finish, gallery, pages: ART.pages, STICKERS, applyRewards };
+window.JCP = { S, analyze, openPage, finish, gallery, pages: ART.pages, STICKERS, applyRewards, celebrateScenes, buildHome };
 })();
+
+// ---------- auto-update: poll cversion.json, reload when a new build is live ----------
+const CBUILD = '20261115173516-b021b1';
+function checkUpdate() { if (location.protocol === 'file:') return; fetch('cversion.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.v && j.v !== CBUILD && !document.getElementById('paint').classList.contains('on')) location.reload(); }).catch(() => {}); }
+document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); }); setInterval(checkUpdate, 5 * 60 * 1000); setTimeout(checkUpdate, 3000);
+setTimeout(() => window.JCP && JCP.celebrateScenes(), 600);
 </script>
 </body></html>

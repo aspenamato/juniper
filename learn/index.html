@@ -5,7 +5,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Juniper Learn">
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#fff7ec">
-<script>window.JBUILD='20261115172418-d72dc4';</script>
+<script>window.JBUILD='20261115173530-f7dbee';</script>
 <title>Juniper's Learning Park</title>
 <style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;height:100%;overflow:hidden;background:#fff7ec;font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold","Nunito","Avenir Next",system-ui,sans-serif;color:#3b2a20;touch-action:manipulation}
@@ -2570,7 +2570,10 @@ function save() { try { localStorage.setItem(KEY, JSON.stringify(ST)); } catch (
 const medalOf = id => { const n = ST.plays[id] || 0; return n >= 5 ? 'gold' : n >= 3 ? 'silver' : n >= 1 ? 'bronze' : null; };
 const stickerUnlocked = i => ST.done >= 1 + 2 * i;
 function syncRewards() { if (typeof EXTRA_STICKERS === 'undefined') return; const ids = EXTRA_STICKERS.filter((s, i) => stickerUnlocked(i)).map(s => s.id);
-  try { const prev = JSON.parse(localStorage.getItem('juniperRewards') || 'null'); if (!prev || JSON.stringify(prev.stickers) !== JSON.stringify(ids)) localStorage.setItem('juniperRewards', JSON.stringify({ v: 1, stickers: ids, from: 'learn', updated: Date.now() })); } catch (e) {} }
+  let scenes = []; try { scenes = typeof scenesEarned === 'function' ? scenesEarned() : []; } catch (e) {}
+  try { const prev = JSON.parse(localStorage.getItem('juniperRewards') || 'null'); const changed = !prev || JSON.stringify(prev.stickers) !== JSON.stringify(ids) || JSON.stringify(prev.scenes || null) !== JSON.stringify(scenes);
+    if (changed) { if (prev && Array.isArray(prev.scenes) && typeof sceneAnnounce === 'function') { const fresh = scenes.filter(s => !prev.scenes.includes(s)); if (fresh.length) sceneAnnounce(fresh); }
+      localStorage.setItem('juniperRewards', JSON.stringify({ v: 2, stickers: ids, scenes, from: 'learn', updated: Date.now() })); } } catch (e) {} }
 // ---------- outfits ----------
 const OUTFITS = [
   { id: 'scarf', name: 'Red Scarf', slot: 'neck', stars: 3 }, { id: 'visor', name: 'Golf Visor', slot: 'head', stars: 6 }, { id: 'helmet', name: 'Skating Helmet', slot: 'head', stars: 12 },
@@ -3892,6 +3895,22 @@ function rideDone() { RIDE.done = true; clearInterval(RIDE.t); ST.rides = (ST.ri
 function closeRide() { if (RIDE) clearInterval(RIDE.t); RIDE = null; const o = $('rideov'); if (o) o.remove(); const ic = $('infoov'); if (ic && ic.classList) ic.classList.remove('on'); }
 // entry points: Marengo on the map (meadow) and a button in dress-up
 document.addEventListener('click', e => { const m = e.target.closest && e.target.closest('#map .lmchar'); if (m && m.querySelector('.chr-marengo')) setTimeout(() => { if ($('map').classList.contains('on') && !RIDE) openRide(); }, 1700); }, true);
+// ---------- coloring-page scenes earned here, unlocked in the Coloring Park (shared localStorage 'juniperRewards'.scenes) ----------
+const SCENES = { nyc: ['nyc_bridge', 'nyc_skyline', 'nyc_bow', 'nyc_liberty', 'nyc_rink', 'nyc_rat'], vail: ['vail_gondola', 'vail_clock', 'vail_bridge', 'vail_lift', 'vail_aspens', 'vail_yeti'],
+  sc: ['ca_gate', 'ca_mission', 'ca_lick', 'ca_stadium', 'ca_orchard', 'ca_glitch'], pr: ['pr_morro', 'pr_sanjuan', 'pr_yunque', 'pr_beach', 'pr_flamboyan', 'pr_cuco'] };
+const SCENE_NAME = { nyc_bridge: 'Brooklyn Bridge', nyc_skyline: 'Empire State and Chrysler', nyc_bow: 'Bow Bridge', nyc_liberty: 'Statue of Liberty', nyc_rink: 'Skating in New York', nyc_rat: 'The Rat King', vail_gondola: 'Vail Gondola', vail_clock: 'Vail Clock Tower', vail_bridge: 'Covered Bridge', vail_lift: 'Ski Lift with Aspen', vail_aspens: 'Aspen Trees in the Snow', vail_yeti: 'The Avalanche Abominable', ca_gate: 'Golden Gate Bridge', ca_mission: 'Mission Santa Clara', ca_lick: 'Lick Observatory', ca_stadium: "Levi's Stadium", ca_orchard: 'Orange Orchard', ca_glitch: 'The Glitch Robot', pr_morro: 'El Morro', pr_sanjuan: 'Old San Juan', pr_yunque: 'La Coca Falls', pr_beach: 'Beach Day with Lola', pr_flamboyan: 'The Flamboyán Tree', pr_cuco: 'El Cuco Cloud' };
+function scenesEarned() { const out = []; const golds = C.A.filter(a => medalOf(a.id) === 'gold').length;
+  Object.entries(SCENES).forEach(([k, ids]) => { if (!WORLDS[k]) return; const open = worldOpen(k); const pos = wPos(k);
+    const epic = BOSSES.filter(b => b.id.indexOf(k + ':') === 0).some(b => hasRelic(b.relic) && ST.relics[b.relic] >= 2);
+    const ok = [open, open && pos >= 3, beaten(k + ':0'), beaten(k + ':1'), beaten(k + ':2'), open && (golds >= 10 || epic)];
+    ids.forEach((id, i) => { if (ok[i]) out.push(id); }); });
+  return out; }
+let SCENE_Q = [];
+function sceneAnnounce(list) { SCENE_Q.push(...list); }
+setInterval(() => { if (!SCENE_Q.length) return; const busy = $('play').classList.contains('on') || $('start').classList.contains('on') || document.querySelector('#reveal.on') || document.querySelector('#infoov.on') || $('rideov'); if (busy) return;
+  const list = SCENE_Q.splice(0); const nm = SCENE_NAME[list[0]] || 'a new picture';
+  infoCard({ art: `<svg viewBox="0 0 120 100" stroke="#3b2147" stroke-width="5" stroke-linejoin="round"><rect x="10" y="10" width="100" height="78" rx="12" fill="#fff"/><path d="M18 78 L46 44 L64 64 L78 50 L102 78 Z" fill="#81d4fa"/><circle cx="84" cy="30" r="10" fill="#fdd835"/><path d="M92 -2 l4 10 l10 4 l-10 4 l-4 10 l-4 -10 l-10 -4 l10 -4 z" fill="#ff4fa3"/></svg>`, tag: 'New coloring page' + (list.length > 1 ? 's' : ''), title: nm + (list.length > 1 ? ` + ${list.length - 1} more` : ''), body: 'Open the Coloring Park to color it!', say: `You unlocked a new coloring page, Aspen! ${nm}! Open the Coloring Park to color it.`, action: ['Go color', () => { location.href = '../'; }] }); SND.fanfare(); }, 1500);
+{ const prevX2 = extraVoLines; extraVoLines = function (add, gen) { prevX2(add, gen); Object.values(SCENE_NAME).forEach(nm => add(`You unlocked a new coloring page, Aspen! ${nm}! Open the Coloring Park to color it.`)); }; }
 
 // ---------- v3: every line the app can say (the build records these) ----------
 function voLines(N = 60) { const out = new Map(); const add = (t, ch = 'juniper', o = {}) => { if (!t) return; VO.need(String(t), ch, o).forEach(([k, v, s]) => { if (!out.has(k)) out.set(k, [k, v, s]); }); };
@@ -3942,7 +3961,7 @@ function voLines(N = 60) { const out = new Map(); const add = (t, ch = 'juniper'
   ['Stop and check. ', 'Poco a poco. '].forEach(p => { ['That one is already in this row.', 'That one is already in this column.', 'Look at the row, the column, and the box. Which one is still missing?', 'That does not fit yet. Try another spot first, then come back.'].forEach(w => add(p + w, 'marcus')); });
   return [...out.values()]; }
 
-window.JLP = { SND, infoCard, awardCard, awardArt, medalSvg, openRide, closeRide, aspenCheer, mountHall, juniperSvg, CHARS, OV: typeof OV !== "undefined" ? OV : null, voLines, VO, BOSSES, BOSS, startBoss, bossState, openVault, openLore, useRelic, playStory, openChest, effPos, gateOf, activeRelic, RELICS, relicArt, openBossIntro, renderMap, get MAPW() { return MAPW; },  rightNow: () => { if (RUN) { RUN.locked = false; correct(); } }, finishNow: () => { if (RUN) { RUN.locked = true; finish(); } }, wrongNow: () => { if (RUN) { RUN.locked = false; wrong(null); } }, AWARDS, WORLDS, WKEYS, TIER, tierOf, worldOpen, openWorlds, checkTrophies, revealAwards, ST, C, startActivity, get RUN() { return RUN; }, cur: () => RUN && cur(), go: () => $('introGo').click(), goHome, openMap, openShelves, openTrophies, openDress, OUTFITS, TROPHIES, medalOf, speak, SP };
+window.JLP = { SND, infoCard, awardCard, awardArt, scenesEarned, sceneAnnounce, syncRewards, medalSvg, openRide, closeRide, aspenCheer, mountHall, juniperSvg, CHARS, OV: typeof OV !== "undefined" ? OV : null, voLines, VO, BOSSES, BOSS, startBoss, bossState, openVault, openLore, useRelic, playStory, openChest, effPos, gateOf, activeRelic, RELICS, relicArt, openBossIntro, renderMap, get MAPW() { return MAPW; },  rightNow: () => { if (RUN) { RUN.locked = false; correct(); } }, finishNow: () => { if (RUN) { RUN.locked = true; finish(); } }, wrongNow: () => { if (RUN) { RUN.locked = false; wrong(null); } }, AWARDS, WORLDS, WKEYS, TIER, tierOf, worldOpen, openWorlds, checkTrophies, revealAwards, ST, C, startActivity, get RUN() { return RUN; }, cur: () => RUN && cur(), go: () => $('introGo').click(), goHome, openMap, openShelves, openTrophies, openDress, OUTFITS, TROPHIES, medalOf, speak, SP };
 })();
 </script>
 </body></html>
