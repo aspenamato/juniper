@@ -93,6 +93,7 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;pad
       <button class="bigbtn sel" id="modeFree" aria-label="Free coloring"></button>
       <button class="bigbtn" id="modeNum" aria-label="Color by number"></button>
       <button class="bigbtn" id="openGallery" aria-label="My gallery"></button>
+      <a class="bigbtn" id="toLearn" href="learn/" aria-label="Juniper's Learning Park"></a>
     </div>
   </div>
   <div class="grid" id="pageGrid"></div>
@@ -459,9 +460,36 @@ add('coqui','Coquí in Puerto Rico','El coquí de Puerto Rico',(()=>{let s=frame
   s+=flower(250,560,c.rojo,1.8)+flower(790,580,c.fucsia,1.6);
   return s;})());
 add('blank','Free Draw','Dibujo libre',frame(Wh));
-return {pages, svg, toLine:s=>s.replace(/fill="#(?!222")[0-9a-fA-F]{3,6}"/g,'fill="#ffffff"')};
+return {pages, svg, toLine:s=>s.replace(/fill="#(?!222")[0-9a-fA-F]{3,6}"/g,'fill="#ffffff"'),
+  parts:{c,foxHead,foxSit,foxStand,foot,tortoise,owl,squirrel,pigeon,doodle,malshie,horse,nicolo,coqui,acorn,carnation,heart,flower,tree,bush,cloud,sun,starD,scallop,grassTufts}};
 })();
 if(typeof module!=='undefined') module.exports={ART,PALETTE};
+</script>
+<script>// Reward stickers unlocked in Juniper's Learning Park (shared by both apps, same origin).
+// Unlock list lives in localStorage key 'juniperRewards' as {v:1, stickers:[ids...]}.
+const EXTRA_STICKERS = (() => {
+  const P = ART.parts, c = P.c;
+  const wrap = (vb, inner) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}"><g stroke="#222" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">${inner}</g></svg>`;
+  const w100 = inner => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" stroke="#222" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">${inner}</svg>`;
+  return [
+    { id: 'medal', name: 'Gold Medal', svg: w100('<path d="M30 6 L44 40 L56 40 L70 6 L58 6 L50 26 L42 6 Z" fill="#1e88e5"/><circle cx="50" cy="64" r="28" fill="#fdd835"/><circle cx="50" cy="64" r="19" fill="#ffe57f"/><path d="M50 50 l4.5 9 10 1 -7.5 7 2 10 -9 -5 -9 5 2 -10 -7.5 -7 10 -1z" fill="#f9a825"/>') },
+    { id: 'marcus', name: 'Marcus', svg: wrap('-170 -150 420 240', P.tortoise()) },
+    { id: 'oscar', name: 'Oscar', svg: wrap('-150 -175 300 325', P.owl()) },
+    { id: 'trophy', name: 'Trophy', svg: w100('<path d="M30 14 H70 V40 Q70 62 50 64 Q30 62 30 40 Z" fill="#fdd835"/><path d="M30 20 Q12 20 14 34 Q16 46 32 46 M70 20 Q88 20 86 34 Q84 46 68 46" fill="none" stroke-width="5"/><rect x="45" y="63" width="10" height="14" fill="#f9a825"/><rect x="30" y="76" width="40" height="14" rx="3" fill="#8d5524"/><path d="M50 26 l3.5 7 8 1 -6 5.5 1.5 8 -7 -4 -7 4 1.5 -8 -6 -5.5 8 -1z" fill="#fff8c4"/>') },
+    { id: 'marengo', name: 'Marengo', svg: wrap('-200 -210 470 370', P.horse()) },
+    { id: 'toulouse', name: 'Toulouse', svg: wrap('-115 -160 260 315', P.doodle(c.negro, { bandana: c.rojo, tuft: c.gris })) },
+    { id: 'snowflake', name: 'Snowflake', svg: w100('<g stroke="#26c6da" stroke-width="7"><path d="M50 8 V92 M14 29 L86 71 M14 71 L86 29"/><path d="M40 16 L50 26 L60 16 M40 84 L50 74 L60 84 M16 42 L28 36 L24 22 M84 58 L72 64 L76 78 M16 58 L28 64 L24 78 M84 42 L72 36 L76 22" fill="none" stroke-width="5"/></g><circle cx="50" cy="50" r="8" fill="#fff" stroke="#26c6da"/>') },
+    { id: 'teddy', name: 'Teddy', svg: wrap('-115 -150 230 290', P.malshie()) },
+    { id: 'golfflag', name: 'Golf Flag', svg: w100('<ellipse cx="50" cy="86" rx="40" ry="10" fill="#c0ca33"/><ellipse cx="44" cy="86" rx="10" ry="4" fill="#3d3a45"/><path d="M46 86 V10" stroke-width="5"/><path d="M48 10 L86 22 L48 34 Z" fill="#e53935"/><circle cx="70" cy="80" r="7" fill="#fff"/>') },
+    { id: 'scramble', name: 'Scramble', svg: wrap('-140 -155 270 265', P.squirrel()) },
+    { id: 'pearl', name: 'Pearl', svg: wrap('-185 -145 350 255', P.pigeon()) },
+    { id: 'winnie', name: 'Winnie', svg: wrap('-115 -160 260 315', P.doodle(c.crema, { collar: c.fucsia })) },
+    { id: 'crown', name: 'Crown', svg: w100('<path d="M12 74 L8 26 L30 46 L50 14 L70 46 L92 26 L88 74 Z" fill="#fdd835"/><rect x="12" y="72" width="76" height="14" rx="4" fill="#f9a825"/><circle cx="30" cy="62" r="6" fill="#e91e63"/><circle cx="50" cy="58" r="7" fill="#1e88e5"/><circle cx="70" cy="62" r="6" fill="#43a047"/>') },
+    { id: 'skater', name: 'Juniper Skates', svg: wrap('-185 -245 330 440', P.foxStand({ feet: 'skate', scarf: c.rojo, armL: -35, armR: 35 })) },
+    { id: 'nicolo', name: 'Old Nicolò', svg: wrap('-125 -115 240 335', P.nicolo()) },
+  ];
+})();
+if (typeof module !== 'undefined') module.exports = { EXTRA_STICKERS };
 </script>
 <script>(() => {
 'use strict';
@@ -514,6 +542,16 @@ const STICKERS = {
 };
 const stickerImgs = {};
 for (const k in STICKERS) { const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(STICKERS[k]); stickerImgs[k] = im; }
+// ---------- reward stickers from Juniper's Learning Park (same origin, shared localStorage) ----------
+function rewardIds() { try { const r = JSON.parse(localStorage.getItem('juniperRewards') || 'null'); return r && Array.isArray(r.stickers) ? r.stickers : []; } catch (e) { return []; } }
+function applyRewards(announce) {
+  if (typeof EXTRA_STICKERS === 'undefined') return 0; const ids = rewardIds(); let added = 0;
+  EXTRA_STICKERS.forEach(x => { const k = 'r_' + x.id; if (ids.includes(x.id) && !STICKERS[k]) { STICKERS[k] = x.svg; const im = new Image(); im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(x.svg); stickerImgs[k] = im; added++; } });
+  if (added && announce) { const t = document.getElementById('toast'); if (t) { t.innerHTML = STICKERS.star + `<b style="font-size:20px">+${added}</b>`; t.style.display = 'flex'; t.style.alignItems = 'center'; t.style.gap = '6px'; setTimeout(() => { t.style.display = 'none'; }, 2600); }
+    if (typeof S !== 'undefined' && S.tool === 'sticker' && document.getElementById('paint').classList.contains('on')) buildPalette(); }
+  return added;
+}
+applyRewards(false);
 
 // ---------- state ----------
 const LS = { get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
@@ -826,7 +864,9 @@ function sparkleBurst(p, n) { const r = board.getBoundingClientRect(); const x =
   for (let i = 0; i < n; i++) { const a = Math.random() * 6.283, v = 2 + Math.random() * 4; parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, g: 0.05, rot: 0, vr: 0.2, s: 5 + Math.random() * 6, c: CONF[(Math.random() * 8) | 0], life: 30 + Math.random() * 20, star: true }); } kick(); }
 // ---------- start ----------
 updToggles(); buildHome();
-window.JCP = { S, analyze, openPage, finish, gallery, pages: ART.pages };
+const _rw = () => applyRewards(true); document.addEventListener('visibilitychange', () => { if (!document.hidden) _rw(); }); window.addEventListener('pageshow', _rw); window.addEventListener('storage', e => { if (e.key === 'juniperRewards') _rw(); });
+if ($('toLearn')) { $('toLearn').innerHTML = `<img src="learn/apple-touch-icon.png" alt="" style="width:56px;height:56px;border-radius:14px">`; }
+window.JCP = { S, analyze, openPage, finish, gallery, pages: ART.pages, STICKERS, applyRewards };
 })();
 </script>
 </body></html>
