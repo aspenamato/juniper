@@ -5,6 +5,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Juniper Learn">
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#fff7ec">
+<script>window.JBUILD='20261115143337-44943b';</script>
 <title>Juniper's Learning Park</title>
 <style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;height:100%;overflow:hidden;background:#fff7ec;font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold","Nunito","Avenir Next",system-ui,sans-serif;color:#3b2a20;touch-action:manipulation}
@@ -579,6 +580,202 @@ html,body{background:#fff4fb;color:var(--ol)}
 
 .troph .wbar.sm{align-self:stretch}
 .troph.got:hover .ti{transform:scale(1.05)}
+/* ===== v3: bosses, chests, relics, vault, story, map life ===== */
+.chr.talking.lip .m-open{animation:none;opacity:0}.chr.talking.lip .m-closed{animation:none;opacity:1}
+.chr.talking.lip.mo .m-open{opacity:1}.chr.talking.lip.mo .m-closed{opacity:0}
+/* home: 7 tiles (Park Path is tall) */
+.tiles{grid-template-columns:repeat(4,minmax(0,1fr));width:min(70vw,980px)}
+.tiles .t-path{grid-row:span 2}
+.t-vault{--c1:#ffb86b;--c2:#ff6a3d;--sh:#c9441d}
+.t-vault .tic{overflow:visible}.t-vault .tic svg{width:100%;height:100%}
+.tiles .tile:nth-child(7){animation-delay:.36s}
+.tile b{font-size:clamp(19px,2.8vmin,30px)}
+@media (orientation:portrait){.tiles{grid-template-columns:repeat(2,minmax(0,1fr));width:94vw}.tiles .t-path{grid-row:auto;grid-column:span 2;flex-direction:row;gap:18px;min-height:110px}.tiles .tile{min-height:104px}}
+/* relic art animation */
+.relic{overflow:visible}
+.relic .rl-rays{transform-origin:0 0;animation:rlspin 14s linear infinite}
+.relic .rl-ring{transform-origin:0 0;animation:rlspin 22s linear infinite reverse}
+.relic .rl-orbit{transform-origin:0 0;animation:rlspin 5s linear infinite}
+.relic .rl-tw{animation:rltw 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 50%}
+.relic .rl-obj{animation:rlfloat 3s ease-in-out infinite}
+.relic .rl-aura{animation:rlpulse 2.4s ease-in-out infinite;transform-origin:0 0}
+.relic.sil .rl-obj{filter:brightness(0);opacity:.28;animation:none}
+@keyframes rlspin{to{transform:rotate(360deg)}}
+@keyframes rltw{0%,100%{opacity:.15;transform:scale(.5)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes rlfloat{0%,100%{transform:translateY(3px)}50%{transform:translateY(-5px)}}
+@keyframes rlpulse{0%,100%{transform:scale(.92);opacity:.8}50%{transform:scale(1.06);opacity:1}}
+.rpill{display:inline-block;border-radius:999px;padding:3px 12px;font-weight:900;font-size:15px;color:#fff;border:3px solid #fff;text-shadow:0 2px 0 rgba(0,0,0,.25);box-shadow:0 3px 0 rgba(59,33,71,.25)}
+.rpill.r0{background:linear-gradient(#9be3a5,#3f9a52)}.rpill.r1{background:linear-gradient(#8fd2ff,#1d6fd1)}.rpill.r2{background:linear-gradient(#d2a8ff,#7b2ff7)}.rpill.r3{background:linear-gradient(#ffe27a,#e07a00)}
+.rpill.r4{background:linear-gradient(90deg,#ff5fb8,#ffb300,#5ef08a,#4fb3ff,#b77bff);background-size:300% 100%;animation:rbw 3s linear infinite}
+.rpill.off{filter:grayscale(1);opacity:.35}
+@keyframes rbw{to{background-position:300% 0}}
+/* play bar relic button */
+.relicbtn{width:auto!important;min-width:64px;padding:0 10px 0 4px;display:flex;align-items:center;gap:4px;background:linear-gradient(180deg,#fff,#fff3d6)!important}
+.relicbtn .pr-art{width:56px;height:56px;display:block}.relicbtn .pr-art svg{width:100%;height:100%}
+.relicbtn .pr-pips{display:flex;flex-direction:column;gap:3px}.relicbtn .pr-pips i{width:12px;height:12px;border-radius:50%;background:#e4dcef;border:2px solid var(--ol)}.relicbtn .pr-pips i.on{background:#ffd93b;box-shadow:0 0 8px #ffd93b}
+.relicbtn.empty .pr-art{filter:grayscale(.8);opacity:.6}
+.relicbtn.call{animation:relicCall .8s ease-in-out infinite;z-index:5}
+@keyframes relicCall{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,217,59,.9),0 5px 0 #d7b8ec}50%{transform:scale(1.18) rotate(-4deg);box-shadow:0 0 0 18px rgba(255,217,59,0),0 5px 0 #d7b8ec}}
+.hintglow{animation:hglow 1s ease-in-out 4;position:relative;z-index:2}
+@keyframes hglow{0%,100%{box-shadow:0 0 0 0 rgba(255,217,59,.95)}50%{box-shadow:0 0 0 12px rgba(255,217,59,.55),0 0 30px 10px rgba(255,236,120,.8)}}
+.zap{animation:zap .5s ease}
+@keyframes zap{30%{transform:scale(1.1) rotate(4deg);filter:brightness(2)}100%{transform:scale(1)}}
+/* boss mode in the play screen */
+.bossbox{display:none}
+#play.bossmode{background:radial-gradient(120% 70% at 50% 0,#ffe0f3 0,#efe2ff 50%,#e2f0ff 100%)}
+#play.bossmode .bossbox{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;position:relative}
+#play.bossmode .bb-chr{width:100%;max-width:230px;height:24vh;filter:drop-shadow(0 8px 6px rgba(59,33,71,.25));animation:bossIdle 2.2s ease-in-out infinite}
+#play.bossmode .bb-chr svg{width:100%;height:100%}
+#play.bossmode .guidefox{height:15vh;max-width:150px}
+#play.bossmode .prog{opacity:.85}
+.bb-chr.hit{animation:bossHit .6s ease!important}.bb-chr.laugh{animation:bossLaugh .7s ease!important}.bb-chr.beat{animation:bossBeat 2.2s ease forwards!important}
+@keyframes bossIdle{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.02,.98)}}
+@keyframes bossHit{0%{transform:translateX(0)}15%{transform:translateX(-14px) rotate(-6deg);filter:brightness(1.8)}35%{transform:translateX(12px) rotate(5deg)}55%{transform:translateX(-8px)}75%{transform:translateX(5px)}100%{transform:none}}
+@keyframes bossLaugh{0%,100%{transform:none}25%{transform:rotate(-5deg) scale(1.05)}50%{transform:rotate(5deg) scale(1.08)}75%{transform:rotate(-3deg)}}
+@keyframes bossBeat{0%{transform:none}30%{transform:rotate(-12deg) scale(1.1)}60%{transform:rotate(370deg) scale(.9)}100%{transform:rotate(360deg) scale(1) translateY(6px)}}
+.hpbar{position:relative;width:min(100%,240px);height:26px;border-radius:13px;background:#fff;border:4px solid var(--ol);overflow:hidden;box-shadow:0 4px 0 rgba(59,33,71,.2)}
+.hpbar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(180deg,#ff8fb8,#ff3f7f 55%,#d81b60);transition:width .7s cubic-bezier(.3,1.4,.5,1);border-radius:9px}
+.hpbar i:after{content:"";position:absolute;left:4px;right:4px;top:3px;height:5px;border-radius:4px;background:rgba(255,255,255,.55)}
+.hpbar em{position:relative;display:block;text-align:center;font-style:normal;font-weight:900;font-size:15px;line-height:18px;color:#fff;text-shadow:0 2px 0 var(--ol),0 0 3px var(--ol)}
+.hpbar.big{width:min(80%,380px);height:32px}.hpbar.big em{font-size:18px;line-height:24px}
+.bb-shield{position:absolute;left:50%;top:0;width:min(100%,250px);height:24vh;transform:translateX(-50%) scale(.2);border-radius:50%;opacity:0;pointer-events:none;transition:transform .5s cubic-bezier(.2,1.6,.4,1),opacity .3s}
+.bb-shield.on{opacity:1;transform:translateX(-50%) scale(1.05);background:radial-gradient(circle,rgba(255,255,255,0) 50%,rgba(126,232,255,.35) 66%,rgba(155,92,255,.55) 72%,rgba(255,255,255,.0) 74%);box-shadow:0 0 30px 6px rgba(155,92,255,.45);animation:shieldWob 1.2s ease-in-out infinite}
+.bb-shield.s-stormcloud.on{background:radial-gradient(circle,rgba(255,255,255,0) 50%,rgba(120,140,200,.4) 66%,rgba(42,124,255,.6) 72%,rgba(255,255,255,0) 74%)}
+.bb-shield.s-yeti.on{background:radial-gradient(circle,rgba(255,255,255,0) 50%,rgba(220,245,255,.6) 66%,rgba(126,232,255,.8) 72%,rgba(255,255,255,0) 74%)}
+.bb-shield.pop{animation:shieldPop .6s ease forwards}
+@keyframes shieldWob{0%,100%{transform:translateX(-50%) scale(1.05,1)}50%{transform:translateX(-50%) scale(1,1.06)}}
+@keyframes shieldPop{to{transform:translateX(-50%) scale(1.8);opacity:0}}
+.relicfly{position:fixed;z-index:80;width:80px;height:80px;pointer-events:none;transition:transform .7s cubic-bezier(.5,-.3,.5,1.3)}.relicfly svg{width:100%;height:100%}
+@media (orientation:portrait){#play.bossmode .guide{flex-direction:row;align-items:center}#play.bossmode .bossbox{width:30vw;flex:0 0 auto}#play.bossmode .bb-chr{height:16vh}#play.bossmode .bb-shield{height:16vh}#play.bossmode .guidefox{height:12vh;width:16vw}#play.bossmode .hpbar{width:28vw}}
+/* boss intro, chest, lore, story overlays */
+.bossintro,.chest,.lore,.story{position:fixed;inset:0;z-index:55;display:none;align-items:center;justify-content:center;padding:2vmin}
+.bossintro.on,.chest.on,.lore.on,.story.on{display:flex}
+.bossintro{background:radial-gradient(circle at 50% 35%,#5b2ba8 0,#2a1250 70%)}
+.bossintro.w-pr{background:radial-gradient(circle at 50% 35%,#1f9a6a 0,#0d3d3a 70%)}.bossintro.w-nyc{background:radial-gradient(circle at 50% 35%,#2a5bd8 0,#141a4a 70%)}
+.bossintro.w-vail{background:radial-gradient(circle at 50% 35%,#4aa8ff 0,#1a2f6a 70%)}.bossintro.w-sc{background:radial-gradient(circle at 50% 35%,#ff8a3d 0,#5a1f4a 70%)}
+.bi-sky{position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 50% 38%,rgba(255,255,255,.07) 0 10deg,rgba(255,255,255,0) 10deg 20deg);pointer-events:none}
+.bi-card{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;max-width:min(760px,96vw);text-align:center;color:#fff}
+.bi-tag{font-weight:900;letter-spacing:4px;font-size:clamp(18px,2.8vmin,26px);color:#ffd93b;text-shadow:0 3px 0 #3b2147;animation:popIn .5s cubic-bezier(.2,1.6,.4,1) both}
+.bi-chr{width:min(42vmin,330px);height:min(40vmin,320px);animation:bossEnter 1s cubic-bezier(.2,1.5,.4,1) both;filter:drop-shadow(0 12px 10px rgba(0,0,0,.35))}
+.bi-chr svg{width:100%;height:100%}
+@keyframes bossEnter{0%{transform:translateY(-60vh) scale(.4) rotate(-20deg)}60%{transform:translateY(10px) scale(1.1,.9)}80%{transform:translateY(-8px)}100%{transform:none}}
+.bi-name{font-weight:900;font-size:clamp(30px,5vmin,50px);text-shadow:0 4px 0 #3b2147,0 0 18px rgba(255,105,180,.7);line-height:1}
+.bi-title{font-weight:800;font-size:clamp(18px,2.6vmin,26px);opacity:.9;margin-bottom:4px}
+.bi-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.bi-relic,.bi-prize{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.95);color:var(--ol);border-radius:22px;padding:6px 14px 6px 6px;border:4px solid #ffd93b;text-align:left;max-width:360px;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.bi-ra{width:66px;height:66px;flex:0 0 auto}.bi-ra svg{width:100%;height:100%}
+.bi-relic b,.bi-prize b{display:block;font-size:17px}.bi-relic small,.bi-prize small{display:block;font-weight:700;font-size:14px;opacity:.8}
+.bi-btns{display:flex;gap:16px;align-items:center;justify-content:center;margin-top:10px}
+.bigbtn.back{width:74px;height:74px;padding:12px}
+.chest{background:radial-gradient(circle at 50% 40%,#3b2a6a,#170a2a 75%);overflow:hidden}
+.ch-rays{position:absolute;left:50%;top:38%;width:220vmax;height:220vmax;transform:translate(-50%,-50%);background:repeating-conic-gradient(rgba(255,236,150,.16) 0 8deg,rgba(255,255,255,0) 8deg 18deg);opacity:0;transition:opacity .6s;animation:raySpin 30s linear infinite;pointer-events:none}
+@keyframes raySpin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.chest.open .ch-rays{opacity:1}
+.chest.r2 .ch-rays{background:repeating-conic-gradient(rgba(200,150,255,.2) 0 8deg,rgba(255,255,255,0) 8deg 18deg)}.chest.r3 .ch-rays{background:repeating-conic-gradient(rgba(255,210,60,.28) 0 8deg,rgba(255,255,255,0) 8deg 18deg)}
+.chest.r4 .ch-rays{background:repeating-conic-gradient(rgba(255,95,184,.25) 0 6deg,rgba(255,217,59,.22) 6deg 12deg,rgba(94,240,138,.22) 12deg 18deg,rgba(79,179,255,.25) 18deg 24deg,rgba(255,255,255,0) 24deg 34deg)}
+.ch-card{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;color:#fff;max-width:min(700px,94vw)}
+.ch-box{position:relative;width:min(46vmin,340px);height:min(40vmin,300px)}
+.ch-box>svg{position:absolute;left:0;right:0;bottom:0;width:100%;height:70%;animation:popIn .6s cubic-bezier(.2,1.6,.4,1) both}
+.chest.shake:not(.open) .ch-box>svg{animation:chShake .35s ease 3}
+@keyframes chShake{25%{transform:rotate(-5deg) translateY(-6px)}75%{transform:rotate(5deg) translateY(-6px)}}
+.ch-box .lid{transform-box:fill-box;transform-origin:50% 100%;transition:transform .6s cubic-bezier(.3,1.6,.5,1)}
+.chest.open .ch-box .lid{transform-origin:50% 100%;transform:translateY(-6px) scaleY(.32)}
+.ch-beam{position:absolute;left:50%;bottom:30%;width:44%;height:0;transform:translateX(-50%);background:linear-gradient(0deg,rgba(255,240,150,.9),rgba(255,255,255,0));border-radius:50% 50% 0 0;transition:height .6s ease .1s;filter:blur(2px)}
+.chest.open .ch-beam{height:90%}
+.ch-relic{position:absolute;left:50%;top:40%;width:60%;aspect-ratio:1/1;transform:translate(-50%,-10%) scale(.1) rotate(-200deg);opacity:0;transition:transform 1.1s cubic-bezier(.2,1.5,.4,1) .3s,opacity .3s .3s}
+.chest.open .ch-relic{opacity:1;transform:translate(-50%,-62%) scale(1) rotate(0)}
+.ch-relic svg{width:100%;height:100%}
+.ch-rar,.ch-name,.ch-lore,.ch-pow,.ch-mast,#chGo{opacity:0;transform:translateY(16px);transition:all .5s ease}
+.chest.open .ch-rar{opacity:1;transform:none;transition-delay:1.1s}.chest.open .ch-name{opacity:1;transform:none;transition-delay:1.3s}.chest.open .ch-lore{opacity:1;transform:none;transition-delay:1.6s}
+.chest.open .ch-pow,.chest.open .ch-mast{opacity:1;transform:none;transition-delay:1.8s}.chest.open #chGo{opacity:1;transform:none;transition-delay:2.1s}
+.ch-rar{font-weight:900;font-size:clamp(22px,3.6vmin,34px);letter-spacing:3px;text-transform:uppercase;text-shadow:0 3px 0 #3b2147}
+.chest.r0 .ch-rar{color:#9be3a5}.chest.r1 .ch-rar{color:#8fd2ff}.chest.r2 .ch-rar{color:#d2a8ff}.chest.r3 .ch-rar{color:#ffd93b}
+.chest.r4 .ch-rar{background:linear-gradient(90deg,#ff5fb8,#ffd93b,#5ef08a,#4fb3ff,#b77bff,#ff5fb8);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;animation:rbw 2s linear infinite}
+.ch-name{font-weight:900;font-size:clamp(26px,4.4vmin,42px);text-shadow:0 4px 0 #3b2147;line-height:1.05}
+.ch-lore{font-weight:700;font-size:clamp(16px,2.3vmin,21px);background:rgba(255,255,255,.12);border:3px solid rgba(255,255,255,.35);border-radius:18px;padding:8px 14px;max-width:620px}
+.ch-pow{font-weight:800;font-size:clamp(15px,2.1vmin,19px);color:#fff3b0}
+.ch-mast{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;font-weight:800;font-size:15px}.ch-mast span{background:rgba(255,255,255,.15);border-radius:12px;padding:3px 10px}
+.lore{background:rgba(30,14,50,.75);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.lo-card{background:linear-gradient(180deg,#fff,#fff6e6);border-radius:30px;border:5px solid #ffd93b;padding:16px 20px;max-width:min(640px,94vw);display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;box-shadow:0 10px 0 rgba(0,0,0,.25);animation:cardIn .5s cubic-bezier(.2,1.5,.4,1)}
+.lore.r4 .lo-card{border-color:transparent;background:linear-gradient(180deg,#fff,#fff6e6) padding-box,linear-gradient(90deg,#ff5fb8,#ffd93b,#5ef08a,#4fb3ff,#b77bff) border-box}
+.lore.r3 .lo-card{border-color:#ffb300}.lore.r2 .lo-card{border-color:#b77bff}.lore.r1 .lo-card{border-color:#4fb3ff}.lore.r0 .lo-card{border-color:#5ec06a}
+.lo-card .bigbtn.go{min-width:170px;white-space:nowrap}
+.lo-art{width:min(36vmin,250px);height:min(36vmin,250px)}.lo-art svg{width:100%;height:100%}
+.lo-art.spin{animation:loSpin 1.2s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes loSpin{from{transform:rotateY(540deg) scale(.4)}to{transform:none}}
+.lo-name{font-weight:900;font-size:clamp(24px,3.6vmin,34px);color:var(--ol);line-height:1.05}
+.rarladder{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.lo-txt{font-weight:700;font-size:clamp(16px,2.3vmin,21px);color:var(--ol)}
+.lo-pow{font-weight:800;color:#c4507a}.lo-from{font-weight:700;font-size:15px;opacity:.75}
+.bigbtn.go{min-width:110px;font-weight:900;font-size:22px;color:#fff;background:linear-gradient(180deg,#7cf06a,#2fbf5a 55%,#1f9a45);border:4px solid #fff;border-radius:22px;padding:12px 20px;box-shadow:0 6px 0 #167a37}
+.story{background:linear-gradient(180deg,rgba(255,236,250,.96),rgba(225,240,255,.96))}
+.st-card{position:relative;width:min(900px,96vw);display:flex;flex-direction:column;align-items:center;gap:10px}
+.st-title{font-weight:900;font-size:clamp(26px,4vmin,40px);color:#fff;background:linear-gradient(180deg,#ff8fd0,#ff3f9b);border:4px solid #fff;border-radius:999px;padding:6px 28px;box-shadow:0 6px 0 #d01f78;text-shadow:0 3px 0 rgba(0,0,0,.2)}
+.st-stage{display:flex;justify-content:space-between;align-items:flex-end;width:100%;height:min(40vh,340px)}
+.st-a,.st-b{width:40%;height:100%;transition:transform .4s cubic-bezier(.3,1.6,.5,1),filter .3s,opacity .3s}.st-a svg,.st-b svg{width:100%;height:100%}
+.st-b svg{transform:scaleX(-1)}
+.st-a.jun svg,.st-b.jun svg{transform-origin:50% 100%;scale:1.3}
+.st-a{animation:stInL .7s cubic-bezier(.2,1.5,.4,1) both}.st-b{animation:stInR .7s cubic-bezier(.2,1.5,.4,1) .15s both}
+.st-a.dim,.st-b.dim{filter:saturate(.6) brightness(.92);opacity:.75;transform:scale(.9)}
+@keyframes stInL{from{transform:translateX(-60vw)}}@keyframes stInR{from{transform:translateX(60vw)}}
+.st-bub{min-height:3.2em;padding-right:104px!important;background:#fff;border:5px solid var(--ol);border-radius:26px;padding:12px 20px;font-weight:800;font-size:clamp(19px,2.8vmin,28px);color:var(--ol);width:100%;box-shadow:0 6px 0 rgba(59,33,71,.2);position:relative}
+.st-bub.on{animation:bump .5s cubic-bezier(.3,1.8,.5,1)}
+.st-bub:before{content:"";position:absolute;top:-22px;border:16px solid transparent;border-bottom:20px solid var(--ol);border-top:0}
+.st-bub.l:before{left:18%}.st-bub.r:before{right:18%}
+.st-dots{display:flex;gap:8px}.st-dots i{width:14px;height:14px;border-radius:50%;background:#e4dcef;border:3px solid var(--ol)}.st-dots i.on{background:#ff3f9b}
+.st-next{position:absolute;right:10px;bottom:34px;width:80px;min-width:0;padding:10px}
+/* vault */
+#vault{background:radial-gradient(130% 70% at 50% 0,#ffe9c2 0,#ffd9ef 55%,#e6dcff 100%)}
+.vcount{font-weight:900;font-size:18px;color:var(--ol);background:#fff;border-radius:999px;padding:6px 14px;border:3px solid #fff;box-shadow:0 4px 0 #d7b8ec}
+.vaultwrap{flex:1;display:flex;gap:2vmin;padding:1vmin 2vmin 2vmin;min-height:0}
+.vequip{flex:0 0 30%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:radial-gradient(circle at 50% 40%,#5b2ba8,#2a1250);border-radius:30px;border:5px solid #fff;box-shadow:0 8px 0 #c9a3ef;color:#fff;padding:14px;text-align:center}
+.ve-ped{position:relative;width:min(30vmin,260px);aspect-ratio:1/1}.ve-ped:after{content:"";position:absolute;left:12%;right:12%;bottom:-4%;height:16%;border-radius:50%;background:radial-gradient(#ffd93b,rgba(255,217,59,0) 70%)}
+.ve-art svg{width:100%;height:100%}.ve-ped.empty{opacity:.6}
+.ve-txt{display:flex;flex-direction:column;align-items:center;gap:4px}.ve-txt small{font-weight:800;opacity:.8;letter-spacing:1px;text-transform:uppercase}.ve-txt b{font-size:clamp(20px,3vmin,28px);line-height:1.1}.ve-txt em{font-style:normal;font-weight:700;font-size:15px;opacity:.9}
+.vgrid{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:12px;padding-bottom:20px}
+.vrow-h{font-weight:900;font-size:22px;color:var(--ol);margin:4px 6px}
+.vrow-i{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.vcard{display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border-radius:22px;padding:8px 6px 10px;border:4px solid #fff;box-shadow:0 6px 0 #d7b8ec,0 10px 20px rgba(59,33,71,.12);animation:popIn .5s cubic-bezier(.2,1.6,.4,1) both;text-align:center}
+.vcard.locked{background:#f1ecf6}.vc-art{width:110px;height:110px}.vc-art svg{width:100%;height:100%}
+.vc-n{font-weight:900;font-size:15px;line-height:1.1;color:var(--ol)}.vcard small{font-weight:700;font-size:13px;opacity:.7}
+.vcard.got.r1{border-color:#8fd2ff}.vcard.got.r2{border-color:#d2a8ff}.vcard.got.r3{border-color:#ffd93b;box-shadow:0 6px 0 #e0a000,0 0 18px rgba(255,217,59,.6)}.vcard.got.r4{border-color:#ff5fb8;box-shadow:0 6px 0 #b77bff,0 0 22px rgba(255,95,184,.6)}
+.vcard.eq:after{content:"EQUIPPED";position:absolute;top:-10px;right:-6px;background:#2fbf5a;color:#fff;font-weight:900;font-size:11px;padding:3px 8px;border-radius:999px;border:3px solid #fff}
+@media (orientation:portrait){.vaultwrap{flex-direction:column}.vequip{flex:0 0 auto;flex-direction:row;padding:10px}.ve-ped{width:22vw}.ve-txt{align-items:flex-start;text-align:left}.vrow-i{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* map: boss arenas, prize, gate slot, story button, ambient life */
+#mapSvg .bosschr{z-index:2;cursor:pointer;filter:drop-shadow(0 8px 6px rgba(59,33,71,.3))}
+#mapSvg .bosschr .chr{animation:bossIdle 2.4s ease-in-out infinite;transform-origin:50% 100%}
+#mapSvg .bosschr.locked .chr{filter:brightness(0) opacity(.35);animation:none}
+#mapSvg .bosschr.needRelic .chr{filter:grayscale(.6) opacity(.75)}
+#mapSvg .bosschr.done .chr{filter:saturate(.7);transform:scale(.85)}
+.bnode{cursor:pointer}.bnode.cur{animation:none}
+.mprize,.mslot{position:absolute;transform:translate(-50%,-50%);aspect-ratio:1/1;cursor:pointer;z-index:2}
+.mprize svg,.mslot svg{width:100%;height:100%}
+.mprize .mchest{display:block;width:100%;height:100%;animation:chBob 2.4s ease-in-out infinite}
+@keyframes chBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-6px) rotate(3deg)}}
+.mslot{border-radius:50%;background:radial-gradient(circle,#fff 0,#f3e9ff 60%);border:5px solid var(--ol);box-shadow:0 4px 0 rgba(59,33,71,.3)}
+.mslot.empty{background:repeating-linear-gradient(45deg,#efe6f7 0 8px,#e2d6ef 8px 16px)}
+.mslot.full{border-color:#ffd93b;box-shadow:0 0 0 4px rgba(255,217,59,.4),0 4px 0 rgba(59,33,71,.3)}
+.mstory{position:absolute;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:#fff;border:4px solid var(--ol);box-shadow:0 4px 0 rgba(59,33,71,.3);padding:6px;z-index:3;animation:popIn .5s both}
+.mstory svg{width:100%;height:100%}
+.curglow.boss{border-color:#ff7ad9;box-shadow:0 0 26px 8px rgba(255,105,180,.75),inset 0 0 22px 6px rgba(255,105,180,.5)}
+.ambclip{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+.amb{position:absolute;left:0;right:0;top:-30%;bottom:0;pointer-events:none;will-change:transform}
+.amb-cloud{position:absolute;left:-30%;width:260px;height:90px;transform:scale(var(--sc));animation:cloudDrift 60s linear infinite;opacity:.85;background:radial-gradient(circle 40px at 78px 54px,#fff 98%,transparent),radial-gradient(circle 46px at 140px 42px,#fff 98%,transparent),radial-gradient(circle 34px at 200px 56px,#fff 98%,transparent),radial-gradient(ellipse 110px 22px at 140px 68px,#fff 98%,transparent);filter:drop-shadow(0 6px 0 rgba(59,33,71,.08))}
+@keyframes cloudDrift{from{left:-30%}to{left:105%}}
+.amb-birds{position:absolute;left:-10%;width:90px;height:40px;pointer-events:none;z-index:2;animation:birdsFly 26s linear infinite}
+.amb-birds i{position:absolute;width:22px;height:10px;border:4px solid var(--ol);border-bottom:0;border-radius:50% 50% 0 0;animation:flap .5s ease-in-out infinite alternate}
+.amb-birds i:nth-child(1){left:0;top:10px}.amb-birds i:nth-child(2){left:30px;top:0;animation-delay:.2s}.amb-birds i:nth-child(3){left:58px;top:16px;animation-delay:.1s}
+@keyframes birdsFly{0%{left:-10%;transform:translateY(0)}50%{transform:translateY(-40px)}100%{left:110%;transform:translateY(0)}}
+@keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.4) translateY(4px)}}
+.amb-shim{position:absolute;width:20px;height:20px;transform:translate(-50%,-50%);pointer-events:none;z-index:1;background:radial-gradient(circle,#fff 0 22%,transparent 24%),linear-gradient(0deg,transparent 45%,#fff 45% 55%,transparent 55%),linear-gradient(90deg,transparent 45%,#fff 45% 55%,transparent 55%);animation:shim 2.2s ease-in-out infinite;opacity:0}
+@keyframes shim{0%,100%{opacity:0;transform:translate(-50%,-50%) scale(.3) rotate(0)}50%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(45deg)}}
+.amb-snow{position:absolute;inset:0;pointer-events:none;z-index:2;background-image:radial-gradient(circle,#fff 0 3px,transparent 4px),radial-gradient(circle,#fff 0 2px,transparent 3px);background-size:140px 160px,90px 110px;background-position:0 0,40px 60px;animation:snowFall 12s linear infinite;opacity:.9}
+@keyframes snowFall{to{background-position:30px 640px,80px 550px}}
+@media (prefers-reduced-motion:reduce){.amb,.amb-birds,.amb-shim,.amb-snow{display:none}}
+@media (orientation:portrait){.bi-chr{margin-top:12vh}}
+#mapSvg .bosschr.locked .chr{filter:brightness(0) opacity(.22)}
+.curglow.boss{aspect-ratio:2.3/1!important;height:auto!important;border-radius:50%}
+@media (orientation:portrait){.homefox{height:24vh}.tiles .tile{min-height:0;padding:10px 8px}.tiles .tic{width:60px;height:60px}.tiles .t-path{min-height:0}.tiles .t-path .tic{width:64px;height:64px}}
 </style></head>
 <body>
 <div id="start" class="screen on">
@@ -598,6 +795,7 @@ html,body{background:#fff4fb;color:var(--ol)}
       <button class="tile t-troph" id="tTroph"><span class="tic" id="tTrophIc"></span><b>Trophy Room</b><small id="tTrophSub"></small></button>
       <button class="tile t-dress" id="tDress"><span class="tic" id="tDressIc"></span><b>Dress Up Juniper</b><small id="tDressSub"></small></button>
       <button class="tile t-world" id="tWorld"><span class="tic" id="tWorldIc"></span><b>Juniper's Worlds</b><small id="tWorldSub"></small></button>
+      <button class="tile t-vault" id="tVault"><span class="tic" id="tVaultIc"></span><b>Relic Vault</b><small id="tVaultSub"></small></button>
       <a class="tile t-color" id="tColor" href="../"><span class="tic" id="tColorIc"></span><b>Coloring Park</b><small id="tColorSub"></small></a>
     </div>
   </div>
@@ -619,14 +817,18 @@ html,body{background:#fff4fb;color:var(--ol)}
   <div class="topbar"><button class="tb" id="wHome" aria-label="Home"></button><div class="hdr">Juniper's Worlds</div><div class="starcount" id="wStars"></div></div>
   <div class="worldgrid" id="wGrid"></div>
 </div>
+<div id="vault" class="screen">
+  <div class="topbar"><button class="tb" id="vHome" aria-label="Home"></button><div class="hdr">Relic Vault</div><div class="vcount" id="vCount"></div><div class="starcount" id="vStars"></div></div>
+  <div class="vaultwrap"><div class="vequip alive" id="vEquip"></div><div class="vgrid" id="vGrid"></div></div>
+</div>
 <div id="dress" class="screen">
   <div class="topbar"><button class="tb" id="dHome" aria-label="Home"></button><div class="hdr">Dress Up Juniper</div><div class="starcount" id="dStars"></div></div>
   <div class="dresswrap"><div class="dressfox alive" id="dressFox"></div><div class="closet" id="closet"></div></div>
 </div>
 <div id="play" class="screen">
-  <div class="topbar"><button class="tb" id="pHome" aria-label="Stop"></button><div class="prog" id="pProg"></div><button class="tb" id="pSpeak" aria-label="Hear it again"></button></div>
+  <div class="topbar"><button class="tb" id="pHome" aria-label="Stop"></button><div class="prog" id="pProg"></div><button class="tb relicbtn" id="pRelic" aria-label="Use relic power" style="display:none"></button><button class="tb" id="pSpeak" aria-label="Hear it again"></button></div>
   <div class="playmain">
-    <div class="guide"><div class="guidefox alive" id="guideFox"></div><div class="bubble" id="bubble"></div></div>
+    <div class="guide"><div class="bossbox" id="bossBox"></div><div class="guidefox alive" id="guideFox"></div><div class="bubble" id="bubble"></div></div>
     <div class="stage" id="stage"></div>
   </div>
   <div class="hint" id="hintBox"><div class="hintic alive" id="hintIc"></div><div class="hintbub" id="hintTxt"></div></div>
@@ -645,6 +847,10 @@ html,body{background:#fff4fb;color:var(--ol)}
 <canvas id="fx"></canvas>
 <div class="overlay" id="meet"><div class="card meetcard"><div class="meetwhere" id="meetWhere"></div><div class="meetchr alive" id="meetChr"></div><div class="meetname" id="meetName"></div><div class="meettxt" id="meetTxt"></div>
   <button class="playbtn small" id="meetGo" aria-label="Let's go"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#43a047" stroke="#222" stroke-width="5"/><path d="M40 28 L74 50 L40 72 Z" fill="#fff" stroke="#222" stroke-width="5" stroke-linejoin="round"/></svg><span>Let's go!</span></button></div></div>
+<div class="bossintro" id="bossIntro"></div>
+<div class="story" id="story"></div>
+<div class="chest" id="chest"></div>
+<div class="lore" id="lore"></div>
 <div class="reveal" id="reveal"></div>
 <script>// Juniper's Coloring Park - original line art (vector, drawn for Aspen). Not copied from any app.
 const PALETTE = [
@@ -1462,6 +1668,108 @@ const DEF = {
   flurry: ['-120 -250 240 390', () => flurryInner()],
   quinn: ['-140 -200 280 340', () => quinnInner()],
 };
+// ---------- v3: boss challengers (friendly puzzle guardians), each with costume forms ----------
+const hat = (form, list) => list[Math.min(form, list.length - 1)] || '';
+function raccoonInner(o = {}) { const f = o.form || 0, GY = '#a3a9c4', DK = '#5b5f7a', LT = '#f1f2fa', MK = '#3b2147'; let s = '';
+  // cape for the grand form sits behind
+  if (f >= 5) s += p('M-60 -30 Q-120 80 -96 140 Q0 120 96 140 Q120 80 60 -30 Z', '#9b5cff') + p('M-60 -30 Q0 -6 60 -30', 'none', 'stroke="#ffd93b" stroke-width="8"');
+  s += g('ch-tail', p('M50 90 C110 96 150 50 150 0 C150 -30 132 -40 122 -30 C126 10 104 50 46 60 Z', GY) + p('M140 -26 C146 -16 148 -4 146 6 L126 6 C128 -2 126 -14 122 -22 Z', MK, 'stroke="none"') + p('M146 30 C140 44 132 54 120 62 L108 46 C118 40 124 32 128 22 Z M104 76 C94 82 82 86 70 88 L66 70 C76 68 86 64 94 58 Z', MK, 'stroke="none"'));
+  let b = p('M-58 140 C-74 70 -62 0 0 -4 C62 0 74 70 58 140 Q0 152 -58 140 Z', GY) + p('M-30 40 C-20 20 20 20 30 40 C40 80 30 120 0 128 C-30 120 -40 80 -30 40 Z', LT, 'stroke="none"') + sheen(-34, 30, 14, 26, -10, .3);
+  b += e(-34, 144, 26, 12, DK) + e(34, 144, 26, 12, DK);
+  if (f === 3) b += p('M-50 4 Q0 30 50 4 L52 24 Q0 50 -52 24 Z', '#ff3fa4') + p('M24 20 L30 70 L48 66 L40 18 Z', '#ff3fa4');
+  if (f === 4) b += p('M-46 16 Q0 34 46 16 L44 60 Q0 74 -44 60 Z', '#2fbf5a') + p('M-40 30 L40 30 M-42 46 L42 46 M-20 18 V66 M14 18 V68', 'none', 'stroke="#ffd93b" stroke-width="4" opacity=".8"');
+  // arms: one holds the riddle cane
+  b += g('ch-armL', p('M-50 30 C-86 44 -96 80 -84 96 C-70 90 -58 66 -40 56 Z', GY) + c(-86, 96, 13, DK));
+  b += g('ch-armR', p('M50 30 C80 20 96 -6 100 -28 C88 -36 76 -18 40 6 Z', GY) + c(100, -30, 13, DK) + p('M104 -30 V96', 'none', 'stroke="#ffd93b" stroke-width="9"') + p('M104 -30 V96', 'none', 'stroke="#3b2147" stroke-width="2" opacity=".25"') + p('M86 -62 C86 -84 122 -84 122 -62 C122 -48 104 -46 104 -34', 'none', 'stroke="#ffd93b" stroke-width="11"'));
+  let hd = g('ch-earR', p('M-70 -118 C-92 -150 -76 -178 -48 -162 C-40 -150 -42 -136 -46 -126 Z', GY) + p('M-66 -128 C-78 -148 -70 -162 -54 -154 C-50 -146 -52 -138 -54 -132 Z', '#ffb3d1', 'stroke="none"'));
+  hd += g('ch-earL', p('M70 -118 C92 -150 76 -178 48 -162 C40 -150 42 -136 46 -126 Z', GY) + p('M66 -128 C78 -148 70 -162 54 -154 C50 -146 52 -138 54 -132 Z', '#ffb3d1', 'stroke="none"'));
+  hd += p('M-86 -64 C-90 -118 -48 -144 0 -144 C48 -144 90 -118 86 -64 C84 -30 50 -8 0 -8 C-50 -8 -84 -30 -86 -64 Z', GY);
+  hd += p('M-80 -76 C-64 -104 -30 -100 -10 -84 Q0 -78 10 -84 C30 -100 64 -104 80 -76 C70 -56 40 -52 18 -64 Q0 -58 -18 -64 C-40 -52 -70 -56 -80 -76 Z', MK, 'stroke="none"');
+  hd += p('M-40 -40 C-34 -60 34 -60 40 -40 C44 -18 22 -10 0 -10 C-22 -10 -44 -18 -40 -40 Z', LT, 'stroke="none"') + p('M-18 -120 Q0 -110 18 -120 L0 -96 Z', LT, 'stroke="none"');
+  hd += eyes(-38, 38, -76, 1.15, '#7ee8ff') + p('M-12 -44 Q0 -52 12 -44 Q8 -34 0 -32 Q-8 -34 -12 -44 Z', MK) + mouth(0, -24, 13) + blush(-60, -40, 10, 6) + blush(60, -40, 10, 6) + sheen(-40, -124, 20, 8, -15);
+  hd += hat(f, [
+    p('M-50 -126 L-40 -200 H40 L50 -126 Q0 -116 -50 -126 Z', '#7b2ff7') + p('M-74 -128 Q0 -110 74 -128 L70 -116 Q0 -98 -70 -116 Z', '#5a1fc0') + p('M-44 -150 Q0 -142 44 -150 L46 -134 Q0 -124 -46 -134 Z', '#ffd93b') + p('M-10 -184 C-10 -198 12 -198 12 -184 C12 -176 2 -174 2 -166', 'none', 'stroke="#ffd93b" stroke-width="6"') + c(2, -158, 3.5, '#ffd93b', 'stroke="none"'),
+    p('M-56 -122 C-56 -168 56 -168 56 -122 Q0 -112 -56 -122 Z', '#2a9cff') + p('M-56 -122 C-50 -150 -20 -164 0 -164 L0 -122 Z', '#ff3fa4', 'stroke="none" opacity=".9"') + p('M0 -164 V-182', 'none', 'stroke-width="6"') + g('ch-prop', p('M-40 -186 Q0 -198 0 -184 Q0 -198 40 -186 Q0 -176 0 -184 Q0 -176 -40 -186 Z', '#ffd93b')),
+    p('M-46 -124 L-48 -160 C-80 -170 -70 -214 -36 -200 C-28 -236 28 -236 36 -200 C70 -214 80 -170 48 -160 L46 -124 Q0 -114 -46 -124 Z', '#ffffff') + sheen(-20, -196, 14, 6, -20, .6),
+    p('M-86 -60 C-104 -60 -104 -100 -86 -100 C-66 -100 -66 -60 -86 -60 Z M86 -60 C104 -60 104 -100 86 -100 C66 -100 66 -60 86 -60 Z', '#ff3fa4') + p('M-86 -98 C-70 -150 70 -150 86 -98', 'none', 'stroke="#ff3fa4" stroke-width="9"'),
+    p('M-60 -120 C-60 -170 60 -170 60 -120 Q0 -110 -60 -120 Z', '#ffffff') + p('M40 -124 Q86 -124 96 -110 Q60 -104 36 -112 Z', '#2fbf5a') + c(0, -164, 7, '#2fbf5a'),
+    p('M-54 -126 L-60 -182 L-30 -152 L0 -196 L30 -152 L60 -182 L54 -126 Q0 -136 -54 -126 Z', '#ffd93b') + c(-30, -140, 7, '#ff3fa4') + c(0, -146, 8, '#2a9cff') + c(30, -140, 7, '#2fbf5a') + sheen(-26, -164, 10, 4, -30, .6)]);
+  s += g('ch-body', b + g('ch-head', hd));
+  return s + spark(-120, -150, 0.9, '#ffd93b') + (f >= 5 ? spark(126, -170, 1.1, '#ff7ad9') : ''); }
+function cloudInner(o = {}) { const f = o.form || 0, CL = '#eef4ff', SH = '#c9d6f5', DK = '#8f9dc4'; let s = '';
+  s += g('ch-tail', p('M-20 70 L-44 120 L-20 116 L-40 168 L18 100 L-6 104 L12 70 Z', '#ffd93b'));
+  [[-110, 60], [-56, 84], [10, 90], [74, 80], [118, 52]].forEach(([x, y], i) => { s += p(`M${x} ${y} q-8 16 0 22 q8 -6 0 -22 Z`, '#7ee8ff', `class="ch-spark" style="animation-delay:${i * .3}s"`); });
+  let b = p('M-130 40 C-170 30 -170 -30 -126 -36 C-130 -96 -60 -120 -26 -84 C-6 -140 86 -138 96 -78 C150 -90 172 -20 136 6 C160 40 120 78 84 60 C60 84 -10 86 -36 62 C-70 80 -120 74 -130 40 Z', CL);
+  b += p('M-120 30 C-90 50 -60 52 -36 40 C-10 62 50 62 84 44 C110 56 130 40 136 20 C120 64 70 70 50 56 C20 76 -30 74 -50 56 C-80 70 -110 60 -120 30 Z', SH, 'stroke="none"') + sheen(-60, -70, 34, 14, -20, .6) + sheen(40, -100, 20, 8, -10, .5);
+  b += g('ch-armL', p('M-130 0 C-170 -10 -186 -40 -176 -60 C-160 -50 -150 -30 -126 -24 Z', CL)) + g('ch-armR', p('M140 -6 C176 -20 186 -54 172 -70 C158 -56 152 -36 132 -28 Z', CL));
+  let hd = eyes(-40, 40, -30, 1.3, '#2a9cff') + p('M-64 -60 Q-40 -72 -18 -62 M18 -62 Q40 -72 64 -60', 'none', 'stroke-width="6"') + mouth(0, 4, 16) + blush(-74, -2, 14, 8) + blush(74, -2, 14, 8);
+  hd += hat(f, [
+    p('M-100 -96 C-80 -170 80 -170 100 -96', 'none', 'stroke="#ff3b5c" stroke-width="10"') + p('M-90 -96 C-72 -156 72 -156 90 -96', 'none', 'stroke="#ffd93b" stroke-width="10"') + p('M-80 -96 C-64 -142 64 -142 80 -96', 'none', 'stroke="#2fbf5a" stroke-width="10"') + p('M-70 -96 C-56 -128 56 -128 70 -96', 'none', 'stroke="#2a9cff" stroke-width="10"'),
+    p('M-80 -100 Q0 -190 80 -100 Q0 -116 -80 -100 Z', '#3b2147') + p('M-96 -100 Q0 -120 96 -100 L90 -88 Q0 -106 -90 -88 Z', '#ffd93b') + c(0, -134, 12, '#fff') + p('M-8 -136 l16 0 M-6 -128 l12 0', 'none', 'stroke-width="3"') + p('M60 -120 Q110 -150 120 -110', 'none', 'stroke="#ff3fa4" stroke-width="8"'),
+    p('M-70 -90 C-70 -140 70 -140 70 -90 Z', '#ffd93b') + p('M-120 -90 Q0 -70 120 -90 Q0 -110 -120 -90 Z', '#ffe9a8') + p('M-62 -96 Q0 -104 62 -96', 'none', 'stroke="#ff3fa4" stroke-width="8"') + r(-70, -46, 54, 30, 14, '#3b2147') + r(16, -46, 54, 30, 14, '#3b2147') + p('M-16 -34 L16 -34', 'none', 'stroke-width="5"') + sheen(-50, -38, 10, 4, -20, .7) + sheen(36, -38, 10, 4, -20, .7)]);
+  s += g('ch-body', b + g('ch-head', hd));
+  return s + spark(-150, -100, 1, '#fff6a8') + spark(160, -110, 0.8, '#7ee8ff'); }
+function sphinxInner(o = {}) { const f = o.form || 0, FUR = '#f5c25c', DK = '#d9952e', LT = '#fff1cf', BL = '#2a7cff', GD = '#ffd93b'; let s = '';
+  s += g('ch-tail', p('M100 110 C150 110 170 70 156 40 C150 30 140 34 144 46 C150 70 136 92 100 92 Z', FUR) + c(150, 38, 12, DK));
+  let b = p('M-120 150 C-130 110 -110 60 -60 50 L90 54 C130 60 140 110 130 150 Z', FUR) + p('M-150 150 C-150 130 -110 126 -86 134 L-80 150 Z M40 150 C40 128 84 126 100 134 L104 150 Z', FUR) + sheen(20, 80, 40, 12, -5, .35);
+  b += c(-130, 146, 3, DK) + c(-118, 146, 3, DK) + c(60, 146, 3, DK) + c(72, 146, 3, DK);
+  b += p('M-48 50 C-50 10 50 10 48 50 C40 90 -40 90 -48 50 Z', LT, 'stroke="none"');
+  b += p('M-16 64 a16 16 0 1 0 32 0 a16 16 0 1 0 -32 0 Z', GD) + p('M-8 64 h16 M0 56 v16', 'none', 'stroke-width="4"');
+  let hd = p('M-90 -60 C-110 -40 -100 30 -60 40 L60 40 C100 30 110 -40 90 -60 C70 -150 -70 -150 -90 -60 Z', BL);
+  [-70, -40, 40, 70].forEach(x => { hd += p(`M${x} -100 L${x * 1.18} 36`, 'none', `stroke="${GD}" stroke-width="10"`); });
+  hd += p('M-66 -70 C-70 -120 70 -120 66 -70 C66 -20 40 10 0 10 C-40 10 -66 -20 -66 -70 Z', FUR) + sheen(-30, -100, 16, 7, -20);
+  hd += p('M-70 -104 Q0 -130 70 -104 L66 -86 Q0 -110 -66 -86 Z', GD) + c(0, -112, 9, '#ff3fa4');
+  hd += eyes(-26, 26, -64, 1.05, '#2fbf5a') + p('M-44 -64 L-58 -60 M44 -64 L58 -60', 'none', 'stroke-width="4"') + p('M-10 -40 Q0 -46 10 -40 Q6 -32 0 -30 Q-6 -32 -10 -40 Z', '#c4507a') + mouth(0, -22, 11) + blush(-46, -34, 9, 6) + blush(46, -34, 9, 6);
+  hd += p('M-30 -30 l-30 -4 M-30 -24 l-28 4 M30 -30 l30 -4 M30 -24 l28 4', 'none', 'stroke-width="2.5" opacity=".6"');
+  hd += hat(f, [
+    p('M-60 -126 Q-30 -150 0 -132 Q30 -150 60 -126', 'none', 'stroke="#2fbf5a" stroke-width="12"') + [-48, -16, 16, 48].map(x => e(x, -134, 12, 7, '#5ef08a')).join(''),
+    p('M-46 4 Q0 28 46 4 L48 22 Q0 46 -48 22 Z', '#ff3fa4') + p('M-80 -60 C-96 -60 -96 -96 -80 -96 C-64 -96 -64 -60 -80 -60 Z M80 -60 C96 -60 96 -96 80 -96 C64 -96 64 -60 80 -60 Z', '#fff'),
+    r(-58, -82, 46, 34, 16, 'none', 'stroke-width="6"') + r(12, -82, 46, 34, 16, 'none', 'stroke-width="6"') + p('M-12 -66 H12', 'none', 'stroke-width="6"') + p('M60 120 h70 v-34 h-70 Z', '#c4507a') + p('M95 86 V120', 'none')]);
+  s += g('ch-body', b + g('ch-head', hd, 'transform="translate(-6 0)"'));
+  return s + spark(-140, -110, 0.9, GD) + spark(150, -60, 0.7, '#7ee8ff'); }
+function yetiInner(o = {}) { const f = o.form || 0, FUR = '#fbfcff', SH = '#dbe4ff', FACE = '#8fd3ff', HN = '#c9b8ff'; let s = '';
+  let b = p('M-90 150 C-120 60 -100 -20 0 -24 C100 -20 120 60 90 150 Q0 166 -90 150 Z', FUR) + p('M-60 60 C-40 30 40 30 60 60 C66 110 40 140 0 144 C-40 140 -66 110 -60 60 Z', SH, 'stroke="none"');
+  [[-80, 40], [80, 40], [-90, 100], [90, 100], [-40, 0], [40, 0]].forEach(([x, y]) => { b += p(`M${x - 12} ${y} q12 -16 24 0`, 'none', 'stroke-width="3" opacity=".5"'); });
+  b += e(-48, 154, 34, 14, SH) + e(48, 154, 34, 14, SH) + sheen(-50, 10, 24, 12, -20, .5);
+  if (f === 2) b += p('M-70 20 Q0 50 70 20 L72 80 Q0 100 -72 80 Z', '#ff5a1f') + p('M-70 40 L70 40 M-72 60 L72 60', 'none', 'stroke="#fff" stroke-width="6" stroke-dasharray="10 10"');
+  b += g('ch-armL', p('M-86 30 C-130 50 -140 100 -120 116 C-100 108 -96 80 -76 64 Z', FUR) + e(-124, 114, 18, 14, FACE));
+  b += g('ch-armR', p('M86 30 C130 50 140 100 120 116 C100 108 96 80 76 64 Z', FUR) + e(124, 114, 18, 14, FACE) + (f === 2 ? r(104, 70, 40, 46, 10, '#ff3fa4') + p('M144 82 q16 4 0 22', 'none', 'stroke-width="6"') + p('M112 62 q6 -14 0 -24 M126 62 q6 -14 0 -24', 'none', 'stroke="#fff" stroke-width="4"') : ''));
+  let hd = p('M-60 -120 C-80 -150 -70 -176 -50 -170 C-46 -150 -40 -140 -34 -130 Z M60 -120 C80 -150 70 -176 50 -170 C46 -150 40 -140 34 -130 Z', HN);
+  hd += p('M-100 -60 C-104 -140 -50 -170 0 -170 C50 -170 104 -140 100 -60 C98 -14 60 6 0 6 C-60 6 -98 -14 -100 -60 Z', FUR);
+  hd += p('M-64 -70 C-66 -120 66 -120 64 -70 C64 -30 40 -10 0 -10 C-40 -10 -64 -30 -64 -70 Z', FACE) + sheen(-30, -100, 16, 6, -20, .6);
+  hd += eyes(-26, 26, -74, 1.1, '#2a7cff') + p('M-10 -52 Q0 -58 10 -52 Q6 -44 0 -42 Q-6 -44 -10 -52 Z', '#3b2147') + mouth(0, -34, 16) + r(-8, -38, 16, 10, 3, '#fff', 'stroke-width="3"') + blush(-48, -42, 10, 6) + blush(48, -42, 10, 6);
+  hd += hat(f, [
+    p('M-96 -96 Q0 -116 96 -96', 'none', 'stroke="#ff3fa4" stroke-width="12"') + r(-70, -112, 60, 36, 16, '#ffd36b') + r(10, -112, 60, 36, 16, '#ffd36b') + sheen(-52, -102, 12, 5, -20, .8) + sheen(28, -102, 12, 5, -20, .8),
+    p('M-104 -50 C-122 -50 -122 -90 -104 -90 C-86 -90 -86 -50 -104 -50 Z M104 -50 C122 -50 122 -90 104 -90 C86 -90 86 -50 104 -50 Z', '#7b4fd6') + p('M-104 -90 C-90 -176 90 -176 104 -90', 'none', 'stroke="#7b4fd6" stroke-width="9"'),
+    p('M-70 -146 C-60 -200 40 -210 70 -146 Q0 -130 -70 -146 Z', '#ff5a1f') + p('M-76 -146 Q0 -128 76 -146 L74 -132 Q0 -114 -74 -132 Z', '#fff') + c(20, -204, 14, '#fff')]);
+  s += g('ch-body', b + g('ch-head', hd));
+  return s + spark(-130, -140, 1, '#cfe9ff') + spark(140, -100, .8, '#ffffff'); }
+function robotInner(o = {}) { const f = o.form || 0, MT = '#cfd8ff', DK = '#8a96c8', SC = '#2a1838', GL = '#7ee8ff'; let s = '';
+  let b = r(-70, 0, 140, 110, 26, MT) + r(-46, 20, 92, 50, 12, '#eef2ff') + sheen(-40, 14, 20, 8, -10, .6);
+  [['#ff3fa4', -26], ['#ffd93b', 0], ['#5ef08a', 26]].forEach(([c0, x]) => { b += c(x, 45, 9, c0, 'class="bulb"'); });
+  b += r(-60, 110, 120, 20, 10, DK) + g('ch-wheel', c(-40, 140, 20, '#3b2147') + c(-40, 140, 8, GL) + p('M-40 122 V158 M-58 140 H-22', 'none', 'stroke="#fff" stroke-width="3"')) + g('ch-wheel', c(40, 140, 20, '#3b2147') + c(40, 140, 8, GL) + p('M40 122 V158 M22 140 H58', 'none', 'stroke="#fff" stroke-width="3"'));
+  b += g('ch-armL', p('M-70 30 C-100 40 -110 70 -100 90', 'none', `stroke="${DK}" stroke-width="14"`) + p('M-112 86 q-6 22 12 22 M-90 90 q10 18 -6 26', 'none', 'stroke-width="7"'));
+  b += g('ch-armR', p('M70 30 C100 20 110 -10 104 -30', 'none', `stroke="${DK}" stroke-width="14"`) + p('M92 -36 q-6 -22 12 -22 M116 -34 q14 -16 -2 -28', 'none', 'stroke-width="7"') + (f === 1 ? c(104, -60, 18, '#ff8f2e') + p('M104 -78 q8 -10 16 -6', 'none', 'stroke="#2fbf5a" stroke-width="6"') : ''));
+  let hd = p('M0 -150 V-186', 'none', 'stroke-width="6"') + c(0, -196, 14, f >= 2 ? '#ffd93b' : '#ff3fa4', 'class="bulb"') + p('M-6 -200 q6 -10 12 0 q-2 6 -6 6 v4', 'none', 'stroke="#fff" stroke-width="3"');
+  hd += r(-90, -150, 180, 140, 34, MT) + r(-72, -132, 144, 96, 22, SC) + sheen(-56, -140, 22, 6, -6, .6);
+  hd += r(-104, -100, 16, 40, 8, DK) + r(88, -100, 16, 40, 8, DK);
+  hd += g('ch-eyes', r(-50, -110, 30, 38, 15, GL, 'stroke="none"') + r(20, -110, 30, 38, 15, GL, 'stroke="none"') + c(-30, -100, 6, '#fff', 'stroke="none"') + c(40, -100, 6, '#fff', 'stroke="none"'));
+  hd += g('ch-mouth', `<path class="m-closed" d="M-30 -56 Q0 -40 30 -56" fill="none" stroke="${GL}" stroke-width="6"/><g class="m-open"><rect x="-26" y="-62" width="52" height="20" rx="10" fill="${GL}" stroke="none"/></g>`);
+  hd += blush(-58, -62, 10, 6) + blush(58, -62, 10, 6);
+  hd += hat(f, [
+    p('M-88 -128 Q0 -146 88 -128', 'none', 'stroke="#ff3fa4" stroke-width="10"') + r(-62, -150, 52, 30, 14, '#ffd93b', 'opacity=".9"') + r(10, -150, 52, 30, 14, '#ffd93b', 'opacity=".9"'),
+    p('M-130 -146 Q0 -120 130 -146 Q0 -176 -130 -146 Z', '#ffe08a') + p('M-70 -150 C-70 -200 70 -200 70 -150 Z', '#ffe08a') + p('M-70 -156 Q0 -146 70 -156', 'none', 'stroke="#ff8f2e" stroke-width="9"'),
+    [[-80, -150], [-40, -168], [0, -176], [40, -168], [80, -150]].map(([x, y], i) => `<g transform="translate(${x} ${y})"><path d="M0 -20 L6 -8 L20 -8 L10 2 L14 16 L0 8 L-14 16 L-10 2 L-20 -8 L-6 -8 Z" fill="${['#ffd93b', '#ff3fa4', '#7ee8ff', '#ff3fa4', '#ffd93b'][i]}"/></g>`).join('')]);
+  s += g('ch-body', b + g('ch-head', hd));
+  return s + spark(-130, -150, .9, GL) + spark(130, -120, .8, '#ffd93b'); }
+Object.assign(DEF, {
+  raccoon: ['-165 -230 330 400', o => raccoonInner(o)],
+  stormcloud: ['-200 -200 400 380', o => cloudInner(o)],
+  sphinx: ['-170 -200 345 370', o => sphinxInner(o)],
+  yeti: ['-160 -230 320 410', o => yetiInner(o)],
+  robot: ['-150 -230 300 400', o => robotInner(o)],
+});
+
 DEF.horse = DEF.marengo; DEF.owl = DEF.oscar; DEF.squirrel = DEF.scramble; DEF.pigeon = DEF.pearl; DEF.tortoise = DEF.marcus; DEF.fox = DEF.juniper; DEF.foxhead = DEF.juniperhead;
 function svg(name, o = {}, extra = '') { const d = DEF[name]; if (!d) return null; return wrap(name, o.vb || d[0], d[1](o) + (o.after || ''), extra, o.cls || ''); }
 return { svg, has: n => !!DEF[n], DEF, foxHeadInner, juniperInner, spark, sheen, OL, FOX, CRM };
@@ -1930,23 +2238,96 @@ function chrOf(el) { return el ? (el.classList && el.classList.contains('chr') ?
 function talkOn(el) { const c = chrOf(el); if (c) c.classList.add('talking'); }
 function talkOff(el) { const c = chrOf(el); if (c) c.classList.remove('talking', 'mo'); }
 function flap(el) { const c = chrOf(el); if (!c) return; c.classList.add('mo'); clearTimeout(c._mo); c._mo = setTimeout(() => c.classList.remove('mo'), 130); }
+// ---------- v3: recorded voices (pre-rendered clips, played with WebAudio; device speech only as a last resort) ----------
+const VO = (() => {
+  const CFG = {"V":{"jun":["en-US-AnaNeural","+0%","+6Hz"],"jes":["es-PR-KarinaNeural","+0%","+38Hz"],"mar":["en-US-AndrewNeural","-10%","-4Hz"],"osc":["en-US-ChristopherNeural","-8%","+0Hz"],"ves":["es-PR-VictorNeural","-6%","+0Hz"],"mom":["en-US-JennyNeural","+0%","+0Hz"],"mes":["es-MX-DaliaNeural","+0%","+0Hz"],"scr":["en-US-AnaNeural","+12%","+28Hz"],"prl":["en-US-EmmaNeural","+5%","+16Hz"],"tou":["en-GB-SoniaNeural","+0%","+10Hz"],"win":["en-GB-MaisieNeural","+4%","+0Hz"],"ted":["en-GB-MaisieNeural","+10%","+22Hz"],"nic":["en-US-RogerNeural","-6%","-6Hz"],"coq":["en-US-AnaNeural","+14%","+48Hz"],"mrg":["en-US-GuyNeural","-6%","-6Hz"],"lol":["en-US-EmmaNeural","+8%","+24Hz"],"les":["es-PR-KarinaNeural","+6%","+18Hz"],"roc":["en-US-BrianNeural","+10%","+10Hz"],"flu":["en-US-AvaNeural","+5%","+26Hz"],"qui":["en-US-AriaNeural","+5%","+20Hz"],"rac":["en-US-GuyNeural","+8%","+18Hz"],"cld":["en-US-RogerNeural","-8%","+4Hz"],"sph":["en-US-AriaNeural","-6%","-8Hz"],"yet":["en-US-EricNeural","-12%","-10Hz"],"rob":["en-US-SteffanNeural","+4%","+14Hz"]},"CH":{"juniper":["jun","jes"],"juniperhead":["jun","jes"],"marcus":["mar","ves"],"oscar":["osc","ves"],"mamafox":["mom","mes"],"scramble":["scr","jes"],"pearl":["prl","mes"],"toulouse":["tou","mes"],"winnie":["win","jes"],"teddy":["ted","jes"],"nicolo":["nic","ves"],"coqui":["coq","jes"],"marengo":["mrg","ves"],"lola":["lol","les"],"rocco":["roc","ves"],"flurry":["flu","jes"],"quinn":["qui","jes"],"raccoon":["rac","ves"],"stormcloud":["cld","ves"],"sphinx":["sph","mes"],"yeti":["yet","ves"],"robot":["rob","ves"],"horse":["mrg","ves"],"fox":["jun","jes"],"foxhead":["jun","jes"],"owl":["osc","ves"],"squirrel":["scr","jes"],"pigeon":["prl","mes"],"tortoise":["mar","ves"]}};
+  const CH = CFG.CH || {};
+  let MAN = null; const BUF = new Map(), PEND = new Map();
+  const stats = { units: 0, clip: 0, tts: 0, missing: [] };
+  function cyrb53(str, seed = 0) { let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+    for (let i = 0, ch; i < str.length; i++) { ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909); h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507); h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36); }
+  const norm = s => String(s).replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/＿＿＿/g, ' blank ').replace(/[“”]/g, '"').replace(/[‘’]/g, "'")
+    .replace(/\s\+\s/g, ' plus ').replace(/\s[−–-]\s/g, ' minus ').replace(/\s=\s/g, ' equals ').replace(/\s+/g, ' ').trim();
+  const key = (v, s) => cyrb53(JSON.stringify((CFG.V || {})[v] || v) + '|' + norm(s).toLowerCase());
+  const hasL = s => /[A-Za-z0-9À-ÿ¡¿]/.test(s);
+  function sentences(t) { return (norm(t).match(/[^.!?]+(?:[.!?]+["')]*|$)/g) || []).map(s => s.trim()).filter(hasL); }
+  function segments(text) { const out = []; String(text).split(/(«[^»]*»)/).forEach(p => { if (!p) return; if (p[0] === '«') out.push({ t: p.slice(1, -1), es: true }); else out.push({ t: p, es: false }); }); return out.filter(s => hasL(s.t)); }
+  // a sentence with numbers in it can be said in pieces: the words around the numbers, then each number
+  function frags(s) { const out = []; const ps = s.split(/(\d+)/);
+    for (let i = 0; i < ps.length; i++) { let p = ps[i];
+      if (i % 2) { const m = (ps[i + 1] || '').match(/^([.?!])/); out.push({ t: p + (m ? m[1] : ''), num: 1 }); if (m) ps[i + 1] = ps[i + 1].slice(1); }
+      else { p = p.replace(/^[\s,:;)]+|[\s,:;(]+$/g, ''); if (hasL(p)) out.push({ t: p }); } }
+    return out; }
+  const vOf = (ch, es) => { const c = CH[ch] || CH.juniper || ['jun', 'jes']; return c[es ? 1 : 0]; };
+  const has = k => !!(MAN && MAN[k]);
+  // make a playlist for some text said by a character
+  function plan(text, ch = 'juniper', esOnly = false) { const units = [];
+    const segs = esOnly ? [{ t: text, es: true }] : segments(text);
+    segs.forEach(seg => { const vs = [vOf(ch, seg.es)]; if (ch !== 'juniper') vs.push(vOf('juniper', seg.es));
+      sentences(seg.t).forEach((s, si) => { let done = false;
+        for (const v of vs) { const k = key(v, s); if (has(k)) { units.push({ k, s, gap: 170 }); done = true; break; } }
+        if (!done && /\d/.test(s)) for (const v of vs) { const fr = frags(s).map(f => ({ k: key(v, f.t), s: f.t, gap: 40 })); if (fr.length && fr.every(f => has(f.k))) { fr[0].gap = 170; units.push(...fr); done = true; break; } }
+        if (!done) units.push({ tts: s, es: seg.es, gap: 100 }); }); });
+    return units; }
+  // every clip a line could need (used by the build to know what to record)
+  function need(text, ch = 'juniper', o = {}) { const out = [];
+    const segs = o.es ? [{ t: text, es: true }] : segments(text);
+    segs.forEach(seg => { const v = vOf(ch, seg.es); sentences(seg.t).forEach(s => {
+      if (!/\d/.test(s) || o.full) out.push([key(v, s), v, s]);
+      if (/\d/.test(s) && !o.full) frags(s).forEach(f => out.push([key(v, f.t), v, f.t])); }); });
+    return out; }
+  function load() { if (MAN || loading) return loading; loading = fetch('vo/manifest.json?b=' + (window.JBUILD || '')).then(r => r.json()).then(m => { MAN = m; return m; }).catch(() => { MAN = MAN || {}; }); return loading; }
+  let loading = null;
+  function buf(k) { if (BUF.has(k)) { const b = BUF.get(k); BUF.delete(k); BUF.set(k, b); return Promise.resolve(b); } if (PEND.has(k)) return PEND.get(k);
+    const a = ac(); if (!a) return Promise.resolve(null);
+    const p = fetch('vo/' + k + '.mp3').then(r => { if (!r.ok) throw new Error('404'); return r.arrayBuffer(); })
+      .then(ab => new Promise((res, rej) => { try { const pr = a.decodeAudioData(ab, res, rej); if (pr && pr.catch) pr.catch(rej); } catch (e) { rej(e); } }))
+      .then(b => { BUF.set(k, b); PEND.delete(k); while (BUF.size > 500) BUF.delete(BUF.keys().next().value); return b; })
+      .catch(() => { PEND.delete(k); return null; });
+    PEND.set(k, p); return p; }
+  function prefetch(text, ch, esOnly) { if (!MAN) return; plan(text, ch, esOnly).forEach(u => { if (u.k) buf(u.k); }); }
+  let tok = 0, src = null, an = null, raf = 0;
+  function stop() { tok++; if (src) { try { src.onended = null; src.stop(); } catch (e) {} src = null; } cancelAnimationFrame(raf); try { speechSynthesis.cancel(); } catch (e) {} }
+  function ttsSay(s, es, cb) { if (!JVOICE.ok) { setTimeout(cb, 60 * s.length); return; } try { const u = JVOICE.utter(s, es); let fired = false; const fin = () => { if (!fired) { fired = true; cb(); } }; u.onend = fin; u.onerror = fin; speechSynthesis.speak(u); setTimeout(fin, 900 + 110 * s.length); } catch (e) { cb(); } }
+  // play a playlist; hooks.onstart / onflap / onend drive the talking mouth
+  function play(units, hooks = {}) { stop(); const my = tok; const a = ac(); let i = 0, started = false;
+    if (a && !an) { an = a.createAnalyser(); an.fftSize = 512; an.connect(a.destination); }
+    const data = an ? new Uint8Array(an.fftSize) : null; let lastOpen = false;
+    const meter = () => { if (my !== tok) return; if (an && src) { an.getByteTimeDomainData(data); let s = 0; for (let j = 0; j < data.length; j += 4) { const d = (data[j] - 128) / 128; s += d * d; } const rms = Math.sqrt(s / (data.length / 4)); const open = rms > 0.035; if (open !== lastOpen) { lastOpen = open; hooks.onmouth && hooks.onmouth(open); } } raf = requestAnimationFrame(meter); };
+    const next = () => { if (my !== tok) return; if (i >= units.length) { src = null; cancelAnimationFrame(raf); hooks.onmouth && hooks.onmouth(false); hooks.onend && hooks.onend(); return; }
+      const u = units[i++]; stats.units++;
+      const go = () => { if (my !== tok) return;
+        if (u.tts) { stats.tts++; if (stats.missing.length < 300) stats.missing.push(u.tts); if (!started) { started = true; hooks.onstart && hooks.onstart(); } hooks.onfake && hooks.onfake(u.tts); ttsSay(u.tts, u.es, next); return; }
+        buf(u.k).then(b => { if (my !== tok) return; if (!b) { stats.tts++; if (stats.missing.length < 300) stats.missing.push('[load] ' + u.s); ttsSay(u.s, false, next); return; }
+          stats.clip++; const s = a.createBufferSource(); s.buffer = b; s.connect(an); src = s; s.onended = () => { if (src === s) src = null; next(); };
+          if (!started) { started = true; hooks.onstart && hooks.onstart(); cancelAnimationFrame(raf); raf = requestAnimationFrame(meter); }
+          s.start(); }); };
+      if (i > 1 && u.gap) setTimeout(go, u.gap); else go(); };
+    load().then(() => { if (my === tok) next(); }); return my; }
+  // iOS: the first tap unlocks audio; also let it play with the ring switch on silent (iOS 17+)
+  function unlock() { try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {} const a = ac(); if (!a) return;
+    try { const b = a.createBuffer(1, 1, 22050), s = a.createBufferSource(); s.buffer = b; s.connect(a.destination); s.start(0); } catch (e) {} }
+  ['pointerdown', 'touchend', 'click'].forEach(ev => document.addEventListener(ev, unlock, { capture: true, passive: true }));
+  load();
+  return { plan, need, play, stop, prefetch, load, key, norm, sentences, segments, frags, vOf, CH, stats, get MAN() { return MAN; } };
+})();
+
+function chName(el) { const c = chrOf(el); const m = c && c.getAttribute && (c.getAttribute('class') || '').match(/\bchr-([a-z]+)/); return m ? m[1] : 'juniper'; }
 function speak(text, opts = {}) {
-  if (SP.talker) talkOff(SP.talker); SP.talker = null;
-  if (!SP.ok || !ST.voice) { if (opts.onend) setTimeout(opts.onend, 300); return; }
-  const my = ++SP.n; try { speechSynthesis.cancel(); } catch (e) {}
-  const who = opts.who === undefined ? defaultTalker() : opts.who; SP.talker = who; let started = false;
-  const segs = opts.es ? [{ t: text, es: true }] : segments(text.replace(/＿＿＿/g, ' blank '));
-  if (!segs.length) { if (opts.onend) opts.onend(); return; }
-  const done = () => { if (my === SP.n) { talkOff(who); if (opts.onend) opts.onend(); } };
-  const go = () => segs.forEach((s, i) => { const u = JVOICE.utter(s.t.replace(/[<>]/g, ''), s.es, { pitch: opts.pitch, rate: opts.rate });
-    u.onstart = () => { if (my === SP.n) { started = true; talkOn(who); } };
-    u.onboundary = () => { if (my === SP.n) flap(who); };
-    if (i === segs.length - 1) { u.onend = done; u.onerror = () => { if (my === SP.n) talkOff(who); }; }
-    speechSynthesis.speak(u); });
-  if (/iPad|iPhone|Macintosh/.test(navigator.userAgent)) setTimeout(go, 40); else go();
-  // some browsers never fire onstart: animate the mouth for about as long as the line takes to say
-  setTimeout(() => { if (!started && my === SP.n) { talkOn(who); setTimeout(() => { if (my === SP.n && !started) talkOff(who); }, Math.min(7000, 60 * plain(text).length)); } }, 500);
+  if (SP.talker) talkOff(SP.talker); SP.talker = null; const my = ++SP.n;
+  if (!ST.voice || !text) { VO.stop(); if (opts.onend) setTimeout(opts.onend, 300); return; }
+  const who = opts.who === undefined ? defaultTalker() : opts.who; SP.talker = who; const ch = opts.ch || chName(who);
+  const units = VO.plan(String(text), ch, !!opts.es); SP.last = { text: String(text), ch, units };
+  if (!units.length) { VO.stop(); if (opts.onend) opts.onend(); return; }
+  const c = chrOf(who);
+  VO.play(units, { onstart: () => { if (my === SP.n) { talkOn(who); if (c) c.classList.add('lip'); } },
+    onmouth: open => { if (my === SP.n && c) c.classList.toggle('mo', open); },
+    onfake: () => { if (my === SP.n && c) c.classList.remove('lip'); },
+    onend: () => { if (my === SP.n) { talkOff(who); if (c) c.classList.remove('lip'); if (opts.onend) opts.onend(); } } });
 }
+function hush() { SP.n++; if (SP.talker) talkOff(SP.talker); VO.stop(); }
 const speakEs = w => speak(w, { es: true });
 // ---------- state ----------
 const KEY = 'juniperLearn';
@@ -2108,16 +2489,16 @@ let REVT = 0; // a tap anywhere hurries the reveal along but still reaches the b
 document.addEventListener('pointerdown', () => { if (!revOn) return; const L = $('reveal'); if (L.classList.contains('out')) return; clearTimeout(REVT); L.classList.add('out'); REVT = setTimeout(nextReveal, 300); }, true);
 
 // ---------- navigation ----------
-function show(id) { document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id)); window.scrollTo(0, 0); bubbleOff(); }
+function show(id) { const so = $('story'); if (so && so.classList.contains('on') && id !== 'map') { so.className = 'story'; hush(); } document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id)); window.scrollTo(0, 0); bubbleOff(); }
 const starHtml = () => `${ICON.star}<span>${ST.stars}</span>`;
 // ---------- start ----------
 $('startFox').innerHTML = juniperSvg(ST.outfit, 'wave');
 $('startFriends').innerHTML = ['mamafox', 'scramble', 'marcus', 'pearl', 'toulouse', 'winnie', 'oscar'].map((n, i) => `<span class="sf" style="--i:${i}">${CHARS.svg(n)}</span>`).join('');
 $('start').onclick = () => { ac(); SND.fanfare(); loadVoices();
-  if (SP.ok) { try { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } catch (e) {} }
+  if (SP.ok) { try { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } catch (e) {} } VO.load();
   const first = !ST.done; goHome(); setTimeout(() => sayBub($('homeFox'), first ? "Hi Aspen! I'm Juniper. Let's play and learn in Washington Market Park!" : `Hi Aspen! Welcome back. Let's play!`), 450); };
 // ---------- home ----------
-function goHome() { setStars(); show('home');
+function goHome() { checkUpdate(); setStars(); show('home');
   $('homeFox').innerHTML = juniperSvg(ST.outfit, 'wave'); $('hHello').textContent = 'Hi, Aspen!'; friendsRow($('hFriends'), FRIENDS.concat(WKEYS.filter(k => (ST.met || {})[k]).map(k => [WORLDS[k].friend, WORLDS[k].hello])));
   $('tPathIc').innerHTML = ICONS.icon('map'); $('tShelfIc').innerHTML = ICONS.icon('book'); $('tTrophIc').innerHTML = trophySvg(icInner('foxhead'));
   $('tDressIc').innerHTML = juniperSvg(ST.outfit, 'stand', '-200 -330 400 330'); $('tColorIc').innerHTML = ICONS.icon('crayon');
@@ -2125,19 +2506,22 @@ function goHome() { setStars(); show('home');
   $('tTrophSub').textContent = `${AWARDS.filter(a => ST.trophies[a.id]).length} of ${AWARDS.length} awards`;
   $('tWorldIc').innerHTML = ICONS.icon('map') && `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#5cc8ff" stroke="#3b2147" stroke-width="5"/><path d="M22 34 Q34 22 46 30 Q54 40 44 48 Q30 52 26 64 Q18 52 22 34 Z M58 20 Q74 24 80 40 Q72 46 62 40 Q54 30 58 20 Z M56 58 Q70 54 76 66 Q68 82 54 78 Q50 66 56 58 Z" fill="#5ef08a" stroke="#3b2147" stroke-width="4"/><ellipse cx="36" cy="26" rx="10" ry="5" fill="#fff" opacity=".6"/></svg>`;
   const nOpen = WKEYS.filter(worldOpen).length; $('tWorldSub').textContent = nOpen ? `${nOpen} of 4 new worlds open` : `Next: ${WORLDS.pr.name} at ${WORLDS.pr.stars} stars`;
+  { const nr = BOSSES.filter(b => hasRelic(b.relic)).length; $('tVaultIc').innerHTML = ST.equip && hasRelic(ST.equip) ? relicArt(ST.equip, ST.relics[ST.equip]) : chestSvg(0); $('tVaultSub').textContent = nr ? `${nr} of ${BOSSES.length} relics` : 'Beat a boss to win treasure'; }
   $('tDressSub').textContent = `${OUTFITS.filter(outfitOpen).length} of ${OUTFITS.length} outfits`;
   const ns = typeof EXTRA_STICKERS !== 'undefined' ? EXTRA_STICKERS.filter((s, i) => stickerUnlocked(i)).length : 0; $('tColorSub').textContent = `${ns} new sticker${ns === 1 ? '' : 's'} unlocked`;
   $('hSound').innerHTML = ST.sound ? ICON.speak : ICON.soundOff; }
-$('hSound').onclick = () => { ST.sound = !ST.sound; ST.voice = ST.sound; save(); if (!ST.sound) try { speechSynthesis.cancel(); } catch (e) {} goHome(); SND.tick(); };
+$('hSound').onclick = () => { ST.sound = !ST.sound; ST.voice = ST.sound; save(); if (!ST.sound) hush(); goHome(); SND.tick(); };
 $('homeFox').onclick = e => { charTap($('homeFox'), JUNI[Math.floor(Math.random() * JUNI.length)]); sparkAt(e.clientX, e.clientY, 12); };
 $('tPath').onclick = () => { SND.tap(); openMap('park'); };
 $('tShelf').onclick = () => { SND.tap(); openShelves(); };
 $('tTroph').onclick = () => { SND.tap(); openTrophies(); };
 $('tDress').onclick = () => { SND.tap(); openDress(); };
 $('tWorld').onclick = () => { SND.tap(); openWorlds(); };
+$('tVault').onclick = () => { SND.tap(); openVault(); };
+$('pRelic').onclick = () => { SND.tick(); useRelic(); };
 $('mWorlds').onclick = () => { SND.tap(); openWorlds(); };
 $('mWorlds').innerHTML = `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#5cc8ff" stroke="#3b2147" stroke-width="6"/><path d="M24 36 Q34 24 46 32 Q52 42 42 48 Q30 52 28 62 Q20 52 24 36 Z M58 22 Q72 26 78 40 Q70 46 62 40 Q54 30 58 22 Z M56 58 Q68 54 74 66 Q66 80 54 76 Q50 66 56 58 Z" fill="#5ef08a" stroke="#3b2147" stroke-width="4"/></svg>`;
-['mHome', 'sHome', 'trHome', 'dHome', 'wHome'].forEach(id => { $(id).innerHTML = ICON.home; $(id).onclick = () => { SND.tick(); try { speechSynthesis.cancel(); } catch (e) {} goHome(); }; });
+['mHome', 'sHome', 'trHome', 'dHome', 'wHome', 'vHome'].forEach(id => { $(id).innerHTML = ICON.home; $(id).onclick = () => { SND.tick(); hush(); goHome(); }; });
 // ---------- map (v2: video-game park) ----------
 const SUBC = Object.fromEntries(C.SUBJ.map(s => [s[0], s[3]]));
 const nest = (svgStr, x, y, w, h) => svgStr.replace('<svg ', `<svg x="${x}" y="${y}" width="${w}" height="${h}" `);
@@ -2175,71 +2559,109 @@ const LM = [
 ];
 function vbOf(name) { return CHARS.DEF[name][0].split(/\s+/).map(Number); }
 let MAPW = 'park';
-function openMap(wk) { if (typeof wk === 'string') MAPW = wk; if (MAPW !== 'park' && !worldOpen(MAPW)) MAPW = 'park'; setStars(); show('map'); renderMap(); const cur = document.querySelector('.node.cur'); if (cur) setTimeout(() => cur.scrollIntoView({ block: 'center', behavior: 'smooth' }), 60); }
+function openMap(wk) { if (typeof wk === 'string') MAPW = wk; if (MAPW !== 'park' && !worldOpen(MAPW)) MAPW = 'park'; setStars(); show('map'); renderMap(); const cur = document.querySelector('#mapSvg .node.cur, #mapSvg .bnode.cur'); if (cur) setTimeout(() => cur.scrollIntoView({ block: 'center', behavior: 'smooth' }), 60); else $('mapScroll').scrollTop = 0; }
 function dailyHtml() { const n = ST.pathDays[today()] || 0; return `Today ${[0, 1, 2, 3, 4].map(i => `<i class="${i < n ? 'on' : ''}"></i>`).join('')}`; }
 function pathD(pts, upto) { let d = `M${pts[0][0]} ${pts[0][1] - 130} L${pts[0][0]} ${pts[0][1]}`;
   for (let i = 1; i <= Math.min(upto, pts.length - 1); i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; d += ` C${x0} ${(y0 + y1) / 2} ${x1} ${(y0 + y1) / 2} ${x1} ${y1}`; } return d; }
 let MAPLAST = null;
 function mapDef(wk) { if (wk === 'park') return { secs: C.PATH.map((sec, i) => Object.assign({}, sec, SEC[i], { scene: i, lm: LM[i] })), pos: ST.path, bg: '#a8e57c', name: 'Washington Market Park' };
   const w = WORLDS[wk]; return { secs: w.secs, pos: (ST.wp || {})[wk] || 0, bg: w.bg, name: w.name }; }
-function renderMap() { const MD0 = mapDef(MAPW); const SECS = MD0.secs, POS = MD0.pos; $('mDaily').innerHTML = dailyHtml(); $('map').style.background = MD0.bg; $('mTitle').textContent = MD0.name;
-  const W = 1000; let y = 0, gi = 0, s = ''; const pts = []; const blocks = []; const nodes = [];
-  SECS.forEach((sec, si) => { const left = si % 2 === 0; const top = y; const h = 320 + sec.nodes.length * 172; blocks.push({ top, h, si, left });
-    const cx = left ? 620 : 380;
-    sec.nodes.forEach((id, k) => { const ny = top + 340 + k * 172; const nx = cx + 180 * Math.sin(k * 1.1 + si); pts.push([nx, ny]); nodes.push({ id, x: nx, y: ny, gi: gi++, si }); });
+// ---------- v3 map: stops, boss arenas with relic gates, ambient life (clouds, birds, shimmer), parallax ----------
+function mapStops(w) { const SECS = mapDef(w).secs; const out = []; let gi = 0;
+  SECS.forEach((sec, si) => { sec.nodes.forEach(id => out.push({ t: 'act', id, gi: gi++, si })); const b = BOSS[w + ':' + si]; if (b) out.push({ t: 'boss', b, si }); }); return out; }
+function curStop(w, stops) { const P = effPos(w), tot = stops.filter(s => s.t === 'act').length;
+  const act = stops.find(s => s.t === 'act' && s.gi === P); const blocked = act && act.si > 0 && gateOf(w) === act.si;
+  if (act && !blocked) return act;
+  return stops.find(s => s.t === 'boss' && bossState(s.b) === 'ready') || (P >= tot ? null : act); }
+function renderMap() { const MD0 = mapDef(MAPW); const SECS = MD0.secs; const POS = wPos(MAPW), EP = effPos(MAPW); $('mDaily').innerHTML = dailyHtml(); $('map').style.background = MD0.bg; $('mTitle').textContent = MD0.name;
+  const stops = mapStops(MAPW); const cur = curStop(MAPW, stops);
+  const W = 1000; let y = 0, s = ''; const pts = []; const blocks = [];
+  SECS.forEach((sec, si) => { const left = si % 2 === 0; const top = y; const n = sec.nodes.length; const h = 320 + n * 172 + 300; blocks.push({ top, h, si, left });
+    const cx = left ? 620 : 380; let k = 0;
+    stops.filter(st => st.si === si).forEach(st => { if (st.t === 'act') { st.x = cx + 180 * Math.sin(k * 1.1 + si); st.y = top + 340 + k * 172; k++; } else { st.x = 500; st.y = top + 340 + n * 172 + 70; } pts.push([st.x, st.y]); });
     y += h; });
-  const H = y + 140; const total = nodes.length; const P0 = Math.min(POS, total);
+  const H = y + 140; const ci = cur ? stops.indexOf(cur) : stops.length - 1; const total = stops.filter(x => x.t === 'act').length;
   let defs = `<radialGradient id="mgTree0" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#9df27a"/><stop offset="1" stop-color="#2fa84f"/></radialGradient><radialGradient id="mgTree1" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#7fe08f"/><stop offset="1" stop-color="#1f8f5a"/></radialGradient>
     <linearGradient id="mgRoof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5c8a"/><stop offset="1" stop-color="#d81b60"/></linearGradient><linearGradient id="mgSlide" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c77dff"/><stop offset="1" stop-color="#7b2ff7"/></linearGradient>
     <linearGradient id="mgIce" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2fdff"/><stop offset="1" stop-color="#9ee3ff"/></linearGradient><radialGradient id="mgGreen" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#8ef07a"/><stop offset="1" stop-color="#2fae4f"/></radialGradient>
     <linearGradient id="mgPath" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="${H}">${blocks.map(b => `<stop offset="${(b.top + b.h / 2) / H}" stop-color="${SECS[b.si].col}"/>`).join('')}</linearGradient>
     <linearGradient id="mgGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff07a"/><stop offset="1" stop-color="#ffb300"/></linearGradient>
-    <radialGradient id="mgNode" cx=".38" cy=".3" r=".75"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></radialGradient>`;
+    <radialGradient id="mgNode" cx=".38" cy=".3" r=".75"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="mgArena" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#fff6d8"/><stop offset="1" stop-color="#e9c98f"/></radialGradient>`;
   blocks.forEach(b => { const c = SECS[b.si]; s += `<rect x="0" y="${b.top}" width="${W}" height="${b.h + 2}" fill="${c.g1}" stroke="none"/>`;
-    for (let k = 0; k < 5; k++) s += `<ellipse cx="${(k * 263 + b.si * 97) % W}" cy="${b.top + 120 + (k * 211) % (b.h - 160)}" rx="${90 + k * 14}" ry="${40 + k * 6}" fill="${c.g2}" stroke="none"/>`; });
-  // decor down the edges
+    for (let k = 0; k < 6; k++) s += `<ellipse cx="${(k * 263 + b.si * 97) % W}" cy="${b.top + 120 + (k * 211) % (b.h - 160)}" rx="${90 + k * 14}" ry="${40 + k * 6}" fill="${c.g2}" stroke="none"/>`;
+    // little ground details: grass tufts and pebbles
+    for (let k = 0; k < 10; k++) { const gx = (k * 151 + b.si * 61) % 980 + 10, gy = b.top + 60 + (k * 137) % (b.h - 80); s += MAPW === 'vail' ? `<circle cx="${gx}" cy="${gy}" r="4" fill="#fff" stroke="none" opacity=".8"/>` : `<path d="M${gx - 8} ${gy} q4 -14 8 0 q4 -16 8 0" fill="none" stroke="${shadeHex(c.g2, -0.18)}" stroke-width="3"/>`; } });
   let dk = 0; for (let yy = 140; yy < H - 100; yy += 165) { const x1 = (dk % 2 ? 50 : 950); s += dk % 3 === 0 ? (MAPW === 'vail' ? MD.pine(x1, yy + 80, 0.7) : MAPW === 'pr' ? MD.palm(x1, yy + 80, 0.55) : MD.tree(x1, yy + 80, 0.6, dk % 2)) : dk % 3 === 1 ? (MAPW === 'vail' ? MD.spark(x1, yy, 2, '#fff') : MD.flower(x1, yy, 1.1, ['#ff4fa3', '#ffd93b', '#9b5cff', '#22aaf0'][dk % 4])) : (MAPW === 'vail' ? MD.pine(x1, yy + 60, 0.5) : MD.bush(x1, yy, 0.9)); dk++; }
-  // the dirt path, then the coloured trail she has walked
-  const dAll = pathD(pts, total), dDone = pathD(pts, P0), dPrev = pathD(pts, Math.max(0, P0 - 1));
+  const dAll = pathD(pts, pts.length - 1), dDone = pathD(pts, Math.max(0, ci)), dPrev = pathD(pts, Math.max(0, ci - 1));
   s += `<path d="${dAll}" fill="none" stroke="#000" stroke-opacity=".12" stroke-width="66" transform="translate(0 6)"/><path d="${dAll}" fill="none" stroke="#e6d6bb" stroke-width="58" stroke-linecap="round"/><path d="${dAll}" fill="none" stroke="#cdb995" stroke-width="10" stroke-dasharray="2 28" stroke-linecap="round"/>`;
-  s += `<path id="trailGlow" d="${dDone}" fill="none" stroke="url(#mgPath)" stroke-opacity=".35" stroke-width="70" stroke-linecap="round"/><path id="trail" d="${dDone}" fill="none" stroke="url(#mgPath)" stroke-width="46" stroke-linecap="round" data-prev="${dPrev}"/><path d="${dDone}" fill="none" stroke="#fff" stroke-width="9" stroke-dasharray="1 26" stroke-linecap="round" opacity=".9"/>`;
-  // landmarks and section banners with progress bars
-  blocks.forEach(b => { const sec = SECS[b.si]; const lx = b.left ? 210 : 790; s += G(lx, b.top + b.h / 2 + 110, 0.95, typeof sec.scene === 'number' ? scene(sec.scene) : sceneW(sec.scene));
-    const ids = sec.nodes, dn = nodes.filter(n => n.si === b.si && n.gi < POS).length, full = dn === ids.length; const c = sec.col; const bw = 300;
+  if (ci > 0 || (cur && cur.t === 'act' && cur.gi > 0)) s += `<path id="trailGlow" d="${dDone}" fill="none" stroke="url(#mgPath)" stroke-opacity=".35" stroke-width="70" stroke-linecap="round"/><path id="trail" d="${dDone}" fill="none" stroke="url(#mgPath)" stroke-width="46" stroke-linecap="round" data-prev="${dPrev}"/><path d="${dDone}" fill="none" stroke="#fff" stroke-width="9" stroke-dasharray="1 26" stroke-linecap="round" opacity=".9"/>`;
+  blocks.forEach(b => { const sec = SECS[b.si]; const lx = b.left ? 210 : 790; s += G(lx, b.top + b.h / 2 + 60, 0.95, typeof sec.scene === 'number' ? scene(sec.scene) : sceneW(sec.scene));
+    const ids = sec.nodes, dn = stops.filter(n => n.t === 'act' && n.si === b.si && n.gi < POS).length, bt = beaten(MAPW + ':' + b.si); const tot = ids.length + 1, got = dn + (bt ? 1 : 0), full = got === tot; const c = sec.col; const bw = 300;
     s += `<g class="banner" transform="translate(500 ${b.top + 96})"><path d="M-270 -40 L-300 -6 L-270 30 L-240 30 L-240 -40Z" fill="${c}" opacity=".75"/><path d="M270 -40 L300 -6 L270 30 L240 30 L240 -40Z" fill="${c}" opacity=".75"/><rect x="-250" y="-66" width="500" height="104" rx="30" fill="${c}"/><rect x="-240" y="-60" width="480" height="40" rx="20" fill="#fff" opacity=".25" stroke="none"/>
       <text x="0" y="-16" font-size="42" font-weight="900" text-anchor="middle" fill="#fff" stroke="${OLc}" stroke-width="8" paint-order="stroke" font-family="ui-rounded,Arial Rounded MT Bold,Arial">${sec.name}</text>
       <text x="0" y="22" font-size="22" font-weight="800" text-anchor="middle" fill="#fff" stroke="none" font-family="ui-rounded,Arial">${sec.sub}</text>
-      <rect x="${-bw / 2}" y="52" width="${bw}" height="26" rx="13" fill="#fff"/><rect class="bar" x="${-bw / 2 + 4}" y="56" width="${Math.max(0, (bw - 8) * dn / ids.length)}" height="18" rx="9" fill="url(#mgGold)" stroke="none"/>
-      <text x="${bw / 2 + 16}" y="74" font-size="24" font-weight="900" fill="${OLc}" stroke="#fff" stroke-width="6" paint-order="stroke" font-family="ui-rounded,Arial">${full ? '★ ' : ''}${dn}/${ids.length}</text></g>`; });
-  // stops
-  nodes.forEach(n => { const a = C.BY[n.id]; const done = n.gi < POS, cur = n.gi === POS, locked = n.gi > POS; const md = medalOf(n.id);
+      <rect x="${-bw / 2}" y="52" width="${bw}" height="26" rx="13" fill="#fff"/><rect class="bar" x="${-bw / 2 + 4}" y="56" width="${Math.max(0, (bw - 8) * got / tot)}" height="18" rx="9" fill="url(#mgGold)" stroke="none"/>
+      <text x="${bw / 2 + 16}" y="74" font-size="24" font-weight="900" fill="${OLc}" stroke="#fff" stroke-width="6" paint-order="stroke" font-family="ui-rounded,Arial">${full ? '★ ' : ''}${got}/${tot}</text></g>`; });
+  stops.forEach(n => { if (n.t !== 'act') return; const a = C.BY[n.id]; const done = n.gi < POS, isCur = n === cur, locked = !done && !isCur; const md = medalOf(n.id);
     const col = done ? '#cfd3dc' : locked ? '#a9b0c0' : SUBC[a.subj];
-    s += `<g class="node${cur ? ' cur' : ''}${locked ? ' locked' : ''}${done ? ' done' : ''}" data-id="${n.id}" data-gi="${n.gi}" transform="translate(${n.x} ${n.y})">`;
-    s += `<ellipse cx="0" cy="44" rx="56" ry="14" fill="#000" opacity=".15" stroke="none"/><circle r="${cur ? 64 : 56}" fill="${col}" stroke-width="6"/><circle r="${cur ? 64 : 56}" fill="url(#mgNode)" stroke="none"/><circle r="${cur ? 48 : 42}" fill="${done ? '#eef0f4' : locked ? '#dfe3ea' : '#fff'}" stroke="none"/>`;
-    s += nest(ICONS.icon(a.icon) || '', cur ? -38 : -32, cur ? -38 : -32, cur ? 76 : 64, cur ? 76 : 64).replace('<svg ', `<svg opacity="${locked ? 0.22 : done ? 0.4 : 1}" `);
+    s += `<g class="node${isCur ? ' cur' : ''}${locked ? ' locked' : ''}${done ? ' done' : ''}" data-id="${n.id}" data-gi="${n.gi}" transform="translate(${n.x} ${n.y})">`;
+    s += `<ellipse cx="0" cy="44" rx="56" ry="14" fill="#000" opacity=".15" stroke="none"/><circle r="${isCur ? 64 : 56}" fill="${col}" stroke-width="6"/><circle r="${isCur ? 64 : 56}" fill="url(#mgNode)" stroke="none"/><circle r="${isCur ? 48 : 42}" fill="${done ? '#eef0f4' : locked ? '#dfe3ea' : '#fff'}" stroke="none"/>`;
+    s += nest(ICONS.icon(a.icon) || '', isCur ? -38 : -32, isCur ? -38 : -32, isCur ? 76 : 64, isCur ? 76 : 64).replace('<svg ', `<svg opacity="${locked ? 0.22 : done ? 0.4 : 1}" `);
     if (locked) s += `<g transform="translate(0 4)"><g class="lk"><path d="M-14 -10 V-22 a14 14 0 0 1 28 0 V-10" fill="none" stroke="${OLc}" stroke-width="7"/><rect x="-22" y="-12" width="44" height="34" rx="9" fill="url(#mgGold)" stroke="${OLc}" stroke-width="5"/><circle cx="0" cy="3" r="4" fill="${OLc}" stroke="none"/></g></g>`;
     if (done) s += `<g transform="translate(-40 -40)"><circle r="20" fill="#2fbf5a" stroke="${OLc}" stroke-width="5"/><path d="M-9 0 L-2 8 L10 -8" fill="none" stroke="#fff" stroke-width="6"/></g>`;
     if (done && md) s += nest(medalSvg(md), 18, -74, 54, 54);
     const t = a.title.length > 22 ? a.title.slice(0, 21) + '…' : a.title;
-    s += cur ? `<g transform="translate(0 100)"><rect x="-${t.length * 7 + 26}" y="-22" width="${t.length * 14 + 52}" height="40" rx="20" fill="url(#mgGold)" stroke="${OLc}" stroke-width="4"/><text y="7" font-size="22" font-weight="900" text-anchor="middle" fill="${OLc}" stroke="none" font-family="ui-rounded,Arial">${t}</text></g>`
+    s += isCur ? `<g transform="translate(0 100)"><rect x="-${t.length * 7 + 26}" y="-22" width="${t.length * 14 + 52}" height="40" rx="20" fill="url(#mgGold)" stroke="${OLc}" stroke-width="4"/><text y="7" font-size="22" font-weight="900" text-anchor="middle" fill="${OLc}" stroke="none" font-family="ui-rounded,Arial">${t}</text></g>`
       : `<text y="86" font-size="21" font-weight="800" text-anchor="middle" fill="${done ? '#7a8090' : locked ? '#6f7686' : '#1e5b2b'}" stroke="#fff" stroke-width="6" paint-order="stroke" font-family="ui-rounded,Arial">${t}</text>`;
     s += `</g>`; });
-  // animated HTML layer: characters, the glow and Juniper on the current stop (kept out of the big SVG so iPad repaints stay small)
+  // boss arenas
+  stops.forEach(n => { if (n.t !== 'boss') return; const b = n.b, st = bossState(b), sec = SECS[n.si]; const isCur = n === cur;
+    s += `<g class="bnode ${st}${isCur ? ' cur' : ''}" data-b="${b.id}" transform="translate(${n.x} ${n.y})"><ellipse cx="0" cy="40" rx="150" ry="38" fill="#000" opacity=".15" stroke="none"/><ellipse cx="0" cy="26" rx="140" ry="40" fill="${st === 'done' ? '#cfd3dc' : sec.col}" stroke-width="6"/><ellipse cx="0" cy="18" rx="122" ry="30" fill="url(#mgArena)" stroke-width="4"/>
+      ${[-110, -60, 0, 60, 110].map((x, k) => `<path d="M${x} ${16 - Math.sqrt(Math.max(0, 1 - (x / 122) ** 2)) * 30} l0 -16" stroke="${st === 'done' ? '#9aa0b0' : '#ffd93b'}" stroke-width="5"/><circle cx="${x}" cy="${16 - Math.sqrt(Math.max(0, 1 - (x / 122) ** 2)) * 30 - 20}" r="6" fill="${st === 'done' ? '#c0c4d0' : ['#ff3fa4', '#ffd93b', '#22aaf0', '#5ef08a', '#9b5cff'][k]}" class="${st === 'done' ? '' : 'bulb'}"/>`).join('')}
+      <g transform="translate(0 92)"><rect x="-96" y="-22" width="192" height="42" rx="21" fill="${st === 'done' ? '#8a90a0' : '#ff3f7f'}" stroke="${OLc}" stroke-width="5"/><text y="9" font-size="24" font-weight="900" text-anchor="middle" fill="#fff" stroke="none" font-family="ui-rounded,Arial">${st === 'done' ? 'BOSS BEATEN' : 'BOSS'}</text></g></g>`; });
   const pct = (v, m) => (v / m * 100).toFixed(3) + '%';
   let ov = '';
-  blocks.forEach(b => { const lx = b.left ? 210 : 790, gy = b.top + b.h / 2 + 110; (SECS[b.si].lm || []).forEach((c, k) => { const w = c.w * 0.95;
-    ov += `<div class="mchr lmchar" data-k="${b.si}-${k}" style="left:${pct(lx + c.x * 0.95, W)};top:${pct(gy + (c.y || 0) * 0.95, H)};width:${pct(w, W)}">${CHARS.svg(c.n)}</div>`; }); });
-  if (P0 < total) { const n = nodes[P0]; ov += `<div class="curglow" style="left:${pct(n.x, W)};top:${pct(n.y, H)};width:${pct(230, W)}"></div><div class="mchr mapjun" id="mapJun" style="left:${pct(n.x, W)};top:${pct(n.y - 44, H)};width:${pct(118, W)}">${juniperSvg(ST.outfit, 'wave')}</div>`; }
-  else { const n = nodes[total - 1]; ov += `<div class="mchr mapjun" id="mapJun" style="left:${pct(n.x + 120, W)};top:${pct(n.y + 40, H)};width:${pct(130, W)}">${juniperSvg(ST.outfit, 'cheer')}</div>`; }
-  $('mapSvg').innerHTML = `<div class="mapinner"><svg class="mapbg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs>${defs}</defs><g stroke="${OLc}" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">${s}</g></svg>${ov}</div>`;
-  // fill in the newest piece of trail
-  const tr = $('trail'); if (tr && P0 > 0 && MAPLAST !== MAPW + POS) { try { const L = tr.getTotalLength(), pv = document.createElementNS('http://www.w3.org/2000/svg', 'path'); pv.setAttribute('d', tr.dataset.prev); const Lp = pv.getTotalLength();
+  blocks.forEach(b => { const lx = b.left ? 210 : 790, gy = b.top + b.h / 2 + 60; (SECS[b.si].lm || []).forEach((c, k) => { const w = c.w * 0.95;
+    ov += `<div class="mchr lmchar" data-k="${b.si}-${k}" style="left:${pct(lx + c.x * 0.95, W)};top:${pct(gy + (c.y || 0) * 0.95, H)};width:${pct(w, W)}">${CHARS.svg(c.n)}</div>`; });
+    ov += `<button class="mstory" data-si="${b.si}" style="left:${pct(500 + 268, W)};top:${pct(b.top + 30, H)}" aria-label="Story">${STORYIC}</button>`; });
+  // boss characters, prize chest and the relic gate slot
+  stops.forEach(n => { if (n.t !== 'boss') return; const b = n.b, st = bossState(b), pb = prevBoss(b); const rec = ST.boss[b.id];
+    ov += `<div class="mchr bosschr ${st}" data-b="${b.id}" style="left:${pct(n.x, W)};top:${pct(n.y - 50, H)};width:${pct(170, W)}">${CHARS.svg(b.ch, { form: b.form })}</div>`;
+    ov += `<div class="mprize ${rec ? 'got r' + rec.r : ''}" data-b="${b.id}" style="left:${pct(n.x + 168, W)};top:${pct(n.y - 10, H)};width:${pct(96, W)}">${rec ? relicArt(b.relic, rec.r) : `<span class="mchest">${chestSvg(0)}</span>`}</div>`;
+    if (pb) ov += `<div class="mslot ${hasRelic(pb.relic) ? 'full' : 'empty'}" data-b="${b.id}" style="left:${pct(n.x - 168, W)};top:${pct(n.y - 10, H)};width:${pct(86, W)}">${relicArt(pb.relic, hasRelic(pb.relic) ? ST.relics[pb.relic] : 0, { sil: !hasRelic(pb.relic) })}</div>`; });
+  if (cur) { ov += `<div class="curglow${cur.t === 'boss' ? ' boss' : ''}" style="left:${pct(cur.x, W)};top:${pct(cur.y, H)};width:${pct(cur.t === 'boss' ? 330 : 230, W)}"></div><div class="mchr mapjun" id="mapJun" style="left:${pct(cur.t === 'boss' ? cur.x - 100 : cur.x, W)};top:${pct(cur.y - 44, H)};width:${pct(118, W)}">${juniperSvg(ST.outfit, 'wave')}</div>`; }
+  else { const n = stops[stops.length - 1]; ov += `<div class="mchr mapjun" id="mapJun" style="left:${pct(n.x - 120, W)};top:${pct(n.y - 30, H)};width:${pct(130, W)}">${juniperSvg(ST.outfit, 'cheer')}</div>`; }
+  // ambient life: clouds drift (parallax layer), birds fly, water shimmers, snow falls in Vail
+  let amb = '<div class="ambclip"><div class="amb" id="ambLayer">';
+  for (let k = 0; k < Math.ceil(H / 700); k++) amb += `<div class="amb-cloud" style="top:${pct(k * 700 + 120 + (k % 2) * 180, H)};animation-duration:${46 + (k % 3) * 14}s;animation-delay:${-k * 11}s;--sc:${0.7 + (k % 3) * 0.25}"></div>`;
+  amb += '</div>';
+  for (let k = 0; k < Math.ceil(H / 1400); k++) amb += `<div class="amb-birds" style="top:${pct(k * 1400 + 400, H)};animation-delay:${-k * 7}s">${'<i></i>'.repeat(3)}</div>`;
+  blocks.forEach(b => { const sc = SECS[b.si].scene; if ([3, 'rock', 'pond', 'dorado', 'yunque', 'central'].includes(sc)) { const lx = b.left ? 210 : 790, gy = b.top + b.h / 2 + 60;
+    for (let k = 0; k < 6; k++) ov += `<i class="amb-shim" style="left:${pct(lx - 130 + k * 52, W)};top:${pct(gy - 40 + (k % 3) * 14 - (sc === 'yunque' ? 30 : 0), H)};animation-delay:${(k * .45).toFixed(2)}s"></i>`; } });
+  if (MAPW === 'vail') amb += `<div class="amb-snow"></div>`;
+  amb += '</div>';
+  $('mapSvg').innerHTML = `<div class="mapinner">${amb}<svg class="mapbg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs>${defs}</defs><g stroke="${OLc}" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">${s}</g></svg>${ov}</div>`;
+  const tr = $('trail'); if (tr && MAPLAST !== MAPW + ':' + ci) { try { const L = tr.getTotalLength(), pv = document.createElementNS('http://www.w3.org/2000/svg', 'path'); pv.setAttribute('d', tr.dataset.prev); const Lp = pv.getTotalLength();
     [tr, $('trailGlow')].forEach(p => { p.style.strokeDasharray = L + ' ' + L; p.style.strokeDashoffset = L - Lp; p.getBoundingClientRect(); p.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(.4,.1,.2,1) .5s'; p.style.strokeDashoffset = 0; }); } catch (e) {} }
-  MAPLAST = MAPW + POS;
-  $('mapSvg').querySelectorAll('.node').forEach(g => g.addEventListener('click', () => { const gi = +g.dataset.gi; if (gi > POS) { SND.boop(); wiggle(g.querySelector('.lk')); sayBub($('mapJun'), 'Finish the stops before this one first. Poco a poco!'); return; } SND.tap(); startActivity(g.dataset.id, gi === POS ? 'path' : 'pathReplay', { world: MAPW, level: SECS[nodes[gi].si].level || 0 }); }));
-  $('mapSvg').querySelectorAll('.lmchar').forEach(el => el.addEventListener('click', e => { const [si, k] = el.dataset.k.split('-').map(Number); const c = SECS[si].lm[k]; charTap(el, c.line, c.marcus ? LOW() : {}); sparkAt(e.clientX, e.clientY); }));
-  const mj = $('mapJun'); if (mj) mj.addEventListener('click', e => { if (POS < total) { SND.tap(); startActivity(nodes[POS].id, 'path', { world: MAPW, level: SECS[nodes[POS].si].level || 0 }); } else charTap(mj, MAPW === 'park' ? 'Aspen, you finished the whole park! You are amazing!' : `Aspen, you finished ${MD0.name}! You are amazing!`); });
+  MAPLAST = MAPW + ':' + ci;
+  const go = n => { if (n.t === 'boss') { tapBoss(n.b); return; } SND.tap(); startActivity(n.id, n.gi < POS ? 'pathReplay' : 'path', { world: MAPW, level: SECS[n.si].level || 0, sec: MAPW + ':' + n.si }); };
+  $('mapSvg').querySelectorAll('.node').forEach(g => g.addEventListener('click', () => { const n = stops.find(x => x.t === 'act' && x.gi === +g.dataset.gi);
+    if (n.gi >= POS && n !== cur) { SND.boop(); wiggle(g.querySelector('.lk')); const gate = n.si > 0 && gateOf(MAPW) <= n.si && !beaten(MAPW + ':' + (n.si - 1)); sayBub($('mapJun'), gate ? `Beat the ${bossName(BOSS[MAPW + ':' + (n.si - 1)])} to open this part of the map!` : 'Finish the stops before this one first. Poco a poco!'); return; } go(n); }));
+  $('mapSvg').querySelectorAll('.bnode,.bosschr').forEach(g => g.addEventListener('click', e => { const b = BOSS[g.dataset.b]; sparkAt(e.clientX, e.clientY, 10); tapBoss(b); }));
+  $('mapSvg').querySelectorAll('.mprize').forEach(g => g.addEventListener('click', e => { const b = BOSS[g.dataset.b]; sparkAt(e.clientX, e.clientY, 12); if (ST.boss[b.id]) openLore(b); else { SND.boop(); wiggle(g); sayBub(g, `A mystery treasure! Beat the ${bossName(b)} to open it.`); } }));
+  $('mapSvg').querySelectorAll('.mslot').forEach(g => g.addEventListener('click', e => { const b = BOSS[g.dataset.b], pb = prevBoss(b); sparkAt(e.clientX, e.clientY, 8); if (hasRelic(pb.relic)) { SND.pop(); sayBub(g, `The ${RELICS[pb.relic].name} opens this boss gate!`); } else { SND.boop(); wiggle(g); sayBub(g, `This gate needs the ${RELICS[pb.relic].name}.`); } }));
+  $('mapSvg').querySelectorAll('.mstory').forEach(g => g.addEventListener('click', e => { e.stopPropagation(); SND.tap(); playStory(MAPW, +g.dataset.si); }));
+  $('mapSvg').querySelectorAll('.lmchar').forEach(el => el.addEventListener('click', e => { const [si, k] = el.dataset.k.split('-').map(Number); const c = SECS[si].lm[k]; charTap(el, c.line); sparkAt(e.clientX, e.clientY); }));
+  const mj = $('mapJun'); if (mj) mj.addEventListener('click', e => { if (cur) go(cur); else charTap(mj, MAPW === 'park' ? 'Aspen, you finished the whole park! You are amazing!' : `Aspen, you finished ${MD0.name}! You are amazing!`); });
+  // a new part of the map? tell its story first
+  if (cur) { const si = cur.si; const first = cur.t === 'act' && cur.gi === secStart(MAPW, si); if (first && !ST.seenStory[MAPW + ':' + si] && storyFor(MAPW, si).length) setTimeout(() => { if (document.querySelector('.screen.on#map')) playStory(MAPW, si); }, 700); }
 }
+const STORYIC = `<svg viewBox="0 0 64 64"><g stroke="#3b2147" stroke-width="4" stroke-linejoin="round"><path d="M14 10 H50 Q56 10 56 16 V50 Q56 56 50 56 H14 Z" fill="#fff4dc"/><path d="M8 14 Q8 8 14 8 Q20 8 20 14 V54 Q20 58 14 58 Q8 58 8 52 Z" fill="#ffd36b"/><path d="M26 22 H48 M26 32 H48 M26 42 H40" stroke-width="3.5"/></g></svg>`;
+function shadeHex(h, k) { const n = parseInt(h.slice(1), 16); let r = n >> 16, g = (n >> 8) & 255, b = n & 255; const f = v => Math.max(0, Math.min(255, Math.round(k < 0 ? v * (1 + k) : v + (255 - v) * k))); return '#' + [f(r), f(g), f(b)].map(v => v.toString(16).padStart(2, '0')).join(''); }
+// clouds drift slower than the map when she scrolls (parallax)
+(() => { const sc = $('mapScroll'); let q = 0; sc.addEventListener('scroll', () => { if (q) return; q = requestAnimationFrame(() => { q = 0; const a = $('ambLayer'); if (a) a.style.transform = `translate3d(0,${(sc.scrollTop * 0.35).toFixed(1)}px,0)`; }); }, { passive: true }); })();
+
 // ---------- v2: new worlds to unlock ----------
 const L_ = (n, x, w, line, y, low) => ({ n, x, w, line, y, marcus: low });
 const WORLDS = {
@@ -2335,6 +2757,283 @@ function meetFriend(k) { const w = WORLDS[k]; ST.met = ST.met || {}; ST.met[k] =
   $('meet').classList.add('on'); SND.fanfare(); setTimeout(() => { sparkEl($('meetChr'), 30); bounceChr($('meetChr')); }, 350); speak(w.hello, { who: $('meetChr') });
   $('meetGo').onclick = () => { SND.pop(); $('meet').classList.remove('on'); openMap(k); }; }
 
+// ---------- v3: bosses, treasure chests, relics, relic power-ups, story ----------
+// ---------- v3: relics (treasure from boss chests), five rarities ----------
+const RAR = [
+  { n: 'Common', col: '#7fcf8a', c2: '#3f9a52', glow: '#c9f7cf', ch: 1 },
+  { n: 'Rare', col: '#4fb3ff', c2: '#1d6fd1', glow: '#bfe6ff', ch: 1 },
+  { n: 'Epic', col: '#b77bff', c2: '#7b2ff7', glow: '#e6d0ff', ch: 2 },
+  { n: 'Legendary', col: '#ffc21a', c2: '#e07a00', glow: '#fff1b0', ch: 2 },
+  { n: 'Mythic', col: '#ff5fb8', c2: '#7b2ff7', glow: '#ffe0f5', ch: 3 }];
+const RPRE = ['', 'Glowing ', 'Starlit ', 'Golden ', 'Rainbow '];
+const RELICS = {
+  moonstone: { name: 'Gazebo Moonstone', power: 'Moonbeam', does: 'lights up the right answer', lore: 'A moon-shaped stone that glows under the gazebo on starry nights. Mama Fox says it lit up Juniper\'s den the night she was born.' },
+  compass: { name: "Marcus's Ancient Shell Compass", power: 'True North', does: 'points to the right path', lore: 'Marcus has carried this compass for a hundred years. Its needle never rushes. It always points to the right path, poco a poco.' },
+  spoon: { name: "Nicolò's Golden Gelato Spoon", power: 'Sweet Scoop', does: 'scoops away a wrong answer', lore: 'Old Nicolò stirred his very first gelato with this golden spoon. It still smells like strawberries and vanilla.' },
+  skate: { name: 'Crystal Skate Charm', power: 'Glide', does: 'glides you to the next step', lore: 'A tiny skate carved from rink ice that never melts. Toulouse says it makes your spins extra sparkly.' },
+  tee: { name: 'Diamond Golf Tee', power: 'Hole in One', does: 'shows the perfect shot', lore: 'Winnie dug this diamond tee up on the golf green. Any ball placed on it flies straight and true.' },
+  lantern: { name: 'Fox Spirit Lantern', power: 'Fox Fire', does: 'lights up the right answer', lore: 'A lantern with a tiny fox-shaped flame that dances inside. It glows brightest for friends who stop and check.' },
+  coqui: { name: 'Coquí Jade Totem', power: 'Co-quí Call', does: 'sings out the right answer', lore: 'A little green coquí carved from jade. In El Yunque the coquís sing all night, and this one sings when you are close to the answer.' },
+  sunkey: { name: 'El Morro Sun Key', power: 'Sun Gate', does: 'unlocks the right path', lore: 'An old golden key from the fort of El Morro in Old San Juan. Its sun-shaped handle opens doors that only the sun can find.' },
+  amulet: { name: 'Taíno Star Amulet', power: 'Star Spiral', does: 'spirals to the right answer', lore: 'Its sun and star spiral is inspired by the rock carvings the Taíno people of Puerto Rico made long, long ago. Hold it gently and with respect.' },
+  acorn: { name: 'Central Park Golden Acorn', power: 'Acorn Hop', does: 'hops past a wrong answer', lore: 'Rocco found this golden acorn under the oldest oak in Central Park. Squirrels whisper that it is lucky for thinkers.' },
+  prism: { name: 'Rockefeller Star Prism', power: 'Rainbow Beam', does: 'shines on the right answer', lore: 'A crystal from the top of the giant holiday tree. When light goes in, a rainbow comes out.' },
+  torch: { name: 'Liberty Torch Crystal', power: 'Torch Light', does: 'lights up the right answer', lore: 'A crystal flame shaped like the torch of the Statue of Liberty. It shines on every good idea.' },
+  glacier: { name: 'Glacier Heart Gem', power: 'Ice Glow', does: 'freezes a wrong answer', lore: 'A heart of blue ice from the top of Vail Mountain. The Avalanche Yeti kept it safe for a thousand winters.' },
+  mirror: { name: 'Frozen Pond Mirror', power: 'Mirror Peek', does: 'shows the next step', lore: 'A hand mirror made from the smoothest pond ice. Look into it and you can see the next step.' },
+  crown: { name: 'Vail Aurora Snowflake Crown', power: 'Aurora', does: 'lights up the right answer', lore: 'A crown made of six snowflakes that shimmer with the green and pink colors of the northern lights.' },
+  lens: { name: 'Telescope Star Lens', power: 'Zoom', does: 'zooms in on the answer', lore: 'The lens from Quinn\'s first telescope. Through it, even tiny stars look big and bright.' },
+  seed: { name: 'Golden Orange Sun Seed', power: 'Sunshine', does: 'grows the right answer', lore: 'One golden seed from the sunniest orange tree in the orchard. Plant an idea and watch it grow.' },
+  chip: { name: 'Silicon Starchip Relic', power: 'Compute', does: 'computes the right answer', lore: 'The star-shaped chip from the very first robot in Santa Clara. It hums a happy beep when you think hard.' },
+};
+const relicName = (id, r) => RPRE[r || 0] + RELICS[id].name;
+let RLN = 0;
+function relicObj(id, r, u) { const M = r >= 3 ? `url(#${u}gd)` : r === 2 ? '#d8c2ff' : r === 1 ? '#e4ecf7' : '#d9b48a'; // metal trim gets fancier with rarity
+  const GEM = [null, '#4fb3ff', '#b77bff', '#ffd93b', `url(#${u}rb)`][r] || '#7fcf8a';
+  const sh = (x, y, rx, ry, rot = -25) => `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${x} ${y})" fill="#fff" opacity=".6" stroke="none"/>`;
+  switch (id) {
+    case 'moonstone': return `<path d="M0 -62 C10 -62 14 -52 14 -46 H-14 C-14 -52 -10 -62 0 -62 Z" fill="${M}"/><circle cx="0" cy="-66" r="6" fill="none" stroke-width="4"/><ellipse cx="0" cy="0" rx="42" ry="50" fill="#e9f0ff"/><path d="M-6 -36 C-34 -26 -34 26 -6 36 C-24 18 -24 -18 -6 -36 Z" fill="${r ? GEM : '#9fb4e8'}" stroke-width="3"/><ellipse cx="0" cy="0" rx="42" ry="50" fill="none" stroke="${M}" stroke-width="7"/>${sh(-16, -26, 12, 6)}<circle cx="16" cy="-10" r="3" fill="#fff" stroke="none"/><circle cx="22" cy="14" r="2" fill="#fff" stroke="none"/>`;
+    case 'compass': return `<circle r="54" fill="${M}"/><circle r="44" fill="#7a9a4a"/>${[[0, -22], [-20, -10], [20, -10], [-20, 14], [20, 14], [0, 26]].map(([x, y]) => `<path d="M${x - 10} ${y} L${x - 5} ${y - 9} L${x + 5} ${y - 9} L${x + 10} ${y} L${x + 5} ${y + 9} L${x - 5} ${y + 9} Z" fill="#a8c46a" stroke-width="2.5"/>`).join('')}<path d="M0 -36 L9 0 L0 36 L-9 0 Z" fill="#fff" stroke-width="3"/><path d="M0 -36 L9 0 L-9 0 Z" fill="#ff3b5c" stroke-width="3"/><circle r="6" fill="${r ? GEM : '#ffd93b'}"/><text y="-58" font-size="16" font-weight="900" text-anchor="middle" fill="#3b2147" stroke="none" font-family="ui-rounded,Arial">N</text>${sh(-24, -26, 14, 6)}`;
+    case 'spoon': return `<path d="M-6 60 L-4 -8 H4 L6 60 Q0 66 -6 60 Z" fill="${M}"/><ellipse cx="0" cy="-24" rx="30" ry="22" fill="${M}"/><circle cx="0" cy="-42" r="28" fill="#ff9ec7"/><path d="M-28 -36 Q-20 -24 -12 -34 Q-4 -24 4 -34 Q12 -24 20 -34 Q26 -28 28 -36" fill="#ff9ec7"/><circle cx="-8" cy="-56" r="4" fill="#fff" stroke="none"/><path d="M0 -84 l5 10 11 1 -8 8 2 11 -10 -6 -10 6 2 -11 -8 -8 11 -1 Z" fill="${r ? GEM : '#ffd93b'}" stroke-width="3"/>${sh(-12, -50, 10, 5)}`;
+    case 'skate': return `<path d="M-34 -50 H8 L12 -6 Q40 -2 44 18 V28 H-34 Z" fill="#dff6ff"/><path d="M-24 -40 h22 M-24 -28 h24 M-24 -16 h26" fill="none" stroke="${r ? GEM : '#7ee8ff'}" stroke-width="5"/><path d="M-26 28 V40 M30 28 V40" fill="none"/><path d="M-44 40 H50 Q58 40 56 48 H-44 Z" fill="${M}"/>${sh(-20, -36, 8, 14, 0)}<circle cx="34" cy="-30" r="4" fill="#fff" stroke="none"/>`;
+    case 'tee': return `<circle cx="0" cy="-44" r="24" fill="#fff"/>${[[-8, -52], [6, -50], [-2, -38], [10, -38], [-12, -40]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.6" fill="#c9d3e8" stroke="none"/>`).join('')}<path d="M-28 -18 H28 L18 -4 L0 60 L-18 -4 Z" fill="${r ? GEM : '#bfefff'}"/><path d="M-28 -18 L-8 -4 L0 60 M28 -18 L8 -4 L0 60 M-18 -4 H18" fill="none" stroke-width="2.5"/>${sh(-12, -6, 6, 10, 0)}${sh(-10, -54, 7, 4)}`;
+    case 'lantern': return `<path d="M-14 -66 Q0 -84 14 -66" fill="none" stroke-width="5"/><rect x="-30" y="-66" width="60" height="12" rx="5" fill="${M}"/><path d="M-34 -54 Q-44 0 -30 44 H30 Q44 0 34 -54 Z" fill="#fff3c4" opacity=".95"/><path d="M0 30 C-22 26 -24 0 -12 -14 L-14 -32 L-4 -20 Q0 -22 4 -20 L14 -32 L12 -14 C24 0 22 26 0 30 Z" fill="${r ? '#ff7a2e' : '#ffb04d'}"/><path d="M0 26 C-12 22 -12 6 0 -4 C12 6 12 22 0 26 Z" fill="#ffe08a" stroke="none"/><rect x="-34" y="44" width="68" height="12" rx="5" fill="${M}"/>${sh(-22, -30, 6, 14, 0)}`;
+    case 'coqui': return `<rect x="-40" y="34" width="80" height="22" rx="8" fill="${M}"/><path d="M-34 34 C-44 0 -30 -30 0 -30 C30 -30 44 0 34 34 Z" fill="#3fbf7a"/><path d="M-34 34 C-50 30 -54 16 -44 10 M34 34 C50 30 54 16 44 10" fill="none" stroke="#2a8a5a" stroke-width="8"/><circle cx="-16" cy="-30" r="14" fill="#3fbf7a"/><circle cx="16" cy="-30" r="14" fill="#3fbf7a"/><circle cx="-16" cy="-30" r="7" fill="${r ? GEM : '#2a1838'}"/><circle cx="16" cy="-30" r="7" fill="${r ? GEM : '#2a1838'}"/><path d="M-14 -4 Q0 6 14 -4" fill="none" stroke-width="3.5"/><path d="M-20 12 q20 10 40 0" fill="none" stroke="#2a8a5a" stroke-width="3"/>${sh(-20, -36, 5, 3)}${sh(-14, 0, 10, 5)}`;
+    case 'sunkey': return `<path d="M-6 -6 H6 V62 H-6 Z" fill="${M}"/><path d="M6 36 H22 V44 H6 Z M6 50 H18 V58 H6 Z" fill="${M}"/>${[...Array(10)].map((_, i) => { const a = i * 36 * Math.PI / 180; return `<path d="M${Math.cos(a) * 26} ${-36 + Math.sin(a) * 26} L${Math.cos(a + 0.18) * 40} ${-36 + Math.sin(a + 0.18) * 40} L${Math.cos(a + 0.36) * 26} ${-36 + Math.sin(a + 0.36) * 26} Z" fill="#ffb300" stroke-width="2.5"/>`; }).join('')}<circle cx="0" cy="-36" r="26" fill="#ffd93b"/><circle cx="0" cy="-36" r="9" fill="${r ? GEM : '#fff3c4'}"/><path d="M-12 -46 a3 3 0 1 0 0.1 0 M12 -46 a3 3 0 1 0 0.1 0" fill="#3b2147"/>${sh(-10, -50, 8, 4)}`;
+    case 'amulet': return `<path d="M-30 -66 Q0 -40 30 -66" fill="none" stroke="#a8683c" stroke-width="5"/><circle r="50" fill="#e8c890"/><circle r="50" fill="none" stroke="${M}" stroke-width="7"/><path d="M0 0 m0 -6 a6 6 0 1 1 -6 6 a12 12 0 1 1 12 12 a18 18 0 1 1 -18 -18 a24 24 0 1 1 24 24" fill="none" stroke="#8a4a2a" stroke-width="4"/>${[...Array(8)].map((_, i) => { const a = i * 45 * Math.PI / 180; return `<path d="M${Math.cos(a) * 36} ${Math.sin(a) * 36} L${Math.cos(a) * 46} ${Math.sin(a) * 46}" stroke="#8a4a2a" stroke-width="4"/>`; }).join('')}<circle r="5" fill="${r ? GEM : '#8a4a2a'}"/>${sh(-22, -26, 12, 5)}`;
+    case 'acorn': return `<path d="M-30 -10 C-30 30 -14 54 0 62 C14 54 30 30 30 -10 Z" fill="${r >= 3 ? `url(#${u}gd)` : '#d99a4e'}"/><path d="M-40 -10 C-40 -40 40 -40 40 -10 Q0 4 -40 -10 Z" fill="#8a5a2a"/><path d="M-30 -24 l60 0 M-34 -16 l68 0" stroke="#6a4020" stroke-width="2.5"/><path d="M0 -34 Q2 -50 12 -56" fill="none" stroke="#6a4020" stroke-width="6"/><circle cx="0" cy="20" r="${r ? 7 : 0}" fill="${GEM || 'none'}"/>${sh(-14, 6, 6, 16, 0)}`;
+    case 'prism': return `<path d="M0 -60 L52 40 H-52 Z" fill="#e9f6ff" opacity=".95"/><path d="M0 -60 L14 40 M0 -60 L-20 40" fill="none" stroke-width="2.5" opacity=".6"/><path d="M0 -14 l7 14 15 2 -11 10 3 15 -14 -8 -14 8 3 -15 -11 -10 15 -2 Z" fill="${r ? GEM : '#ffd93b'}" stroke-width="3"/>${['#ff3b5c', '#ffb300', '#ffe14d', '#5ef08a', '#4fb3ff', '#9b5cff'].map((c0, i) => `<path d="M40 ${10 + i * 6} L76 ${-4 + i * 12}" stroke="${c0}" stroke-width="5" opacity=".9"/>`).join('')}${sh(-16, -10, 6, 18, 25)}`;
+    case 'torch': return `<path d="M-14 6 H14 L8 60 H-8 Z" fill="${M}"/><path d="M-26 -4 H26 L14 10 H-14 Z" fill="${M}"/><path d="M0 -70 C26 -50 24 -24 14 -6 H-14 C-24 -24 -26 -50 0 -70 Z" fill="${r ? GEM : '#ffd36b'}"/><path d="M0 -50 L10 -28 L0 -10 L-10 -28 Z" fill="#fff" opacity=".7" stroke-width="2.5"/><path d="M-8 22 h16 M-6 38 h12" stroke-width="3"/>${sh(-8, -40, 4, 10, 10)}`;
+    case 'glacier': return `<path d="M0 54 C-40 24 -60 -6 -50 -30 C-40 -54 -12 -54 0 -30 C12 -54 40 -54 50 -30 C60 -6 40 24 0 54 Z" fill="${r ? GEM : '#9fe3ff'}"/><path d="M0 -30 L-14 0 L0 54 L14 0 Z M-50 -30 L-14 0 M50 -30 L14 0" fill="none" stroke-width="2.5" opacity=".7"/>${sh(-28, -26, 12, 6)}<circle cx="24" cy="-28" r="3" fill="#fff" stroke="none"/>`;
+    case 'mirror': return `<path d="M-6 30 H6 L8 70 H-8 Z" fill="${M}"/><circle cx="0" cy="-14" r="46" fill="${M}"/><circle cx="0" cy="-14" r="36" fill="#dff6ff"/><path d="M-20 -30 L10 -44 M-24 -10 L20 -30" stroke="#fff" stroke-width="6" stroke-linecap="round"/>${[0, 60, 120, 180, 240, 300].map(a => `<circle cx="${Math.cos(a * Math.PI / 180) * 41}" cy="${-14 + Math.sin(a * Math.PI / 180) * 41}" r="4" fill="${r ? GEM : '#fff'}" stroke-width="2"/>`).join('')}`;
+    case 'crown': return `<path d="M-50 30 L-58 -30 L-26 -4 L0 -50 L26 -4 L58 -30 L50 30 Z" fill="${r >= 3 ? `url(#${u}gd)` : '#e4ecf7'}"/><rect x="-52" y="24" width="104" height="18" rx="7" fill="${M}"/>${[[-58, -38], [0, -60], [58, -38]].map(([x, y]) => `<g transform="translate(${x} ${y})"><path d="M0 -12 V12 M-10 -6 L10 6 M-10 6 L10 -6" stroke="#4fb3ff" stroke-width="4"/></g>`).join('')}<circle cx="0" cy="8" r="8" fill="${r ? GEM : '#ff9ec7'}"/><circle cx="-28" cy="12" r="5" fill="#5ef08a"/><circle cx="28" cy="12" r="5" fill="#ff7ad9"/>${sh(-26, -2, 8, 4)}`;
+    case 'lens': return `<circle r="52" fill="${M}"/><circle r="40" fill="#1b2a5a"/><circle r="40" fill="url(#${u}ln)" stroke="none"/><path d="M0 -16 l5 11 12 1 -9 8 3 12 -11 -6 -11 6 3 -12 -9 -8 12 -1 Z" fill="${r ? GEM : '#ffd93b'}" stroke-width="2.5"/>${[[-22, 18], [20, -24], [24, 20], [-18, -22]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.5" fill="#fff" stroke="none"/>`).join('')}${sh(-20, -26, 14, 6)}`;
+    case 'seed': return `<path d="M0 56 C-30 40 -36 0 -20 -26 C-12 -40 12 -40 20 -26 C36 0 30 40 0 56 Z" fill="${r >= 3 ? `url(#${u}gd)` : '#ffb04d'}"/><path d="M0 -36 C-10 -60 -34 -64 -40 -56 C-30 -44 -16 -40 0 -36 Z M0 -36 C10 -66 36 -68 42 -58 C30 -46 16 -40 0 -36 Z" fill="#5ef08a"/><path d="M0 -30 Q-6 10 0 50" fill="none" stroke-width="2.5" opacity=".5"/><circle cx="0" cy="10" r="${r ? 8 : 0}" fill="${GEM || 'none'}"/>${sh(-12, -10, 6, 14, 0)}`;
+    case 'chip': return `${[-30, -10, 10, 30].map(x => `<path d="M${x} -56 V-44 M${x} 44 V56 M-56 ${x} H-44 M44 ${x} H56" stroke="${M === '#d9b48a' ? '#c9a36a' : '#c0c8e0'}" stroke-width="6"/>`).join('')}<rect x="-44" y="-44" width="88" height="88" rx="12" fill="#2a3358"/><rect x="-44" y="-44" width="88" height="88" rx="12" fill="none" stroke="${M}" stroke-width="5"/><path d="M0 -26 l7 16 17 1 -13 11 4 17 -15 -9 -15 9 4 -17 -13 -11 17 -1 Z" fill="${r ? GEM : '#7ee8ff'}" stroke-width="3"/><path d="M-30 30 h14 M16 -30 h14" stroke="#7ee8ff" stroke-width="3"/>${sh(-24, -28, 12, 5)}`;
+  } return ''; }
+function relicArt(id, r = 0, o = {}) { const u = 'rl' + (++RLN); const R = RAR[r];
+  const defs = `<defs><radialGradient id="${u}au"><stop offset="0" stop-color="${R.glow}" stop-opacity=".95"/><stop offset=".55" stop-color="${R.col}" stop-opacity=".45"/><stop offset="1" stop-color="${R.col}" stop-opacity="0"/></radialGradient>
+    <linearGradient id="${u}gd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff59a"/><stop offset=".5" stop-color="#ffc21a"/><stop offset="1" stop-color="#e08a00"/></linearGradient>
+    <linearGradient id="${u}rb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5fb8"/><stop offset=".25" stop-color="#ffd93b"/><stop offset=".5" stop-color="#5ef08a"/><stop offset=".75" stop-color="#4fb3ff"/><stop offset="1" stop-color="#b77bff"/></linearGradient>
+    <radialGradient id="${u}ln" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#7ee8ff" stop-opacity=".6"/><stop offset="1" stop-color="#7b2ff7" stop-opacity=".2"/></radialGradient></defs>`;
+  let s = '';
+  if (!o.sil) { s += `<circle r="${80 + r * 6}" fill="url(#${u}au)" stroke="none" class="rl-aura"/>`;
+    if (r >= 3) s += `<g class="rl-rays" opacity="${r === 4 ? .7 : .5}">${[...Array(12)].map((_, i) => `<path d="M0 0 L${Math.cos(i * 30 * Math.PI / 180 - .1) * 98} ${Math.sin(i * 30 * Math.PI / 180 - .1) * 98} L${Math.cos(i * 30 * Math.PI / 180 + .1) * 98} ${Math.sin(i * 30 * Math.PI / 180 + .1) * 98} Z" fill="${r === 4 ? ['#ff5fb8', '#ffd93b', '#5ef08a', '#4fb3ff'][i % 4] : '#fff6a8'}" stroke="none"/>`).join('')}</g>`;
+    if (r >= 2) s += `<circle r="74" fill="none" stroke="${R.col}" stroke-width="4" stroke-dasharray="4 10" class="rl-ring"/>`; }
+  s += `<g class="rl-obj" stroke="#3b2147" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round">${relicObj(id, r, u)}</g>`;
+  if (!o.sil && r >= 1) s += [...Array(2 + r * 2)].map((_, i) => { const a = i * 2.4, rr = 62 + (i % 3) * 10; return `<path class="rl-tw" style="animation-delay:${(i * .37).toFixed(2)}s" transform="translate(${(Math.cos(a) * rr).toFixed(1)} ${(Math.sin(a) * rr).toFixed(1)}) scale(${.5 + (i % 2) * .4})" d="M0 -12 Q2 -2 12 0 Q2 2 0 12 Q-2 2 -12 0 Q-2 -2 0 -12Z" fill="${r === 4 ? ['#ff5fb8', '#ffd93b', '#5ef08a', '#4fb3ff'][i % 4] : '#fff'}" stroke="none"/>`; }).join('');
+  if (!o.sil && r === 4) s += `<g class="rl-orbit">${[0, 120, 240].map((a, i) => `<circle cx="${Math.cos(a * Math.PI / 180) * 84}" cy="${Math.sin(a * Math.PI / 180) * 84}" r="6" fill="${['#ff5fb8', '#5ef08a', '#4fb3ff'][i]}" stroke="#fff" stroke-width="2"/>`).join('')}</g>`;
+  return `<svg class="relic r${r}${o.sil ? ' sil' : ''}" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg">${defs}${s}</svg>`; }
+
+// ---------- v3: a light adventure told between sections ----------
+const STORY = {
+  'park:0': [['juniper', "Aspen! Something silly happened in the park last night!"], ['mamafox', 'The Riddle Raccoon hid our park treasures in treasure chests, sweetheart.'], ['juniper', 'He only gives them back to friends who can solve his riddles. Will you help me?'], ['mamafox', 'Learn at every stop, then meet the Riddle Raccoon at the end. Have fun, you two!']],
+  'park:1': [['juniper', 'Our Gazebo Moonstone is glowing! It lights the way to the playground.'], ['scramble', 'Zoom zoom! The Riddle Raccoon ran by the swings with a propeller hat!'], ['marcus', "He borrowed my old shell compass. Stop and check every answer, and we will get it back. Poco a poco."]],
+  'park:2': [['marcus', 'My compass is home! Thank you, Aspen. It points to Nicolò\'s café.'], ['nicolo', 'Ciao, Aspen! That raccoon is in my kitchen wearing a chef hat!'], ['juniper', 'Let\'s practice at every table, then win back the golden spoon!']],
+  'park:3': [['nicolo', 'Grazie, Aspen! My golden spoon is back. Gelato for everyone!'], ['toulouse', 'Bonjour! The raccoon is skating at the ice rink in pink earmuffs!'], ['juniper', 'Lace up, Aspen! Skate, count, and think!']],
+  'park:4': [['toulouse', 'Ooh la la, a crystal skate! You glide like a star, Aspen.'], ['winnie', 'Woof! I smelled the raccoon on the golf green! He hid a diamond tee!'], ['juniper', 'Fore! Let\'s play every hole, Aspen.']],
+  'park:5': [['winnie', 'Woof woof! The diamond tee sparkles in the sun!'], ['marengo', 'Neigh! The raccoon put on a crown. He calls himself the Grand Riddle King!'], ['oscar', 'Hoo. These are the hardest riddles yet. Think it through, step by step.'], ['juniper', 'We can do it together, Aspen!']],
+  'pr:0': [['lola', '«¡Bienvenida!» Welcome to El Yunque, the rainforest! Listen to the coquís sing.'], ['coqui', 'Co-quí! A grumpy Storm Cloud is raining on our jade totem!'], ['lola', 'Learn with us, Aspen, and the cloud will turn into a rainbow!']],
+  'pr:1': [['lola', 'The rain stopped! Now we fly to Old San Juan, with its blue streets.'], ['pearl', 'Coo coo! The Storm Cloud put on a pirate hat at El Morro!'], ['juniper', 'Let\'s find the Sun Key, Aspen! «¡Vamos!»']],
+  'pr:2': [['lola', '«¡Wepa!» The Sun Key opened the gate to Dorado Beach!'], ['winnie', 'Woof! Golf by the ocean! But the cloud is wearing sunglasses now!'], ['lola', 'One more challenge, Aspen. The Taíno Star Amulet is waiting.']],
+  'nyc:0': [['rocco', 'Hey Aspen! Welcome to New York City! I am Scramble\'s cousin, Rocco.'], ['rocco', 'A Sphinx rides the subway, and it hid a golden acorn in Central Park!'], ['juniper', 'Let\'s explore the park and solve every puzzle, Aspen!']],
+  'nyc:1': [['rocco', 'The golden acorn! Thanks, Aspen! Next stop: the big rink under the giant tree.'], ['toulouse', 'Bonjour! The Sphinx is skating in a scarf! Ooh la la!'], ['juniper', 'Let\'s skate and think, Aspen!']],
+  'nyc:2': [['rocco', 'Shh! We are at the Big Library. So many books!'], ['oscar', 'Hoo. The Subway Sphinx keeps its trickiest riddles here. Read every clue carefully.'], ['juniper', 'Reading is our superpower, Aspen!']],
+  'vail:0': [['flurry', 'Hi Aspen! Welcome to Vail, Colorado! Look at all the snow!'], ['flurry', 'A big furry Avalanche Yeti lives on the mountain. He is friendly, but he loves tricky riddles!'], ['juniper', 'Let\'s zoom down the mountain and learn, Aspen!']],
+  'vail:1': [['flurry', 'The Glacier Heart Gem! It glows so blue! Now, to the frozen pond.'], ['juniper', 'I see the Yeti! He is skating in purple earmuffs!'], ['teddy', 'Brrr! I wear my sweater on the ice. You can do it, Aspen!']],
+  'vail:2': [['flurry', 'We made it to the cozy lodge! Hot cocoa time!'], ['mamafox', 'Snuggle in, Aspen. The Yeti is waiting by the fire with his last riddles.'], ['juniper', 'Then the Aurora Crown will be ours!']],
+  'sc:0': [['quinn', 'Hello Aspen! Welcome to Santa Clara, California, where friends build robots!'], ['quinn', 'Our Robot Riddler got a little too clever. It locked the star lens in the lab!'], ['juniper', 'Let\'s do some science, Aspen!']],
+  'sc:1': [['quinn', 'The star lens! Now we can see the sunny orange orchard.'], ['scramble', 'So many trees to climb! The robot is picking oranges in a straw hat!'], ['juniper', 'Let\'s count and think, Aspen!']],
+  'sc:2': [['quinn', 'This is the Robot Garage. The Robot Riddler is in mega mode!'], ['nicolo', 'Ciao, Aspen! Even my café has a robot now. You can beat it!'], ['juniper', 'Our biggest adventure yet, Aspen. Let\'s go!']],
+};
+// what each boss says when it shows up in a story
+
+const BOSSCH = { raccoon: 'Riddle Raccoon', stormcloud: 'Storm Cloud', sphinx: 'Subway Sphinx', yeti: 'Avalanche Yeti', robot: 'Robot Riddler' };
+const BOSS_LINES = {
+  raccoon: { hit: ['Ooh! You got that one!', 'Hee hee, clever friend!', 'My riddles are wobbling!', 'No fair, you are too smart!', 'Okay, okay, one more riddle!'], shield: 'Ha! My riddle shield is up! Can you break it?', boo: 'Hee hee! Try again!' },
+  stormcloud: { hit: ['Pitter patter, you got it!', 'Whoosh! Good one!', 'My thunder went boom... oops!', 'Drizzle drizzle, you are so smart!', '«¡Ay, caramba!» That was right!'], shield: 'Rumble rumble! A rain shield! Can you get past it?', boo: 'Drip drop! Try again!' },
+  sphinx: { hit: ['Purr-fect answer!', 'Meow-velous!', 'You solved my riddle!', 'My whiskers are shaking!', 'Next stop: the right answer!'], shield: 'Mind the gap! My puzzle shield is up!', boo: 'Purr... try again!' },
+  yeti: { hit: ['Brrr! You got it!', 'Snow-tastic!', 'That was ice cold. So cool!', 'My snowball melted!', 'Yeti or not, you are right!'], shield: 'Snow shield! It is frosty in here!', boo: 'Brrr! Try again!' },
+  robot: { hit: ['Beep! Correct!', 'Boop! You are so smart!', 'Error! Too much smart!', 'Whirr! Good thinking!', 'Battery dropping! Nice!'], shield: 'Activating force field! Beep beep!', boo: 'Beep! Try again!' },
+};
+const BOSSES = [
+  ['park:0', 'raccoon', 0, 'the Top-Hat Trickster', 'moonstone', 6, "Hee hee! I'm the Riddle Raccoon! I hid a treasure chest under the gazebo. Solve my riddles to win it!", 'You solved my riddles! The treasure is yours, Aspen!'],
+  ['park:1', 'raccoon', 1, 'the Propeller Prankster', 'compass', 6, "Whirr! It's me again, with my propeller hat! I borrowed Marcus's compass. Solve my riddles to get it back!", 'Okay, okay! Here is the compass. Marcus will be so happy!'],
+  ['park:2', 'raccoon', 2, 'the Chef of Riddles', 'spoon', 7, "Bonjour! I mean, ciao! I'm cooking up riddles in Nicolò's café. Can you taste the answers?", 'Mmm, you are too smart! Take the golden spoon!'],
+  ['park:3', 'raccoon', 3, 'the Ice Rink Racer', 'skate', 7, "Brrr! My earmuffs are on and my riddles are icy! Race me on the rink!", 'Wow, you glide through riddles! The crystal skate is yours!'],
+  ['park:4', 'raccoon', 4, 'the Fairway Fooler', 'tee', 8, "Fore! I hid a diamond golf tee on the green. Answer my riddles in as few tries as you can!", 'A hole in one! The diamond tee is yours, Aspen!'],
+  ['park:5', 'raccoon', 5, 'the Grand Riddle King', 'lantern', 8, "I am the Grand Riddle Raccoon, King of Riddles! These are my hardest riddles of all!", 'You beat the King of Riddles! Take the Fox Spirit Lantern. Now we are friends forever!'],
+  ['pr:0', 'stormcloud', 0, 'Nube of El Yunque', 'coqui', 8, "«¡Hola!» I'm the Storm Cloud of El Yunque! Pitter patter! Answer my rainy riddles to find the jade coquí!", '«¡Qué bueno!» The rain stopped and a rainbow came out! The totem is yours!'],
+  ['pr:1', 'stormcloud', 1, 'Captain of El Morro', 'sunkey', 9, "Ahoy! Captain Storm Cloud guards the old fort of El Morro! Solve my riddles to find the sun key!", '«¡Wepa!» You did it! Take the El Morro Sun Key!'],
+  ['pr:2', 'stormcloud', 2, 'the Sunny Beach Cloud', 'amulet', 10, "Even clouds like the beach! I'm wearing sunglasses today. My riddles are hot like the sand!", 'You are a superstar! Take the Taíno Star Amulet and keep it safe.'],
+  ['nyc:0', 'sphinx', 0, 'of Central Park', 'acorn', 8, "Greetings! I'm the Subway Sphinx. I ride every train in New York! Answer my riddles before the next stop!", 'All aboard the smart train! The golden acorn is yours!'],
+  ['nyc:1', 'sphinx', 1, 'of the Big Rink', 'prism', 9, "I put on my skating scarf for the big rink! My riddles twirl and spin. Can you keep up?", 'What a twirl! The star prism is yours!'],
+  ['nyc:2', 'sphinx', 2, 'Keeper of the Library', 'torch', 10, "Shh! Welcome to the Big Library. I'm the Keeper of riddles. These are my trickiest ones!", 'You are a true thinker! Take the Liberty Torch Crystal!'],
+  ['vail:0', 'yeti', 0, 'of Snowy Mountain', 'glacier', 8, "Rawr! Just kidding. I'm the Avalanche Yeti, and I'm very friendly! Solve my snowy riddles!", 'Snow-tastic! The Glacier Heart Gem is yours!'],
+  ['vail:1', 'yeti', 1, 'of the Frozen Pond', 'mirror', 9, "I love to skate on the frozen pond! My riddles are slippery. Careful now!", 'Wow! Take the Frozen Pond Mirror!'],
+  ['vail:2', 'yeti', 2, 'of the Cozy Lodge', 'crown', 10, "Hot cocoa time! But first, my coziest, trickiest riddles in the whole lodge!", 'You warm my heart! Take the Aurora Snowflake Crown!'],
+  ['sc:0', 'robot', 0, 'Lab Edition', 'lens', 8, "Beep boop! I am the Robot Riddler, lab edition! Computing riddles now!", 'Calculation complete: you are amazing! Take the star lens!'],
+  ['sc:1', 'robot', 1, 'Orchard Edition', 'seed', 9, "Beep! I am picking oranges and riddles today! Ready, Aspen?", 'Juicy work! Take the Golden Orange Sun Seed!'],
+  ['sc:2', 'robot', 2, 'Mega Edition', 'chip', 10, "MEGA MODE ACTIVATED! These are my biggest, brainiest riddles! Beep boop!", 'System says: you are a genius! The Silicon Starchip is yours!'],
+].map(([id, ch, form, title, relic, hp, intro, defeat]) => ({ id, ch, form, title, relic, hp, intro, defeat, name: (id === 'park:5' ? 'Grand ' : '') + BOSSCH[ch], w: id.split(':')[0], si: +id.split(':')[1] }));
+const BOSS = Object.fromEntries(BOSSES.map(b => [b.id, b]));
+const bossName = b => b.name + ', ' + b.title;
+// sections of each world: [{name, nodes}]
+const secsOf = w => w === 'park' ? C.PATH : WORLDS[w].secs;
+const secStart = (w, si) => secsOf(w).slice(0, si).reduce((s, x) => s + x.nodes.length, 0);
+const secEnd = (w, si) => secStart(w, si) + secsOf(w)[si].nodes.length;
+const wPos = w => w === 'park' ? ST.path : ((ST.wp || {})[w] || 0);
+const beaten = id => !!(ST.boss && ST.boss[id]);
+const relicOf = id => BOSS[id] && BOSS[id].relic;
+const hasRelic = rid => ST.relics && ST.relics[rid] != null;
+const prevBoss = b => b.si > 0 ? BOSS[b.w + ':' + (b.si - 1)] : null;
+// v3 migration: sections she already passed are not blocked by bosses she has not fought yet
+(function migrate() { ST.boss = ST.boss || {}; ST.relics = ST.relics || {}; ST.grand = ST.grand || {}; ST.seenStory = ST.seenStory || {};
+  if (!ST.v3) { ['park', ...WKEYS].forEach(w => secsOf(w).forEach((s, si) => { if (si > 0 && wPos(w) >= secStart(w, si)) ST.grand[w + ':' + si] = 1; })); ST.v3 = 1; try { localStorage.setItem(KEY, JSON.stringify(ST)); } catch (e) {} } })();
+// first section whose start is blocked by an unbeaten boss (stops advancing past it)
+function gateOf(w) { const S = secsOf(w); for (let si = 1; si < S.length; si++) { if (!beaten(w + ':' + (si - 1)) && !ST.grand[w + ':' + si]) return si; } return S.length; }
+function effPos(w) { const g = gateOf(w); return Math.min(wPos(w), g < secsOf(w).length ? secStart(w, g) : Infinity); }
+function bossState(b) { if (beaten(b.id)) return 'done'; if (wPos(b.w) < secEnd(b.w, b.si)) return 'locked'; const pb = prevBoss(b); if (pb && !hasRelic(pb.relic)) return 'needRelic'; return 'ready'; }
+// mastery: boss first-try accuracy plus the section's medals
+function sectionMedals(w, si) { const ids = secsOf(w)[si].nodes; return ids.reduce((s, id) => s + ({ gold: 1, silver: 0.67, bronze: 0.33 }[medalOf(id)] || 0), 0) / Math.max(1, ids.length); }
+function rarityOf(acc, med) { const sc = 0.75 * acc + 0.25 * med; return acc >= 1 && med >= 0.6 ? 4 : sc >= 0.8 ? 3 : sc >= 0.65 ? 2 : sc >= 0.45 ? 1 : 0; }
+// the relic that powers a run: in a path or boss, the relic from the section before; otherwise the equipped one
+function activeRelic() { if (!RUN) return null; let id = null;
+  if (RUN.sec) { const [w, si] = RUN.sec.split(':'); const pb = +si > 0 ? BOSS[w + ':' + (+si - 1)] : null; if (pb && hasRelic(pb.relic)) id = pb.relic; }
+  if (!id && ST.equip && hasRelic(ST.equip)) id = ST.equip;
+  return id ? { id, r: ST.relics[id] } : null; }
+// ---------- relic power button in the play bar ----------
+function relicBtn() { const b = $('pRelic'); if (!RUN) { b.style.display = 'none'; return; } const ar = RUN.relic;
+  if (!ar) { b.style.display = 'none'; return; } b.style.display = '';
+  const left = RUN.charges; b.innerHTML = `<span class="pr-art">${relicArt(ar.id, ar.r)}</span><span class="pr-pips">${[...Array(RAR[ar.r].ch + (ar.r >= 3 ? 1 : 0))].map((_, k) => `<i class="${k < left ? 'on' : ''}"></i>`).join('')}</span>`;
+  b.classList.toggle('empty', left <= 0); }
+function useRelic() { if (!RUN) return; if (RUN.shield) { if (!RUN.shieldBusy) { RUN.shieldBusy = true; breakShield(); } return; } if (RUN.locked) return; const ar = RUN.relic; if (!ar) return;
+  if (RUN.charges <= 0) { SND.boop(); wiggle($('pRelic')); speak('Your relic is resting. It will be ready in the next game.'); return; }
+  const strong = ar.r >= 3; const ok = RUN.help ? RUN.help(strong) : false;
+  if (!ok) { SND.boop(); wiggle($('pRelic')); speak('Your relic cannot help with this one. You can do it!'); return; }
+  RUN.charges--; RUN.itemPow = true; RUN.powUsed = (RUN.powUsed || 0) + 1; SND.medal(); sparkEl($('pRelic'), 18); relicBtn();
+  const R0 = RELICS[ar.id]; speak(`${R0.power}! It ${R0.does}.`); }
+// ---------- boss gate on the map ----------
+function tapBoss(b) { const st = bossState(b);
+  if (st === 'locked') { SND.boop(); sayBub($('mapJun'), `Finish every stop in ${secsOf(b.w)[b.si].name} to meet the boss!`); return; }
+  if (st === 'needRelic') { const pb = prevBoss(b); SND.boop(); sayBub($('mapJun'), `You need the ${RELICS[pb.relic].name} first. Beat the ${bossName(pb)}!`); return; }
+  SND.tap(); openBossIntro(b); }
+function openBossIntro(b) { const L = $('bossIntro'); const pb = prevBoss(b); const rl = pb && hasRelic(pb.relic) ? { id: pb.relic, r: ST.relics[pb.relic] } : null; const rec = ST.boss[b.id];
+  L.className = 'bossintro on w-' + b.w;
+  L.innerHTML = `<div class="bi-sky"></div><div class="bi-card"><div class="bi-tag">BOSS CHALLENGE</div><div class="bi-chr alive" id="biChr">${CHARS.svg(b.ch, { form: b.form })}</div><div class="bi-name">${b.name}</div><div class="bi-title">${b.title}</div>
+    <div class="hpbar big"><i style="width:100%"></i><em>${b.hp} riddles</em></div>
+    <div class="bi-row">${rl ? `<div class="bi-relic"><span class="bi-ra">${relicArt(rl.id, rl.r)}</span><span><b>${relicName(rl.id, rl.r)}</b><small>${RAR[rl.r].n} relic, ready to break the boss shield</small></span></div>` : `<div class="bi-relic"><span class="bi-ra">${sparkRelic()}</span><span><b>Friendship Spark</b><small>Juniper's power, ready to break the boss shield</small></span></div>`}
+    <div class="bi-prize"><span class="bi-ra">${relicArt(b.relic, rec ? rec.r : 0, { sil: !rec })}</span><span><b>Prize: ${rec ? relicName(b.relic, rec.r) : 'a mystery relic'}</b><small>${rec ? (rec.r < 4 ? 'Play again with fewer hints to upgrade it!' : 'Mythic! The very best!') : 'The fewer hints you need, the rarer it gets!'}</small></span></div></div>
+    <div class="bi-btns"><button class="bigbtn back" id="biBack">${ICON.back}</button><button class="playbtn" id="biGo"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#ff3f7f" stroke="#222" stroke-width="5"/><path d="M40 28 L74 50 L40 72 Z" fill="#fff" stroke="#222" stroke-width="5" stroke-linejoin="round"/></svg><span>Let's go!</span></button></div></div>`;
+  SND.whoosh(); setTimeout(() => { SND.fanfare(); sparkEl($('biChr'), 24); }, 500);
+  setTimeout(() => sayBub($('biChr'), b.intro), 700);
+  $('biBack').onclick = () => { SND.tick(); hush(); bubbleOff(); L.classList.remove('on'); };
+  $('biGo').onclick = () => { SND.pop(); hush(); bubbleOff(); L.classList.remove('on'); startBoss(b); }; }
+const sparkRelic = () => `<svg class="relic r1" viewBox="-100 -100 200 200"><circle r="80" fill="#ffe0f0" opacity=".6"/><g stroke="#3b2147" stroke-width="4.5" stroke-linejoin="round"><path d="M0 -60 Q8 -8 60 0 Q8 8 0 60 Q-8 8 -60 0 Q-8 -8 0 -60 Z" fill="#ff7ad9"/><path d="M0 18 C-26 0 -22 -22 -6 -20 Q0 -18 0 -12 Q0 -18 6 -20 C22 -22 26 0 0 18 Z" fill="#fff"/></g></svg>`;
+function bossItems(b) { const ids = secsOf(b.w)[b.si].nodes; const pools = ids.map(id => { const a = C.BY[id]; let list = []; for (let k = 0; k < 2; k++) list = list.concat(C.makeItems(a)); return list.filter(it => !['board', 'read', 'trace'].includes(it.type)); }).filter(p => p.length);
+  // harder first: prefer the tougher activities, then interleave them
+  pools.sort((x, y) => 0); const out = []; let k = 0, guard = 0;
+  const order = ids.map((id, i) => [tierOf(id), i]).sort((x, y) => y[0] - x[0]).map(x => x[1]);
+  while (out.length < b.hp && guard++ < 200) { const p = pools[order[k % order.length] % pools.length]; k++; if (p && p.length) out.push(p.splice(p.length > 2 ? 1 : 0, 1)[0]); }
+  return C.helpers.shuffle(out).slice(0, b.hp); }
+function startBoss(b) { const items = bossItems(b);
+  RUN = { a: { id: 'boss', title: b.name, icon: 'star', subj: 'logic' }, id: 'boss:' + b.id, mode: 'boss', boss: b, sec: b.id, world: b.w, level: 9, items, i: 0, hinted: false, miss: false, got: [], fixes: 0, hp: items.length, hpMax: items.length, first: 0, shieldAt: Math.ceil(items.length / 2), shieldDone: false };
+  backTo = 'map'; RUN.relic = activeRelic(); RUN.charges = RUN.relic ? RAR[RUN.relic.r].ch + (RUN.relic.r >= 3 ? 1 : 0) : 0;
+  $('play').classList.add('bossmode'); show('play'); $('guideFox').innerHTML = juniperSvg(ST.outfit, 'wave');
+  $('bossBox').innerHTML = `<div class="bb-chr alive" id="bbChr">${CHARS.svg(b.ch, { form: b.form })}</div><div class="hpbar"><i id="bbHp" style="width:100%"></i><em id="bbHpT">${RUN.hp}/${RUN.hpMax}</em></div><div class="bb-shield" id="bbShield"></div>`;
+  renderItem(); }
+function bossHit() { const b = RUN.boss; RUN.hp = Math.max(0, RUN.hp - 1); const pct = 100 * RUN.hp / RUN.hpMax; $('bbHp').style.width = pct + '%'; $('bbHpT').textContent = RUN.hp + '/' + RUN.hpMax;
+  const c = $('bbChr'); c.classList.remove('hit'); void c.offsetWidth; c.classList.add('hit'); sparkEl(c, 16); tone(220, 0, 0.12, 'square', 0.08, 120); setTimeout(() => tone(660, 0, 0.18, 'triangle', 0.12, 990), 80); }
+function bossLine(kind) { const L = BOSS_LINES[RUN.boss.ch]; return kind === 'hit' ? L.hit[RUN.i % L.hit.length] : L[kind]; }
+function raiseShield(then) { RUN.shield = then; RUN.shieldDone = true; const sh = $('bbShield'); sh.className = 'bb-shield on s-' + RUN.boss.ch; SND.whoosh();
+  const pr = $('pRelic'); if (!RUN.relic) { pr.style.display = ''; pr.innerHTML = `<span class="pr-art">${sparkRelic()}</span>`; } pr.classList.add('call');
+  speak(bossLine('shield'), { who: $('bbChr'), onend: () => { if (RUN && RUN.shield) speak('Use your relic, Aspen! Tap it to break the shield!', { who: $('guideFox') }); } }); }
+function breakShield() { const then = RUN.shield; RUN.shield = null; const pr = $('pRelic'); pr.classList.remove('call'); const sh = $('bbShield');
+  const r0 = pr.getBoundingClientRect(), r1 = $('bbChr').getBoundingClientRect(); const fly = document.createElement('div'); fly.className = 'relicfly'; fly.innerHTML = pr.querySelector('.pr-art').innerHTML;
+  fly.style.left = r0.left + 'px'; fly.style.top = r0.top + 'px'; document.body.appendChild(fly); fly.getBoundingClientRect();
+  fly.style.transform = `translate(${r1.left + r1.width / 2 - r0.left - 40}px,${r1.top + r1.height / 2 - r0.top - 40}px) scale(1.6) rotate(360deg)`;
+  SND.whoosh(); setTimeout(() => { fly.remove(); sh.classList.add('pop'); SND.medal(); sparkEl($('bbChr'), 40); confettiBit(); setTimeout(() => { sh.className = 'bb-shield'; }, 600);
+    if (!RUN.relic) pr.style.display = 'none'; else relicBtn(); speak('Your relic broke the shield! Hooray!', { who: $('guideFox'), onend: () => setTimeout(then, 200) }); }, 700); }
+function confettiBit() { burst(24); }
+function bossWin() { const b = RUN.boss; const acc = RUN.first / RUN.hpMax, med = sectionMedals(b.w, b.si); const r = rarityOf(acc, med);
+  const prev = ST.boss[b.id]; const best = Math.max(r, prev ? prev.r : -1); const upgraded = prev && r > prev.r; const isNew = !prev;
+  ST.boss[b.id] = { r: best, n: (prev ? prev.n : 0) + 1, acc: Math.max(acc, prev ? prev.acc || 0 : 0) }; ST.relics[b.relic] = Math.max(ST.relics[b.relic] ?? -1, r);
+  if (!ST.equip || (ST.relics[ST.equip] ?? -1) <= ST.relics[b.relic]) ST.equip = b.relic;
+  ST.stars += 5 + r * 2; ST.done++; const d = today(); ST.days[d] = (ST.days[d] || 0) + 1;
+  const wasOpen = WKEYS.filter(worldOpen); const newT = checkTrophies(); const newW = WKEYS.filter(k => worldOpen(k) && !wasOpen.includes(k)); save();
+  const c = $('bbChr'); c.classList.add('beat'); SND.fanfare(); confetti();
+  speak(b.defeat, { who: c }); setTimeout(() => openChest(b, r, { acc, med, upgraded, isNew, best, newT, newW }), 2600); }
+// ---------- treasure chest ----------
+function chestSvg(r) { const R = RAR[r]; return `<svg viewBox="-120 -150 240 230" xmlns="http://www.w3.org/2000/svg"><g stroke="#3b2147" stroke-width="5" stroke-linejoin="round">
+  <ellipse cx="0" cy="66" rx="110" ry="14" fill="#000" opacity=".18" stroke="none"/>
+  <path d="M-96 -10 H96 V58 Q96 66 88 66 H-88 Q-96 66 -96 58 Z" fill="#b8692f"/><path d="M-96 6 H96 M-96 40 H96" stroke="#7a3f18" stroke-width="4"/>
+  <path d="M-96 -10 H-70 V66 H-88 Q-96 66 -96 58 Z M96 -10 H70 V66 H88 Q96 66 96 58 Z" fill="${R.col}"/><rect x="-16" y="-6" width="32" height="34" rx="6" fill="${R.col}"/><circle cx="0" cy="8" r="5" fill="#3b2147"/><path d="M0 12 V20" stroke-width="4"/>
+  <g class="lid"><path d="M-96 -10 V-36 Q-96 -86 0 -86 Q96 -86 96 -36 V-10 Z" fill="#c97a3a"/><path d="M-96 -10 H-70 V-78 Q-90 -66 -96 -36 Z M96 -10 H70 V-78 Q90 -66 96 -36 Z" fill="${R.col}"/><path d="M-60 -70 Q0 -84 60 -70" fill="none" stroke="#fff" stroke-width="5" opacity=".5"/></g></g></svg>`; }
+function openChest(b, r, info) { const L = $('chest'); const R0 = RELICS[b.relic], RR = RAR[r];
+  L.className = 'chest on r' + r; RUN && (RUN.locked = true);
+  L.innerHTML = `<div class="ch-rays"></div><div class="ch-card"><div class="ch-box">${chestSvg(r)}<div class="ch-beam"></div><div class="ch-relic">${relicArt(b.relic, r)}</div></div>
+    <div class="ch-rar">${RR.n}${info.upgraded ? ' · Upgraded!' : ''}</div><div class="ch-name">${relicName(b.relic, r)}</div>
+    <div class="ch-lore">${R0.lore}</div><div class="ch-pow"><b>Power: ${R0.power}</b> · ${R0.does}${r >= 3 ? ' (super strong!)' : ''} · ${RR.ch + (r >= 3 ? 1 : 0)} use${RR.ch + (r >= 3 ? 1 : 0) > 1 ? 's' : ''} each game</div>
+    <div class="ch-mast"><span>First try: <b>${RUN ? RUN.first : 0}/${RUN ? RUN.hpMax : 0}</b></span><span>Section medals: <b>${Math.round(info.med * 100)}%</b></span>${info.best > r ? `<span>Your best: <b>${RAR[info.best].n}</b></span>` : ''}</div>
+    <button class="playbtn" id="chGo"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#43a047" stroke="#222" stroke-width="5"/><path d="M28 52 l14 14 30 -30" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Hooray!</span></button></div>`;
+  SND.whoosh(); setTimeout(() => { L.classList.add('shake'); tone(200, 0, 0.1, 'square', 0.06); }, 300);
+  setTimeout(() => { L.classList.add('open'); tierFanfare(Math.min(5, r + 1)); sparkEl(L.querySelector('.ch-box'), 30 + r * 10); if (r >= 3) confetti(); }, 1500);
+  setTimeout(() => { speak(`You found the ${relicName(b.relic, r)}! It is ${RR.n === 'Epic' ? 'an' : 'a'} ${RR.n} relic!`, { who: null }); }, 1900);
+  $('chGo').onclick = () => { SND.pop(); hush(); L.className = 'chest'; $('play').classList.remove('bossmode'); const nT = info.newT, nW = info.newW; RUN = null; openMap(b.w);
+    if (nT.length || nW.length) setTimeout(() => revealAwards([...nT, ...nW.map(k => ({ world: k, tier: 5, name: WORLDS[k].name, desc: 'A new world and a new friend are waiting!' }))]), 600); }; }
+// ---------- relic vault ----------
+function openVault() { setStars(); show('vault'); renderVault(); speak('This is your Relic Vault, Aspen! Tap a treasure to hear its story.'); }
+function renderVault() { const eq = ST.equip && hasRelic(ST.equip) ? ST.equip : null;
+  $('vEquip').innerHTML = eq ? `<div class="ve-ped"><span class="ve-art">${relicArt(eq, ST.relics[eq])}</span></div><div class="ve-txt"><small>Equipped relic</small><b>${relicName(eq, ST.relics[eq])}</b><span class="rpill r${ST.relics[eq]}">${RAR[ST.relics[eq]].n}</span><em>${RELICS[eq].power}: ${RELICS[eq].does}</em></div>`
+    : `<div class="ve-ped empty"><span class="ve-art">${relicArt('moonstone', 0, { sil: true })}</span></div><div class="ve-txt"><small>Equipped relic</small><b>No relic yet</b><em>Beat a boss at the end of a park section to win your first treasure!</em></div>`;
+  const n = BOSSES.filter(b => hasRelic(b.relic)).length;
+  $('vCount').textContent = `${n} of ${BOSSES.length} relics`;
+  $('vGrid').innerHTML = ['park', ...WKEYS].map(w => `<div class="vrow"><div class="vrow-h">${w === 'park' ? 'Washington Market Park' : WORLDS[w].name}</div><div class="vrow-i">${BOSSES.filter(b => b.w === w).map(b => { const has = hasRelic(b.relic), r = has ? ST.relics[b.relic] : 0;
+    return `<button class="vcard${has ? ' got r' + r : ' locked'}${eq === b.relic ? ' eq' : ''}" data-b="${b.id}"><span class="vc-art">${relicArt(b.relic, r, { sil: !has })}</span><span class="vc-n">${has ? RELICS[b.relic].name : '???'}</span>${has ? `<span class="rpill r${r}">${RAR[r].n}</span>` : `<small>${b.name}</small>`}</button>`; }).join('')}</div></div>`).join('');
+  $('vGrid').querySelectorAll('.vcard').forEach(c => c.onclick = e => { const b = BOSS[c.dataset.b]; sparkAt(e.clientX, e.clientY, 10);
+    if (!hasRelic(b.relic)) { SND.boop(); wiggle(c); speak(`Beat the ${bossName(b)} to find this treasure!`); return; } SND.pop(); openLore(b); }); }
+function openLore(b) { const r = ST.relics[b.relic], R0 = RELICS[b.relic]; const L = $('lore'); L.className = 'lore on r' + r;
+  L.innerHTML = `<div class="lo-card"><div class="lo-art spin">${relicArt(b.relic, r)}</div><div class="lo-name">${relicName(b.relic, r)}</div><div class="rarladder">${RAR.map((x, k) => `<span class="rpill r${k}${k <= r ? '' : ' off'}">${x.n}</span>`).join('')}</div>
+    <div class="lo-txt">${R0.lore}</div><div class="lo-pow"><b>Power: ${R0.power}</b> · ${R0.does}</div><div class="lo-from">Won from the ${bossName(b)}${r < 4 ? '. Beat the boss again with fewer hints to upgrade it!' : '. It is Mythic, the rarest of all!'}</div>
+    <div class="bi-btns"><button class="bigbtn back" id="loBack">${ICON.back}</button><button class="bigbtn go" id="loEq">${ST.equip === b.relic ? 'Equipped' : 'Equip'}</button></div></div>`;
+  speak(`${relicName(b.relic, r)}. ${R0.lore}`);
+  $('loBack').onclick = () => { SND.tick(); hush(); L.className = 'lore'; };
+  $('loEq').onclick = () => { ST.equip = b.relic; save(); SND.medal(); sparkEl($('loEq'), 20); $('loEq').textContent = 'Equipped'; renderVault(); speak(`${R0.power} is ready!`); };
+  L.onclick = e => { if (e.target === L) { hush(); L.className = 'lore'; } }; }
+// ---------- story beats between sections ----------
+function storyFor(w, si) { return (STORY[w + ':' + si] || []); }
+function playStory(w, si, then) { const lines = storyFor(w, si); if (!lines.length) { if (then) then(); return; } ST.seenStory[w + ':' + si] = 1; save();
+  const L = $('story'); L.className = 'story on w-' + w; let i = 0; const sec = secsOf(w)[si];
+  L.innerHTML = `<div class="st-card"><div class="st-title">${sec.name}</div><div class="st-stage"><div class="st-a alive" id="stA"></div><div class="st-b alive" id="stB"></div></div><div class="st-bub" id="stBub"></div><div class="st-dots">${lines.map((_, k) => `<i data-k="${k}"></i>`).join('')}</div><button class="bigbtn go st-next" id="stNext">${ICON.next}</button></div>`;
+  const chars = [...new Set(lines.map(l => l[0]))]; const left = chars[0], right = chars.find(c => c !== left) || 'juniper';
+  const art = c => c === 'juniper' ? juniperSvg(ST.outfit, 'wave') : BOSSCH[c.split('.')[0]] ? CHARS.svg(c.split('.')[0], { form: +(c.split('.')[1] || 0) }) : CHARS.svg(c);
+  $('stA').innerHTML = art(left); $('stB').innerHTML = art(right); $('stA').classList.toggle('jun', left === 'juniper'); $('stB').classList.toggle('jun', right === 'juniper');
+  const step = () => { if (i >= lines.length) { hush(); L.className = 'story'; if (then) then(); return; } const [c, t] = lines[i]; const el = c === left ? $('stA') : $('stB');
+    [$('stA'), $('stB')].forEach(x => x.classList.toggle('dim', x !== el)); L.querySelectorAll('.st-dots i').forEach((d, k) => d.classList.toggle('on', k <= i));
+    $('stBub').innerHTML = shown(t); $('stBub').className = 'st-bub on ' + (el === $('stA') ? 'l' : 'r'); bounceChr(el); const my = ++i;
+    speak(t, { who: el, ch: c.split('.')[0], onend: () => { if (i === my && L.classList.contains('on')) setTimeout(() => { if (i === my) step(); }, 700); } }); };
+  $('stNext').onclick = e => { e.stopPropagation(); SND.tick(); step(); }; step(); }
+// ---------- relic awards ----------
+const relicCount = (min = 0) => Object.values(ST.relics || {}).filter(r => r >= min).length;
+ADD(2, 'medal', '#ffb300', 'rl_first', 'First Treasure', 'Beat a boss and open a treasure chest', () => relicCount() >= 1, P_(() => relicCount(), 1));
+ADD(3, 'gem', '#b77bff', 'rl_epic', 'Epic Explorer', 'Win an Epic relic or better', () => relicCount(2) >= 1, P_(() => relicCount(2), 1));
+ADD(4, 'crystal', '#ffc21a', 'rl_legend', 'Legendary Finder', 'Win a Legendary relic or better', () => relicCount(3) >= 1, P_(() => relicCount(3), 1));
+ADD(4, 'crystal', '#7fcf8a', 'rl_park', 'Park Treasure Keeper', 'Win all 6 park relics', () => BOSSES.filter(b => b.w === 'park').every(b => hasRelic(b.relic)), P_(() => BOSSES.filter(b => b.w === 'park' && hasRelic(b.relic)).length, 6));
+ADD(5, 'rainbowcrown', '#ff5fb8', 'rl_myth', 'Mythic Master', 'Win a Mythic relic: every boss riddle right on the first try', () => relicCount(4) >= 1, P_(() => relicCount(4), 1));
+ADD(5, 'cosmic', '#7b2ff7', 'rl_all', 'Keeper of All Relics', 'Win all 18 relics in every world', () => relicCount() >= BOSSES.length, P_(() => relicCount(), BOSSES.length));
+// ---------- v3: every boss / story / relic line, for the voice pre-render ----------
+function extraVoLines(add, gen) {
+  Object.keys(BOSS_LINES).forEach(c => { const L = BOSS_LINES[c]; L.hit.forEach(t => add(t, c)); add(L.shield, c); add(L.boo, c); });
+  ['Use your relic, Aspen! Tap it to break the shield!', 'Your relic broke the shield! Hooray!', 'Your relic is resting. It will be ready in the next game.', 'Your relic cannot help with this one. You can do it!',
+   'This is your Relic Vault, Aspen! Tap a treasure to hear its story.', 'Finish the stops before this one first. Poco a poco!'].forEach(t => add(t));
+  BOSSES.forEach(b => { add(b.intro, b.ch); add(b.defeat, b.ch); const R0 = RELICS[b.relic], pb = prevBoss(b);
+    add(`${R0.power}! It ${R0.does}.`); add(`${R0.power} is ready!`);
+    add(`Beat the ${bossName(b)} to find this treasure!`); add(`A mystery treasure! Beat the ${bossName(b)} to open it.`); add(`Beat the ${bossName(b)} to open this part of the map!`);
+    add(`Finish every stop in ${secsOf(b.w)[b.si].name} to meet the boss!`, 'juniper', gen);
+    if (pb) { add(`You need the ${RELICS[pb.relic].name} first. Beat the ${bossName(pb)}!`); add(`The ${RELICS[pb.relic].name} opens this boss gate!`); add(`This gate needs the ${RELICS[pb.relic].name}.`); }
+    RAR.forEach((RR, r) => { add(`You found the ${relicName(b.relic, r)}! It is ${RR.n === 'Epic' ? 'an' : 'a'} ${RR.n} relic!`); add(`${relicName(b.relic, r)}. ${R0.lore}`); }); });
+  Object.keys(STORY).forEach(k => STORY[k].forEach(([c, t]) => add(t, c.split('.')[0]))); }
+
 // ---------- shelves ----------
 let shelfTab = 'math';
 function openShelves() { setStars(); show('shelves'); renderShelves(); }
@@ -2378,7 +3077,7 @@ function startActivity(id, mode = 'free', ctx = {}) { const a = C.BY[id]; if (!a
   const world = mode.startsWith('path') ? (ctx.world || 'park') : null, level = ctx.level || 0;
   const items = C.makeItems(a); const extra = a.n >= 3 ? (level >= 3 ? 4 : level >= 2 ? 2 : 0) : 0;
   for (let k = 0; k < 3 && items.length < a.n + extra; k++) C.makeItems(a).forEach(it => { if (items.length < a.n + extra) items.push(it); });
-  RUN = { a, id, mode, world, level, items, i: 0, hinted: false, miss: false, got: [], fixes: 0 };
+  RUN = { a, id, mode, world, level, items, i: 0, hinted: false, miss: false, got: [], fixes: 0, sec: mode.startsWith('path') ? ctx.sec || null : null }; RUN.relic = activeRelic(); RUN.charges = RUN.relic ? RAR[RUN.relic.r].ch + (RUN.relic.r >= 3 ? 1 : 0) : 0; $('play').classList.remove('bossmode');
   const W0 = world && world !== 'park' ? WORLDS[world] : null; const t = tierOf(id);
   $('introIc').innerHTML = W0 ? CHARS.svg(W0.friend) : (ICONS.icon(a.who) || ICONS.icon(a.icon) || '');
   $('introTitle').textContent = a.title; $('introLine').innerHTML = shown(a.line);
@@ -2386,36 +3085,38 @@ function startActivity(id, mode = 'free', ctx = {}) { const a = C.BY[id]; if (!a
   const pre = W0 ? W0.cheer[Math.floor(Math.random() * W0.cheer.length)] + ' ' : '';
   $('intro').classList.add('on'); speak(`${pre}${a.title}. ${a.line}`); }
 $('introGo').onclick = () => { SND.pop(); $('intro').classList.remove('on'); show('play'); $('guideFox').innerHTML = juniperSvg(ST.outfit, 'wave'); renderItem(); };
-$('intro').addEventListener('click', e => { if (e.target.id === 'intro') { $('intro').classList.remove('on'); try { speechSynthesis.cancel(); } catch (x) {} } });
+$('intro').addEventListener('click', e => { if (e.target.id === 'intro') { $('intro').classList.remove('on'); hush(); } });
 $('pHome').innerHTML = ICON.close; $('pSpeak').innerHTML = ICON.speak;
-$('pHome').onclick = () => { SND.tick(); try { speechSynthesis.cancel(); } catch (e) {} hideHint(); RUN = null; const m = document.querySelector('.screen.on'); goBack(); };
+$('pHome').onclick = () => { SND.tick(); hush(); hideHint(); RUN = null; $('play').classList.remove('bossmode'); $('pRelic').classList.remove('call'); const m = document.querySelector('.screen.on'); goBack(); };
 function goBack() { if (backTo === 'map') openMap(MAPW); else if (backTo === 'shelves') openShelves(); else goHome(); }
 $('guideFox').onclick = () => { if (RUN && !RUN.locked) { bounceChr($('guideFox')); speak(cur().say); } };
 $('pSpeak').onclick = () => { if (RUN) { SND.tick(); speak(cur().say); } };
 const cur = () => RUN.items[RUN.i];
 function progress() { $('pProg').innerHTML = RUN.items.map((_, k) => `<i>${k < RUN.i || RUN.got[k] ? ICON.star : ICON.starOff}</i>`).join(''); }
-function renderItem() { const it = cur(); RUN.hinted = false; RUN.locked = false; hideHint(); progress();
+function renderItem() { const it = cur(); RUN.hinted = false; RUN.locked = false; RUN.itemMiss = false; RUN.itemPow = false; RUN.help = null; hideHint(); progress(); relicBtn();
   $('bubble').innerHTML = shown(it.say); stage.className = 'stage swap'; stage.innerHTML = ''; setTimeout(() => stage.classList.remove('swap'), 500);
   (R[it.type] || R.choice)(it, stage); bindSay(stage);
-  speak(it.say); }
+  speak(it.say); if (it.hint) VO.prefetch(it.hint, 'marcus'); const nx = RUN.items[RUN.i + 1]; if (nx) VO.prefetch(nx.say, 'juniper'); }
 function bindSay(root) { root.querySelectorAll('[data-say]').forEach(w => w.addEventListener('click', e => { e.stopPropagation(); const s = w.dataset.say; if (!s) return; root.querySelectorAll('.w.lit').forEach(x => x.classList.remove('lit')); w.classList.add('lit'); setTimeout(() => w.classList.remove('lit'), 900); SND.tick(); w.dataset.es ? speakEs(s) : speak(s); })); }
 function correct(sayFirst) { if (!RUN || RUN.locked) return; RUN.locked = true; RUN.got[RUN.i] = true; if (RUN.hinted) { ST.fixes++; RUN.fixes++; }
+  if (RUN.mode === 'boss') { if (!RUN.itemMiss && !RUN.itemPow) RUN.first++; bossHit(); }
   SND.ding(); setTimeout(SND.star, 200); hideHint(); progress();
   const gf = $('guideFox'); gf.innerHTML = juniperSvg(ST.outfit, 'cheer'); gf.classList.remove('hop'); void gf.offsetWidth; gf.classList.add('hop');
   const p = PRAISE[Math.floor(Math.random() * PRAISE.length)]; $('bubble').innerHTML = shown(p); burst(12); sparkAt(LASTP.x, LASTP.y, 18, 1.4); const le = LASTP.el; if (le && stage.contains(le)) { le.classList.remove('yay'); void le.offsetWidth; le.classList.add('yay'); }
   const bb = $('bubble'); bb.classList.remove('pop'); void bb.offsetWidth; bb.classList.add('pop');
-  const go = () => { if (!RUN) return; RUN.i++; gf.innerHTML = juniperSvg(ST.outfit, 'wave'); if (RUN.i >= RUN.items.length) finish(); else renderItem(); };
+  const go = () => { if (!RUN) return; RUN.i++; gf.innerHTML = juniperSvg(ST.outfit, 'wave'); if (RUN.i >= RUN.items.length) finish(); else if (RUN.mode === 'boss' && !RUN.shieldDone && RUN.hp <= RUN.shieldAt) raiseShield(renderItem); else renderItem(); };
   let left = 2; const step = () => { if (--left <= 0) go(); };
+  if (RUN.mode === 'boss') { const bl = bossLine('hit'); $('bubble').innerHTML = shown(bl); speak(bl, { who: $('bbChr'), onend: step }); } else
   speak((sayFirst ? sayFirst + '. ' : '') + p, { onend: step }); setTimeout(step, 1300); setTimeout(() => { if (RUN && RUN.locked && RUN.items[RUN.i] && left > 0) { left = 0; go(); } }, 4000); }
-function wrong(el, extra) { if (!RUN || RUN.locked) return; RUN.hinted = true; RUN.miss = true; SND.boop();
+function wrong(el, extra) { if (!RUN || RUN.locked) return; RUN.hinted = true; RUN.miss = true; RUN.itemMiss = true; SND.boop(); if (RUN.mode === 'boss') { const c = $('bbChr'); if (c) { c.classList.remove('laugh'); void c.offsetWidth; c.classList.add('laugh'); } }
   if (el) { el.classList.remove('wrong'); void el.offsetWidth; el.classList.add('wrong'); }
-  const it = cur(); const h = extra || it.hint || 'Stop and check. Try again.';
+  const it = cur(); const h = extra || it.hint || 'Stop and check. Try again.'; RUN.lastHint = h;
   $('hintIc').innerHTML = ICONS.icon('marcus'); $('hintTxt').innerHTML = shown(h); $('hintBox').classList.add('on');
-  speak(h, { pitch: Math.max(0.6, JVOICE.cfg().pitch - 0.5), rate: Math.max(0.7, JVOICE.cfg().rate - 0.1), who: $('hintIc') }); }
+  speak(h, { who: $('hintIc') }); }
 function hideHint() { $('hintBox').classList.remove('on'); }
-$('hintBox').onclick = () => { speak($('hintTxt').textContent, { pitch: Math.max(0.6, JVOICE.cfg().pitch - 0.5), rate: Math.max(0.7, JVOICE.cfg().rate - 0.1), who: $('hintIc') }); };
+$('hintBox').onclick = () => { speak(RUN && RUN.lastHint || $('hintTxt').textContent, { who: $('hintIc') }); };
 // ---------- finish ----------
-function finish() { const a = RUN.a, id = RUN.id; const before = { medal: medalOf(id), stars: ST.stars, stick: EXTRA_STICKERS.filter((s, i) => stickerUnlocked(i)).length, outfits: OUTFITS.filter(outfitOpen).length };
+function finish() { if (RUN.mode === 'boss') { bossWin(); return; } const a = RUN.a, id = RUN.id; const before = { medal: medalOf(id), stars: ST.stars, stick: EXTRA_STICKERS.filter((s, i) => stickerUnlocked(i)).length, outfits: OUTFITS.filter(outfitOpen).length };
   ST.plays[id] = (ST.plays[id] || 0) + 1; ST.done++; ST.stars += 3; const d = today(); ST.days[d] = (ST.days[d] || 0) + 1;
   let pathMsg = '';
   const wasOpen = WKEYS.filter(worldOpen);
@@ -2444,7 +3145,7 @@ function finish() { const a = RUN.a, id = RUN.id; const before = { medal: medalO
   const topT = newT.slice().sort((x, y) => y.tier - x.tier)[0]; if (topT) msg += ` You won the ${topT.name}!`;
   if (newW.length) msg += ` And a new world opened: ${WORLDS[newW[0]].name}!`;
   speak(msg); }
-$('cAgain').onclick = () => { SND.tap(); $('cele').classList.remove('on'); const id = RUN.id; const mode = RUN.mode === 'path' ? 'pathReplay' : RUN.mode; startActivity(id, mode, { world: RUN.world, level: RUN.level }); };
+$('cAgain').onclick = () => { SND.tap(); $('cele').classList.remove('on'); const id = RUN.id; const mode = RUN.mode === 'path' ? 'pathReplay' : RUN.mode; startActivity(id, mode, { world: RUN.world, level: RUN.level, sec: RUN.sec }); };
 $('cHome').onclick = () => { SND.tap(); $('cele').classList.remove('on'); RUN = null; goHome(); };
 $('cNext').onclick = () => { SND.tap(); $('cele').classList.remove('on'); const m = RUN.mode; const id = RUN.id; RUN = null;
   if (m === 'path' || m === 'pathReplay') { openMap(); return; }
@@ -2492,7 +3193,7 @@ function friendsRow(box, list) { box.innerHTML = list.map(([n], i) => `<button c
 // star counters that count up
 let STAR_SHOWN = null;
 function setStars() { const to = ST.stars, from = STAR_SHOWN == null ? to : STAR_SHOWN; STAR_SHOWN = to;
-  const ids = ['hStars', 'mStars', 'sStars', 'trStars', 'dStars', 'wStars']; ids.forEach(id => $(id).innerHTML = `${ICON.star}<span class="sv">${from}</span>`);
+  const ids = ['hStars', 'mStars', 'sStars', 'trStars', 'dStars', 'wStars', 'vStars']; ids.forEach(id => $(id).innerHTML = `${ICON.star}<span class="sv">${from}</span>`);
   if (from === to) return; const t0 = performance.now(), dur = 900;
   ids.forEach(id => { const e = $(id); e.classList.remove('bump'); void e.offsetWidth; e.classList.add('bump'); });
   const step = t => { const k = Math.min(1, (t - t0) / dur), v = Math.round(from + (to - from) * (1 - Math.pow(1 - k, 3))); document.querySelectorAll('.starcount .sv').forEach(s => s.textContent = v); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
@@ -2530,7 +3231,10 @@ R.choice = (it, st) => { let host = st;
       if (o.sayEs) speakEs(o.sayEs);
       if (ok) { b.classList.add('right'); box.querySelectorAll('.opt').forEach(x => x !== b && x.classList.add('dim')); setTimeout(() => correct(o.sayEs ? '«' + o.sayEs + '»' : o.say || null), o.sayEs ? 700 : 0); }
       else { b.classList.add('dim'); if (it.passage && it.passage.ev >= 0) { const ev = st.querySelector(`.passage p[data-k="${it.passage.ev}"]`); if (ev) { ev.classList.add('ev'); ev.scrollIntoView({ block: 'nearest' }); } } setTimeout(() => wrong(b), o.sayEs ? 600 : 0); } }; });
+  RUN.help = strong => helpChoice([...box.querySelectorAll('.opt')], b => String(it.opts[+b.dataset.k].v) === String(it.ans), strong);
 };
+const glowEl = e => { if (!e) return false; e.classList.remove('hintglow'); void e.offsetWidth; e.classList.add('hintglow'); return true; };
+const helpChoice = (els, isRight, strong) => { const right = els.find(isRight); if (!right) return false; if (strong) return glowEl(right); const w = els.filter(e => e !== right && !e.classList.contains('dim')); if (!w.length) return glowEl(right); const x = w[Math.floor(Math.random() * w.length)]; x.classList.add('dim', 'zap'); return true; };
 R.read = (it, st) => { const box = h('div', 'readbox'); const p = h('div', 'passage', `<h4>${it.title}</h4>` + it.lines.map((l, k) => `<p data-k="${k}">${l}</p>`).join('')); box.appendChild(p);
   const row = h('div', 'rowbtns'); const all = h('button', 'bigbtn', ICON.speak); const ok = h('button', 'bigbtn go', ICON.check); row.append(all, ok); box.appendChild(row); st.appendChild(box);
   p.querySelectorAll('p').forEach(x => x.onclick = () => { p.querySelectorAll('p.lit').forEach(y => y.classList.remove('lit')); x.classList.add('lit'); SND.tick(); speak(x.textContent); });
@@ -2547,6 +3251,7 @@ R.tenframe = (it, st) => { let filled = it.have; const fr = h('div', 'tenframe')
     vals.forEach(v => { const b = h('button', 'opt', N(v)); b.dataset.v = v; b.onclick = () => { if (RUN.locked || b.classList.contains('dim')) return; if (v === it.ans) { b.classList.add('right'); correct(`${it.have} and ${v} make 10`); } else { b.classList.add('dim'); wrong(b); } }; q.appendChild(b); }); };
   st.append(fr, pile, q);
   RUN.auto = () => { while (filled < 10) place(pile.querySelector('.ball')); };
+  RUN.help = strong => { if (filled < 10) { RUN.auto(); return true; } return helpChoice([...q.querySelectorAll('.opt')], b => +b.dataset.v === it.ans, strong); };
 };
 R.bond = (it, st) => { const b = h('div', 'bond'); b.innerHTML = `<svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M50 26 L22 74 M50 26 L78 74" stroke="#3b2a20" stroke-width="2" fill="none" vector-effect="non-scaling-stroke" style="stroke-width:6px"/></svg>`;
   const pos = [['whole', 50, 24], [0, 22, 74], [1, 78, 74]]; let miss = null;
@@ -2555,7 +3260,7 @@ R.bond = (it, st) => { const b = h('div', 'bond'); b.innerHTML = `<svg class="li
   const tray = h('div', 'tray');
   const tryIt = (el, v) => { if (RUN.locked) return; if (v === it.ans) { miss.innerHTML = N(v); miss.classList.add('filled'); el.remove(); SND.pop(); correct(it.miss === 'whole' ? `${it.parts[0]} and ${it.parts[1]} make ${it.whole}` : `${it.whole} is ${it.parts[0]} and ${it.parts[1]}`); } else { SND.boop(); wrong(el); } };
   it.opts.forEach(o => { const p = h('div', 'piece', o.h); p.dataset.v = o.v; tray.appendChild(p); draggable(p, { onDrop: el => tryIt(el, o.v), onTap: el => tryIt(el, o.v) }); });
-  st.append(b, tray); };
+  st.append(b, tray); RUN.help = strong => { const ps = [...tray.querySelectorAll('.piece')]; const ok = helpChoice(ps, p => +p.dataset.v === it.ans, strong); ps.forEach(p => { if (p.classList.contains('dim')) p.style.pointerEvents = 'none'; }); return ok; }; };
 R.build = (it, st) => { st.appendChild(h('div', 'buildpic', `<span class="ic">${ICONS.icon(it.pic) || ''}</span>`));
   const slots = h('div', 'slots'); const ss = it.word.split('').map((ch, k) => { const s = h('div', 'slot'); s.dataset.drop = k; slots.appendChild(s); return s; });
   const tray = h('div', 'tray'); let n = 0;
@@ -2564,7 +3269,7 @@ R.build = (it, st) => { st.appendChild(h('div', 'buildpic', `<span class="ic">${
       if (n === it.word.length) setTimeout(() => correct(it.word), 350); }
     else wrong(el); };
   it.tiles.forEach(ch => { const p = h('div', 'piece', `<span class="lt">${ch}</span>`); p.dataset.ch = ch; tray.appendChild(p); draggable(p, { onDrop: (el, t) => tryIt(el, ch, t), onTap: el => tryIt(el, ch) }); });
-  st.append(slots, tray); };
+  st.append(slots, tray); RUN.help = () => glowEl([...tray.querySelectorAll('.piece')].find(p => p.dataset.ch === it.word[n])); };
 R.order = (it, st) => { const slots = h('div', 'slots'); const ss = it.ans.map((_, k) => { const s = h('div', 'slot'); s.dataset.drop = k; slots.appendChild(s); return s; });
   const tray = h('div', 'tray'); let n = 0;
   const tryIt = (el, t, slot) => { if (RUN.locked) return; slot = slot || ss.find(s => !s.classList.contains('filled')); if (!slot) return; const k = +slot.dataset.drop;
@@ -2572,7 +3277,7 @@ R.order = (it, st) => { const slots = h('div', 'slots'); const ss = it.ans.map((
       if (n === it.ans.length) setTimeout(() => correct(it.meta && it.meta.s ? it.meta.s : null), 350); }
     else wrong(el); };
   it.tiles.forEach(t => { const p = h('div', 'piece', t.h); p.dataset.v = t.v; tray.appendChild(p); draggable(p, { onDrop: (el, s) => tryIt(el, t, s), onTap: el => tryIt(el, t) }); });
-  st.append(slots, tray); };
+  st.append(slots, tray); RUN.help = () => glowEl([...tray.querySelectorAll('.piece')].find(p => +p.dataset.v === it.ans[n])); };
 const MC = ['#e53935', '#1e88e5', '#43a047', '#f57c00', '#8e24aa', '#00acc1'];
 R.match = (it, st) => { const m = h('div', 'match'); const L = h('div', 'colm'), Rr = h('div', 'colm'); const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.setAttribute('class', 'mlines');
   const order = it.pairs.map((_, k) => k).sort(() => Math.random() - 0.5); let sel = null, done = 0;
@@ -2590,6 +3295,7 @@ R.match = (it, st) => { const m = h('div', 'match'); const L = h('div', 'colm'),
   m.querySelectorAll('.mi').forEach(e => { e.addEventListener('pointerdown', ev => { if (e.disabled || RUN.locked) return; ev.preventDefault(); try { e.releasePointerCapture(ev.pointerId); } catch (x) {} const s = sayOf(e); if (s) speak(s); SND.tick();
       if (sel && sel !== e) { attempt(sel, e); return; } if (sel === e) return; sel = e; e.classList.add('sel'); e._down = true; });
     e.addEventListener('pointerup', ev => { }); });
+  RUN.help = () => { const l = m.querySelector('.mi[data-side="0"]:not(.done)'); if (!l) return false; glowEl(l); return glowEl(m.querySelector(`.mi[data-side="1"][data-k="${l.dataset.k}"]`)); };
   m.addEventListener('pointerup', ev => { if (!sel) return; const t = document.elementFromPoint(ev.clientX, ev.clientY); const tgt = t && t.closest && t.closest('.mi'); if (tgt && tgt !== sel && !tgt.disabled && tgt.dataset.side !== sel.dataset.side) attempt(sel, tgt); });
 };
 R.trace = (it, st) => { const w = h('div', 'tracewrap'); const cv = document.createElement('canvas'); w.appendChild(cv); const row = h('div', 'rowbtns'); const clr = h('button', 'bigbtn', ICON.clear); clr.setAttribute('aria-label', 'Clear'); row.appendChild(clr); st.append(w, row);
@@ -2630,6 +3336,7 @@ R.sudoku = (it, st) => { const g = it.grid.map(r => r.slice()); const box = h('d
       else { const nx = cells.find(e => !g[e._rc[0]][e._rc[1]]); if (nx) { sel = nx; nx.classList.add('sel'); } } }
     else { const why = g[r].includes(v) ? 'That one is already in this row.' : g.some(row => row[c] === v) ? 'That one is already in this column.' : 'Look at the row, the column, and the box. Which one is still missing?'; wrong(sel, (Math.random() < .5 ? 'Stop and check. ' : 'Poco a poco. ') + why); } }; });
   st.append(box, pal);
+  RUN.help = () => { if (!sel) return false; const [r, c] = sel._rc; return glowEl(pal.querySelector(`.opt[data-v="${it.sol[r][c]}"]`)); };
   const nx = cells.find(e => !g[e._rc[0]][e._rc[1]]); if (nx) { sel = nx; nx.classList.add('sel'); }
 };
 R.deduce = (it, st) => { const d = h('div', 'ded'); const cl = h('div', 'dclues'); it.clues.forEach((c, k) => { const e = h('div', 'dclue', c); e.dataset.k = k; e.onclick = () => { cl.querySelectorAll('.lit').forEach(x => x.classList.remove('lit')); e.classList.add('lit'); SND.tick(); speak(c); }; cl.appendChild(e); });
@@ -2647,7 +3354,8 @@ R.deduce = (it, st) => { const d = h('div', 'ded'); const cl = h('div', 'dclues'
       el.classList.remove('sel'); selP = null; wrong(el, msg); } };
   for (let p = 0; p < n; p++) { const e = h('div', 'piece', pieceHtml(p)); e.dataset.p = p; tray.appendChild(e);
     draggable(e, { onDrop: (el, s) => tryIt(el, s), onTap: el => { tray.querySelectorAll('.sel').forEach(x => x.classList.remove('sel')); selP = el; el.classList.add('sel'); SND.tick(); speak(seats ? it.friends[p] : 'the ' + it.things[p][1]); } }); }
-  d.append(cl, tg, tray); st.appendChild(d); };
+  d.append(cl, tg, tray); st.appendChild(d);
+  RUN.help = () => { const pe = tray.querySelector('.piece'); if (!pe) return false; const pp = +pe.dataset.p; const t = seats ? it.sol[pp] : it.sol.indexOf(pp); glowEl(pe); return glowEl(targets[t] && targets[t].parentNode); }; };
 const dieFace = n => { const P = { 1: [[50, 50]], 2: [[30, 30], [70, 70]], 3: [[28, 28], [50, 50], [72, 72]], 4: [[30, 30], [70, 30], [30, 70], [70, 70]], 5: [[28, 28], [72, 28], [50, 50], [28, 72], [72, 72]], 6: [[30, 26], [70, 26], [30, 50], [70, 50], [30, 74], [70, 74]] }[n];
   return `<svg viewBox="0 0 100 100"><rect x="8" y="8" width="84" height="84" rx="18" fill="#fff" stroke="#222" stroke-width="5"/>${P ? P.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="8" fill="#222"/>`).join('') : '<text x="50" y="68" font-size="52" font-weight="900" text-anchor="middle" fill="#f57c00" font-family="Arial">?</text>'}</svg>`; };
 R.board = (it, st) => { const N0 = it.cells; const bd = h('div', 'board'); bd.style.position = 'relative'; const cells = [];
@@ -2671,6 +3379,7 @@ R.board = (it, st) => { const N0 = it.cells; const bd = h('div', 'board'); bd.st
       else fin(); };
     const hop = () => { p++; put(p); SND.hop(); speak(String(p - T.start)); if (p < land) setTimeout(hop, 380); else setTimeout(after, 500); }; hop();  });
   RUN.boardState = () => ({ t, rolled, busy, turn: it.turns[t] });
+  RUN.help = () => { if (busy) return false; if (!rolled) return glowEl(die); const T = it.turns[t]; return glowEl(cells[T.start + T.roll]); };
 };
 R.numline = (it, st) => { const nl = h('div', 'nline'); const mk = h('div', 'mk', ICONS.icon('marcus')); const ticks = h('div', 'ticks'); const tk = [];
   for (let v = it.from; v <= it.to; v++) { const e = h('div', 'tk', `<b>${v}</b>`); e.dataset.v = v; tk.push(e); ticks.appendChild(e); }
@@ -2680,12 +3389,72 @@ R.numline = (it, st) => { const nl = h('div', 'nline'); const mk = h('div', 'mk'
   let busy = false;
   tk.forEach(e => e.onclick = () => { if (busy || RUN.locked) return; const v = +e.dataset.v;
     if (v === it.ans) { busy = true; e.classList.add('right'); let p = it.start, k = 0; const dir = Math.sign(it.delta); const hop = () => { p += dir; k++; put(p); SND.hop(); speak(String(k)); if (p !== it.ans) setTimeout(hop, 420); else { eq.innerHTML = `${it.start} ${it.delta > 0 ? '+' : '−'} ${Math.abs(it.delta)} = ${it.ans}`; setTimeout(() => correct(`${it.start} ${it.delta > 0 ? 'plus' : 'minus'} ${Math.abs(it.delta)} is ${it.ans}`), 300); } }; setTimeout(hop, 200); }
-    else { e.classList.add('wrong'); setTimeout(() => e.classList.remove('wrong'), 1200); wrong(e); } }); };
+    else { e.classList.add('wrong'); setTimeout(() => e.classList.remove('wrong'), 1200); wrong(e); } });
+  RUN.help = () => glowEl(tk[it.ans - it.from]); };
 // ---------- boot ----------
-document.addEventListener('visibilitychange', () => { if (document.hidden) try { speechSynthesis.cancel(); } catch (e) {} });
+// ---------- v3: auto-update (close and reopen the app to get the newest build) ----------
+const UPD = { last: 0 };
+function checkUpdate(force) { const B = window.JBUILD; if (!B || B.indexOf('BUILD') >= 0 || location.protocol === 'file:') return; const now = Date.now(); if (!force && now - UPD.last < 30000) return; UPD.last = now;
+  fetch('version.json?t=' + now, { cache: 'no-store' }).then(r => r.json()).then(j => { if (!j || !j.v || j.v === B) return; UPD.ready = j.v;
+    const k = 'jupd_' + j.v; try { if (sessionStorage.getItem(k)) return; } catch (e) {}
+    const scr = document.querySelector('.screen.on'); const busy = RUN || (scr && scr.id === 'play') || document.querySelector('.on#cele,.on#meet,.on#chest');
+    if (busy) return; try { sessionStorage.setItem(k, '1'); } catch (e) {} location.reload(); }).catch(() => {}); }
+if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => {});
+checkUpdate(true); document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(true); });
+
+document.addEventListener('visibilitychange', () => { if (document.hidden) hush(); });
 syncRewards();
 JVOICE.gear(document.getElementById('hGear'));
-window.JLP = { finishNow: () => { if (RUN) { RUN.locked = true; finish(); } }, wrongNow: () => { if (RUN) { RUN.locked = false; wrong(null); } }, AWARDS, WORLDS, WKEYS, TIER, tierOf, worldOpen, openWorlds, checkTrophies, revealAwards, ST, C, startActivity, get RUN() { return RUN; }, cur: () => RUN && cur(), go: () => $('introGo').click(), goHome, openMap, openShelves, openTrophies, openDress, OUTFITS, TROPHIES, medalOf, speak, SP };
+// ---------- v3: every line the app can say (the build records these) ----------
+function voLines(N = 60) { const out = new Map(); const add = (t, ch = 'juniper', o = {}) => { if (!t) return; VO.need(String(t), ch, o).forEach(([k, v, s]) => { if (!out.has(k)) out.set(k, [k, v, s]); }); };
+  const gen = { full: false };
+  // fixed app lines
+  PRAISE.forEach(p => add(p)); JUNI.forEach(p => add(p)); FRIENDS.forEach(([n, l]) => add(l, n));
+  LM.forEach(sec => sec.forEach(c => add(c.line, c.n)));
+  ["Hi Aspen! I'm Juniper. Let's play and learn in Washington Market Park!", 'Hi Aspen! Welcome back. Let\'s play!', 'Finish the stops before this one first. Poco a poco!', 'Aspen, you finished the whole park! You are amazing!',
+    'Dress up Juniper! Tap an outfit to try it on.', 'Ten! How many golf balls did you add?', 'Tap the die to roll first.', 'Roll again!', 'You solved it', 'Every row, every column, every box', 'You reached the star', 'Great counting',
+    "These are Juniper's worlds, Aspen. Collect stars to unlock new places and new friends!", 'The fancy ones are for the hardest games!', 'This is your trophy room, Aspen.', 'You have 1 award.', 'You have 0 awards.',
+    'You did it, Aspen!', 'You earned 3 stars.', 'You got a bronze medal!', 'You got a silver medal!', 'You got a gold medal!', 'And you unlocked something new!', 'You stopped and checked, just like Marcus.', 'No hints on hard games!', 'Stop and check. Try again.']
+    .forEach(t => add(t, 'juniper', { full: true }));
+  for (let n = 0; n <= 120; n++) add(String(n), 'juniper', { full: true });
+  for (let n = 2; n <= 60; n++) add(`You have ${n} awards.`, 'juniper', gen);
+  C.SUBJ.forEach(s => add(s[1]));
+  ['Ta-da! ', 'Ooh, ', 'I love it! '].forEach(p => OUTFITS.forEach(o => add(p + o.name + '!')));
+  OUTFITS.forEach(o => add(`Collect ${o.stars} stars to unlock the ${o.name}. You have 7.`, 'juniper', gen));
+  AWARDS.forEach(t => { add(`${t.name}! ${t.desc}.`); add(`Not yet, Aspen. ${t.desc}.`, 'juniper', gen); add(`You won the ${t.name}!`, 'juniper', gen); });
+  for (let n = 2; n <= 40; n++) add(`Combo ${n}!`, 'juniper', gen);
+  WKEYS.forEach(k => { const w = WORLDS[k]; add(w.hello, w.friend); w.cheer.forEach(c => add(c, w.friend)); add(`And a new world opened: ${w.name}!`); add(`Aspen, you finished ${w.name}! You are amazing!`);
+    add(`Who is waiting for you in ${w.short}? Collect ${w.stars} stars and ${w.needTxt} to find out!`, w.friend, gen); w.secs.forEach(s => (s.lm || []).forEach(c => add(c.line, c.n))); });
+  // activity intros: title + line, said by the activity's character (or the world friend on a world path)
+  C.A.forEach(a => { const who = CHARS.has(a.who) ? a.who : 'juniper'; add(`${a.title}. ${a.line}`, who);
+    WKEYS.forEach(k => { const w = WORLDS[k]; if (w.secs.some(s => s.nodes.includes(a.id))) add(`${a.title}. ${a.line}`, w.friend); }); });
+  if (typeof extraVoLines === 'function') extraVoLines(add, gen);
+  // generated activity items, many seeds
+  const sayW = (html, ch = 'juniper') => { String(html || '').replace(/data-say="([^"]*)"/g, (m, w) => { add(w, ch, { full: true }); return m; }); };
+  const S = C.helpers.SOUND;
+  C.A.forEach(a => { for (let sd = 1; sd <= N; sd++) { C.setSeed(sd * 7919 + a.id.length * 13); let items; try { items = C.makeItems(a); } catch (e) { continue; }
+    items.forEach(it => { add(it.say, 'juniper', gen); add(it.hint, 'marcus', gen); sayW(it.prompt);
+      (it.opts || []).forEach(o => { sayW(o.h); if (o.say) add(o.say, 'juniper', gen); if (o.sayEs) add(o.sayEs, 'juniper', { es: true }); });
+      (it.tiles || []).forEach(t => { if (t && t.say) add(t.say, 'juniper', { full: true }); if (t && t.h) sayW(t.h); });
+      if (it.passage) { add(it.passage.title); it.passage.lines.forEach(l => add(l, 'juniper', gen)); }
+      if (it.lines) { add(it.title); it.lines.forEach(l => add(l, 'juniper', gen)); }
+      if (it.word) { add(it.word, 'juniper', { full: true }); it.word.split('').forEach(ch => add(S[ch] || ch, 'juniper', { full: true })); }
+      if (it.meta && it.meta.s) add(it.meta.s, 'juniper', gen);
+      if (it.pairs) it.pairs.forEach(p => { if (p[2]) add(p[2], 'juniper', { full: true }); if (p[3]) add(p[3], 'juniper', { full: true }); });
+      if (it.type === 'bond') add(it.miss === 'whole' ? `${it.parts[0]} and ${it.parts[1]} make ${it.whole}` : `${it.whole} is ${it.parts[0]} and ${it.parts[1]}`, 'juniper', gen);
+      if (it.type === 'tenframe') add(`${it.have} and ${it.ans} make 10`, 'juniper', gen);
+      if (it.type === 'numline') { add(`${it.start} ${it.delta > 0 ? 'plus' : 'minus'} ${Math.abs(it.delta)} is ${it.ans}`, 'juniper', gen); }
+      if (it.type === 'trace') add(`${it.letter === it.letter.toUpperCase() ? 'Big' : 'Little'} ${it.letter.toUpperCase()}`, 'juniper', { full: true });
+      if (it.type === 'deduce') { it.clues.forEach(c => { add(c, 'juniper', gen); add('Stop and check this clue: ' + c, 'marcus', gen); });
+        it.friends.forEach((f, i) => { add(f, 'juniper', { full: true }); if (it.mode === 'seats') add(`${f} sits in seat ${i + 1}.`, 'juniper', gen); else it.things.forEach(t => add(`${f} has the ${t[1]}.`)); });
+        (it.things || []).forEach(t => add('the ' + t[1])); }
+      if (it.type === 'board') { it.turns.forEach(T => { add(`You rolled ${T.roll}. Count ${T.roll} hop${T.roll > 1 ? 's' : ''} and tap where you land.`, 'juniper', gen); ['Stop and check. ', 'Poco a poco. '].forEach(p => add(p + `Start at ${T.start === 0 ? 'GO' : T.start} and count ${T.roll} hops, one square at a time.`, 'marcus', gen)); });
+        Object.values(it.special).forEach(sp => add(sp[1] > 0 ? `A ${sp[0]}! Zoom ahead ${sp[1]}.` : `A ${sp[0]}! Slide back ${-sp[1]}.`, 'juniper', gen)); }
+    }); } });
+  ['Stop and check. ', 'Poco a poco. '].forEach(p => { ['That one is already in this row.', 'That one is already in this column.', 'Look at the row, the column, and the box. Which one is still missing?', 'That does not fit yet. Try another spot first, then come back.'].forEach(w => add(p + w, 'marcus')); });
+  return [...out.values()]; }
+
+window.JLP = { voLines, VO, BOSSES, BOSS, startBoss, bossState, openVault, openLore, useRelic, playStory, openChest, effPos, gateOf, activeRelic, RELICS, relicArt, openBossIntro, renderMap, get MAPW() { return MAPW; },  rightNow: () => { if (RUN) { RUN.locked = false; correct(); } }, finishNow: () => { if (RUN) { RUN.locked = true; finish(); } }, wrongNow: () => { if (RUN) { RUN.locked = false; wrong(null); } }, AWARDS, WORLDS, WKEYS, TIER, tierOf, worldOpen, openWorlds, checkTrophies, revealAwards, ST, C, startActivity, get RUN() { return RUN; }, cur: () => RUN && cur(), go: () => $('introGo').click(), goHome, openMap, openShelves, openTrophies, openDress, OUTFITS, TROPHIES, medalOf, speak, SP };
 })();
 </script>
 </body></html>
