@@ -1,5 +1,5 @@
 // Juniper's Learning Park service worker: always fetch the newest app, keep voice clips cached.
-const V = '20261115154943-b5dc33'; const APPC = 'jl-app-' + V, VOC = 'jl-vo';
+const V = '20261115170451-86e73e'; const APPC = 'jl-app-' + V, VOC = 'jl-vo';
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('jl-app-') && k !== APPC).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => { const req = e.request; if (req.method !== 'GET') return; const u = new URL(req.url); if (u.origin !== location.origin) return;

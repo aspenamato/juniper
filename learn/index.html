@@ -5,7 +5,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Juniper Learn">
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#fff7ec">
-<script>window.JBUILD='20261115154943-b5dc33';</script>
+<script>window.JBUILD='20261115170451-86e73e';</script>
 <title>Juniper's Learning Park</title>
 <style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;height:100%;overflow:hidden;background:#fff7ec;font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold","Nunito","Avenir Next",system-ui,sans-serif;color:#3b2a20;touch-action:manipulation}
@@ -797,6 +797,20 @@ html,body{background:#fff4fb;color:var(--ol)}
 .hpbar{height:30px}.hpbar em{font-size:18px;line-height:22px;letter-spacing:.5px}
 @media (orientation:portrait){#play.bossmode .hpbar{width:30vw;height:32px}#play.bossmode .hpbar em{font-size:20px;line-height:24px}}
 @media (orientation:portrait){.hint{background:rgba(240,255,242,.97);border:4px solid #2fbf5a;border-radius:26px;padding:6px 10px;box-shadow:0 8px 0 rgba(47,191,90,.22),0 12px 26px rgba(59,33,71,.15)}.hint .hintbub{border:0;background:none;box-shadow:none;padding:4px 6px}}
+.infoov{position:fixed;inset:0;z-index:76;display:none;align-items:center;justify-content:center;background:rgba(40,25,60,.55)}
+.infoov.on{display:flex;animation:rvIn .25s ease-out}
+.infocard{position:relative;width:min(86vw,460px);display:flex;flex-direction:column;align-items:center;gap:8px;padding:22px 22px 26px;text-align:center;animation:popIn .45s cubic-bezier(.2,1.6,.4,1) both}
+.ic-close{position:absolute;right:10px;top:10px;width:52px;height:52px;border-radius:50%;border:4px solid var(--ol);background:#fff;font-size:24px;font-weight:900;color:var(--ol)}
+.ic-art{width:min(46vmin,230px);height:min(46vmin,230px);animation:icSpin 1s cubic-bezier(.2,1.2,.4,1) both}.ic-art svg{width:100%;height:100%}
+.infocard.locked .ic-art{filter:grayscale(.85) brightness(.9);opacity:.75}
+@keyframes icSpin{from{transform:rotateY(540deg) scale(.3)}to{transform:none}}
+.ic-tag{font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#c27a00;font-size:clamp(15px,2.2vmin,20px)}
+.ic-title{font-weight:900;font-size:clamp(26px,4.4vmin,40px);color:var(--ol)}
+.ic-body{font-weight:800;font-size:clamp(17px,2.5vmin,22px);color:var(--ol);opacity:.9}
+.ic-prog{width:80%}
+.ic-act{min-width:200px;font-size:22px;padding:10px 20px}
+.unl{cursor:pointer}
+.unl:active{transform:scale(.95)}
 </style></head>
 <body>
 <div id="start" class="screen on">
@@ -1507,14 +1521,18 @@ function foot(type) {
   if (type === 'skate') return p('M-16 -6 L16 -6 L18 16 Q40 18 42 32 L42 40 L-16 40 Z', '#ffffff') + sheen(-4, 6, 6, 12, 0, 0.6) + p('M-8 4 l14 0 M-8 14 l16 0', 'none', 'stroke="#ff4fa3" stroke-width="4"') + p('M-8 40 L-8 50 M32 40 L32 50', 'none') + r(-24, 48, 72, 8, 4, '#b8c7ff') + sheen(10, 50, 24, 2, 0, 0.9);
   if (type === 'blade') { let s = p('M-16 -6 L16 -6 L18 16 Q40 18 42 32 L42 40 L-16 40 Z', '#8e44ff') + sheen(-4, 6, 6, 12, 0, 0.45) + r(-20, 40, 64, 10, 5, '#5b5f7a');
     [[-10, '#ff2fa0'], [14, '#26e0ff'], [38, '#c6ff3a']].forEach(([x, f]) => { s += `<g class="ch-wheel">${c(x, 64, 22, f, 'stroke="none" opacity=".35"')}${c(x, 64, 13, f)}${c(x, 64, 4, '#fff')}</g>`; }); return s; }
+  if (type === 'boot') return p('M-18 -8 L18 -8 L20 10 Q42 12 42 28 L42 32 L-18 32 Z', '#2b1d1a') + r(-20, 28, 64, 8, 3, '#120c0b') + sheen(-6, 2, 6, 8, 0, 0.4);
   return p('M-16 -4 L16 -4 L18 10 Q40 12 40 28 L-16 28 Z', SOCK) + sheen(0, 4, 10, 4, 0, 0.3); }
+// light-up ring: gold band with a glowing gem that pulses and twinkles (animated in CSS: .ch-ring)
+function ringSvg(x, y) { return `<g class="ch-ring" transform="translate(${x} ${y})"><circle r="26" fill="#ff7ad9" opacity=".28" stroke="none" class="rg-glow"/><ellipse rx="15" ry="6" fill="none" stroke="#ffd34d" stroke-width="5"/><path d="M0 -20 L9 -9 L0 0 L-9 -9 Z" fill="#7ee8ff" stroke-width="3" class="rg-gem"/><path d="M-3 -14 L0 -17 L3 -14" stroke="#fff" stroke-width="2" fill="none"/><path d="M14 -24 l3 -8 l3 8 l8 3 l-8 3 l-3 8 l-3 -8 l-8 -3 Z" fill="#fff" stroke="none" class="rg-tw"/><path d="M-22 -10 l2 -5 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 Z" fill="#fff36b" stroke="none" class="rg-tw2"/></g>`; }
 function juniperInner(o = {}) { const feet = o.feet || 'shoe'; let s = o.back || '';
   s += g('ch-tail', p('M-26 0 C-92 22 -152 -8 -168 -70 C-178 -112 -150 -136 -120 -122 C-128 -82 -100 -46 -30 -32 Z', FOX) + p('M-168 -70 C-178 -112 -150 -136 -120 -122 C-128 -106 -134 -90 -132 -76 C-146 -70 -156 -68 -168 -70 Z', CRM) + sheen(-120, -60, 26, 8, -30, 0.3));
-  s += g('ch-legs', r(-38, 6, 32, 86, 16, FOX) + r(6, 6, 32, 86, 16, FOX) + r(-38, 62, 32, 30, 12, SOCK, 'stroke="none"') + r(6, 62, 32, 30, 12, SOCK, 'stroke="none"') + r(-38, 6, 32, 86, 16, 'none') + r(6, 6, 32, 86, 16, 'none') + `<g transform="translate(-22 96)">${foot(feet)}</g><g transform="translate(22 96)">${foot(feet)}</g>`);
+  s += g('ch-legs', r(-38, 6, 32, 86, 16, FOX) + r(6, 6, 32, 86, 16, FOX) + r(-38, 62, 32, 30, 12, SOCK, 'stroke="none"') + r(6, 62, 32, 30, 12, SOCK, 'stroke="none"') + r(-38, 6, 32, 86, 16, 'none') + r(6, 6, 32, 86, 16, 'none') + (feet === 'boot' ? r(-40, 38, 36, 60, 10, '#2b1d1a') + r(4, 38, 36, 60, 10, '#2b1d1a') + r(-40, 38, 36, 9, 4, '#8a5a3b') + r(4, 38, 36, 9, 4, '#8a5a3b') + sheen(-28, 62, 4, 16, 0, 0.35) + sheen(16, 62, 4, 16, 0, 0.35) : '') + `<g transform="translate(-22 96)">${foot(feet)}</g><g transform="translate(22 96)">${foot(feet)}</g>`);
   let body = p('M-52 -8 C-58 -62 -30 -84 0 -84 C30 -84 58 -62 52 -8 C50 22 30 36 0 36 C-30 36 -50 22 -52 -8 Z', FOX) + e(0, -2, 30, 40, CRM, 'stroke="none"') + sheen(-26, -56, 14, 8, -30, 0.35);
-  const arm = (side, ang, cls) => `<g transform="translate(${side * 36} -52)"><g class="${cls}"><g transform="rotate(${ang})">` + r(side > 0 ? -2 : -70, -12, 72, 28, 14, FOX) + c(side > 0 ? 68 : -68, 2, 16, SOCK) + `</g></g></g>`;
-  if (o.golf) body += `<g transform="rotate(${o.golf} 0 -30)">` + r(-4, -36, 10, 150, 4, '#9aa3c7') + p('M-12 110 L42 110 Q50 110 50 120 L50 128 L-12 128 Z', '#e2e8ff') + r(-9, -48, 20, 42, 7, '#2a1838') + `</g>` + arm(-1, -60, 'ch-armL') + arm(1, 240, 'ch-armR');
-  else body += arm(-1, o.armL ?? -25, 'ch-armL') + arm(1, o.armR ?? 25, 'ch-armR');
+  const arm = (side, ang, cls) => `<g transform="translate(${side * 36} -52)"><g class="${cls}"><g transform="rotate(${ang})">` + r(side > 0 ? -2 : -70, -12, 72, 28, 14, o.sleeve || FOX) + (o.sleeve && o.cuff ? r(side > 0 ? 44 : -54, -12, 10, 28, 3, o.cuff) : '') + c(side > 0 ? 68 : -68, 2, 16, o.glove || SOCK) + (o.glove ? p(`M${side * 60} -8 l${side * 10} 0`, 'none', 'stroke-width="3"') : '') + (side > 0 && o.ring ? ringSvg(68, 2) : '') + `</g></g></g>`;
+  if (o.dress) body += o.dress;
+  if (o.golf) body += `<g class="golfclub" transform="translate(-70 0) rotate(${o.golf} 0 -30)">` + r(-6, -40, 13, 158, 6, '#c9d2ee') + r(-3, -36, 4, 150, 2, '#ffffff', 'stroke="none" opacity=".7"') + p('M-14 112 L46 108 Q58 108 58 120 L58 132 Q58 138 50 138 L-14 138 Z', '#eef2ff') + r(-11, -54, 26, 50, 9, '#ff4fa3') + p('M-11 -40 h26 M-11 -28 h26 M-11 -16 h26', 'none', 'stroke-width="3"') + `</g>` + c(-12, 142, 11, '#fff');
+  body += arm(-1, o.armL ?? -25, 'ch-armL') + arm(1, o.armR ?? 25, 'ch-armR');
   if (o.scarf) body += p('M-50 -74 Q0 -52 50 -74 L52 -54 Q0 -30 -52 -54 Z', o.scarf) + r(14, -56, 24, 58, 9, o.scarf) + sheen(-20, -64, 16, 4, 5, 0.4) + p('M20 -4 L20 6 M27 -4 L27 6 M34 -4 L34 6', 'none');
   s += g('ch-body', body + (o.bodyExtra || '') + `<g transform="translate(0 -108) scale(.92)">${g('ch-head', foxHeadInner({ helmet: o.helmet }) + (o.headExtra || ''))}</g>`);
   return s; }
@@ -1585,6 +1603,7 @@ function dogInner(k) { const C0 = k.fur, C1 = k.fur2, FACE = k.face; let s = '';
   s += g('ch-tail', k.pomTail ? p('M58 60 Q92 40 98 6', 'none', `stroke="${C0}" stroke-width="12"`) + puff(100, -4, 22, 22, 8, C0) + sheen(94, -12, 7, 4, -20, 0.35) : puff(84, 30, 40, 20, 8, C0, 'transform="rotate(-40 84 30)"'));
   let b = puff(0, 52, 70, 54, 11, C0) + puff(0, 60, 40, 32, 8, C1, 'stroke="none"') + sheen(-34, 24, 18, 8, -20, 0.3);
   b += r(-50, 80, 26, 46, 12, C0) + r(24, 80, 26, 46, 12, C0) + (k.pomFeet ? puff(-37, 124, 20, 13, 7, C0) + puff(37, 124, 20, 13, 7, C0) : e(-37, 124, 18, 10, C0) + e(37, 124, 18, 10, C0));
+  if (k.bandana) b += p('M-42 0 Q0 18 42 0 L4 44 Q0 48 -4 44 Z', k.bandana) + c(-14, 10, 3, '#fff', 'stroke="none"') + c(10, 14, 3, '#fff', 'stroke="none"') + c(0, 28, 3, '#fff', 'stroke="none"');
   if (k.collar) b += p('M-40 2 Q0 22 40 2', 'none', `stroke="${k.collar}" stroke-width="10"`) + c(0, 18, 8, '#ffd34d') + sheen(-2, 16, 3, 2, 0, 0.9);
   let hd = g('ch-earR', puff(-62, -36, 26, 46, 9, k.ear || C0)) + g('ch-earL', puff(62, -36, 26, 46, 9, k.ear || C0));
   hd += puff(0, -60, 60, 54, 12, C0) + (k.topknot ? puff(0, -112, 30, 22, 8, C0) : '') + e(0, -40, 40, 36, FACE) + sheen(-24, -92, 16, 6, -20, 0.35);
@@ -1593,7 +1612,7 @@ function dogInner(k) { const C0 = k.fur, C1 = k.fur2, FACE = k.face; let s = '';
   hd += eyes(-20, 20, -52, 0.95, ir) + e(0, -30, 11, 8, '#1b1028') + sheen(-3, -32, 3, 2, 0, 0.8) + mouth(0, -18, 11) + blush(-34, -28, 8, 5) + blush(34, -28, 8, 5);
   s += g('ch-body', b + g('ch-head', hd));
   return s; }
-const TOULOUSE = { fur: '#2b2740', fur2: '#3f3a5e', face: '#47426a', ear: '#2b2740', collar: '#ff2fa0', pomTail: true, pomFeet: true, topknot: true, eyeRing: true, iris: '#b86bff' };
+const TOULOUSE = { fur: '#2b2740', fur2: '#3f3a5e', face: '#47426a', ear: '#2b2740', bandana: '#e53935', pomTail: true, pomFeet: true, topknot: true, iris: '#c98a3a' }; // Toulouse is a BOY: red bandana, no pink
 const WINNIE = { fur: '#f2ae48', fur2: '#ffd27a', face: '#ffd99a', ear: '#e39a34', collar: '#26c6ff', iris: '#ff7a2e' };
 const TEDDY = { fur: '#fffaf2', fur2: '#f4ece0', face: '#fffdf8', ear: '#f0d2a8', bow: '#ff7eb6', iris: '#7ee8ff', topknot: true };
 // ---------------- Marengo the horse ----------------
@@ -1790,6 +1809,73 @@ Object.assign(DEF, {
   yeti: ['-160 -230 320 410', o => yetiInner(o)],
   robot: ['-150 -230 300 400', o => robotInner(o)],
 });
+// ---------- v4: villains, one per section, each themed to its place (mischievous and silly, never scary) ----------
+const VBROW = (y = -96, col = OL) => p(`M-60 ${y - 6} L-16 ${y + 8} M60 ${y - 6} L16 ${y + 8}`, 'none', `stroke="${col}" stroke-width="9" stroke-linecap="round"`);
+const vEyes = (y, iris, s = 1.1) => eyes(-36, 36, y, s, iris) + VBROW(y - 24);
+const smirk = (y) => mouth(0, y, 15) + p(`M-6 ${y + 1} l4 8 l4 -8`, '#fff', 'stroke-width="2.5"');
+const vHead = (col, y = 0) => p(`M-86 ${-64 + y} C-90 ${-118 + y} -48 ${-144 + y} 0 ${-144 + y} C48 ${-144 + y} 90 ${-118 + y} 86 ${-64 + y} C84 ${-30 + y} 50 ${-8 + y} 0 ${-8 + y} C-50 ${-8 + y} -84 ${-30 + y} -86 ${-64 + y} Z`, col) + sheen(-40, -124 + y, 20, 8, -15);
+const vBody = (col, belly) => p('M-58 140 C-74 70 -62 0 0 -4 C62 0 74 70 58 140 Q0 152 -58 140 Z', col) + (belly ? p('M-30 40 C-20 20 20 20 30 40 C40 80 30 120 0 128 C-30 120 -40 80 -30 40 Z', belly, 'stroke="none"') : '') + sheen(-34, 30, 14, 26, -10, .3);
+const vFeet = col => e(-34, 144, 26, 12, col) + e(34, 144, 26, 12, col);
+const vArms = (col, hand, L = '', R = '') => g('ch-armL', p('M-50 30 C-86 44 -96 80 -84 96 C-70 90 -58 66 -40 56 Z', col) + c(-86, 96, 13, hand) + L) + g('ch-armR', p('M50 30 C80 20 96 -6 100 -28 C88 -36 76 -18 40 6 Z', col) + c(100, -30, 13, hand) + R);
+const vWrap = (b, hd, extra = '') => g('ch-body', b + g('ch-head', hd)) + extra;
+const pointyEars = (col, inn, len = 60) => g('ch-earR', p(`M-70 -100 L-${110 + len / 2} -${120 + len / 3} L-52 -132 Z`, col) + p(`M-74 -108 L-${100 + len / 3} -${118 + len / 4} L-60 -126 Z`, inn, 'stroke="none"')) + g('ch-earL', p(`M70 -100 L${110 + len / 2} -${120 + len / 3} L52 -132 Z`, col) + p(`M74 -108 L${100 + len / 3} -${118 + len / 4} L60 -126 Z`, inn, 'stroke="none"'));
+const roundEars = (col, inn, r0 = 30) => g('ch-earR', c(-70, -128, r0, col) + c(-70, -128, r0 * .6, inn, 'stroke="none"')) + g('ch-earL', c(70, -128, r0, col) + c(70, -128, r0 * .6, inn, 'stroke="none"'));
+const maskBand = col => p('M-84 -84 Q0 -64 84 -84 L84 -60 Q0 -40 -84 -60 Z', col, 'stroke="none"');
+const VILL = {
+  // Park
+  goblin(o) { const G = '#8fdc5a', D = '#5aa83a'; return vWrap(vBody('#7b4bd1', '#a77cf0') + vFeet('#4a2f86') + vArms('#7b4bd1', G, '', p('M88 -60 Q118 -96 128 -40 Q120 -6 96 -14 Z', '#f5d9a8') + `<text x="98" y="-34" font-size="22" font-weight="900" fill="#3b2147" stroke="none" font-family="Arial">ABC</text>`),
+      pointyEars(G, '#ffb3d1', 90) + vHead(G) + p('M-86 -70 Q-40 -170 0 -186 Q40 -170 86 -70 Q60 -120 0 -132 Q-60 -120 -86 -70 Z', '#7b4bd1') + vEyes(-74, '#ffd93b') + e(0, -44, 13, 9, D) + smirk(-24) + blush(-60, -40, 10, 6) + blush(60, -40, 10, 6)); },
+  weasel(o) { const W = '#b78bd6', L = '#f3e6ff'; return g('ch-tail', p('M48 110 C120 120 150 60 132 20 C126 40 110 80 46 88 Z', W) + p('M132 20 C136 30 136 40 132 50 L120 44 Z', '#6b3fa0', 'stroke="none"')) + vWrap(vBody(W, L) + vFeet('#6b3fa0') + vArms(W, '#6b3fa0', '', p('M96 -40 C120 -80 150 -60 140 -36', 'none', 'stroke="#ff3fa4" stroke-width="7"')),
+      roundEars(W, '#ffb3d1', 24) + vHead(W) + maskBand('#4a2f6e') + vEyes(-72, '#7ee8ff') + e(0, -42, 12, 8, '#3b2147') + smirk(-24) + p('M-40 -40 l-40 -6 M-40 -34 l-40 4 M40 -40 l40 -6 M40 -34 l40 4', 'none', 'stroke-width="3"')); },
+  pickle(o) { const P = '#7cc84a', D = '#4f9a2c'; let bumps = ''; [[-30, -60], [24, -20], [-20, 30], [30, 70], [-28, 100], [6, -100]].forEach(([x, y]) => bumps += c(x, y, 7, D, 'stroke="none"'));
+    return g('ch-body', p('M-62 120 C-80 40 -80 -100 -40 -150 Q0 -180 40 -150 C80 -100 80 40 62 120 Q0 160 -62 120 Z', P) + bumps + sheen(-40, -60, 12, 40, -6, .35) + vFeet('#3b2147') + vArms(P, D, '', p('M90 -44 L128 -64 L134 -50 L96 -32 Z', '#c0c8d8'))
+      + g('ch-head', maskBand('#2a1838').replace('-84 -84', '-70 -84').replace('84 -84', '70 -84') + vEyes(-72, '#ff3b5c') + smirk(-26) + p('M-90 -140 Q0 -120 90 -140 Q0 -160 -90 -140 Z', '#8a5a3b') + p('M-46 -144 C-46 -200 46 -200 46 -144 Z', '#8a5a3b') + p('M-46 -150 Q0 -140 46 -150', 'none', 'stroke="#ffd93b" stroke-width="7"'))); },
+  wolf(o) { const B = '#a9c8ff', L = '#eef5ff'; return g('ch-tail', p('M50 100 C130 110 160 40 140 0 C130 30 100 70 46 80 Z', B)) + vWrap(vBody(B, L) + vFeet('#5b6fa8') + vArms(B, L) + p('M-50 0 Q0 24 50 0 L52 22 Q0 46 -52 22 Z', '#2a7cff') + r(16, 14, 22, 60, 8, '#2a7cff'),
+      pointyEars(B, '#d6e6ff', 50) + vHead(B) + p('M-34 -54 Q0 -80 34 -54 Q36 -6 0 -2 Q-36 -6 -34 -54 Z', L) + vEyes(-80, '#7ee8ff') + e(0, -48, 13, 9, '#3b2147') + mouth(0, -26, 13) + p('M-10 -22 l4 12 l4 -12 M2 -22 l4 12 l4 -12', '#fff', 'stroke-width="2"') + spark(-100, -150, .7, '#d6f1ff') + spark(110, -100, .6, '#fff')); },
+  gremlin(o) { const S = '#e8c27a', D = '#b8904a'; return vWrap(vBody(S, '#f7e2b5') + vFeet(D) + vArms(S, D, '', p('M100 -30 V110 M84 110 H116 M86 110 v12 M96 110 v12 M106 110 v12 M116 110 v12', 'none', 'stroke-width="6"')),
+      g('ch-earR', p('M-76 -90 C-150 -150 -160 -60 -84 -64 Z', S) + p('M-84 -84 C-130 -120 -136 -74 -90 -72 Z', '#ffb3a1', 'stroke="none"')) + g('ch-earL', p('M76 -90 C150 -150 160 -60 84 -64 Z', S) + p('M84 -84 C130 -120 136 -74 90 -72 Z', '#ffb3a1', 'stroke="none"')) + vHead(S) + vEyes(-74, '#18c46a', 1.25) + e(0, -44, 11, 8, '#3b2147') + smirk(-24)
+      + p('M-80 -118 Q0 -160 80 -118 Q0 -104 -80 -118 Z', '#2fbf5a') + p('M60 -116 Q110 -110 120 -96 Q90 -100 56 -106 Z', '#2fbf5a')); },
+  witch(o) { const SK = '#b7e08a', H = '#3a2a5e'; return g('ch-back', p('M-60 -10 Q-110 90 -90 150 Q0 130 90 150 Q110 90 60 -10 Z', '#5b3fa0')) + vWrap(vBody('#4a2f86', '#6a4fb0') + vFeet('#2a1838') + vArms('#4a2f86', SK, '', p('M104 -60 V130', 'none', 'stroke="#8a5a3b" stroke-width="9"') + p('M104 -40 l-14 -8 M104 0 l14 -8 M104 40 l-14 -8 M104 80 l14 -8', 'none', 'stroke="#2f8a3a" stroke-width="5"') + c(104, -66, 12, '#ff3fa4')),
+      vHead(SK) + p('M-96 -112 Q0 -140 96 -112 Q0 -92 -96 -112 Z', H) + p('M-60 -118 L10 -236 L30 -200 L60 -118 Z', H) + p('M-56 -128 Q0 -138 56 -128', 'none', 'stroke="#ff3fa4" stroke-width="8"') + vEyes(-72, '#a24dff') + p('M0 -60 L16 -30 L-4 -36 Z', '#9ccf6a') + smirk(-22) + c(52, -40, 4, '#5a8a3a', 'stroke="none"')); },
+  // Puerto Rico
+  cucocloud(o) { const C1 = '#8e7fb8', C2 = '#b3a6d9'; return g('ch-body', p('M-150 40 C-180 40 -180 -20 -140 -24 C-150 -90 -70 -110 -40 -70 C-20 -130 70 -130 80 -64 C130 -96 180 -40 150 0 C190 10 180 60 140 60 Z', C1) + p('M-120 20 C-130 0 -110 -10 -100 -6 C-90 -50 -40 -60 -20 -36', 'none', `stroke="${C2}" stroke-width="10"`) + sheen(-60, -70, 30, 10, -10, .3)
+      + p('M-30 70 L-50 120 L-30 112 L-46 160 L0 96 L-20 104 L-6 70 Z', '#ffd93b') + p('M60 70 L44 104 L58 100 L48 130 L80 90 L66 94 L76 70 Z', '#ffd93b')
+      + g('ch-head', vEyes(-20, '#ffd93b', 1.2) + smirk(16)) + g('ch-armL', '') + g('ch-armR', '')); },
+  barnacle(o) { const R = '#ff6b4a', D = '#c94a2e'; return vWrap(e(0, 60, 90, 70, R) + sheen(-40, 30, 20, 30, -10, .3) + [-70, -40, 40, 70].map(x => p(`M${x} 110 l${x > 0 ? 20 : -20} 40`, 'none', `stroke="${D}" stroke-width="10"`)).join('') + c(-30, 70, 9, '#e6e0d0') + c(20, 90, 7, '#e6e0d0') + c(50, 50, 6, '#e6e0d0')
+      + g('ch-armL', p('M-80 30 C-130 10 -140 -40 -120 -60', 'none', `stroke="${R}" stroke-width="22"`) + p('M-140 -90 C-170 -70 -150 -30 -120 -50 L-128 -70 L-104 -72 C-104 -98 -126 -104 -140 -90 Z', R)) + g('ch-armR', p('M80 30 C130 10 140 -40 120 -60', 'none', `stroke="${R}" stroke-width="22"`) + p('M140 -90 C170 -70 150 -30 120 -50 L128 -70 L104 -72 C104 -98 126 -104 140 -90 Z', R)),
+      p('M-34 -40 V-10 M34 -40 V-10', 'none', `stroke="${R}" stroke-width="12"`) + c(-34, -50, 22, '#fff') + c(34, -50, 22, '#fff') + c(-30, -48, 10, '#2a1838') + p('M14 -72 L58 -30', 'none', 'stroke="#2a1838" stroke-width="6"') + e(34, -50, 22, 22, '#2a1838') + smirk(20)
+      + p('M-110 -90 Q0 -140 110 -90 Q60 -150 0 -150 Q-60 -150 -110 -90 Z', '#2a1838') + p('M-20 -128 l10 10 l10 -10 M-10 -118 l0 -12', 'none', 'stroke="#fff" stroke-width="4"')); },
+  hag(o) { const SK = '#c8d6f0', HR = '#7fa6d9'; let swirl = ''; for (let i = 0; i < 5; i++) swirl += p(`M${-100 + i * 50} ${-150 - (i % 2) * 20} q20 -30 40 0 q-10 20 -24 6`, 'none', `stroke="${HR}" stroke-width="9"`);
+    return vWrap(p('M-60 0 Q-120 80 -100 150 Q-50 130 0 150 Q50 130 100 150 Q120 80 60 0 Z', '#9fb8e0') + p('M-80 120 q20 -20 40 0 q20 -20 40 0 q20 -20 40 0 q20 -20 40 0', 'none', 'stroke="#fff" stroke-width="6"') + vArms('#9fb8e0', SK, '', p('M100 -30 m-26 0 a26 26 0 1 0 52 0 a18 18 0 1 0 -36 0 a10 10 0 1 0 20 0', 'none', 'stroke="#2a7cff" stroke-width="5"')),
+      p('M-100 -60 C-140 -160 140 -160 100 -60 C140 -20 120 40 90 30 L-90 30 C-120 40 -140 -20 -100 -60 Z', HR) + swirl + vHead(SK) + vEyes(-72, '#2a7cff') + p('M0 -60 Q14 -30 -4 -32', 'none', 'stroke-width="5"') + smirk(-22) + c(-46, -36, 5, '#9aa3c7', 'stroke="none"')); },
+  // NYC
+  ratking(o) { const G = '#9aa0b8', L = '#d9dcea'; return g('ch-tail', p('M50 120 C140 140 170 60 120 40', 'none', 'stroke="#ffb3c8" stroke-width="10"')) + vWrap(vBody(G, L) + vFeet('#ffb3c8') + p('M-60 0 Q-100 90 -80 150 L80 150 Q100 90 60 0 Q0 30 -60 0 Z', '#c0263e') + p('M-62 4 Q0 34 62 4', 'none', 'stroke="#fff" stroke-width="10" stroke-dasharray="6 8"') + vArms(G, '#ffb3c8', '', p('M104 -40 V100', 'none', 'stroke="#ffd93b" stroke-width="8"') + r(84, -84, 44, 30, 6, '#ffd93b') + `<text x="90" y="-62" font-size="16" font-weight="900" fill="#2a1838" stroke="none" font-family="Arial">M</text>`),
+      roundEars(G, '#ffb3c8', 34) + vHead(G) + p('M-30 -50 Q0 -70 30 -50 L0 -12 Z', L) + c(0, -16, 9, '#ff7aa8') + vEyes(-78, '#ff3b5c') + smirk(-2).replace(/-2/g, '-2') + p('M-30 -50 l-50 -10 M-30 -42 l-50 6 M30 -50 l50 -10 M30 -42 l50 6', 'none', 'stroke-width="3"')
+      + p('M-56 -136 L-60 -190 L-30 -160 L0 -200 L30 -160 L60 -190 L56 -136 Q0 -150 -56 -136 Z', '#ffd93b') + c(0, -170, 8, '#ff3fa4')); },
+  gargoyle(o) { const S = '#9da3b4', D = '#6b7186'; return g('ch-back', p('M-40 0 C-140 -60 -190 0 -170 60 C-150 30 -120 40 -100 60 C-90 30 -60 30 -40 40 Z', D) + p('M40 0 C140 -60 190 0 170 60 C150 30 120 40 100 60 C90 30 60 30 40 40 Z', D)) + vWrap(vBody(S, '#c3c8d6') + vFeet(D) + vArms(S, D),
+      p('M-56 -130 L-80 -190 L-30 -140 Z M56 -130 L80 -190 L30 -140 Z', D) + pointyEars(S, '#c3c8d6', 30) + vHead(S) + p('M-60 -110 l20 6 M40 -60 l12 10 M-20 -130 l6 12', 'none', `stroke="${D}" stroke-width="3"`) + vEyes(-74, '#ff8f2e') + e(0, -44, 14, 10, D) + mouth(0, -22, 18) + p('M-14 -20 l4 10 l4 -10 M6 -20 l4 10 l4 -10', '#fff', 'stroke-width="2"')); },
+  smoke(o) { const S = '#8d8f9e', L = '#b9bbc8'; let puffs = ''; [[-90, 40, 50], [90, 40, 50], [-50, 110, 46], [50, 110, 46], [0, 130, 50]].forEach(([x, y, rr]) => puffs += c(x, y, rr, S));
+    return g('ch-body', puffs + c(0, 40, 90, S) + sheen(-40, 10, 30, 14, -10, .25) + g('ch-armL', c(-130, -10, 26, L)) + g('ch-armR', c(130, -10, 26, L) + p('M150 -30 l30 -30', 'none', 'stroke="#ffd93b" stroke-width="6"'))
+      + g('ch-head', c(0, -60, 80, L) + r(-70, -96, 140, 30, 12, '#2a1838') + p('M-74 -96 Q0 -116 74 -96', 'none', 'stroke="#ff3b5c" stroke-width="6"') + p('M-90 -110 Q0 -160 90 -110 Q0 -128 -90 -110 Z', '#2a1838') + VBROW(-104, '#2a1838') + smirk(-36))); },
+  // Vail
+  abominable(o) { const W = '#fbfcff', SH = '#dbe4ff', F = '#8fd3ff'; let fluff = ''; for (let i = -3; i <= 3; i++) fluff += p(`M${i * 26 - 12} -140 l12 -24 l12 24`, W);
+    return vWrap(p('M-80 150 C-100 60 -90 -20 0 -24 C90 -20 100 60 80 150 Q0 166 -80 150 Z', W) + p('M-40 40 C-30 20 30 20 40 40 C50 90 30 130 0 136 C-30 130 -50 90 -40 40 Z', SH, 'stroke="none"') + vFeet('#9fb3e8') + vArms(W, '#9fb3e8', '', c(108, -50, 22, '#fff') + spark(108, -50, .5, '#7ee8ff')),
+      fluff + p('M-60 -130 L-90 -200 L-40 -150 Z M60 -130 L90 -200 L40 -150 Z', '#c9b8ff') + vHead(W) + p('M-56 -100 C-56 -30 56 -30 56 -100 Q0 -120 -56 -100 Z', F, 'stroke="none"') + vEyes(-80, '#2a7cff') + smirk(-36)); },
+  icequeen(o) { const SK = '#dff4ff', GW = '#7ec8ff'; return g('ch-back', p('M-60 -20 Q-150 80 -120 160 Q0 130 120 160 Q150 80 60 -20 Z', '#bfe6ff', 'opacity=".9"')) + vWrap(p('M-50 -10 Q-110 100 -100 150 Q0 170 100 150 Q110 100 50 -10 Q0 10 -50 -10 Z', GW) + p('M-60 100 l20 30 l20 -30 l20 30 l20 -30 l20 30 l20 -30', 'none', 'stroke="#fff" stroke-width="5"') + vArms(GW, SK, '', p('M104 -50 V120', 'none', 'stroke="#d6f1ff" stroke-width="7"') + p('M104 -86 l10 18 l20 0 l-16 12 l6 20 l-20 -12 l-20 12 l6 -20 l-16 -12 l20 0 Z', '#fff')),
+      p('M-90 -60 C-110 -150 110 -150 90 -60 C110 0 96 40 70 30 L-70 30 C-96 40 -110 0 -90 -60 Z', '#f2fbff') + vHead(SK) + p('M-50 -136 L-40 -186 L-20 -146 L0 -206 L20 -146 L40 -186 L50 -136 Q0 -150 -50 -136 Z', '#bfe6ff') + c(0, -170, 7, '#2a7cff') + vEyes(-72, '#2a7cff') + smirk(-22) + blush(-58, -40, 9, 5) + blush(58, -40, 9, 5)); },
+  ermine(o) { const W = '#ffffff', L = '#f0f4ff'; return g('ch-tail', p('M50 110 C120 120 150 60 132 20 C126 40 110 80 46 88 Z', W) + p('M132 20 C140 34 138 46 132 56 L118 48 Z', '#2a1838', 'stroke="none"')) + vWrap(vBody(W, L) + vFeet('#c3c8d6') + p('M-50 0 Q0 24 50 0 L52 22 Q0 46 -52 22 Z', '#ff3b5c') + vArms(W, '#c3c8d6', '', c(104, -40, 18, '#fff') + c(118, -54, 12, '#fff')),
+      roundEars(W, '#ffb3d1', 22) + vHead(W) + r(-80, -96, 160, 36, 16, '#2a7cff') + e(-36, -78, 26, 16, '#bfe6ff') + e(36, -78, 26, 16, '#bfe6ff') + p('M-60 -86 l12 -6 M12 -86 l12 -6', 'none', 'stroke="#fff" stroke-width="4"') + VBROW(-108) + e(0, -44, 11, 8, '#2a1838') + smirk(-24)); },
+  // Santa Clara
+  glitch(o) { const M = '#cfd8ff', D = '#8a96c8'; let px = ''; [[-50, -100, '#ff3fa4'], [30, -110, '#7ee8ff'], [-20, -60, '#ffd93b'], [50, -66, '#18c46a']].forEach(([x, y, f]) => px += r(x, y, 14, 14, 2, f, 'stroke="none" class="gl-px"'));
+    return vWrap(r(-60, 0, 120, 140, 24, M) + r(-36, 30, 72, 50, 10, '#2a1838') + p('M-26 56 h20 l6 -12 l8 24 l6 -12 h12', 'none', 'stroke="#18c46a" stroke-width="4"') + vFeet(D) + vArms(M, D),
+      p('M0 -150 V-186', 'none', 'stroke-width="5"') + c(0, -190, 10, '#ff3b5c', 'class="gl-px"') + r(-90, -150, 180, 140, 30, M) + r(-72, -134, 144, 106, 18, '#2a1838') + px + g('ch-eyes', r(-50, -100, 28, 22, 4, '#7ee8ff') + r(22, -100, 28, 22, 4, '#7ee8ff')) + VBROW(-112, '#7ee8ff') + mouth(0, -56, 16)); },
+  weevil(o) { const SH = '#3fb36a', D = '#2a7a46'; return vWrap(e(0, 70, 80, 80, SH) + p('M0 -6 V150', 'none', `stroke="${D}" stroke-width="5"`) + sheen(-34, 40, 14, 30, -10, .35) + c(-40, 60, 8, D, 'stroke="none"') + c(40, 90, 8, D, 'stroke="none"') + vFeet('#2a1838') + vArms('#5a3a22', '#2a1838', '', c(104, -40, 20, '#ff8f2e') + p('M104 -60 l6 -10', 'none', 'stroke="#18c46a" stroke-width="5"')),
+      p('M-30 -140 C-40 -180 -70 -190 -80 -180 M30 -140 C40 -180 70 -190 80 -180', 'none', 'stroke-width="5"') + c(-80, -182, 8, '#ff8f2e') + c(80, -182, 8, '#ff8f2e') + vHead('#7a5236') + p('M-18 -44 Q0 -40 18 -44 L8 30 Q0 40 -8 30 Z', '#7a5236') + vEyes(-80, '#ffd93b') + p('M-12 30 Q0 22 12 30', 'none', 'stroke-width="4"')); },
+  drstatic(o) { const SK = '#ffd9b8'; let zap = ''; for (let i = -4; i <= 4; i++) zap += p(`M${i * 22} -130 l${i * 6} -40 l10 14 l${i * 4} -36`, 'none', 'stroke="#ffd93b" stroke-width="9"'); 
+    return vWrap(p('M-62 140 C-74 70 -62 0 0 -4 C62 0 74 70 58 140 Q0 152 -62 140 Z', '#ffffff') + p('M0 -4 V140 M-20 10 L0 40 L20 10', 'none', 'stroke-width="4"') + c(-30, 80, 6, '#7ee8ff') + c(-30, 104, 6, '#7ee8ff') + vFeet('#2a1838') + vArms('#ffffff', SK, '', p('M96 -40 l20 -30 l-6 20 l20 -6 l-26 34 l6 -20 Z', '#ffd93b')),
+      zap + vHead(SK) + r(-80, -96, 160, 22, 10, '#5b5f7a') + c(-36, -86, 24, '#7ee8ff') + c(36, -86, 24, '#7ee8ff') + c(-36, -84, 9, '#2a1838') + c(36, -84, 9, '#2a1838') + VBROW(-118) + e(0, -48, 10, 8, '#e8a07a') + smirk(-26) + p('M-40 -20 q40 30 80 0', 'none', 'stroke="#c9b8ff" stroke-width="6"')); },
+};
+Object.entries(VILL).forEach(([k, f]) => { DEF['v' + k] = ['-200 -240 400 420', o => f(o || {}) + spark(-150, -170, .8, '#ffd93b') + spark(160, -140, .7, '#ff3fa4')]; });
 
 DEF.horse = DEF.marengo; DEF.owl = DEF.oscar; DEF.squirrel = DEF.scramble; DEF.pigeon = DEF.pearl; DEF.tortoise = DEF.marcus; DEF.fox = DEF.juniper; DEF.foxhead = DEF.juniperhead;
 function svg(name, o = {}, extra = '') { const d = DEF[name]; if (!d) return null; return wrap(name, o.vb || d[0], d[1](o) + (o.after || ''), extra, o.cls || ''); }
@@ -1831,13 +1917,13 @@ function numOpts(ans, k = 3, spread = 3, min = 0) {
 }
 const valOpts = vals => shuffle([...new Set(vals)]).map(v => ({ h: num(v), v }));
 const picOpts = (ans, pool, k = 3) => shuffle([ans, ...sample([...new Set(pool)].filter(w => w !== ans && IC.has(w)), k - 1)]).map(w => ({ h: ic(w), v: w }));
-const HINTS = ['Stop and check.', 'Poco a poco.', 'Stop and check. Try once more.', 'Poco a poco. You can do it.'];
-const hint = s => pick(HINTS) + ' ' + s;
+const HINTS = ['Stop and check.', 'Poco a poco.', 'Slow and steady.', 'Breathe, then look again.', 'Stop and check. Try once more.', 'Poco a poco. You can do it.'];
+const hint = s => 'Patience, Aspen. ' + pick(HINTS) + ' ' + s; // Marcus, the calm mentor, always leads with "Patience, Aspen."
 function choice(say, prompt, opts, ans, h, meta = {}, extra = {}) { return Object.assign({ type: 'choice', say, prompt, opts, ans, hint: hint(h), meta }, extra); }
 // ---------- word data ----------
 const CVC = { a: ['cat', 'hat', 'map', 'fan', 'van', 'pan', 'cap'], e: ['hen', 'net', 'pen', 'bed', 'ten'], i: ['pig', 'pin', 'six', 'lip'], o: ['dog', 'log', 'mop', 'pot', 'top', 'box'], u: ['sun', 'bug', 'mug', 'rug', 'cup', 'tub', 'bus'] };
 const CVC_ALL = Object.values(CVC).flat();
-const SOUND = { a: 'ah', b: 'buh', c: 'kuh', d: 'duh', e: 'eh', f: 'fff', g: 'guh', h: 'huh', i: 'ih', j: 'juh', k: 'kuh', l: 'lll', m: 'mmm', n: 'nnn', o: 'ah', p: 'puh', q: 'kwuh', r: 'rrr', s: 'sss', t: 'tuh', u: 'uh', v: 'vvv', w: 'wuh', x: 'ks', y: 'yuh', z: 'zzz' };
+const SOUND = Object.fromEntries('abcdefghijklmnopqrstuvwxyz'.split('').map(l => [l, '‹' + l + '›'])); // ‹p› = a short recorded /p/ cut from "pig" (never "puh", which reads as "pooh")
 const KEYWORD = { a: 'apple', b: 'bus', c: 'cat', d: 'dog', e: 'egg', f: 'fan', g: 'goat', h: 'hat', i: 'in', j: 'jump', k: 'kite', l: 'log', m: 'moon', n: 'net', o: 'octopus', p: 'pig', q: 'queen', r: 'rug', s: 'sun', t: 'top', u: 'up', v: 'van', w: 'web', x: 'box', y: 'yes', z: 'zoo' };
 const LETTER_GROUPS = D.skate.filter(x => x.kind === 'case').map(x => x.letters);
 const ALPHA = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -1860,21 +1946,21 @@ M.join = () => { const n1 = int(1, 6), n2 = int(1, 5), name = pick(COUNTABLE);
 M.compare = (lo, hi) => () => { const a = int(lo, hi), b = rnd() < 0.2 ? a : int(lo, hi); const ans = a > b ? '>' : a < b ? '<' : '=';
   return choice(`Which sign goes in the middle? ${a} and ${b}.`, big(`${a} ${Q} ${b}`), ['>', '<', '='].map(s => ({ h: `<span class="num sign">${s}</span>`, v: s, say: s === '>' ? 'is greater than' : s === '<' ? 'is less than' : 'is equal to' })), ans,
     hi > 20 ? 'Look at the tens first. Then look at the ones.' : 'The open side eats the bigger number. Same numbers get equals.', { kind: 'cmp', a, b }); };
-M.numline = () => { const add = rnd() < 0.6; let s, d; if (add) { s = int(0, 14); d = int(1, Math.min(6, 20 - s)); } else { s = int(4, 20); d = int(1, Math.min(6, s)); }
+M.numline = () => { const add = rnd() < 0.6; let s, d; if (add) { s = int(0, 15); d = int(2, Math.min(9, 20 - s)); } else { s = int(5, 20); d = int(2, Math.min(9, s)); }
   const ans = add ? s + d : s - d; return { type: 'numline', from: 0, to: 20, start: s, delta: add ? d : -d, ans, say: `Marcus starts on ${s}. He hops ${d} ${add ? 'forward' : 'back'}. Tap where he lands.`, hint: hint(`Hop one space at a time and count each hop: ${d} hops.`), meta: { kind: 'arith', expr: `${s}${add ? '+' : '-'}${d}` } }; };
-M.skip = () => { const step = pick([2, 5, 10]); const start = step * int(0, step === 10 ? 5 : 6); const seq = range(0, 4).map(i => start + step * i); const blank = int(2, 4); const ans = seq[blank];
+M.skip = () => { const step = pick([2, 5, 10]); const start = step * int(2, step === 10 ? 6 : 12); const seq = range(0, 4).map(i => start + step * i); const blank = int(2, 4); const ans = seq[blank];
   return choice(`Count by ${step}s. What number is missing?`, big(seq.map((v, i) => i === blank ? Q : v).join(', ')), valOpts([ans, ans + step === seq[blank + 1] ? ans + 1 : ans + step, ans - 1]), ans, `Count by ${step}s out loud. Add ${step} each time.`, { kind: 'skip', seq, blank }); };
 function dieSvg(n) { const P = { 1: [[50, 50]], 2: [[30, 30], [70, 70]], 3: [[28, 28], [50, 50], [72, 72]], 4: [[30, 30], [70, 30], [30, 70], [70, 70]], 5: [[28, 28], [72, 28], [50, 50], [28, 72], [72, 72]], 6: [[30, 26], [70, 26], [30, 50], [70, 50], [30, 74], [70, 74]] }[n] || [];
   return `<span class="ic die"><svg viewBox="0 0 100 100"><rect x="8" y="8" width="84" height="84" rx="16" fill="#fff" stroke="#222" stroke-width="5"/>${P.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="8" fill="#222"/>`).join('')}</svg></span>`; }
-M.doubles = () => { const near = rnd() < 0.35; const a = int(1, near ? 9 : 10); const b = near ? a + 1 : a; const dice = b <= 6;
+M.doubles = () => { const near = rnd() < 0.5; const a = int(3, near ? 11 : 12); const b = near ? a + 1 : a; const dice = b <= 6;
   const p = (dice ? `<div class="groups">${dieSvg(a)}<div class="op">+</div>${dieSvg(b)}</div>` : '') + eqh(`${a} + ${b} = ?`);
   return choice(near ? `Near doubles! What is ${a} plus ${b}?` : `Doubles! What is ${a} plus ${a}?`, p, numOpts(a + b, 3, 2, 0), a + b, near ? `${a} plus ${a} is ${a + a}. One more makes the answer.` : `Count on from ${a}, ${a} more times.`, { kind: 'arith', expr: `${a}+${b}` }); };
 M.make10 = () => { const have = int(1, 9); return { type: 'tenframe', have, target: 10, ans: 10 - have, say: `Drag golf balls into the frame to make 10. Then tell me how many you added.`, hint: hint(`Count the empty boxes. Each box needs one ball.`), meta: { kind: 'arith', expr: `10-${have}` } }; };
-M.bonds = (maxW) => () => { const whole = int(maxW > 10 ? 11 : 3, maxW); const a = maxW > 10 ? 10 : int(1, whole - 1); const b = whole - a; const r = rnd(); const miss = r < 0.2 ? 'whole' : r < 0.6 ? 0 : 1;
+M.bonds = (maxW) => () => { const whole = int(maxW > 10 ? 12 : 6, maxW); const a = maxW > 10 ? (rnd() < 0.4 ? 10 : int(3, whole - 3)) : int(1, whole - 1); const b = whole - a; const r = rnd(); const miss = r < 0.2 ? 'whole' : r < 0.6 ? 0 : 1;
   const ans = miss === 'whole' ? whole : miss === 0 ? a : b;
   return { type: 'bond', whole, parts: [a, b], miss, opts: numOpts(ans, 4, 3, 0), ans, say: miss === 'whole' ? `Two parts make the whole. What is ${a} and ${b} together?` : `The whole is ${whole}. One part is ${miss === 0 ? b : a}. Drag the missing part into the empty circle.`,
     hint: hint(miss === 'whole' ? `Put the parts together: ${a} plus ${b}.` : `Start at ${miss === 0 ? b : a} and count up to ${whole}.`), meta: { kind: 'bond', whole, a, b, miss } }; };
-M.family = () => { const a = int(1, 9), b = int(1, 9), w = a + b; const facts = [`${a} + ${b} = ${w}`, `${b} + ${a} = ${w}`, `${w} − ${a} = ${b}`, `${w} − ${b} = ${a}`];
+M.family = () => { const a = int(3, 12), b = int(2, 9), w = a + b; const facts = [`${a} + ${b} = ${w}`, `${b} + ${a} = ${w}`, `${w} − ${a} = ${b}`, `${w} − ${b} = ${a}`];
   const right = pick(facts); const wrong = [`${a} + ${w} = ${b}`, `${b} − ${w} = ${a}`, `${a} − ${b} = ${w}`, `${w} + ${a} = ${b}`].filter(f => !facts.includes(f));
   return choice(`These numbers are a family: ${a}, ${b}, and ${w}. Which fact is in the family?`, `<div class="family">${num(a)}${num(b)}${num(w)}</div>`, shuffle([right, ...sample(wrong, 2)]).map(f => ({ h: `<span class="wd">${f}</span>`, v: f })), right, `The biggest number, ${w}, is the whole. Adding the parts makes the whole. Taking one part away leaves the other part.`, { kind: 'family', a, b, w }, { style: 'col' }); };
 const arith = (op, maxA, maxB, maxSum, pics) => () => { let a, b; do { a = int(op === '-' ? 1 : 0, maxA); b = int(0, maxB); } while ((op === '+' && (a + b > maxSum || a + b === 0)) || (op === '-' && b > a));
@@ -1882,18 +1968,18 @@ const arith = (op, maxA, maxB, maxSum, pics) => () => { let a, b; do { a = int(o
   if (pics && a <= 10) p = (op === '+' ? `<div class="groups"><div>${icons(name, a)}</div><div class="op">+</div><div>${icons(name, b)}</div></div>` : `<div class="icrow cnt">${range(1, a).map(i => ic(name, i > a - b ? 'gone' : '')).join('')}</div>`) + p;
   const h = op === '+' ? (a + b > 10 ? `Make a ten first. ${a} plus ${Math.max(0, 10 - a)} is 10, then add the rest.` : `Start at ${Math.max(a, b)} and count on ${Math.min(a, b)} more.`) : `Start at ${a} and count back ${b}. Or think: ${b} plus what makes ${a}?`;
   return choice(`What is ${a} ${op === '+' ? 'plus' : 'minus'} ${b}?`, p, numOpts(ans, 3, 2, 0), ans, h, { kind: 'arith', expr: `${a}${op}${b}` }, { count: !!pics }); };
-M.add3 = () => { const a = int(1, 9), b = int(1, 9), c2 = int(1, 9);
+M.add3 = () => { const a = int(2, 9), b = int(2, 9), c2 = int(2, 9);
   return choice(`Add three numbers: ${a} plus ${b} plus ${c2}.`, eqh(`${a} + ${b} + ${c2} = ?`), numOpts(a + b + c2, 3, 2, 0), a + b + c2, `Look for two numbers that make 10. Add those first, then the last one.`, { kind: 'arith', expr: `${a}+${b}+${c2}` }); };
-M.missing = () => { const t = int(0, 2); const w = int(5, 20); let s, ans;
+M.missing = () => { const t = int(0, 2); const w = int(9, 25); let s, ans;
   if (t === 0) { const a = int(0, Math.min(w, 10)); ans = w - a; s = `${a} + ? = ${w}`; }
   else if (t === 1) { const b = int(0, Math.min(w, 10)); ans = w - b; s = `? + ${b} = ${w}`; }
   else { ans = int(0, Math.min(w, 10)); s = `${w} - ? = ${w - ans}`; }
   return choice(`What number is hiding? ${s.replace('?', 'what').replace(' - ', ' minus ').replace('+', 'plus').replace('=', 'equals')}`, eqh(s), numOpts(ans, 3, 2, 0), ans, `Try your answer in the box. Does the number sentence come out true?`, { kind: 'missing', s }); };
-M.mixed = () => (rnd() < 0.5 ? arith('+', 10, 10, 20, false) : arith('-', 20, 10, 20, false))();
+M.mixed = () => (rnd() < 0.5 ? arith('+', 20, 12, 30, false) : arith('-', 30, 15, 30, false))();
 const WP = [...D.wp.map(w => ({ fixed: w })), ...D.wp58.map(t => ({ tpl: t }))];
 M.wp = (more) => () => {
   if (more) { const who = pick([['Aspen', 'Nikko', 'golf balls', 'golfball'], ['Valentina', 'Olivia', 'stars', 'star'], ['Marengo', 'Teddy', 'carrots', 'carrot'], ['Sofia', 'Landen', 'medals', 'medal'], ['Scramble', 'Juniper', 'acorns', 'acorn']]);
-    const a = int(4, 10), b = int(1, a - 1); const t = `${who[0]} has ${a} ${who[2]}. ${who[1]} has ${b}. How many more does ${who[0]} have?`;
+    const a = int(7, 15), b = int(2, a - 2); const t = `${who[0]} has ${a} ${who[2]}. ${who[1]} has ${b}. How many more does ${who[0]} have?`;
     return choice(t, `<div class="wp">${sentence(t)}</div><div class="cmpgrid"><div><b>${who[0]}</b>${icons(who[3], a, 'line')}</div><div><b>${who[1]}</b>${icons(who[3], b, 'line')}</div></div>`, numOpts(a - b, 3, 2, 0), a - b, `Line them up. Count the extra ones that have no partner.`, { kind: 'arith', expr: `${a}-${b}` }); }
   const w = pick(WP); let text, a, b, op, iconName;
   if (w.fixed) { ({ a, b, op } = w.fixed); text = w.fixed.text; iconName = w.fixed.pic[0]; }
@@ -1912,13 +1998,13 @@ M.tens = () => { const t = int(1, 9), o = int(0, 9), ans = t * 10 + o; const swa
 M.tenmore = () => { const n = int(11, 89); const t = pick(['10 more', '10 less', '1 more', '1 less']); const sgn = t.includes('more') ? 1 : -1; const ans = n + sgn * (t.startsWith('10') ? 10 : 1);
   const wrong1 = n + sgn * (t.startsWith('10') ? 1 : 10); const wrong2 = n - sgn * (t.startsWith('10') ? 10 : 1);
   return choice(`What is ${t} than ${n}?`, big(`${t} than ${n} = ${Q}`), valOpts([ans, wrong1, wrong2]), ans, t.startsWith('10') ? 'Only the tens change. The ones stay the same.' : 'Only the ones change, by one.', { kind: 'tenmore', n, t }); };
-M.addtens = () => { const a = int(1, 7) * 10 + (rnd() < 0.5 ? 0 : int(1, 9)); const b = 10 * int(1, Math.min(3, Math.floor((99 - a) / 10))); const ans = a + b;
+M.addtens = () => { const a = int(1, 7) * 10 + (rnd() < 0.5 ? 0 : int(1, 9)); const b = 10 * int(1, Math.min(4, Math.floor((99 - a) / 10))); const ans = a + b;
   return choice(`What is ${a} plus ${b}?`, eqh(`${a} + ${b} = ?`), valOpts([ans, ans + 1, ans + 10 <= 109 ? ans + 10 : ans - 1]), ans, `Count on by tens from ${a}: ${a + 10}, ${a + 20}...`, { kind: 'arith', expr: `${a}+${b}` }); };
 M.clock = () => { const h = int(1, 12), half = rnd() < 0.4; const lab = (hh, hf) => `${hh}:${hf ? '30' : '00'}`; const ans = lab(h, half);
   const others = [...new Set([lab(h, !half), lab((h % 12) + 1, half), lab(((h + 5) % 12) + 1, half)])].filter(x => x !== ans);
   return choice(`What time is it on the gazebo clock?`, `<div class="clockwrap">${IC.clock(h, half ? 30 : 0, 220)}</div>`, shuffle([ans, ...sample(others, 2)]).map(v => ({ h: `<span class="num">${v}</span>`, v })), ans, half ? 'The long hand points down at the 6. That means thirty. The short hand is just past the hour.' : 'The long hand points straight up at 12. Read the short hand for the hour.', { kind: 'clock', h, half }); };
 const COINS = { penny: 1, nickel: 5, dime: 10, quarter: 25 };
-M.coins = () => { let list, tot; do { list = []; const n = int(2, 5); for (let i = 0; i < n; i++) list.push(rnd() < 0.12 ? 'quarter' : pick(['penny', 'nickel', 'dime'])); tot = list.reduce((s, c) => s + COINS[c], 0); } while (tot > 50);
+M.coins = () => { let list, tot; do { list = []; const n = int(2, 5); for (let i = 0; i < n; i++) list.push(rnd() < 0.22 ? 'quarter' : pick(['penny', 'nickel', 'dime'])); tot = list.reduce((s, c) => s + COINS[c], 0); } while (tot > 75);
   list.sort((a, b) => COINS[b] - COINS[a]);
   return choice(`Nicolò's café! How much money is this? Big coins first.`, `<div class="icrow coins">${list.map(c => ic(c, 'coin')).join('')}</div>`, numOpts(tot, 3, 5, 1).map(o => ({ h: num(o.v + '¢'), v: o.v })), tot, `Start with the biggest coin. Then count on: dimes by 10, nickels by 5, pennies by 1.`, { kind: 'coins', list }); };
 const SHAPES = { circle: '<circle cx="50" cy="50" r="38"/>', square: '<rect x="14" y="14" width="72" height="72"/>', triangle: '<path d="M50 10 L90 86 L10 86 Z"/>', rectangle: '<rect x="6" y="26" width="88" height="48"/>', hexagon: '<path d="M30 12 L70 12 L92 50 L70 88 L30 88 L8 50 Z"/>', oval: '<ellipse cx="50" cy="50" rx="42" ry="28"/>' };
@@ -1935,7 +2021,7 @@ function cutSvg(kind, fair, parts) { const f = '#ffcc99'; let s = '';
 M.halves = () => { const parts = pick([2, 4]); const kind = pick(['circle', 'rect']);
   const opts = shuffle([{ h: cutSvg(kind, true, parts), v: 'fair' }, { h: cutSvg(kind, false, parts), v: 'notfair' }, { h: cutSvg(kind === 'circle' ? 'rect' : 'circle', false, parts), v: 'notfair2' }]);
   return choice(`Winnie wants fair shares. Which one is cut into ${parts === 2 ? 'halves' : 'fourths'}, all the same size?`, big(parts === 2 ? '½' : '¼'), opts, 'fair', 'Fair shares are all the same size. Look for pieces that match.', { kind: 'fair' }); };
-M.groups = () => { const g = int(2, 4), each = int(2, 5); const name = pick(['biscotto', 'golfball', 'acorn', 'apple']);
+M.groups = () => { const g = int(2, 5), each = int(2, 6); const name = pick(['biscotto', 'golfball', 'acorn', 'apple']);
   return choice(`${g} groups of ${each}. How many in all?`, `<div class="groups">${range(1, g).map(() => `<div class="grp">${icons(name, each, 'cnt small')}</div>`).join('')}</div>`, numOpts(g * each, 3, 2, 1), g * each, `Count by ${each}s, one group at a time.`, { kind: 'arith', expr: `${g}*${each}` }, { count: true }); };
 // ================= READING =================
 const Rd = {};
@@ -1948,8 +2034,9 @@ Rd.edge = (end) => () => { const w = pick(CVC_ALL); const l = end ? w[w.length -
   return choice(`What is the ${end ? 'last' : 'first'} sound in ${w}? ${w}.`, `<div class="bigic">${ic(w)}</div>`, shuffle([l, ...sample('bcdfghlmnprstv'.split('').filter(x => x !== l && !(l === 'c' && x === 'k')), 3)]).map(letterOpt), l, `Say it slowly: ${w.split('').map(x => SOUND[x]).join(', ')}. Listen to the ${end ? 'end' : 'start'}.`, { kind: 'edge', w, end: !!end }); };
 Rd.vowel = () => { const v = pick('aeiou'.split('')); const w = pick(CVC[v]);
   return choice(`Tap the middle sound in ${w}. ${w}.`, `<div class="bigic">${ic(w)}</div>${big(`<span class="wd">${w[0]}_${w[2]}</span>`)}`, 'aeiou'.split('').map(x => ({ h: `<span class="lt">${x}</span>`, v: x })), v, `Stretch the word: ${w.split('').map(x => SOUND[x]).join(', ')}. The middle sound is a vowel.`, { kind: 'vowel', w }); };
-Rd.blend = () => { const w = pick(CVC_ALL.filter(x => x !== 'six')); return choice(`Listen and blend. ${w.split('').map(x => SOUND[x]).join('... ')}. What word is it?`, big(`<span class="wd">${w.split('').join(' · ')}</span>`), picOpts(w, CVC_ALL, 3), w, `Say the sounds faster and faster until they slide together, like skating: ${w.split('').map(x => SOUND[x]).join(' ')}.`, { kind: 'blend', w }); };
-Rd.build = () => { const w = pick(CVC_ALL); const extra = sample('abcdefghilmnoprstu'.split('').filter(x => !w.includes(x)), 2);
+Rd.blend = () => { const w = LONGW.length && rnd() < 0.5 ? pick(LONGW) : pick(CVC_ALL.filter(x => x !== 'six')); return choice(`Listen and blend. ${w.split('').map(x => SOUND[x]).join('... ')}. What word is it?`, big(`<span class="wd">${w.split('').join(' · ')}</span>`), picOpts(w, CVC_ALL, 3), w, `Say the sounds faster and faster until they slide together, like skating: ${w.split('').map(x => SOUND[x]).join(' ')}.`, { kind: 'blend', w }); };
+const LONGW = ['frog', 'crab', 'drum', 'flag', 'sled', 'plum', 'nest', 'milk', 'hand', 'duck', 'tent', 'gift', 'lamp', 'pond', 'clam', 'crib', 'belt', 'mask', 'raft', 'vest', 'desk', 'bell', 'doll', 'swan', 'snail'.slice(0, 0)].filter(w => w && IC.has(w));
+Rd.build = () => { const w = LONGW.length && rnd() < 0.65 ? pick(LONGW) : pick(CVC_ALL); const extra = sample('abcdefghilmnoprstu'.split('').filter(x => !w.includes(x)), 2);
   return { type: 'build', word: w, pic: w, tiles: shuffle([...w.split(''), ...extra]), say: `Build the word ${w}. Drag the letters in order.`, hint: hint(`Say it slowly: ${w.split('').map(x => SOUND[x]).join(', ')}. Find each sound.`), meta: { kind: 'build', w } }; };
 const FAM = { at: ['cat', 'hat', 'mat', 'bat', 'sat'], an: ['fan', 'van', 'pan', 'can', 'man'], en: ['hen', 'pen', 'ten', 'men'], op: ['mop', 'top', 'hop', 'pop'], ug: ['bug', 'mug', 'rug', 'hug'], ot: ['pot', 'dot', 'hot', 'lot'], un: ['sun', 'run', 'fun', 'bun'], ig: ['pig', 'dig', 'big', 'wig'] };
 Rd.family = () => { const f = pick(Object.keys(FAM)); const w = pick(FAM[f]); const others = sample(Object.keys(FAM).filter(x => x !== f), 2).map(x => pick(FAM[x]));
@@ -2002,9 +2089,9 @@ L.ppat = () => { const unit = pick(UNITS); const letters = [...new Set(unit)]; c
   const reps = unit.length <= 3 ? 3 : 2; const seq = []; for (let r = 0; r < reps; r++) for (const ch of unit) seq.push(map[ch]); const ans = map[unit[0]];
   const opts = [ans, ...sample([...letters.map(l => map[l]), ics[letters.length]].filter(x => x !== ans), 2)];
   return choice(`What comes next in the pattern?`, `<div class="icrow pat">${seq.map(n => ic(n)).join('')}<span class="qbox">?</span></div>`, shuffle(opts).map(n => ({ h: ic(n), v: n })), ans, `Say the pattern out loud. What starts again?`, { kind: 'ppat', seq, unit }); };
-L.npat = () => { const step = pick([1, 2, 5, 10, -1, -2, 3]); const start = step < 0 ? int(10, 20) : int(0, 12); const seq = range(0, 4).map(i => start + i * step); const blank = rnd() < 0.7 ? 4 : int(1, 3); const ans = seq[blank];
+L.npat = () => { const step = pick([2, 3, 4, 5, 10, -2, -3, -5]); const start = step < 0 ? int(18, 30) : int(0, 15); const seq = range(0, 4).map(i => start + i * step); const blank = rnd() < 0.7 ? 4 : int(1, 3); const ans = seq[blank];
   return choice(`Number pattern! What number is missing?`, big(seq.map((v, i) => i === blank ? Q : v).join(', ')), numOpts(ans, 3, 2, 0), ans, `How much does it change each time? It goes ${step > 0 ? 'up' : 'down'} by ${Math.abs(step)}.`, { kind: 'npat', seq, blank }); };
-L.grow = () => { const st = int(1, 3), step = int(1, 2); const seq = [st, st + step, st + 2 * step]; const ans = st + 3 * step;
+L.grow = () => { const st = int(1, 4), step = int(2, 3); const seq = [st, st + step, st + 2 * step]; const ans = st + 3 * step;
   const pile = n => `<div class="pile">${icons('acorn', n, 'tiny')}<b>${n}</b></div>`;
   return choice(`Scramble's acorn piles grow! How many acorns come next?`, `<div class="piles">${seq.map(pile).join('')}<div class="pile"><span class="qbox">?</span></div></div>`, numOpts(ans, 3, 2, 1), ans, `Each pile adds ${step} more. ${seq[2]} plus ${step}.`, { kind: 'grow', seq }); };
 const ODDG = Object.fromEntries(Object.entries(D.oddgroups).map(([k, v]) => [k, v.filter(x => IC.has(x))]));
@@ -2048,7 +2135,7 @@ function makeSudoku(givens) { const base = [[1, 2, 3, 4], [3, 4, 1, 2], [2, 1, 4
   const sol = g.map(r => r.slice()); const puz = g.map(r => r.slice()); let filled = 16;
   for (const k of shuffle(range(0, 15))) { if (filled <= givens) break; const r = k >> 2, c = k & 3; const v = puz[r][c]; puz[r][c] = 0; if (sudSolve(puz).count !== 1) puz[r][c] = v; else filled--; }
   return { puz, sol }; }
-L.sudoku = (pics) => () => { const { puz, sol } = makeSudoku(pick([9, 10, 8])); const iconsSet = pics ? sample(PAT_ICONS, 4) : null;
+L.sudoku = (pics) => () => { const { puz, sol } = makeSudoku(pick([7, 8, 6])); const iconsSet = pics ? sample(PAT_ICONS, 4) : null;
   return { type: 'sudoku', grid: puz, sol, icons: iconsSet, say: `Oscar's sudoku! Every row, every column, and every box of four needs one of each. Tap an empty square, then pick.`, hint: hint('Look at the row, the column, and the box. Which one is still missing?'), meta: { kind: 'sudoku', puz, sol } }; };
 const DSTORIES = D.dstory.map(s => { const lines = s.text.match(/[^.!?]+[.!?]+/g).map(x => x.trim()); return { title: s.story_title, lines, qs: s.qs.map(q => ({ q: q.q, a: q.kind === 'yesno' ? q.ans : q.opts[q.ans], opts: q.kind === 'yesno' ? null : q.opts, evIdx: lines.findIndex(l => norm(l) === norm(q.evidence)) })) }; });
 L.detective = () => storyItems(DSTORIES[(ROT.d++) % DSTORIES.length]);
@@ -2113,11 +2200,11 @@ add('m_make10', 'math', 'Make 10 with Ten Frames', 'juniper', 'Fill every box. T
 add('m_bonds10', 'math', 'Number Bonds to 10', 'winnie', 'Find one part. Then find the next.', 'heart', M.bonds(10));
 add('m_bonds20', 'math', 'Number Bonds to 20', 'winnie', 'A teen number is ten and some more.', 'heart', M.bonds(20));
 add('m_family', 'math', 'Fact Families', 'mamafox', 'Three numbers, one family. Like us!', 'foxhead', M.family);
-add('m_add10', 'math', 'Add Within 10', 'juniper', 'Do this sum. Then do the next.', 'golfball', arith('+', 10, 10, 10, true));
-add('m_add20', 'math', 'Add Within 20', 'juniper', 'Enough is the true sum. Write it and stop.', 'golfflag', arith('+', 10, 10, 20, false));
+add('m_add10', 'math', 'Add Within 20', 'juniper', 'Do this sum. Then do the next.', 'golfball', arith('+', 12, 10, 20, true));
+add('m_add20', 'math', 'Add Within 30', 'juniper', 'Enough is the true sum. Write it and stop.', 'golfflag', arith('+', 20, 12, 30, false));
 add('m_add3', 'math', 'Add Three Numbers', 'oscar', 'Make a ten first.', 'acorn', M.add3);
-add('m_sub10', 'math', 'Subtract Within 10', 'marcus', 'Count what is left. Keep the share fair.', 'acorn', arith('-', 10, 10, 10, true));
-add('m_sub20', 'math', 'Subtract Within 20', 'marcus', 'Let some go. Then check what is left.', 'snowflake', arith('-', 20, 10, 20, false));
+add('m_sub10', 'math', 'Subtract Within 20', 'marcus', 'Count what is left. Keep the share fair.', 'acorn', arith('-', 20, 10, 20, true));
+add('m_sub20', 'math', 'Subtract Within 30', 'marcus', 'Let some go. Then check what is left.', 'snowflake', arith('-', 30, 15, 30, false));
 add('m_missing', 'math', 'Find the Missing Number', 'juniper', 'Look for one missing part.', 'star', M.missing);
 add('m_mixed', 'math', 'Mixed Plus and Minus', 'juniper', 'Check the sign. Then do that one.', 'medal', M.mixed);
 add('m_wp', 'math', 'Park Story Problems', 'nicolo', 'One line, one number. Read it slowly.', 'nicolo', M.wp(false));
@@ -2144,9 +2231,9 @@ add('r_digraph', 'read', 'sh, ch, th', 'oscar', 'Two letters can make one sound.
 add('r_silente', 'read', 'Magic e', 'oscar', 'A quiet e can change a word.', 'kite', Rd.silentE);
 add('r_vteam', 'read', 'Vowel Teams', 'pearl', 'Two vowels walk together.', 'boat', Rd.vteam);
 add('r_hf', 'read', 'Word Spotlight', 'juniper', 'Little words we see every day.', 'star', Rd.hf);
-add('r_sw1', 'read', 'Sight Words 1 to 50', 'nicolo', 'Read my chalkboard, Aspen. Say each word.', 'chalkboard', SW(0, 50));
-add('r_sw2', 'read', 'Sight Words 51 to 100', 'nicolo', 'Your practice is yours, Aspen.', 'chalkboard', SW(50, 100));
-add('r_sw3', 'read', 'Sight Words 101 to 200', 'pearl', 'Right first. Fast comes later.', 'chalkboard', SW(100, 200));
+add('r_sw1', 'read', 'Sight Words 26 to 100', 'nicolo', 'Read my chalkboard, Aspen. Say each word.', 'chalkboard', SW(25, 100));
+add('r_sw2', 'read', 'Sight Words 76 to 150', 'nicolo', 'Your practice is yours, Aspen.', 'chalkboard', SW(75, 150));
+add('r_sw3', 'read', 'Sight Words 126 to 250', 'pearl', 'Right first. Fast comes later.', 'chalkboard', SW(125, 250));
 add('r_sw4', 'read', 'Sight Words 201 to 300', 'oscar', 'Look twice, then pop it.', 'chalkboard', SW(200, 300));
 add('r_fill', 'read', 'Fill the Blank', 'oscar', 'Read the whole sentence. Then pick a word.', 'book', Rd.fill);
 add('r_check', 'read', 'Read and Check', 'toulouse', 'Read, then look.', 'book', Rd.check);
@@ -2251,7 +2338,7 @@ const SND = {
 // ---------- speech ----------
 const SP = { ok: JVOICE.ok, n: 0 };
 const loadVoices = () => JVOICE.refresh();
-const plain = s => String(s).replace(/<[^>]+>/g, '').replace(/＿＿＿/g, ' blank ').replace(/[«»]/g, '').replace(/\s+/g, ' ').trim();
+const plain = s => String(s).replace(/‹([a-z]+)›/g, '$1').replace(/<[^>]+>/g, '').replace(/＿＿＿/g, ' blank ').replace(/[«»]/g, '').replace(/\s+/g, ' ').trim();
 function segments(text) { const out = []; String(text).split(/(«[^»]*»)/).forEach(p => { if (!p) return; if (p[0] === '«') out.push({ t: p.slice(1, -1), es: true }); else out.push({ t: p, es: false }); }); return out.filter(s => /[A-Za-z0-9À-ÿ¡¿]/.test(s.t)); }
 function defaultTalker() { if ($('meet').classList.contains('on')) return $('meetChr'); if ($('cele').classList.contains('on')) return $('celeFox'); if ($('intro').classList.contains('on')) return $('introIc');
   const scr = document.querySelector('.screen.on'); const id = scr && scr.id; return { play: $('guideFox'), home: $('homeFox'), start: $('startFox'), dress: $('dressFox') }[id] || null; }
@@ -2261,7 +2348,7 @@ function talkOff(el) { const c = chrOf(el); if (c) c.classList.remove('talking',
 function flap(el) { const c = chrOf(el); if (!c) return; c.classList.add('mo'); clearTimeout(c._mo); c._mo = setTimeout(() => c.classList.remove('mo'), 130); }
 // ---------- v3: recorded voices (pre-rendered clips, played with WebAudio; device speech only as a last resort) ----------
 const VO = (() => {
-  const CFG = {"V":{"jun":["en-US-AnaNeural","+0%","+6Hz"],"jes":["es-PR-KarinaNeural","+0%","+38Hz"],"mar":["en-US-AndrewNeural","-10%","-4Hz"],"osc":["en-US-ChristopherNeural","-8%","+0Hz"],"ves":["es-PR-VictorNeural","-6%","+0Hz"],"mom":["en-US-JennyNeural","+0%","+0Hz"],"mes":["es-MX-DaliaNeural","+0%","+0Hz"],"scr":["en-US-AnaNeural","+12%","+28Hz"],"prl":["en-US-EmmaNeural","+5%","+16Hz"],"tou":["en-GB-SoniaNeural","+0%","+10Hz"],"win":["en-GB-MaisieNeural","+4%","+0Hz"],"ted":["en-GB-MaisieNeural","+10%","+22Hz"],"nic":["en-US-RogerNeural","-6%","-6Hz"],"coq":["en-US-AnaNeural","+14%","+48Hz"],"mrg":["en-US-GuyNeural","-6%","-6Hz"],"lol":["en-US-EmmaNeural","+8%","+24Hz"],"les":["es-PR-KarinaNeural","+6%","+18Hz"],"roc":["en-US-BrianNeural","+10%","+10Hz"],"flu":["en-US-AvaNeural","+5%","+26Hz"],"qui":["en-US-AriaNeural","+5%","+20Hz"],"rac":["en-US-GuyNeural","+8%","+18Hz"],"cld":["en-US-RogerNeural","-8%","+4Hz"],"sph":["en-US-AriaNeural","-6%","-8Hz"],"yet":["en-US-EricNeural","-12%","-10Hz"],"rob":["en-US-SteffanNeural","+4%","+14Hz"]},"CH":{"juniper":["jun","jes"],"juniperhead":["jun","jes"],"marcus":["mar","ves"],"oscar":["osc","ves"],"mamafox":["mom","mes"],"scramble":["scr","jes"],"pearl":["prl","mes"],"toulouse":["tou","mes"],"winnie":["win","jes"],"teddy":["ted","jes"],"nicolo":["nic","ves"],"coqui":["coq","jes"],"marengo":["mrg","ves"],"lola":["lol","les"],"rocco":["roc","ves"],"flurry":["flu","jes"],"quinn":["qui","jes"],"raccoon":["rac","ves"],"stormcloud":["cld","ves"],"sphinx":["sph","mes"],"yeti":["yet","ves"],"robot":["rob","ves"],"horse":["mrg","ves"],"fox":["jun","jes"],"foxhead":["jun","jes"],"owl":["osc","ves"],"squirrel":["scr","jes"],"pigeon":["prl","mes"],"tortoise":["mar","ves"]}};
+  const CFG = {"V":{"jun":["en-US-AnaNeural","+0%","+6Hz"],"jes":["es-PR-KarinaNeural","+0%","+38Hz"],"mar":["en-US-AndrewNeural","-10%","-4Hz"],"osc":["en-US-ChristopherNeural","-8%","+0Hz"],"ves":["es-PR-VictorNeural","-6%","+0Hz"],"mom":["en-US-JennyNeural","+0%","+0Hz"],"mes":["es-MX-DaliaNeural","+0%","+0Hz"],"scr":["en-US-AnaNeural","+12%","+28Hz"],"prl":["en-US-EmmaNeural","+5%","+16Hz"],"tou":["en-GB-RyanNeural","+6%","+6Hz"],"win":["en-GB-MaisieNeural","+4%","+0Hz"],"ted":["en-GB-MaisieNeural","+10%","+22Hz"],"nic":["en-US-RogerNeural","-6%","-6Hz"],"coq":["en-US-AnaNeural","+14%","+48Hz"],"mrg":["en-US-GuyNeural","-6%","-6Hz"],"lol":["en-US-EmmaNeural","+8%","+24Hz"],"les":["es-PR-KarinaNeural","+6%","+18Hz"],"roc":["en-US-BrianNeural","+10%","+10Hz"],"flu":["en-US-AvaNeural","+5%","+26Hz"],"qui":["en-US-AriaNeural","+5%","+20Hz"],"rac":["en-US-GuyNeural","+8%","+18Hz"],"cld":["en-US-RogerNeural","-8%","+4Hz"],"sph":["en-US-AriaNeural","-6%","-8Hz"],"yet":["en-US-EricNeural","-12%","-10Hz"],"rob":["en-US-SteffanNeural","+4%","+14Hz"],"vgo":["en-AU-WilliamMultilingualNeural","+8%","+16Hz"],"vwe":["en-US-GuyNeural","+14%","+24Hz"],"vpi":["en-ZA-LukeNeural","+0%","+4Hz"],"vwo":["en-CA-LiamNeural","-6%","-8Hz"],"vgr":["en-SG-WayneNeural","+12%","+22Hz"],"vwi":["en-GB-LibbyNeural","+0%","+8Hz"],"vcu":["en-US-RogerNeural","-12%","-8Hz"],"vba":["en-GB-ThomasNeural","-4%","-10Hz"],"vha":["en-AU-NatashaNeural","+0%","-4Hz"],"vra":["en-PH-JamesNeural","+10%","+18Hz"],"vga":["en-US-ChristopherNeural","-14%","-14Hz"],"vsm":["en-US-EricNeural","-4%","-6Hz"],"vab":["en-NZ-MitchellNeural","-10%","-12Hz"],"viq":["en-GB-SoniaNeural","-6%","+0Hz"],"ver":["en-IN-PrabhatNeural","+8%","+10Hz"],"vgl":["en-US-SteffanNeural","+6%","+20Hz"],"vwv":["en-NG-AbeoNeural","+6%","+16Hz"],"vds":["en-IE-ConnorNeural","+10%","+12Hz"]},"CH":{"juniper":["jun","jes"],"juniperhead":["jun","jes"],"marcus":["mar","ves"],"oscar":["osc","ves"],"mamafox":["mom","mes"],"scramble":["scr","jes"],"pearl":["prl","mes"],"toulouse":["tou","ves"],"winnie":["win","jes"],"teddy":["ted","jes"],"nicolo":["nic","ves"],"coqui":["coq","jes"],"marengo":["mrg","ves"],"lola":["lol","les"],"rocco":["roc","ves"],"flurry":["flu","jes"],"quinn":["qui","jes"],"raccoon":["rac","ves"],"stormcloud":["cld","ves"],"sphinx":["sph","mes"],"yeti":["yet","ves"],"robot":["rob","ves"],"horse":["mrg","ves"],"fox":["jun","jes"],"foxhead":["jun","jes"],"owl":["osc","ves"],"squirrel":["scr","jes"],"pigeon":["prl","mes"],"tortoise":["mar","ves"],"vgoblin":["vgo","ves"],"vweasel":["vwe","ves"],"vpickle":["vpi","ves"],"vwolf":["vwo","ves"],"vgremlin":["vgr","ves"],"vwitch":["vwi","ves"],"vcucocloud":["vcu","ves"],"vbarnacle":["vba","ves"],"vhag":["vha","ves"],"vratking":["vra","ves"],"vgargoyle":["vga","ves"],"vsmoke":["vsm","ves"],"vabominable":["vab","ves"],"vicequeen":["viq","ves"],"vermine":["ver","ves"],"vglitch":["vgl","ves"],"vweevil":["vwv","ves"],"vdrstatic":["vds","ves"]}};
   const CH = CFG.CH || {};
   let MAN = null; const BUF = new Map(), PEND = new Map();
   const stats = { units: 0, clip: 0, tts: 0, missing: [] };
@@ -2273,8 +2360,13 @@ const VO = (() => {
     .replace(/\s\+\s/g, ' plus ').replace(/\s[−–-]\s/g, ' minus ').replace(/\s=\s/g, ' equals ').replace(/\s+/g, ' ').trim();
   const key = (v, s) => cyrb53(JSON.stringify((CFG.V || {})[v] || v) + '|' + norm(s).toLowerCase());
   const hasL = s => /[A-Za-z0-9À-ÿ¡¿]/.test(s);
+  // letters: names are said as names (P = "Pee"), sounds ‹p› are short clips cut from the start of a keyword
+  const LNAME = { a: 'Ay', b: 'Bee', c: 'See', d: 'Dee', e: 'Ee', f: 'Eff', g: 'Jee', h: 'Aitch', i: 'Eye', j: 'Jay', k: 'Kay', l: 'Ell', m: 'Em', n: 'En', o: 'Oh', p: 'Pee', q: 'Cue', r: 'Ar', s: 'Ess', t: 'Tee', u: 'You', v: 'Vee', w: 'Double-you', x: 'Ex', y: 'Why', z: 'Zee' };
+  const LKW = { a: 'apple', b: 'bus', c: 'cat', d: 'dog', e: 'egg', f: 'fan', g: 'goat', h: 'hat', i: 'itch', j: 'jump', k: 'kite', l: 'log', m: 'moon', n: 'net', o: 'octopus', p: 'pig', q: 'queen', r: 'rug', s: 'sun', t: 'top', u: 'up', v: 'van', w: 'web', x: 'box', y: 'yes', z: 'zoo' };
+  const names = t => String(t).replace(/\b(letter|letters|Letter) ([A-Z])\b/g, (m, w, L) => w + ' ' + LNAME[L.toLowerCase()]).replace(/\b([A-Z]) and ([a-z])\b(?=[^a-z])/g, (m, A, b) => LNAME[A.toLowerCase()] + ' and ' + LNAME[b]);
+  const sndKey = (v, l) => 'snd-' + v + '-' + l + '-3';
   function sentences(t) { return (norm(t).match(/[^.!?]+(?:[.!?]+["')]*|$)/g) || []).map(s => s.trim()).filter(hasL); }
-  function segments(text) { const out = []; String(text).split(/(«[^»]*»)/).forEach(p => { if (!p) return; if (p[0] === '«') out.push({ t: p.slice(1, -1), es: true }); else out.push({ t: p, es: false }); }); return out.filter(s => hasL(s.t)); }
+  function segments(text) { const out = []; names(text).split(/(«[^»]*»|‹[a-z]+›)/).forEach(p => { if (!p) return; if (p[0] === '«') out.push({ t: p.slice(1, -1), es: true }); else if (p[0] === '‹') out.push({ t: p, snd: p.slice(1, -1) }); else out.push({ t: p, es: false }); }); return out.filter(s => s.snd || hasL(s.t)); }
   // a sentence with numbers in it can be said in pieces: the words around the numbers, then each number
   function frags(s) { const out = []; const ps = s.split(/(\d+)/);
     for (let i = 0; i < ps.length; i++) { let p = ps[i];
@@ -2286,7 +2378,8 @@ const VO = (() => {
   // make a playlist for some text said by a character
   function plan(text, ch = 'juniper', esOnly = false) { const units = [];
     const segs = esOnly ? [{ t: text, es: true }] : segments(text);
-    segs.forEach(seg => { const vs = [vOf(ch, seg.es)]; if (ch !== 'juniper') vs.push(vOf('juniper', seg.es));
+    segs.forEach(seg => { const vs = [vOf(ch, seg.es)]; // each character only ever uses their own voice
+      if (seg.snd) { const k = sndKey(vs[0], seg.snd); units.push(has(k) ? { k, s: seg.t, gap: 260 } : { tts: (LNAME[seg.snd] || seg.snd) + ', as in ' + (LKW[seg.snd] || ''), gap: 200 }); return; }
       sentences(seg.t).forEach((s, si) => { let done = false;
         for (const v of vs) { const k = key(v, s); if (has(k)) { units.push({ k, s, gap: 170 }); done = true; break; } }
         if (!done && /\d/.test(s)) for (const v of vs) { const fr = frags(s).map(f => ({ k: key(v, f.t), s: f.t, gap: 40 })); if (fr.length && fr.every(f => has(f.k))) { fr[0].gap = 170; units.push(...fr); done = true; break; } }
@@ -2295,7 +2388,7 @@ const VO = (() => {
   // every clip a line could need (used by the build to know what to record)
   function need(text, ch = 'juniper', o = {}) { const out = [];
     const segs = o.es ? [{ t: text, es: true }] : segments(text);
-    segs.forEach(seg => { const v = vOf(ch, seg.es); sentences(seg.t).forEach(s => {
+    segs.forEach(seg => { const v = vOf(ch, seg.es); if (seg.snd) { out.push([sndKey(v, seg.snd), v, seg.t]); return; } sentences(seg.t).forEach(s => {
       if (!/\d/.test(s) || o.full) out.push([key(v, s), v, s]);
       if (/\d/.test(s) && !o.full) frags(s).forEach(f => out.push([key(v, f.t), v, f.t])); }); });
     return out; }
@@ -2332,17 +2425,18 @@ const VO = (() => {
     try { const b = a.createBuffer(1, 1, 22050), s = a.createBufferSource(); s.buffer = b; s.connect(a.destination); s.start(0); } catch (e) {} }
   ['pointerdown', 'touchend', 'click'].forEach(ev => document.addEventListener(ev, unlock, { capture: true, passive: true }));
   load();
-  return { plan, need, play, stop, prefetch, load, key, norm, sentences, segments, frags, vOf, CH, stats, get MAN() { return MAN; } };
+  return { LNAME, LKW, sndKey, names, plan, need, play, stop, prefetch, load, key, norm, sentences, segments, frags, vOf, CH, stats, get MAN() { return MAN; } };
 })();
 
 function chName(el) { const c = chrOf(el); const m = c && c.getAttribute && (c.getAttribute('class') || '').match(/\bchr-([a-z]+)/); return m ? m[1] : 'juniper'; }
-function speak(text, opts = {}) {
+function speak(text, opts = {}) { window.__spk = (window.__spk || 0) + 1;
   if (SP.talker) talkOff(SP.talker); SP.talker = null; const my = ++SP.n;
   if (!ST.voice || !text) { VO.stop(); if (opts.onend) setTimeout(opts.onend, 300); return; }
   const who = opts.who === undefined ? defaultTalker() : opts.who; SP.talker = who; const ch = opts.ch || chName(who);
   const units = VO.plan(String(text), ch, !!opts.es); SP.last = { text: String(text), ch, units };
   if (!units.length) { VO.stop(); if (opts.onend) opts.onend(); return; }
-  const c = chrOf(who);
+  const c = chrOf(who); const shownCh = c ? chName(who) : null; // speaker check: the animated face must use the same voice as the clip
+  if (shownCh && VO.vOf && VO.vOf(shownCh) !== VO.vOf(ch)) (window.__vmis = window.__vmis || []).push(shownCh + ' shown, ' + ch + ' voice: ' + String(text).slice(0, 50));
   VO.play(units, { onstart: () => { if (my === SP.n) { talkOn(who); if (c) c.classList.add('lip'); } },
     onmouth: open => { if (my === SP.n && c) c.classList.toggle('mo', open); },
     onfake: () => { if (my === SP.n && c) c.classList.remove('lip'); },
@@ -2384,7 +2478,7 @@ function juniperSvg(outfit = ST.outfit, pose = 'stand', vb = '-200 -330 400 520'
   const o = { vb, cls: 'pose-' + pose + ' ' + cls }; const has = id => Object.values(outfit).includes(id);
   if (has('helmet')) o.helmet = '#26c6da'; if (has('scarf')) o.scarf = '#ff2f6e';
   if (has('skates')) o.feet = 'skate'; if (has('blades')) o.feet = 'blade';
-  if (pose === 'cheer') { o.armL = 55; o.armR = -55; } else if (pose === 'wave') { o.armL = -25; o.armR = -60; } else if (has('golf')) o.golf = -10;
+  if (has('golf')) o.golf = pose === 'stand' ? -10 : -14; if (pose === 'cheer') { o.armL = 55; o.armR = -55; } else if (pose === 'wave') { o.armL = -25; o.armR = -60; } else if (has('golf')) { o.armL = -60; o.armR = 25; }
   o.back = has('cape') ? OV.cape : ''; o.bodyExtra = ''; o.headExtra = '';
   ['tutu', 'medal'].forEach(k => { if (has(k)) o.bodyExtra += OV[k]; });
   ['visor', 'party', 'crown', 'flowers', 'bow', 'glasses'].forEach(k => { if (has(k) && !(o.helmet && ['visor', 'party', 'crown', 'flowers'].includes(k))) o.headExtra += OV[k]; });
@@ -2875,57 +2969,54 @@ function relicArt(id, r = 0, o = {}) { const u = 'rl' + (++RLN); const R = RAR[r
 
 // ---------- v3: a light adventure told between sections ----------
 const STORY = {
-  'park:0': [['juniper', "Aspen! Something silly happened in the park last night!"], ['mamafox', 'The Riddle Raccoon hid our park treasures in treasure chests, sweetheart.'], ['juniper', 'He only gives them back to friends who can solve his riddles. Will you help me?'], ['mamafox', 'Learn at every stop, then meet the Riddle Raccoon at the end. Have fun, you two!']],
-  'park:1': [['juniper', 'Our Gazebo Moonstone is glowing! It lights the way to the playground.'], ['scramble', 'Zoom zoom! The Riddle Raccoon ran by the swings with a propeller hat!'], ['marcus', "He borrowed my old shell compass. Stop and check every answer, and we will get it back. Poco a poco."]],
-  'park:2': [['marcus', 'My compass is home! Thank you, Aspen. It points to Nicolò\'s café.'], ['nicolo', 'Ciao, Aspen! That raccoon is in my kitchen wearing a chef hat!'], ['juniper', 'Let\'s practice at every table, then win back the golden spoon!']],
-  'park:3': [['nicolo', 'Grazie, Aspen! My golden spoon is back. Gelato for everyone!'], ['toulouse', 'Bonjour! The raccoon is skating at the ice rink in pink earmuffs!'], ['juniper', 'Lace up, Aspen! Skate, count, and think!']],
-  'park:4': [['toulouse', 'Ooh la la, a crystal skate! You glide like a star, Aspen.'], ['winnie', 'Woof! I smelled the raccoon on the golf green! He hid a diamond tee!'], ['juniper', 'Fore! Let\'s play every hole, Aspen.']],
-  'park:5': [['winnie', 'Woof woof! The diamond tee sparkles in the sun!'], ['marengo', 'Neigh! The raccoon put on a crown. He calls himself the Grand Riddle King!'], ['oscar', 'Hoo. These are the hardest riddles yet. Think it through, step by step.'], ['juniper', 'We can do it together, Aspen!']],
-  'pr:0': [['lola', '«¡Bienvenida!» Welcome to El Yunque, the rainforest! Listen to the coquís sing.'], ['coqui', 'Co-quí! A grumpy Storm Cloud is raining on our jade totem!'], ['lola', 'Learn with us, Aspen, and the cloud will turn into a rainbow!']],
-  'pr:1': [['lola', 'The rain stopped! Now we fly to Old San Juan, with its blue streets.'], ['pearl', 'Coo coo! The Storm Cloud put on a pirate hat at El Morro!'], ['juniper', 'Let\'s find the Sun Key, Aspen! «¡Vamos!»']],
-  'pr:2': [['lola', '«¡Wepa!» The Sun Key opened the gate to Dorado Beach!'], ['winnie', 'Woof! Golf by the ocean! But the cloud is wearing sunglasses now!'], ['lola', 'One more challenge, Aspen. The Taíno Star Amulet is waiting.']],
-  'nyc:0': [['rocco', 'Hey Aspen! Welcome to New York City! I am Scramble\'s cousin, Rocco.'], ['rocco', 'A Sphinx rides the subway, and it hid a golden acorn in Central Park!'], ['juniper', 'Let\'s explore the park and solve every puzzle, Aspen!']],
-  'nyc:1': [['rocco', 'The golden acorn! Thanks, Aspen! Next stop: the big rink under the giant tree.'], ['toulouse', 'Bonjour! The Sphinx is skating in a scarf! Ooh la la!'], ['juniper', 'Let\'s skate and think, Aspen!']],
-  'nyc:2': [['rocco', 'Shh! We are at the Big Library. So many books!'], ['oscar', 'Hoo. The Subway Sphinx keeps its trickiest riddles here. Read every clue carefully.'], ['juniper', 'Reading is our superpower, Aspen!']],
-  'vail:0': [['flurry', 'Hi Aspen! Welcome to Vail, Colorado! Look at all the snow!'], ['flurry', 'A big furry Avalanche Yeti lives on the mountain. He is friendly, but he loves tricky riddles!'], ['juniper', 'Let\'s zoom down the mountain and learn, Aspen!']],
-  'vail:1': [['flurry', 'The Glacier Heart Gem! It glows so blue! Now, to the frozen pond.'], ['juniper', 'I see the Yeti! He is skating in purple earmuffs!'], ['teddy', 'Brrr! I wear my sweater on the ice. You can do it, Aspen!']],
-  'vail:2': [['flurry', 'We made it to the cozy lodge! Hot cocoa time!'], ['mamafox', 'Snuggle in, Aspen. The Yeti is waiting by the fire with his last riddles.'], ['juniper', 'Then the Aurora Crown will be ours!']],
-  'sc:0': [['quinn', 'Hello Aspen! Welcome to Santa Clara, California, where friends build robots!'], ['quinn', 'Our Robot Riddler got a little too clever. It locked the star lens in the lab!'], ['juniper', 'Let\'s do some science, Aspen!']],
-  'sc:1': [['quinn', 'The star lens! Now we can see the sunny orange orchard.'], ['scramble', 'So many trees to climb! The robot is picking oranges in a straw hat!'], ['juniper', 'Let\'s count and think, Aspen!']],
-  'sc:2': [['quinn', 'This is the Robot Garage. The Robot Riddler is in mega mode!'], ['nicolo', 'Ciao, Aspen! Even my café has a robot now. You can beat it!'], ['juniper', 'Our biggest adventure yet, Aspen. Let\'s go!']],
+  'park:0': [['juniper', "Aspen! Something sneaky happened in the park last night!"], ['mamafox', 'A Gazebo Goblin snatched our sight words and hid the Gazebo Moonstone, sweetheart.'], ['juniper', 'Villains are hiding all over the park. Only learning can beat them. Will you help me?'], ['mamafox', 'Learn at every stop, then face the Goblin at the end. Have fun, you two!']],
+  'park:1': [['juniper', 'Our Gazebo Moonstone is glowing! It lights the way to the playground.'], ['scramble', 'Zoom zoom! A Sneaky Slide Weasel greased the slide and ran off!'], ['marcus', "He took my old shell compass. Patience, Aspen. Stop and check every answer, and we will get it back."]],
+  'park:2': [['marcus', "My compass is home! Thank you, Aspen. It points to Nicolò's café."], ['nicolo', 'Ciao, Aspen! The Sour Pickle Bandit made my gelato sour and took my golden spoon!'], ['juniper', "Let's practice at every table, then win back the golden spoon!"]],
+  'park:3': [['nicolo', 'Grazie, Aspen! My golden spoon is back. Gelato for everyone!'], ['toulouse', 'Bonjour! The Frost Fang Wolf froze the ice rink into a maze. He took the crystal skate!'], ['juniper', 'Lace up, Aspen! Skate, count, and think!']],
+  'park:4': [['toulouse', 'Ooh la la, a crystal skate! You glide like a star, Aspen.'], ['winnie', 'Woof! A Sand Trap Gremlin hid the diamond tee in a bunker on the golf green!'], ['juniper', "Fore! Let's play every hole, Aspen."]],
+  'park:5': [['winnie', 'Woof woof! The diamond tee sparkles in the sun!'], ['marengo', 'Neigh! The Thorn Witch grew prickly thorns all around my meadow!'], ['oscar', 'Hoo. Her puzzles are the hardest yet. Think it through, step by step.'], ['juniper', 'We can do it together, Aspen!']],
+  'pr:0': [['lola', '«¡Bienvenida!» Welcome to El Yunque, the rainforest! Listen to the coquís sing.'], ['coqui', 'Co-quí! El Cuco Cloud is raining on our jade totem!'], ['lola', 'Learn with us, Aspen, and the cloud will turn into a rainbow!']],
+  'pr:1': [['lola', 'The rain stopped! Now we fly to Old San Juan, with its blue cobblestone streets.'], ['pearl', 'Coo coo! Captain Barnacle, a crabby pirate, climbed the walls of El Morro!'], ['juniper', "Let's find the Sun Key, Aspen! «¡Vamos!»"]],
+  'pr:2': [['lola', '«¡Wepa!» The Sun Key opened the gate to Dorado Beach!'], ['winnie', 'Woof! Golf by the ocean! But the Hurricán Hag is blowing the sand everywhere!'], ['lola', 'One more challenge, Aspen. The Taíno Star Amulet is waiting.']],
+  'nyc:0': [['rocco', "Hey Aspen! Welcome to New York City! I am Scramble's cousin, Rocco."], ['rocco', 'The Rat King of the Subway took a golden acorn from Central Park!'], ['juniper', "Let's explore the park and solve every puzzle, Aspen!"]],
+  'nyc:1': [['rocco', 'The golden acorn! Thanks, Aspen! Next stop: the big rink under the giant tree.'], ['toulouse', 'Bonjour! The Gargoyle of the Chrysler Building swooped down and took the star prism!'], ['juniper', "Let's skate and think, Aspen!"]],
+  'nyc:2': [['rocco', 'Shh! We are at the Big Library. So many books!'], ['oscar', 'Hoo. The Big Smoke Bully fogged up the reading room. Read every clue carefully.'], ['juniper', 'Reading is our superpower, Aspen!']],
+  'vail:0': [['flurry', 'Hi Aspen! Welcome to Vail, Colorado! Look at all the snow!'], ['flurry', 'The Avalanche Abominable rolls giant snowballs down the mountain!'], ['juniper', "Let's ride the gondola and learn, Aspen!"]],
+  'vail:1': [['flurry', 'The Glacier Heart Gem! It glows so blue! Now, to the frozen pond.'], ['juniper', 'Look! The Ice Queen of the Pass froze the pond and the mountain road!'], ['teddy', 'Brrr! I wear my sweater on the ice. You can do it, Aspen!']],
+  'vail:2': [['flurry', 'We made it to the cozy lodge! Hot cocoa time!'], ['mamafox', 'Snuggle in, Aspen. The Blizzard Bandit is hiding in the lodge to steal the Aurora Crown.'], ['juniper', 'Then we will find him first!']],
+  'sc:0': [['quinn', 'Hello Aspen! Welcome to Santa Clara, California, where friends build robots!'], ['quinn', 'The Glitch Robot scrambled the lab and locked the star lens!'], ['juniper', "Let's do some science, Aspen!"]],
+  'sc:1': [['quinn', 'The star lens! Now we can see the sunny orange orchard.'], ['scramble', 'Oh no! The Orchard Weevil is munching all the oranges!'], ['juniper', "Let's count and think, Aspen!"]],
+  'sc:2': [['quinn', 'This is the Robot Garage. Dr. Static charged up every robot with his zappy hair!'], ['nicolo', 'Ciao, Aspen! Even my café robot is zapping. You can beat him!'], ['juniper', "Our biggest adventure yet, Aspen. Let's go!"]],
 };
 // what each boss says when it shows up in a story
 
-const BOSSCH = { raccoon: 'Riddle Raccoon', stormcloud: 'Storm Cloud', sphinx: 'Subway Sphinx', yeti: 'Avalanche Yeti', robot: 'Robot Riddler' };
-const BOSS_LINES = {
-  raccoon: { hit: ['Ooh! You got that one!', 'Hee hee, clever friend!', 'My riddles are wobbling!', 'No fair, you are too smart!', 'Okay, okay, one more riddle!'], shield: 'Ha! My riddle shield is up! Can you break it?', boo: 'Hee hee! Try again!' },
-  stormcloud: { hit: ['Pitter patter, you got it!', 'Whoosh! Good one!', 'My thunder went boom... oops!', 'Drizzle drizzle, you are so smart!', '«¡Ay, caramba!» That was right!'], shield: 'Rumble rumble! A rain shield! Can you get past it?', boo: 'Drip drop! Try again!' },
-  sphinx: { hit: ['Purr-fect answer!', 'Meow-velous!', 'You solved my riddle!', 'My whiskers are shaking!', 'Next stop: the right answer!'], shield: 'Mind the gap! My puzzle shield is up!', boo: 'Purr... try again!' },
-  yeti: { hit: ['Brrr! You got it!', 'Snow-tastic!', 'That was ice cold. So cool!', 'My snowball melted!', 'Yeti or not, you are right!'], shield: 'Snow shield! It is frosty in here!', boo: 'Brrr! Try again!' },
-  robot: { hit: ['Beep! Correct!', 'Boop! You are so smart!', 'Error! Too much smart!', 'Whirr! Good thinking!', 'Battery dropping! Nice!'], shield: 'Activating force field! Beep beep!', boo: 'Beep! Try again!' },
-};
+const BOSSCH = {};
+// v4: a different mischievous villain at every stop, themed to the place. Silly, sneaky, never scary, and beaten by learning.
+const V_ = (id, ch, name, title, relic, hp, intro, defeat, hit, shield, boo) => ({ id, ch: 'v' + ch, name, title, relic, hp, intro, defeat, lines: { hit, shield, boo } });
 const BOSSES = [
-  ['park:0', 'raccoon', 0, 'the Top-Hat Trickster', 'moonstone', 6, "Hee hee! I'm the Riddle Raccoon! I hid a treasure chest under the gazebo. Solve my riddles to win it!", 'You solved my riddles! The treasure is yours, Aspen!'],
-  ['park:1', 'raccoon', 1, 'the Propeller Prankster', 'compass', 6, "Whirr! It's me again, with my propeller hat! I borrowed Marcus's compass. Solve my riddles to get it back!", 'Okay, okay! Here is the compass. Marcus will be so happy!'],
-  ['park:2', 'raccoon', 2, 'the Chef of Riddles', 'spoon', 7, "Bonjour! I mean, ciao! I'm cooking up riddles in Nicolò's café. Can you taste the answers?", 'Mmm, you are too smart! Take the golden spoon!'],
-  ['park:3', 'raccoon', 3, 'the Ice Rink Racer', 'skate', 7, "Brrr! My earmuffs are on and my riddles are icy! Race me on the rink!", 'Wow, you glide through riddles! The crystal skate is yours!'],
-  ['park:4', 'raccoon', 4, 'the Fairway Fooler', 'tee', 8, "Fore! I hid a diamond golf tee on the green. Answer my riddles in as few tries as you can!", 'A hole in one! The diamond tee is yours, Aspen!'],
-  ['park:5', 'raccoon', 5, 'the Grand Riddle King', 'lantern', 8, "I am the Grand Riddle Raccoon, King of Riddles! These are my hardest riddles of all!", 'You beat the King of Riddles! Take the Fox Spirit Lantern. Now we are friends forever!'],
-  ['pr:0', 'stormcloud', 0, 'Nube of El Yunque', 'coqui', 8, "«¡Hola!» I'm the Storm Cloud of El Yunque! Pitter patter! Answer my rainy riddles to find the jade coquí!", '«¡Qué bueno!» The rain stopped and a rainbow came out! The totem is yours!'],
-  ['pr:1', 'stormcloud', 1, 'Captain of El Morro', 'sunkey', 9, "Ahoy! Captain Storm Cloud guards the old fort of El Morro! Solve my riddles to find the sun key!", '«¡Wepa!» You did it! Take the El Morro Sun Key!'],
-  ['pr:2', 'stormcloud', 2, 'the Sunny Beach Cloud', 'amulet', 10, "Even clouds like the beach! I'm wearing sunglasses today. My riddles are hot like the sand!", 'You are a superstar! Take the Taíno Star Amulet and keep it safe.'],
-  ['nyc:0', 'sphinx', 0, 'of Central Park', 'acorn', 8, "Greetings! I'm the Subway Sphinx. I ride every train in New York! Answer my riddles before the next stop!", 'All aboard the smart train! The golden acorn is yours!'],
-  ['nyc:1', 'sphinx', 1, 'of the Big Rink', 'prism', 9, "I put on my skating scarf for the big rink! My riddles twirl and spin. Can you keep up?", 'What a twirl! The star prism is yours!'],
-  ['nyc:2', 'sphinx', 2, 'Keeper of the Library', 'torch', 10, "Shh! Welcome to the Big Library. I'm the Keeper of riddles. These are my trickiest ones!", 'You are a true thinker! Take the Liberty Torch Crystal!'],
-  ['vail:0', 'yeti', 0, 'of Snowy Mountain', 'glacier', 8, "Rawr! Just kidding. I'm the Avalanche Yeti, and I'm very friendly! Solve my snowy riddles!", 'Snow-tastic! The Glacier Heart Gem is yours!'],
-  ['vail:1', 'yeti', 1, 'of the Frozen Pond', 'mirror', 9, "I love to skate on the frozen pond! My riddles are slippery. Careful now!", 'Wow! Take the Frozen Pond Mirror!'],
-  ['vail:2', 'yeti', 2, 'of the Cozy Lodge', 'crown', 10, "Hot cocoa time! But first, my coziest, trickiest riddles in the whole lodge!", 'You warm my heart! Take the Aurora Snowflake Crown!'],
-  ['sc:0', 'robot', 0, 'Lab Edition', 'lens', 8, "Beep boop! I am the Robot Riddler, lab edition! Computing riddles now!", 'Calculation complete: you are amazing! Take the star lens!'],
-  ['sc:1', 'robot', 1, 'Orchard Edition', 'seed', 9, "Beep! I am picking oranges and riddles today! Ready, Aspen?", 'Juicy work! Take the Golden Orange Sun Seed!'],
-  ['sc:2', 'robot', 2, 'Mega Edition', 'chip', 10, "MEGA MODE ACTIVATED! These are my biggest, brainiest riddles! Beep boop!", 'System says: you are a genius! The Silicon Starchip is yours!'],
-].map(([id, ch, form, title, relic, hp, intro, defeat]) => ({ id, ch, form, title, relic, hp, intro, defeat, name: (id === 'park:5' ? 'Grand ' : '') + BOSSCH[ch], w: id.split(':')[0], si: +id.split(':')[1] }));
+  V_('park:0', 'goblin', 'the Gazebo Goblin', 'Word Snatcher', 'moonstone', 7, "Heh heh! I'm the Gazebo Goblin! I stuffed all your sight words in my sack. Read them back if you can!", 'Nooo! My sack is empty! Fine, take the Gazebo Moonstone!', ['Grr, you read that one!', 'Hey! Give that word back!', 'My sack is getting lighter!', 'How do you know so many words?', 'Not fair, not fair!'], 'Ha! My word sack shield is up!', 'Heh heh! That word is mine!'),
+  V_('park:1', 'weasel', 'the Sneaky Slide Weasel', 'Playground Prankster', 'compass', 7, "Psst! I'm the Sneaky Slide Weasel. I greased the slide and swiped Marcus's compass. Catch me with your brain!", 'Okay, okay, you caught me! Here is the compass.', ['Eek! Caught again!', 'You are too quick!', 'Hey, no peeking at my tricks!', 'My plan is slipping!', 'Whoa, good one!'], 'Wheee! My slippery shield is up!', 'Hee hee, slipped right past you!'),
+  V_('park:2', 'pickle', 'the Sour Pickle Bandit', "of Nicolò's Café", 'spoon', 8, "Howdy! I'm the Sour Pickle Bandit! I made Nicolò's gelato sour and took his golden spoon. Pucker up for my puzzles!", 'Sweet, sweet defeat! Take the golden spoon back.', ['Sour grapes! You got it!', 'That answer was too sweet!', 'Pickles! Not again!', 'My brine is drying up!', 'Crunch! Right again!'], 'Pucker up! My sour shield is on!', 'So sour! Try again!'),
+  V_('park:3', 'wolf', 'the Frost Fang Wolf', 'of the Ice Rink', 'skate', 8, "Awoo! I'm the Frost Fang Wolf. I froze the rink into a maze and took the crystal skate. Skate through my puzzles!", 'Awoo... you melted my maze! The crystal skate is yours.', ['Awoo! You got it!', 'My ice is cracking!', 'Brr, that was cool!', 'You skate right past my tricks!', 'My fangs are chattering!'], 'Awoo! Ice wall up!', 'Slippery! Try again!'),
+  V_('park:4', 'gremlin', 'the Sand Trap Gremlin', 'of the Golf Green', 'tee', 9, "Hee hee! I'm the Sand Trap Gremlin! I hid the diamond tee in a sand trap. Hit every answer out of my bunker!", 'Out of the bunker! You win the diamond tee!', ['Argh! Out of my sand trap!', 'Fore! That one flew!', 'My rake is broken!', 'A hole in one!', 'Too much sand in my shoes!'], 'Sand storm shield! Swish swish!', 'Stuck in the sand! Try again!'),
+  V_('park:5', 'witch', 'the Thorn Witch', "of Marengo's Meadow", 'lantern', 10, "Cackle cackle! I'm the Thorn Witch. I grew a tangle of thorns around Marengo's meadow. Only the cleverest thinker can clear it!", 'My thorns turned into flowers! Take the Fox Spirit Lantern.', ['Prickles! You got it!', 'My thorns are wilting!', 'Oh, petals and poppies!', 'My broom is drooping!', 'Cackle... I mean, nice one!'], 'Thorny shield! Tangle tangle!', 'Ouch, a thorn! Try again!'),
+  V_('pr:0', 'cucocloud', 'El Cuco Cloud', 'of El Yunque', 'coqui', 9, "Rumble rumble! I'm El Cuco Cloud! I'm raining on the coquís of El Yunque. Answer my soggy riddles to make me stop!", '«¡Ay, bendito!» The sun is out and a rainbow too! The jade coquí is yours.', ['Drip drop, you got it!', 'My rain is drying up!', 'Rumble... that was right!', '«¡Ay!» Too smart!', 'No more thunder for me!'], 'Rumble! A rain shield!', 'Drizzle drizzle! Try again!'),
+  V_('pr:1', 'barnacle', 'Captain Barnacle', 'of El Morro', 'sunkey', 10, "Arr! I'm Captain Barnacle, a crabby pirate! I climbed the walls of El Morro and took the Sun Key. Snip snap, solve my puzzles!", 'Blistering barnacles! The El Morro Sun Key is yours, matey!', ['Arr, ye got it!', 'Snip snap, good answer!', 'Shiver me shells!', 'Walk the plank, wrong answers!', 'My claws are clattering!'], 'Arr! Shell shield up, matey!', 'Snip snap! Try again, matey!'),
+  V_('pr:2', 'hag', 'the Hurricán Hag', 'of Dorado Beach', 'amulet', 11, "Whoooosh! I'm the Hurricán Hag! I blow the sand and spin the waves at Dorado Beach. Hold on to your answers!", 'My wind is just a breeze now. Take the Taíno Star Amulet!', ['Whoosh, you got it!', 'My winds are slowing!', 'Swirl and twirl, nice one!', 'You stand strong in my wind!', 'Only a little breeze left!'], 'Whirlwind shield!', 'Whoosh! Blown away! Try again!'),
+  V_('nyc:0', 'ratking', 'the Rat King', 'of the Subway', 'acorn', 9, "Squeak! I'm the Rat King of the Subway! I took the golden acorn from Central Park. Answer before my train leaves!", 'Squeak! Next stop: defeat. The golden acorn is yours!', ['Squeak! You got it!', 'My crown is slipping!', 'Stand clear of the right answer!', 'My train is running late!', 'Rats! Right again!'], 'Squeak! Turnstile shield!', 'Squeak squeak! Try again!'),
+  V_('nyc:1', 'gargoyle', 'the Gargoyle', 'of the Chrysler Building', 'prism', 10, "Grumble! I'm the Gargoyle of the Chrysler Building. I swooped down to the rink and took the star prism. Can you out-think stone?", 'I am crumbling... into a smile! Take the star prism.', ['Crumble! You got it!', 'My stone is cracking!', 'Grumble... good one!', 'My wings are wobbly!', 'You are rock solid!'], 'Stone shield! Grumble!', 'Grumble! Try again!'),
+  V_('nyc:2', 'smoke', 'the Big Smoke Bully', 'of the Big Library', 'torch', 11, "Hey! I'm the Big Smoke Bully. I fogged up the library so nobody can read. Clear my smoke with smart answers!", 'Cough cough... the air is clear! Take the Liberty Torch Crystal.', ['Cough! You got it!', 'My smoke is fading!', 'Hey, that was right!', 'I can see the books again!', 'Puff... I am shrinking!'], 'Smoke screen shield!', 'Puff puff! Try again!'),
+  V_('vail:0', 'abominable', 'the Avalanche Abominable', 'of Snowy Mountain', 'glacier', 10, "ROAR! Hee hee, just kidding. I'm the Avalanche Abominable! I roll snowballs down Vail Mountain. Dodge them with answers!", 'My snowballs melted! Take the Glacier Heart Gem.', ['Brrr! You got it!', 'My snowball melted!', 'Snow-way! Right again!', 'You dodged my avalanche!', 'Too cool for me!'], 'Snowball wall!', 'Splat! Try again!'),
+  V_('vail:1', 'icequeen', 'the Ice Queen', 'of the Pass', 'mirror', 11, "Frosty greetings! I am the Ice Queen of the Pass. I froze the pond and the mountain pass. Only warm, clever answers can melt my ice!", 'You melted my icy heart! Take the Frozen Pond Mirror.', ['Oh! You got it!', 'My ice is melting!', 'How very clever!', 'My crown is dripping!', 'You are warmer than I thought!'], 'Ice crystal shield!', 'Frosty! Try again!'),
+  V_('vail:2', 'ermine', 'the Blizzard Bandit', 'of the Cozy Lodge', 'crown', 12, "Shh! I'm the Blizzard Bandit, the sneakiest snow weasel. I hid in the lodge to steal the Aurora Crown. Find me with your brain!", 'You found me! Take the Aurora Snowflake Crown.', ['Eek! You got it!', 'My snowy disguise is slipping!', 'Too sharp for me!', 'Blizzard... over!', 'Hot cocoa for you, not me!'], 'Snow cloud shield!', 'Whoosh, hidden! Try again!'),
+  V_('sc:0', 'glitch', 'the Glitch Robot', 'of the Science Lab', 'lens', 10, "Beep... b-b-boop! I am the Glitch Robot! I scrambled the lab and locked the star lens. Debug my puzzles!", 'System fixed! Thank you! Take the star lens.', ['Bzzt! Correct!', 'Error: you are too smart!', 'Rebooting... nice one!', 'My pixels are falling off!', 'Beep! Good debugging!'], 'Firewall shield! Bzzt!', 'Bzzt! Try again!'),
+  V_('sc:1', 'weevil', 'the Orchard Weevil', 'of the Sunny Orchard', 'seed', 11, "Munch munch! I'm the Orchard Weevil! I'm nibbling all the oranges in Santa Clara. Stop me with smart answers!", 'No more munching! Take the Golden Orange Sun Seed.', ['Munch... you got it!', 'My tummy hurts!', 'Juicy answer!', 'My antennae are drooping!', 'No more snacks for me!'], 'Shell shield! Crunch!', 'Munch munch! Try again!'),
+  V_('sc:2', 'drstatic', 'Dr. Static', 'of the Robot Garage', 'chip', 12, "Bzzzt! I am Dr. Static! I charged up every robot in the garage with my zappy hair. Short-circuit my puzzles!", 'My hair fell flat! You win the Silicon Starchip!', ['Zap! You got it!', 'My charge is dropping!', 'Shocking! Right again!', 'My hair is going flat!', 'Bzzt... brilliant!'], 'Static shield! Zzzap!', 'Zap! Try again!'),
+].map(b => ({ ...b, name: b.name.replace(/^the /, ''), form: 0, w: b.id.split(':')[0], si: +b.id.split(':')[1] }));
+const BOSS_LINES = Object.fromEntries(BOSSES.map(b => [b.ch, b.lines]));
+BOSSES.forEach(b => BOSSCH[b.ch] = b.name);
 const BOSS = Object.fromEntries(BOSSES.map(b => [b.id, b]));
-const bossName = b => b.name + ', ' + b.title;
+const bossName = b => b.name + (/^of /.test(b.title) ? ' ' : ', ') + b.title;
 // sections of each world: [{name, nodes}]
 const secsOf = w => w === 'park' ? C.PATH : WORLDS[w].secs;
 const secStart = (w, si) => secsOf(w).slice(0, si).reduce((s, x) => s + x.nodes.length, 0);
@@ -2983,6 +3074,9 @@ function bossItems(b) { const ids = secsOf(b.w)[b.si].nodes; const pools = ids.m
   pools.sort((x, y) => 0); const out = []; let k = 0, guard = 0;
   const order = ids.map((id, i) => [tierOf(id), i]).sort((x, y) => y[0] - x[0]).map(x => x[1]);
   while (out.length < b.hp && guard++ < 200) { const p = pools[order[k % order.length] % pools.length]; k++; if (p && p.length) out.push(p.splice(p.length > 2 ? 1 : 0, 1)[0]); }
+  // stretch: every boss mixes in two tougher (tier 3-4) questions from the same subjects, so she meets harder work earlier
+  const subs = new Set(ids.map(id => C.BY[id] && C.BY[id].subj)); const hard = C.A.filter(a => subs.has(a.subj) && tierOf(a.id) >= 3 && tierOf(a.id) <= 4 && !ids.includes(a.id));
+  for (let n = 0; n < 2 && hard.length; n++) { const a = C.helpers.pick ? C.helpers.pick(hard) : hard[n % hard.length]; let st = []; try { st = C.makeItems(a).filter(it => !['board', 'read', 'trace'].includes(it.type)); } catch (e) {} if (st.length && out.length) out[out.length - 1 - n] = st[0]; }
   return C.helpers.shuffle(out).slice(0, b.hp); }
 function startBoss(b) { const items = bossItems(b);
   RUN = { a: { id: 'boss', title: b.name, icon: 'star', subj: 'logic' }, id: 'boss:' + b.id, mode: 'boss', boss: b, sec: b.id, world: b.w, level: 9, items, i: 0, hinted: false, miss: false, got: [], fixes: 0, hp: items.length, hpMax: items.length, first: 0, shieldAt: Math.ceil(items.length / 2), shieldDone: false };
@@ -3104,7 +3198,7 @@ function openTrophies() { setStars(); show('trophies');
   $('medalRow').innerHTML = ['gold', 'silver', 'bronze'].map((k, i) => `<span class="mc" style="--i:${i}">${medalSvg(k)} ${cnt(k)}</span>`).join('') + `<span style="font-size:18px;font-weight:700;opacity:.75">Play a game 1 time for bronze, 3 times for silver, 5 times for gold.</span>`;
   $('stkGrid').innerHTML = (typeof EXTRA_STICKERS !== 'undefined' ? EXTRA_STICKERS : []).map((st, i) => `<div class="stk${stickerUnlocked(i) ? '' : ' locked'}"><span class="si">${st.svg}</span>${stickerUnlocked(i) ? st.name : `${1 + 2 * i} games`}</div>`).join('');
   $('trGrid').querySelectorAll('.troph').forEach(d => d.onclick = e => { const t = AWARDS[+d.dataset.i]; sparkAt(e.clientX, e.clientY, 10 + t.tier * 4); SND.pop();
-    if (ST.trophies[t.id]) { d.classList.remove('spin'); void d.offsetWidth; d.classList.add('spin'); speak(`${t.name}! ${t.desc}.`); } else { wiggle(d); speak(`Not yet, Aspen. ${t.desc}.`); } });
+    if (ST.trophies[t.id]) { d.classList.remove('spin'); void d.offsetWidth; d.classList.add('spin'); } else wiggle(d); setTimeout(() => awardCard(t), 260); });
   const n = AWARDS.filter(a => ST.trophies[a.id]).length;
   speak(`This is your trophy room, Aspen. You have ${n} award${n === 1 ? '' : 's'}. The fancy ones are for the hardest games!`);
 }
@@ -3120,7 +3214,7 @@ function renderDress() { $('dressFox').innerHTML = juniperSvg(ST.outfit, 'wave')
 // ---------- runner ----------
 let RUN = null; let backTo = 'home';
 const stage = $('stage');
-const shown = s => String(s).replace(/«([^»]*)»/g, '<span class="es">$1</span>');
+const shown = s => String(s).replace(/«([^»]*)»/g, '<span class="es">$1</span>').replace(/‹([a-z]+)›/g, '<b class="snd">/$1/</b>');
 const PRAISE = ['Yes!', 'You got it, Aspen!', 'Great thinking!', 'That is right!', '«¡Muy bien!»', 'Super!', 'Nice job!', '«¡Excelente!»', 'Way to go, Aspen!', 'You checked it. Yes!'];
 function startActivity(id, mode = 'free', ctx = {}) { const a = C.BY[id]; if (!a) return; backTo = mode.startsWith('path') ? 'map' : 'shelves';
   const world = mode.startsWith('path') ? (ctx.world || 'park') : null, level = ctx.level || 0;
@@ -3128,11 +3222,12 @@ function startActivity(id, mode = 'free', ctx = {}) { const a = C.BY[id]; if (!a
   for (let k = 0; k < 3 && items.length < a.n + extra; k++) C.makeItems(a).forEach(it => { if (items.length < a.n + extra) items.push(it); });
   RUN = { a, id, mode, world, level, items, i: 0, hinted: false, miss: false, got: [], fixes: 0, sec: mode.startsWith('path') ? ctx.sec || null : null }; RUN.relic = activeRelic(); RUN.charges = RUN.relic ? RAR[RUN.relic.r].ch + (RUN.relic.r >= 3 ? 1 : 0) : 0; $('play').classList.remove('bossmode');
   const W0 = world && world !== 'park' ? WORLDS[world] : null; const t = tierOf(id);
-  $('introIc').innerHTML = W0 ? CHARS.svg(W0.friend) : (ICONS.icon(a.who) || ICONS.icon(a.icon) || '');
+  const spk = W0 ? W0.friend : (CHARS.has(a.who) ? a.who : 'juniper'); // the face shown is always the voice heard
+  $('introIc').innerHTML = CHARS.svg(spk);
   $('introTitle').textContent = a.title; $('introLine').innerHTML = shown(a.line);
   $('introTier').innerHTML = `<span class="tierpill t${t}">${'★'.repeat(t)} ${TIERNAME[t]}</span>${extra ? `<span class="tierpill lv">Level ${level}: +${extra} extra</span>` : ''}`;
   const pre = W0 ? W0.cheer[Math.floor(Math.random() * W0.cheer.length)] + ' ' : '';
-  $('intro').classList.add('on'); speak(`${pre}${a.title}. ${a.line}`); }
+  $('intro').classList.add('on'); speak(`${pre}${a.title}. ${a.line}`, { ch: spk }); }
 $('introGo').onclick = () => { SND.pop(); $('intro').classList.remove('on'); show('play'); $('guideFox').innerHTML = juniperSvg(ST.outfit, 'wave'); renderItem(); };
 $('intro').addEventListener('click', e => { if (e.target.id === 'intro') { $('intro').classList.remove('on'); hush(); } });
 $('pHome').innerHTML = ICON.close; $('pSpeak').innerHTML = ICON.speak;
@@ -3159,11 +3254,11 @@ function correct(sayFirst) { if (!RUN || RUN.locked) return; RUN.locked = true; 
   speak((sayFirst ? sayFirst + '. ' : '') + p, { onend: step }); setTimeout(step, 1300); setTimeout(() => { if (RUN && RUN.locked && RUN.items[RUN.i] && left > 0) { left = 0; go(); } }, 4000); }
 function wrong(el, extra) { if (!RUN || RUN.locked) return; RUN.hinted = true; RUN.miss = true; RUN.itemMiss = true; SND.boop(); if (RUN.mode === 'boss') { const c = $('bbChr'); if (c) { c.classList.remove('laugh'); void c.offsetWidth; c.classList.add('laugh'); } }
   if (el) { el.classList.remove('wrong'); void el.offsetWidth; el.classList.add('wrong'); }
-  const it = cur(); const h = extra || it.hint || 'Stop and check. Try again.'; RUN.lastHint = h;
-  $('hintIc').innerHTML = ICONS.icon('marcus'); $('hintTxt').innerHTML = shown(h); $('hintBox').classList.add('on');
-  speak(h, { who: $('hintIc') }); }
+  const it = cur(); let h = extra || it.hint || 'Patience, Aspen. Stop and check. Try again.'; if (!/^Patience, Aspen/.test(h)) h = 'Patience, Aspen. ' + h; RUN.lastHint = h;
+  $('hintIc').innerHTML = CHARS.svg('marcus'); $('hintTxt').innerHTML = shown(h); $('hintBox').classList.add('on');
+  speak(h, { who: $('hintIc'), ch: 'marcus' }); }
 function hideHint() { $('hintBox').classList.remove('on'); }
-$('hintBox').onclick = () => { speak(RUN && RUN.lastHint || $('hintTxt').textContent, { who: $('hintIc') }); };
+$('hintBox').onclick = () => { speak(RUN && RUN.lastHint || $('hintTxt').textContent, { who: $('hintIc'), ch: 'marcus' }); };
 // ---------- finish ----------
 function finish() { if (RUN.mode === 'boss') { bossWin(); return; } const a = RUN.a, id = RUN.id; const before = { medal: medalOf(id), stars: ST.stars, stick: EXTRA_STICKERS.filter((s, i) => stickerUnlocked(i)).length, outfits: OUTFITS.filter(outfitOpen).length };
   ST.plays[id] = (ST.plays[id] || 0) + 1; ST.done++; ST.stars += 3; const d = today(); ST.days[d] = (ST.days[d] || 0) + 1;
@@ -3176,16 +3271,16 @@ function finish() { if (RUN.mode === 'boss') { bossWin(); return; } const a = RU
   const newT = checkTrophies(); const newW = WKEYS.filter(k => worldOpen(k) && !wasOpen.includes(k)); save();
   const md = medalOf(id); const newMedal = md !== before.medal;
   const unl = [];
-  if (newMedal) unl.push(`<div class="unl"><span class="ui">${medalSvg(md)}</span>${md[0].toUpperCase() + md.slice(1)} medal!</div>`);
-  EXTRA_STICKERS.forEach((s, i) => { if (i >= before.stick && stickerUnlocked(i)) unl.push(`<div class="unl"><span class="ui">${s.svg}</span>New coloring sticker: ${s.name}</div>`); });
-  OUTFITS.forEach((o, i) => { if (outfitOpen(o) && before.stars < o.stars) unl.push(`<div class="unl"><span class="ui">${outfitIcon(o)}</span>New outfit: ${o.name}</div>`); });
-  newT.forEach(t => unl.push(`<div class="unl t${t.tier}"><span class="ui">${awardArt(t)}</span>${t.name}</div>`));
-  newW.forEach(k => unl.push(`<div class="unl t5"><span class="ui sil">${CHARS.svg(WORLDS[k].friend)}</span>New world: ${WORLDS[k].name}!</div>`));
+  if (newMedal) unl.push(`<div class="unl" role="button" data-k="medal" data-v="${md}"><span class="ui">${medalSvg(md)}</span>${md[0].toUpperCase() + md.slice(1)} medal!</div>`);
+  EXTRA_STICKERS.forEach((s, i) => { if (i >= before.stick && stickerUnlocked(i)) unl.push(`<div class="unl" role="button" data-k="sticker" data-v="${i}"><span class="ui">${s.svg}</span>New coloring sticker: ${s.name}</div>`); });
+  OUTFITS.forEach((o, i) => { if (outfitOpen(o) && before.stars < o.stars) unl.push(`<div class="unl" role="button" data-k="outfit" data-v="${i}"><span class="ui">${outfitIcon(o)}</span>New outfit: ${o.name}</div>`); });
+  newT.forEach(t => unl.push(`<div class="unl t${t.tier}" role="button" data-k="award" data-v="${AWARDS.indexOf(t)}"><span class="ui">${awardArt(t)}</span>${t.name}</div>`));
+  newW.forEach(k => unl.push(`<div class="unl t5" role="button" data-k="world" data-v="${k}"><span class="ui sil">${CHARS.svg(WORLDS[k].friend)}</span>New world: ${WORLDS[k].name}!</div>`));
   if (newT.length || newW.length) setTimeout(() => revealAwards([...newT, ...newW.map(k => ({ world: k, tier: 5, name: WORLDS[k].name, desc: 'A new world and a new friend are waiting!' }))]), 1400);
   $('celeFox').innerHTML = juniperSvg(ST.outfit, 'cheer'); $('celeMedal').innerHTML = medalSvg(md || 'bronze', icInner(a.icon));
   const m = $('celeMedal'); m.style.animation = 'none'; void m.offsetWidth; m.style.animation = '';
   $('celeTxt').textContent = ['You did it, Aspen!', 'Hooray, Aspen!', 'Amazing work, Aspen!'][ST.done % 3];
-  $('celeStars').innerHTML = ICON.star + ICON.star + ICON.star; $('celeUnlocks').innerHTML = unl.join('');
+  $('celeStars').innerHTML = ICON.star + ICON.star + ICON.star; $('celeUnlocks').innerHTML = unl.join(''); wireUnlocks();
   $('cAgain').innerHTML = ICON.again; $('cHome').innerHTML = ICON.home; $('cNext').innerHTML = RUN.mode === 'path' || RUN.mode === 'pathReplay' ? ICONS.icon('map') : ICON.next;
   $('cele').classList.add('on'); SND.fanfare(); setTimeout(SND.medal, 50); confetti(); setTimeout(() => sparkEl($('celeMedal'), 30), 700);
   let msg = `You did it, Aspen! You earned 3 stars.`; if (newMedal) msg += ` You got a ${md} medal!`; if (unl.length > (newMedal ? 1 : 0)) msg += ' And you unlocked something new!';
@@ -3314,7 +3409,7 @@ R.build = (it, st) => { st.appendChild(h('div', 'buildpic', `<span class="ic">${
   const slots = h('div', 'slots'); const ss = it.word.split('').map((ch, k) => { const s = h('div', 'slot'); s.dataset.drop = k; slots.appendChild(s); return s; });
   const tray = h('div', 'tray'); let n = 0;
   const tryIt = (el, ch, slot) => { if (RUN.locked) return; slot = slot || ss.find(s => !s.classList.contains('filled')); if (!slot) return; const k = +slot.dataset.drop;
-    if (it.word[k] === ch) { slot.innerHTML = `<span class="lt">${ch}</span>`; slot.classList.add('filled'); el.remove(); n++; SND.pop(); speak(C.helpers && C.helpers.SOUND ? C.helpers.SOUND[ch] || ch : ch);
+    if (it.word[k] === ch) { slot.innerHTML = `<span class="lt">${ch}</span>`; slot.classList.add('filled'); el.remove(); n++; SND.pop(); speak('‹' + ch + '›');
       if (n === it.word.length) setTimeout(() => correct(it.word), 350); }
     else wrong(el); };
   it.tiles.forEach(ch => { const p = h('div', 'piece', `<span class="lt">${ch}</span>`); p.dataset.ch = ch; tray.appendChild(p); draggable(p, { onDrop: (el, t) => tryIt(el, ch, t), onTap: el => tryIt(el, ch) }); });
@@ -3454,6 +3549,30 @@ checkUpdate(true); document.addEventListener('visibilitychange', () => { if (!do
 document.addEventListener('visibilitychange', () => { if (document.hidden) hush(); });
 syncRewards();
 JVOICE.gear(document.getElementById('hGear'));
+// ---- v4: info / award detail cards, tappable celebration unlocks, reveal that never blocks buttons ----
+const TIERN = ['', 'Ribbon', 'Medal', 'Gem Trophy', 'Crystal Cup', 'Legendary'];
+function infoCard(o) { let L = $('infoov'); if (!L) { L = document.createElement('div'); L.id = 'infoov'; L.className = 'infoov'; document.body.appendChild(L);
+    L.addEventListener('click', e => { if (e.target === L || e.target.closest('.ic-close')) { SND.tap(); L.classList.remove('on'); } }); }
+  L.innerHTML = `<div class="card infocard ${o.cls || ''}"><button class="ic-close" aria-label="Close">✕</button><div class="ic-art">${o.art || ''}</div>${o.tag ? `<div class="ic-tag">${o.tag}</div>` : ''}<div class="ic-title">${o.title}</div>${o.body ? `<div class="ic-body">${o.body}</div>` : ''}${o.prog ? `<span class="wbar ic-prog"><i style="width:${Math.round(100 * o.prog[0] / Math.max(1, o.prog[1]))}%"></i><em>${o.prog[0]}/${o.prog[1]}</em></span>` : ''}${o.action ? `<button class="bigbtn go ic-act">${o.action[0]}</button>` : ''}</div>`;
+  if (o.action) L.querySelector('.ic-act').onclick = () => { SND.tap(); L.classList.remove('on'); o.action[1](); };
+  L.classList.add('on'); SND.pop(); const r = L.querySelector('.ic-art').getBoundingClientRect(); sparkAt(r.left + r.width / 2, r.top + r.height / 2, 14, 1.2);
+  if (o.say) speak(o.say); }
+function awardCard(t) { const has = ST.trophies[t.id]; const pr = t.prog ? t.prog() : null;
+  const when = has && has > 1 ? new Date(has).toLocaleDateString(undefined, { month: 'long', day: 'numeric' }) : '';
+  infoCard({ cls: 't' + t.tier + (has ? ' got' : ' locked'), art: awardArt(t, 1), tag: TIERN[t.tier], title: t.name,
+    body: has ? `You earned it${when ? ' on ' + when : ''}! <br><b>How:</b> ${t.desc}.` : `<b>How to earn it:</b> ${t.desc}.`, prog: !has && pr ? pr : null,
+    say: has ? `${t.name}! You earned it. ${t.desc}.` : `Not yet, Aspen. ${t.desc}.` }); }
+function leaveCele() { $('cele').classList.remove('on'); RUN = null; }
+function wireUnlocks() { $('celeUnlocks').querySelectorAll('.unl').forEach(d => d.onclick = e => { SND.tap(); const k = d.dataset.k, v = d.dataset.v;
+  if (k === 'award') awardCard(AWARDS[+v]);
+  else if (k === 'medal') infoCard({ art: medalSvg(v), tag: 'Medal', title: v[0].toUpperCase() + v.slice(1) + ' medal', body: 'Play a game 1 time for bronze, 3 times for silver and 5 times for gold.', say: `A ${v} medal! Play a game 1 time for bronze, 3 times for silver, and 5 times for gold.`, action: ['See trophies', () => { leaveCele(); openTrophies(); }] });
+  else if (k === 'sticker') { const s = EXTRA_STICKERS[+v]; infoCard({ art: s.svg, tag: 'Coloring sticker', title: s.name, body: 'Find it in your coloring game sticker box!', say: `New sticker: ${s.name}! Find it in your coloring game.` }); }
+  else if (k === 'outfit') { const o = OUTFITS[+v]; infoCard({ art: outfitIcon(o), tag: 'New outfit', title: o.name, say: `New outfit: ${o.name}! Do you want to try it on?`, action: ['Try it on', () => { leaveCele(); openDress(); }] }); }
+  else if (k === 'world') infoCard({ art: postcard(v), tag: 'New world', title: WORLDS[v].name, say: `A new world: ${WORLDS[v].name}!`, action: ['Go there', () => { leaveCele(); openWorlds(); }] }); }); }
+// a tap on any real button while a reveal is showing clears the reveals at once so the button works on the first tap
+document.addEventListener('pointerdown', e => { if (!revOn) return; if (e.target.closest && e.target.closest('button,.unl,[role=button]')) { REVQ.length = 0; clearTimeout(REVT); const L = $('reveal'); L.classList.remove('on', 'out'); revOn = false; } }, true);
+$('hGear') && $('hGear').addEventListener('click', () => { SND.tap(); wiggle($('hGear')); });
+
 // ---------- v3: every line the app can say (the build records these) ----------
 function voLines(N = 60) { const out = new Map(); const add = (t, ch = 'juniper', o = {}) => { if (!t) return; VO.need(String(t), ch, o).forEach(([k, v, s]) => { if (!out.has(k)) out.set(k, [k, v, s]); }); };
   const gen = { full: false };
@@ -3482,7 +3601,7 @@ function voLines(N = 60) { const out = new Map(); const add = (t, ch = 'juniper'
   const sayW = (html, ch = 'juniper') => { String(html || '').replace(/data-say="([^"]*)"/g, (m, w) => { add(w, ch, { full: true }); return m; }); };
   const S = C.helpers.SOUND;
   C.A.forEach(a => { for (let sd = 1; sd <= N; sd++) { C.setSeed(sd * 7919 + a.id.length * 13); let items; try { items = C.makeItems(a); } catch (e) { continue; }
-    items.forEach(it => { add(it.say, 'juniper', gen); add(it.hint, 'marcus', gen); sayW(it.prompt);
+    items.forEach(it => { add(it.say, 'juniper', gen); add(it.hint && !/^Patience, Aspen/.test(it.hint) ? 'Patience, Aspen. ' + it.hint : it.hint, 'marcus', gen); sayW(it.prompt);
       (it.opts || []).forEach(o => { sayW(o.h); if (o.say) add(o.say, 'juniper', gen); if (o.sayEs) add(o.sayEs, 'juniper', { es: true }); });
       (it.tiles || []).forEach(t => { if (t && t.say) add(t.say, 'juniper', { full: true }); if (t && t.h) sayW(t.h); });
       if (it.passage) { add(it.passage.title); it.passage.lines.forEach(l => add(l, 'juniper', gen)); }
@@ -3503,7 +3622,7 @@ function voLines(N = 60) { const out = new Map(); const add = (t, ch = 'juniper'
   ['Stop and check. ', 'Poco a poco. '].forEach(p => { ['That one is already in this row.', 'That one is already in this column.', 'Look at the row, the column, and the box. Which one is still missing?', 'That does not fit yet. Try another spot first, then come back.'].forEach(w => add(p + w, 'marcus')); });
   return [...out.values()]; }
 
-window.JLP = { voLines, VO, BOSSES, BOSS, startBoss, bossState, openVault, openLore, useRelic, playStory, openChest, effPos, gateOf, activeRelic, RELICS, relicArt, openBossIntro, renderMap, get MAPW() { return MAPW; },  rightNow: () => { if (RUN) { RUN.locked = false; correct(); } }, finishNow: () => { if (RUN) { RUN.locked = true; finish(); } }, wrongNow: () => { if (RUN) { RUN.locked = false; wrong(null); } }, AWARDS, WORLDS, WKEYS, TIER, tierOf, worldOpen, openWorlds, checkTrophies, revealAwards, ST, C, startActivity, get RUN() { return RUN; }, cur: () => RUN && cur(), go: () => $('introGo').click(), goHome, openMap, openShelves, openTrophies, openDress, OUTFITS, TROPHIES, medalOf, speak, SP };
+window.JLP = { SND, infoCard, awardCard, juniperSvg, CHARS, OV: typeof OV !== "undefined" ? OV : null, voLines, VO, BOSSES, BOSS, startBoss, bossState, openVault, openLore, useRelic, playStory, openChest, effPos, gateOf, activeRelic, RELICS, relicArt, openBossIntro, renderMap, get MAPW() { return MAPW; },  rightNow: () => { if (RUN) { RUN.locked = false; correct(); } }, finishNow: () => { if (RUN) { RUN.locked = true; finish(); } }, wrongNow: () => { if (RUN) { RUN.locked = false; wrong(null); } }, AWARDS, WORLDS, WKEYS, TIER, tierOf, worldOpen, openWorlds, checkTrophies, revealAwards, ST, C, startActivity, get RUN() { return RUN; }, cur: () => RUN && cur(), go: () => $('introGo').click(), goHome, openMap, openShelves, openTrophies, openDress, OUTFITS, TROPHIES, medalOf, speak, SP };
 })();
 </script>
 </body></html>
