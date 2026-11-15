@@ -483,6 +483,250 @@ return {pages, svg, toLine:s=>s.replace(/fill="#(?!222")[0-9a-fA-F]{3,6}"/g,'fil
 })();
 if(typeof module!=='undefined') module.exports={ART,PALETTE};
 
+// ---------- Elegant storybook library (v2 line art). Original drawings for Aspen; smooth beziers, line-weight hierarchy. ----------
+(() => {
+const A = ART.parts, c = A.c, K = '#222', Wh = c.blanco;
+const n = v => Math.round(v * 10) / 10;
+const P = (d, f = 'none', x = '') => `<path d="${d}" fill="${f}" ${x}/>`;
+const E = (cx, cy, rx, ry, f = Wh, x = '') => `<ellipse cx="${n(cx)}" cy="${n(cy)}" rx="${n(rx)}" ry="${n(ry)}" fill="${f}" ${x}/>`;
+const C = (cx, cy, r, f = Wh, x = '') => `<circle cx="${n(cx)}" cy="${n(cy)}" r="${n(r)}" fill="${f}" ${x}/>`;
+const G = (tx, ty, s, inner, rot = 0, flip = false) => `<g transform="translate(${n(tx)} ${n(ty)}) rotate(${rot}) scale(${flip ? -s : s} ${s})">${inner}</g>`;
+const HL = (cx, cy, r) => C(cx, cy, r, Wh, 'stroke="none"');
+const INK = d => P(d, K, 'stroke="none"');            // solid ink shape (tapered strokes, lashes)
+let uid = 0;
+const clip = (d, inner) => { const id = 'k' + (++uid); return `<clipPath id="${id}"><path d="${d}"/></clipPath><g clip-path="url(#${id})">${inner}</g>`; };
+// symmetric path: right half as list of cubic segments [c1x,c1y,c2x,c2y,x,y] from top-centre (0,y0) down to bottom-centre
+function sym(y0, segs) {
+  let d = `M0 ${y0}`; const pts = [[0, y0]];
+  for (const s of segs) { d += ` C${s[0]} ${s[1]} ${s[2]} ${s[3]} ${s[4]} ${s[5]}`; pts.push([s[4], s[5]]); }
+  for (let i = segs.length - 1; i >= 0; i--) { const s = segs[i], p0 = pts[i]; d += ` C${-s[2]} ${s[3]} ${-s[0]} ${s[1]} ${-p0[0]} ${p0[1]}`; }
+  return d + ' Z';
+}
+// line-weight hierarchy: thick outer contour, fine interior detail. sc = on-screen scale so widths stay constant in pixels
+const bold = (inner, sc = 1, top = '', outer = 7.5, fine = 3.2) =>
+  `<g stroke-width="${n(outer / sc)}">${inner}</g><g stroke-width="${n(fine / sc)}">${inner}${top}</g>`;
+const fig = (x, y, s, inner, flip = false, top = '', rot = 0) => G(x, y, s, bold(inner, s, top), rot, flip);
+
+// ---------- scenery ----------
+const band = (f = c.rosa) => {
+  const o = 'M6 34 A28 28 0 0 1 34 6 H990 A28 28 0 0 1 1018 34 V734 A28 28 0 0 1 990 762 H34 A28 28 0 0 1 6 734 Z';
+  const i = 'M28 46 V722 A18 18 0 0 0 46 740 H978 A18 18 0 0 0 996 722 V46 A18 18 0 0 0 978 28 H46 A18 18 0 0 0 28 46 Z';
+  let s = `<g stroke-width="4">` + P(o + ' ' + i, f, 'fill-rule="evenodd"');
+  for (const [x, y] of [[17, 17], [1007, 17], [17, 751], [1007, 751]]) s += rosette(x, y, 0.62);
+  for (const x of [512]) { s += P(`M${x - 40} 17 Q${x - 20} 4 ${x} 17 Q${x + 20} 4 ${x + 40} 17 Q${x + 20} 30 ${x} 17 Q${x - 20} 30 ${x - 40} 17 Z`, c.amarillo); }
+  return s + '</g>';
+};
+const rosette = (x, y, s = 1, f = c.amarillo, mid = c.fucsia) => G(x, y, s, [0, 90, 180, 270].map(a => G(0, 0, 1, P('M0 0 C-10 -8 -10 -22 0 -26 C10 -22 10 -8 0 0 Z', f), a)).join('') + C(0, 0, 7, mid));
+const sky = f => `<rect x="6" y="6" width="1012" height="756" rx="28" fill="${f}" stroke-width="4"/>`;
+function cloud(x, y, s = 1) {
+  const d = 'M-104 20 C-124 18 -124 -6 -102 -10 C-106 -34 -78 -46 -60 -32 C-54 -64 -6 -72 12 -42 C28 -64 66 -58 68 -28 C90 -38 112 -16 100 4 C116 8 112 24 96 24 C40 28 -40 28 -104 20 Z';
+  return G(x, y, s, `<g stroke-width="${n(3.6 / s)}">` + P(d, Wh) + P('M-60 -32 C-58 -20 -50 -14 -40 -16 M12 -42 C16 -28 26 -22 36 -24 M68 -28 C68 -18 74 -10 84 -10', 'none', `stroke-width="${n(2.6 / s)}"`) + '</g>');
+}
+function sun(x, y, r = 46, face = false) {
+  let s = '';
+  for (let i = 0; i < 12; i++) { const a = i * 30 * Math.PI / 180, L = i % 2 ? r * 0.42 : r * 0.72, w = i % 2 ? 0.11 : 0.15, r0 = r + 9;
+    const p = (rr, aa) => `${n(x + rr * Math.cos(aa))} ${n(y + rr * Math.sin(aa))}`;
+    s += P(`M${p(r0, a - w)} Q${p(r0 + L * 0.6, a - w * 0.5)} ${p(r0 + L, a)} Q${p(r0 + L * 0.6, a + w * 0.5)} ${p(r0, a + w)} Q${p(r0 - 3, a)} ${p(r0, a - w)} Z`, c.amarillo); }
+  s += C(x, y, r, c.amarillo) + C(x, y, r * 0.72, c.amarillo, 'stroke-width="2.4"');
+  if (face) s += E(x - r * .3, y - r * .1, 3.5, 5, K, 'stroke="none"') + E(x + r * .3, y - r * .1, 3.5, 5, K, 'stroke="none"') + P(`M${x - r * .25} ${y + r * .22} Q${x} ${y + r * .4} ${x + r * .25} ${y + r * .22}`, 'none', 'stroke-width="3"');
+  return `<g stroke-width="3.6">${s}</g>`;
+}
+// lobed canopy: arcs between points on an ellipse (deterministic wobble)
+function lobes(cx, cy, rx, ry, nb, seed = 1, k = 0.55) {
+  const pts = []; for (let i = 0; i < nb; i++) { const a = -Math.PI / 2 + i / nb * 2 * Math.PI, w = 1 + 0.07 * Math.sin(seed * 7.3 + i * 2.1);
+    pts.push([cx + rx * w * Math.cos(a), cy + ry * w * Math.sin(a)]); }
+  let d = `M${n(pts[0][0])} ${n(pts[0][1])}`;
+  for (let i = 0; i < nb; i++) { const p = pts[(i + 1) % nb], q = pts[i]; const ch = Math.hypot(p[0] - q[0], p[1] - q[1]); const r = n(ch * k + 0.1 * ch * Math.cos(seed + i));
+    d += ` A${r} ${r} 0 0 1 ${n(p[0])} ${n(p[1])}`; }
+  return d + ' Z';
+}
+function tree(x, y, s = 1, leaf = c.verde, fruit = null) {
+  const t = P('M-16 0 C-12 -40 -14 -80 -12 -120 L-34 -150 L-28 -156 L-6 -132 L-4 -170 L6 -170 L8 -132 L30 -160 L36 -154 L14 -118 C14 -80 12 -40 18 0 C10 4 -8 4 -16 0 Z', c.marron)
+    + P('M-2 -30 q4 -16 0 -30 M4 -90 q-4 -10 0 -18', 'none', 'stroke-width="2.6"');
+  let cn = P(lobes(0, -190, 104, 78, 11, x), leaf) + P('M-60 -150 C-50 -170 -20 -176 -6 -160 C4 -186 40 -190 52 -166 M-80 -196 C-70 -220 -40 -226 -26 -212 M10 -236 C24 -252 50 -250 60 -232', 'none', 'stroke-width="2.8"');
+  let det = P('M70 -200 q8 -10 18 -6 M-40 -130 q10 6 22 2', 'none', 'stroke-width="2.4"');
+  if (fruit) det += [[-60, -160], [-6, -230], [60, -180], [20, -150], [-80, -210], [70, -230]].map(([a, b]) => C(a, b, 12, fruit) + P(`M${a} ${b - 12} q4 -6 9 -6`, 'none', 'stroke-width="2.4"')).join('');
+  return G(x, y, s, `<g stroke-width="${n(4 / s)}">` + t + cn + det + '</g>');
+}
+function pine(x, y, s = 1, snow = false) {
+  let d = 'M0 -230 C10 -206 26 -186 44 -170 C34 -168 26 -168 20 -170 C34 -146 54 -126 76 -110 C62 -106 50 -106 40 -108 C58 -82 82 -62 104 -48 C70 -38 36 -38 14 -42 L14 0 L-14 0 L-14 -42 C-36 -38 -70 -38 -104 -48 C-82 -62 -58 -82 -40 -108 C-50 -106 -62 -106 -76 -110 C-54 -126 -34 -146 -20 -170 C-26 -168 -34 -168 -44 -170 C-26 -186 -10 -206 0 -230 Z';
+  let t = P('M-14 -44 L-14 0 L14 0 L14 -44 Z', c.marron) + P(d, c.verde_oscuro) + P('M-2 -186 L0 -150 M-4 -120 L0 -70', 'none', 'stroke-width="2.4"');
+  if (snow) t += P('M0 -230 C10 -206 20 -194 30 -184 C20 -180 12 -188 4 -182 C-2 -190 -12 -182 -26 -186 C-14 -198 -6 -212 0 -230 Z', Wh) + P('M-60 -112 C-50 -104 -38 -112 -28 -104 C-16 -112 -6 -104 6 -110 C18 -102 30 -112 44 -106 L40 -108 C28 -118 10 -120 0 -120 C-20 -120 -40 -118 -60 -112 Z', Wh);
+  return G(x, y, s, `<g stroke-width="${n(3.6 / s)}">${t}</g>`);
+}
+function aspenTree(x, y, s = 1, leaf = c.amarillo) {
+  let t = P('M-13 0 C-10 -60 -10 -140 -8 -200 L8 -200 C10 -140 10 -60 13 0 Z', Wh);
+  for (const [a, b, w] of [[-2, -40, 7], [3, -90, 6], [-3, -140, 6], [2, -175, 5]]) t += INK(`M${a - w} ${b} Q${a} ${b - 4} ${a + w} ${b} Q${a} ${b + 3} ${a - w} ${b} Z`);
+  t += P(lobes(0, -236, 62, 56, 9, x, 0.6), leaf) + P('M-36 -226 C-28 -242 -8 -244 0 -232 C8 -246 28 -244 32 -228', 'none', 'stroke-width="2.4"') + P('M-30 -260 q10 -8 20 -2 M24 -214 q8 6 18 0', 'none', 'stroke-width="2.4"');
+  return G(x, y, s, `<g stroke-width="${n(3.6 / s)}">${t}</g>`);
+}
+function palm(x, y, s = 1) {
+  let t = P('M-14 0 C-24 -80 -16 -170 18 -250 L34 -244 C6 -170 2 -80 14 0 Z', c.canela);
+  for (let i = 1; i < 8; i++) { const yy = -i * 30, xx = (i * i) * 0.45 - 2; t += P(`M${n(-14 + xx + i * 0.6)} ${yy} Q${n(xx + 4)} ${yy - 8} ${n(14 + xx + i * 0.2)} ${yy - 2}`, 'none', 'stroke-width="2.6"'); }
+  const frond = (a, len, droop) => { const ang = a * Math.PI / 180, ex = Math.cos(ang) * len, ey = Math.sin(ang) * len + droop;
+    const mx = ex * 0.5, my = ey * 0.5 - 40, nx = -Math.sin(ang) * 22, ny = Math.cos(ang) * 22;
+    return P(`M0 0 Q${n(mx + nx)} ${n(my + ny - 6)} ${n(ex)} ${n(ey)} Q${n(mx - nx * 0.4)} ${n(my - ny * 0.4 - 12)} 0 0 Z`, c.verde) + P(`M0 0 Q${n(mx + nx * 0.25)} ${n(my - 8)} ${n(ex)} ${n(ey)}`, 'none', 'stroke-width="2.4"'); };
+  t += G(26, -248, 1, [[-160, 150, 70], [-125, 140, 30], [-80, 110, -10], [-30, 120, 0], [10, 150, 40], [-200, 140, 90], [30, 140, 90]].map(([a, l, d]) => frond(a, l, d)).join('') + C(-6, 10, 12, c.marron) + C(10, 14, 11, c.marron) + C(-16, 2, 10, c.marron));
+  return G(x, y, s, `<g stroke-width="${n(3.6 / s)}">${t}</g>`);
+}
+function mountains(y, f = c.lila, snow = true, peaks = [[180, 260], [470, 330], [800, 290]]) {
+  // smooth majestic ridge with snow caps
+  let s = '';
+  const ridge = `M6 ${y} L6 ${y - 90} C80 ${y - 120} 120 ${y - 200} 180 ${y - 260} C220 ${y - 210} 260 ${y - 170} 300 ${y - 150} C350 ${y - 190} 410 ${y - 280} 470 ${y - 330} C530 ${y - 260} 590 ${y - 190} 640 ${y - 160} C700 ${y - 210} 750 ${y - 260} 800 ${y - 290} C870 ${y - 220} 940 ${y - 130} 1018 ${y - 90} L1018 ${y} Z`;
+  s += P(ridge, f);
+  if (snow) for (const [px, h] of peaks) { const top = y - h, w = h * 0.26;
+    s += P(`M${px} ${top} C${px + w * 0.5} ${top + w * 0.5} ${px + w * 0.8} ${top + w * 0.8} ${px + w} ${top + w * 1.1} C${px + w * 0.7} ${top + w * 0.9} ${px + w * 0.5} ${top + w * 1.3} ${px + w * 0.3} ${top + w} C${px + w * 0.1} ${top + w * 1.4} ${px - w * 0.2} ${top + w * 1.1} ${px - w * 0.35} ${top + w * 1.3} C${px - w * 0.5} ${top + w * 1.0} ${px - w * 0.8} ${top + w * 1.2} ${px - w} ${top + w * 1.1} C${px - w * 0.7} ${top + w * 0.7} ${px - w * 0.4} ${top + w * 0.4} ${px} ${top} Z`, Wh);
+    s += P(`M${px} ${top + w * 1.3} C${px + 10} ${top + h * 0.5} ${px - 10} ${top + h * 0.7} ${px + 6} ${y - 30}`, 'none', 'stroke-width="2.4"'); }
+  return `<g stroke-width="3.6">${s}</g>`;
+}
+const hills = (y, f, amp = 30, ph = 0) => P(`M6 ${y} C200 ${y - amp - ph} 330 ${y - amp} 512 ${y - 6} C700 ${y + amp * 0.4} 840 ${y - amp + ph} 1018 ${y - amp * 0.6} V762 H6 Z`, f, 'stroke-width="3.6"');
+function flower(x, y, f = c.rosa, s = 1, mid = c.amarillo, stem = true) {
+  let t = '';
+  if (stem) t += P('M0 10 C2 30 -2 50 2 70', 'none', 'stroke-width="3"') + P('M1 52 C-14 40 -30 42 -34 50 C-24 58 -10 58 1 52 Z', c.verde) + P('M-2 52 L-24 49', 'none', 'stroke-width="2"');
+  for (let i = 0; i < 5; i++) t += G(0, 0, 1, P('M0 -4 C-14 -10 -18 -30 -8 -34 C-4 -36 -1 -32 0 -29 C1 -32 4 -36 8 -34 C18 -30 14 -10 0 -4 Z', f), i * 72);
+  t += C(0, 0, 7.5, mid);
+  return G(x, y, s, `<g stroke-width="${n(3 / s)}">${t}</g>`);
+}
+function tulip(x, y, f = c.rojo, s = 1) {
+  const t = P('M0 0 C2 24 -2 44 0 64', 'none', 'stroke-width="3"') + P('M0 50 C-8 30 -6 16 -2 10 C6 22 6 40 0 50 Z', c.verde) + P('M0 4 C-16 2 -20 -18 -16 -36 L-8 -24 L0 -40 L8 -24 L16 -36 C20 -18 16 2 0 4 Z', f) + P('M-8 -24 C-6 -12 -4 -4 0 4 M8 -24 C6 -12 4 -4 0 4', 'none', 'stroke-width="2.2"');
+  return G(x, y, s, `<g stroke-width="${n(3 / s)}">${t}</g>`);
+}
+const grass = (x, y, s = 1, f = c.verde) => G(x, y, s, `<g stroke-width="${n(2.6 / s)}">` + P('M-16 0 C-14 -10 -18 -22 -26 -30 C-12 -24 -6 -12 -4 0 Z', f) + P('M-6 0 C-4 -16 -2 -30 4 -40 C6 -26 6 -12 6 0 Z', f) + P('M6 0 C10 -10 18 -20 28 -24 C20 -14 16 -6 16 0 Z', f) + '</g>');
+const sparkle = (x, y, s = 1, f = c.amarillo) => G(x, y, s, `<g stroke-width="${n(3 / s)}">` + P('M0 -24 C3 -6 6 -3 24 0 C6 3 3 6 0 24 C-3 6 -6 3 -24 0 C-6 -3 -3 -6 0 -24 Z', f) + '</g>');
+const heart = (x, y, s = 1, f = c.rojo) => G(x, y, s, `<g stroke-width="${n(3.4 / s)}">` + P('M0 20 C-30 2 -40 -12 -34 -24 C-28 -36 -8 -34 0 -20 C8 -34 28 -36 34 -24 C40 -12 30 2 0 20 Z', f) + '</g>');
+function butterfly(x, y, s = 1, f = c.lila, g = c.celeste, rot = -10) {
+  const w = P('M0 -4 C10 -34 40 -44 50 -28 C58 -14 40 0 0 2 Z', f) + P('M0 2 C30 4 44 14 38 30 C30 42 10 30 0 6 Z', g) + C(30, -22, 6, g);
+  return G(x, y, s, `<g stroke-width="${n(3 / s)}">` + w + G(0, 0, 1, w, 0, true) + P('M0 -10 C3 -10 3 24 0 26 C-3 24 -3 -10 0 -10 Z', K) + P('M0 -10 q-4 -14 -12 -18 M0 -10 q4 -14 12 -18', 'none', 'stroke-width="2.2"') + '</g>', rot);
+}
+const swirl = (x, y, s = 1, flip = false) => G(x, y, s, P('M0 0 C20 -2 34 -16 30 -30 C26 -42 10 -40 10 -30 C10 -22 20 -20 22 -26', 'none', `stroke-width="${n(3 / s)}"`), 0, flip);
+const stone = (x, y, w, h, f = c.gris_claro) => P(`M${x} ${y + h * 0.5} C${x} ${y + h * 0.1} ${x + w * 0.1} ${y} ${x + w * 0.5} ${y} C${x + w * 0.9} ${y} ${x + w} ${y + h * 0.15} ${x + w} ${y + h * 0.55} C${x + w} ${y + h * 0.9} ${x + w * 0.8} ${y + h} ${x + w * 0.5} ${y + h} C${x + w * 0.15} ${y + h} ${x} ${y + h * 0.85} ${x} ${y + h * 0.5} Z`, f);
+
+// ---------- Juniper (the fox): head ----------
+const FOX = c.naranja, CR = c.crema, SOCK = c.marron_oscuro;
+const HEAD = sym(-78, [[34, -80, 62, -66, 74, -40], [82, -24, 92, -8, 110, 2], [100, 9, 94, 13, 89, 15], [98, 22, 104, 29, 106, 36], [86, 46, 66, 54, 46, 59], [30, 64, 14, 70, 0, 72]]);
+function juniperHead(o = {}) {
+  let s = '';
+  // her right ear (viewer's left): straight with dark tip
+  const ER = 'M-6 -74 C-20 -100 -44 -126 -80 -140 C-82 -106 -72 -82 -46 -60 Z';
+  s += P(ER, FOX) + clip(ER, P('M-100 -104 C-88 -112 -78 -112 -64 -126 L-60 -170 L-110 -150 Z', SOCK)) + P(ER);
+  s += P('M-14 -76 C-26 -96 -44 -114 -66 -124 C-66 -102 -58 -86 -42 -70 Z', CR);
+  // her LEFT ear (viewer's right): crooked, the tip flops outward
+  const EL = 'M6 -74 C22 -98 40 -116 62 -128 C78 -132 96 -124 108 -108 C96 -102 86 -100 76 -100 C68 -86 56 -72 44 -60 Z';
+  s += P(EL, FOX) + clip(EL, P('M62 -128 C68 -118 72 -110 76 -100 L130 -96 L120 -170 Z', SOCK)) + P(EL);
+  s += P('M16 -76 C28 -94 42 -108 58 -118 C62 -110 66 -104 68 -98 C60 -86 52 -76 42 -68 Z', CR);
+  // face
+  s += P(HEAD, FOX);
+  s += clip(HEAD, P('M150 -6 C116 -2 78 10 50 8 C34 7 22 0 12 -8 C6 -12 -6 -12 -12 -8 C-22 0 -34 7 -50 8 C-78 10 -116 -2 -150 -6 L-150 120 L150 120 Z', CR));
+  s += P(HEAD);
+  // cheek fur flicks & crown tuft
+  s += P('M84 30 C76 28 70 30 64 34 M-84 30 C-76 28 -70 30 -64 34 M-6 -78 C-2 -90 8 -96 18 -94 C10 -90 8 -84 10 -78', 'none', 'stroke-width="2.6"');
+  if (o.helmet) s += P('M-90 -30 C-96 -108 96 -108 90 -30 C40 -48 -40 -48 -90 -30 Z', o.helmet) + P('M-40 -96 C-30 -70 -26 -60 -24 -50 M40 -96 C30 -70 26 -60 24 -50 M0 -104 L0 -52', 'none', 'stroke-width="2.6"') ;
+  if (o.bow) s += G(-46, -70, 1, P('M0 0 C-14 -20 -36 -14 -32 2 C-28 14 -12 10 0 0 Z', o.bow) + P('M0 0 C14 -20 36 -14 32 2 C28 14 12 10 0 0 Z', o.bow) + C(0, 0, 7, o.bow), -20);
+  // eyes: big almond eyes, warm iris, twin highlights, lashes
+  for (const k of [-1, 1]) {
+    const ex = k * 37;
+    const eye = `M${ex - 21 * k} -20 C${ex - 20 * k} -44 ${ex + 16 * k} -50 ${ex + 21 * k} -26 C${ex + 22 * k} -8 ${ex + 12 * k} 4 ${ex} 4 C${ex - 12 * k} 4 ${ex - 21 * k} -6 ${ex - 21 * k} -20 Z`;
+    s += P(eye, Wh) + clip(eye, C(ex + 2 * k, -16, 16, c.canela) + C(ex + 2 * k, -16, 8.5, K, 'stroke="none"') + HL(ex + 7 * k, -23, 5.2) + HL(ex - 3 * k, -9, 2.4)) + P(eye, 'none', 'stroke-width="2.6"');
+    // upper lid ink + lashes on the outer corner
+    s += INK(`M${ex - 23 * k} -18 C${ex - 22 * k} -48 ${ex + 18 * k} -54 ${ex + 23 * k} -26 C${ex + 16 * k} -44 ${ex - 16 * k} -44 ${ex - 23 * k} -18 Z`);
+    s += INK(`M${ex + 20 * k} -34 C${ex + 26 * k} -38 ${ex + 30 * k} -42 ${ex + 32 * k} -48 C${ex + 30 * k} -40 ${ex + 28 * k} -36 ${ex + 22 * k} -30 Z`) + INK(`M${ex + 22 * k} -28 C${ex + 29 * k} -30 ${ex + 33 * k} -32 ${ex + 37 * k} -36 C${ex + 34 * k} -30 ${ex + 30 * k} -27 ${ex + 23 * k} -24 Z`);
+    // brow
+    s += INK(`M${ex - 14 * k} -58 C${ex - 4 * k} -66 ${ex + 10 * k} -66 ${ex + 18 * k} -60 C${ex + 8 * k} -62 ${ex - 4 * k} -61 ${ex - 14 * k} -58 Z`);
+  }
+  // nose + smile
+  s += P('M-12 12 C-12 4 12 4 12 12 C12 20 5 24 0 24 C-5 24 -12 20 -12 12 Z', K) + E(-4, 9, 4, 2.4, Wh, 'stroke="none"');
+  s += P('M0 24 L0 31 M-22 30 C-14 40 -5 40 0 31 C5 40 14 40 22 30', 'none', 'stroke-width="3"');
+  s += P('M-9 37 C-6 46 6 46 9 37 C4 40 -4 40 -9 37 Z', c.rosa, 'stroke-width="2.4"');
+  return s;
+}
+// ---------- Juniper: standing (anthropomorphic, child proportions). Frame matches old foxStand: feet ~ y 150 ----------
+function boot(type) {
+  if (type === 'skate') return P('M-16 -20 L14 -20 L16 4 C30 6 38 12 38 22 L38 28 L-18 28 Z', Wh) + P('M-8 -10 L8 -12 M-8 -2 L10 -4 M-6 6 L14 6', 'none', 'stroke-width="2.4"') + P('M-12 28 L-12 36 M30 28 L30 36', 'none', 'stroke-width="3"') + P('M-24 36 L40 36 C48 36 52 30 50 24 C56 30 54 44 42 44 L-24 44 C-28 44 -28 36 -24 36 Z', c.gris_claro);
+  if (type === 'blade') return P('M-16 -20 L14 -20 L16 4 C30 6 38 12 38 22 L38 30 L-18 30 Z', c.morado) + P('M-16 -8 L14 -10', 'none', 'stroke-width="3"') + P('M-18 30 L38 30 L38 38 L-18 38 Z', c.gris) + [-10, 6, 22, 36].map((wx, i) => C(wx, 46, 8, [c.fucsia, c.turquesa, c.verde_lima, c.amarillo][i])).join('');
+  if (type === 'riding') return P('M-14 -26 L14 -26 L16 6 C28 8 36 14 36 24 L36 30 L-16 30 Z', c.marron_oscuro) + P('M-16 22 L36 22', 'none', 'stroke-width="2.4"');
+  // paws with dark socks
+  return P('M-16 -16 L14 -16 C16 0 18 10 30 14 C40 18 38 30 28 30 L-14 30 C-22 30 -22 20 -18 8 Z', SOCK) + P('M8 20 L8 30 M18 18 L18 30', 'none', 'stroke-width="2.2"');
+}
+function juniperStand(o = {}) {
+  const feet = o.feet || 'paw'; let s = '';
+  // tail: flowing plume behind, white tip
+  const TAIL = 'M-30 40 C-84 60 -136 40 -150 -6 C-160 -42 -146 -82 -114 -98 C-110 -80 -116 -62 -108 -44 C-98 -18 -74 -2 -40 2 Z';
+  s += P(TAIL, FOX) + clip(TAIL, P('M-170 -46 C-158 -54 -152 -48 -144 -58 C-136 -68 -130 -64 -124 -74 C-118 -82 -112 -82 -106 -86 L-100 -150 L-180 -150 Z', Wh)) + P(TAIL) + P('M-136 6 C-110 24 -84 30 -60 28 M-130 -34 C-120 -16 -104 -6 -86 -2', 'none', 'stroke-width="2.6"');
+  // legs
+  for (const k of [-1, 1]) s += P(`M${k * 6} 40 C${k * 4} 70 ${k * 6} 96 ${k * 8} 114 L${k * 38} 114 C${k * 42} 96 ${k * 46} 70 ${k * 46} 40 Z`, FOX);
+  s += G(-23, 128, 1.05, boot(feet), 0, true) + G(23, 128, 1.05, boot(feet));
+  // torso + bib
+  const TORSO = 'M0 -86 C28 -86 42 -64 46 -36 C52 -6 62 24 54 46 C40 62 -40 62 -54 46 C-62 24 -52 -6 -46 -36 C-42 -64 -28 -86 0 -86 Z';
+  s += P(TORSO, o.dress || FOX);
+  if (o.dress) s += P('M-46 10 C-70 50 -80 80 -84 100 C-30 116 30 116 84 100 C80 80 70 50 46 10 C20 18 -20 18 -46 10 Z', o.dress) + P('M-84 100 C-74 112 -64 112 -56 104 C-46 114 -36 114 -28 106 C-18 116 -8 116 0 108 C8 116 18 116 28 106 C36 114 46 114 56 104 C64 112 74 112 84 100', 'none', 'stroke-width="2.6"') + P('M-46 10 C-20 18 20 18 46 10', 'none', 'stroke-width="4"');
+  else s += P('M0 -70 C20 -70 28 -44 30 -18 C34 12 30 40 0 50 C-30 40 -34 12 -30 -18 C-28 -44 -20 -70 0 -70 Z', CR);
+  s += P('M-38 -80 C-14 -96 14 -96 38 -80 C34 -60 24 -52 14 -58 C10 -46 -10 -46 -14 -58 C-24 -52 -34 -60 -38 -80 Z', CR);
+  // golf club behind arms
+  if (o.golf !== undefined) s += `<g transform="rotate(${o.golf} 0 -10)">` + P('M-4 -30 L4 -30 L6 116 L-2 116 Z', c.gris) + P('M-4 106 C10 104 34 106 44 112 C48 120 44 126 34 126 L-6 126 Z', c.gris_claro) + P('M-6 -50 L6 -50 L6 -14 L-6 -14 Z', c.negro) + `</g>`;
+  const arm = (side, ang) => `<g transform="translate(${side * 40} -58) rotate(${ang}) scale(${side} 1)">` + P('M-6 -13 C22 -15 48 -12 64 -9 C70 -8 70 8 64 9 C48 12 22 15 -6 13 C-12 8 -12 -8 -6 -13 Z', o.sleeve || FOX) + P('M60 -12 C76 -14 86 -6 86 2 C86 12 76 16 64 13 C58 8 58 -6 60 -12 Z', SOCK) + `</g>`;
+  if (o.golf !== undefined) s += arm(-1, -50) + arm(1, 230);
+  else s += arm(-1, o.armL ?? -30) + arm(1, o.armR ?? 30);
+  if (o.scarf) s += P('M-46 -84 C-20 -70 20 -70 46 -84 L48 -66 C20 -52 -20 -52 -48 -66 Z', o.scarf) + P('M18 -62 C24 -40 26 -20 22 0 L40 -2 C42 -22 38 -44 32 -64 Z', o.scarf) + P('M22 0 L22 10 M28 -1 L29 9 M34 -1 L35 9 M40 -2 L41 8', 'none', 'stroke-width="2.6"');
+  s += G(0, -132, 0.8, juniperHead({ helmet: o.helmet, bow: o.bow }));
+  return s;
+}
+const juniper = (x, y, s = 1, o = {}, flip = false, rot = 0) => fig(x, y, s, juniperStand(o), flip, '', rot);
+
+// ---------- cartoon Aspen (from G's description only): hazel eyes, dark-blond braided pigtails, pink princess dress, light-up high tops ----------
+function aspenKid(o = {}) {
+  let s = '';
+  const HAIR = c.canela, DRESS = o.dress || c.rosa;
+  // braids (behind)
+  for (const k of [-1, 1]) {
+    let b = '';
+    for (let i = 0; i < 5; i++) { const y = -150 + i * 22, x = k * (60 + i * 3);
+      b += P(`M${x - 13} ${y} C${x - 14} ${y - 12} ${x + 12} ${y - 14} ${x + 14} ${y} C${x + 15} ${y + 12} ${x + 2} ${y + 16} ${x} ${y + 14} C${x - 4} ${y + 16} ${x - 14} ${y + 12} ${x - 13} ${y} Z`, HAIR); }
+    b += P(`M${k * 72} -44 C${k * 64} -34 ${k * 66} -24 ${k * 74} -18 C${k * 80} -26 ${k * 82} -36 ${k * 72} -44 Z`, HAIR) + E(k * 72, -50, 10, 6, c.fucsia);
+    b += P(`M${k * 50} -178 C${k * 38} -194 ${k * 64} -200 ${k * 64} -184 C${k * 78} -192 ${k * 82} -170 ${k * 66} -166 Z`, c.fucsia);
+    s += b;
+  }
+  // dress: fitted bodice, full bell skirt with ruffle hem
+  s += P('M-28 -10 C-60 30 -100 90 -112 130 C-60 148 60 148 112 130 C100 90 60 30 28 -10 Z', DRESS);
+  s += P('M-112 130 C-104 140 -94 142 -86 136 C-76 146 -64 146 -56 138 C-46 148 -32 148 -24 140 C-14 150 -2 150 6 142 C16 150 28 148 36 140 C46 148 58 146 66 138 C76 146 88 144 94 136 C102 142 110 140 112 130', 'none', 'stroke-width="2.6"');
+  s += P('M-40 40 C-50 70 -58 100 -62 128 M40 40 C50 70 58 100 62 128 M0 40 L0 140', 'none', 'stroke-width="2.4"');
+  s += P('M-34 -62 C-20 -70 20 -70 34 -62 L30 -8 C10 0 -10 0 -30 -8 Z', DRESS) + P('M-30 -10 C-10 -2 10 -2 30 -10 L32 4 C10 12 -10 12 -32 4 Z', c.fucsia) + G(0, -2, 1, P('M0 0 C-12 -14 -28 -8 -24 4 C-20 12 -8 8 0 0 Z', c.fucsia) + P('M0 0 C12 -14 28 -8 24 4 C20 12 8 8 0 0 Z', c.fucsia) + C(0, 0, 5, c.amarillo));
+  // puff sleeves + arms
+  for (const k of [-1, 1]) {
+    s += P(`M${k * 38} -48 C${k * 56} -30 ${k * 62} -4 ${k * 58} 26 C${k * 52} 31 ${k * 44} 31 ${k * 40} 26 C${k * 40} 0 ${k * 36} -22 ${k * 30} -36 Z`, c.melocoton) + C(k * 50, 34, 10, c.melocoton);
+    s += P(`M${k * 26} -66 C${k * 46} -74 ${k * 60} -56 ${k * 54} -40 C${k * 46} -30 ${k * 34} -34 ${k * 30} -44 Z`, DRESS);
+  }
+  // legs + light-up high tops
+  for (const k of [-1, 1]) {
+    s += P(`M${k * 14} 138 L${k * 16} 160 L${k * 30} 160 L${k * 32} 138 Z`, c.melocoton);
+    s += P(`M${k * 10} 154 L${k * 34} 154 C${k * 36} 162 ${k * 52} 164 ${k * 56} 172 C${k * 58} 178 ${k * 54} 182 ${k * 48} 182 L${k * 8} 182 C${k * 6} 172 ${k * 8} 162 ${k * 10} 154 Z`, Wh) + P(`M${k * 8} 176 L${k * 56} 176`, 'none', 'stroke-width="2.4"');
+    s += [0, 1, 2].map(i => C(k * (16 + i * 14), 179, 3.2, [c.fucsia, c.turquesa, c.amarillo][i], 'stroke-width="1.6"')).join('');
+    s += P(`M${k * 70} 170 l${k * 8} -4 M${k * 66} 182 l${k * 10} 2`, 'none', 'stroke-width="2.4"');
+  }
+  // neck, face
+  s += P('M-10 -84 L-10 -64 C-4 -60 4 -60 10 -64 L10 -84 Z', c.melocoton);
+  const FACE = 'M0 -170 C34 -170 54 -146 54 -116 C54 -86 32 -70 0 -70 C-32 -70 -54 -86 -54 -116 C-54 -146 -34 -170 0 -170 Z';
+  s += P(FACE, c.melocoton);
+  for (const k of [-1, 1]) s += P(`M${k * 54} -118 C${k * 62} -120 ${k * 64} -104 ${k * 54} -100`, c.melocoton);
+  // hair cap with side part and soft bangs
+  s += P('M-56 -112 C-62 -160 -30 -184 2 -182 C38 -182 64 -158 56 -112 C50 -132 40 -144 26 -150 C14 -134 -10 -126 -34 -128 C-28 -136 -24 -142 -22 -148 C-34 -140 -46 -128 -56 -112 Z', HAIR) + P('M-2 -180 C6 -166 14 -156 26 -150 M30 -172 C40 -160 48 -146 52 -128', 'none', 'stroke-width="2.4"');
+  if (o.tiara !== false) s += P('M-24 -176 L-16 -196 L-6 -182 L2 -202 L10 -182 L20 -196 L26 -176 C8 -170 -8 -170 -24 -176 Z', c.amarillo) + C(2, -194, 3.5, c.fucsia, 'stroke-width="1.8"');
+  // hazel eyes
+  for (const k of [-1, 1]) {
+    const ex = k * 21, eye = `M${ex - 13} -110 C${ex - 13} -128 ${ex + 13} -128 ${ex + 13} -110 C${ex + 13} -98 ${ex + 6} -92 ${ex} -92 C${ex - 6} -92 ${ex - 13} -98 ${ex - 13} -110 Z`;
+    s += P(eye, Wh, 'stroke-width="2.4"') + clip(eye, C(ex, -107, 10, c.verde_lima) + C(ex, -107, 5, K, 'stroke="none"') + HL(ex + 3, -112, 3.2) + HL(ex - 3, -101, 1.6));
+    s += INK(`M${ex - 15} -108 C${ex - 14} -130 ${ex + 14} -130 ${ex + 15} -110 C${ex + 10} -124 ${ex - 10} -124 ${ex - 15} -108 Z`) + INK(`M${ex + k * 13} -116 C${ex + k * 18} -120 ${ex + k * 20} -122 ${ex + k * 22} -126 C${ex + k * 21} -118 ${ex + k * 18} -116 ${ex + k * 14} -112 Z`);
+    s += INK(`M${ex - 10} -136 C${ex - 4} -141 ${ex + 6} -141 ${ex + 11} -137 C${ex + 4} -138 ${ex - 4} -138 ${ex - 10} -136 Z`);
+  }
+  s += P('M-3 -94 C-1 -91 1 -91 3 -94', 'none', 'stroke-width="2.4"') + P('M-12 -84 C-6 -76 6 -76 12 -84 C6 -81 -6 -81 -12 -84 Z', c.rosa, 'stroke-width="2.4"');
+  return s;
+}
+const aspen = (x, y, s = 1, o = {}, flip = false) => fig(x, y, s, aspenKid(o), flip);
+
+ART.lib = { P, E, C, G, HL, INK, clip, sym, bold, fig, band, sky, rosette, cloud, sun, lobes, tree, pine, aspenTree, palm, mountains, hills, flower, tulip, grass, sparkle, heart, butterfly, swirl, stone, juniperHead, juniperStand, juniper, aspenKid, aspen, n };
+// upgrade the shared parts the world scenes use
+Object.assign(A, { cloud, sun: (x, y, r) => sun(x, y, r), tree, foxStand: juniperStand, aspenKid, flower: (x, y, f, s) => flower(x, y, f, s), heart });
+})();
+
 // ---------- World scenes (earned in Juniper's Learning Park). Smooth, rounded, chunky shapes: closed regions for fill + color-by-number ----------
 const WORLD_SCENES = [
   // id, world, title, es, need label (shown on locked card)
@@ -546,17 +790,17 @@ const yeti = () => P(scallop(0, 20, 110, 130, 16, 0.12), Wh) + E(0, -40, 60, 52,
 const glitch = () => R(-8, -200, 16, 50, 6, c.gris) + C(0, -206, 16, c.rojo) + R(-90, -150, 180, 140, 30, c.gris_claro) + R(-66, -128, 132, 90, 18, c.turquesa) + P('M-44 -96 h22 M22 -96 h22', 'none', 'stroke-width="8"') + P('M-30 -64 l12 -8 l12 8 l12 -8 l12 8 l12 -8', 'none', 'stroke-width="6"') + R(-70, 0, 140, 120, 26, c.gris) + R(-40, 24, 80, 50, 12, c.amarillo) + C(-20, 49, 10, c.rojo) + C(20, 49, 10, c.verde) + R(-130, 10, 56, 26, 13, c.gris) + R(74, -30, 56, 26, 13, c.gris) + R(-56, 120, 40, 40, 12, c.gris_claro) + R(16, 120, 40, 40, 12, c.gris_claro) + P('M120 -60 l10 -16 l6 12 l10 -18', 'none', 'stroke-width="6"');
 const cuco = () => P(scallop(0, 0, 180, 90, 11, 0.18), c.gris) + eyes(0, -10, 1.4) + vbrows(0, -40, 1.3) + smirk(0, 30, 1.3) + [-120, -60, 0, 60, 120].map((x, i) => P(`M${x} ${130 + (i % 2) * 30} q-14 22 0 30 q14 -8 0 -30 Z`, c.celeste)).join('') + P('M150 60 l-24 50 h30 l-20 50', 'none', 'stroke-width="7"');
 // ---- landmarks ----
-const pine = (x, y, s = 1) => G(x, y, s, R(-10, -30, 20, 30, 4, c.marron) + P('M0 -200 L-56 -110 H-30 L-76 -30 H76 L30 -110 H56 Z', c.verde_oscuro) + P('M0 -200 L-22 -164 Q0 -156 22 -164 Z', Wh));
-const aspenT = (x, y, s = 1, leaf = c.amarillo) => G(x, y, s, R(-18, -170, 36, 170, 12, Wh) + E(-4, -100, 7, 3.5, K) + P(scallop(0, -210, 70, 60, 9, 0.18), leaf));
-const palm = (x, y, s = 1) => G(x, y, s, P('M-12 0 Q-26 -120 4 -240 L26 -236 Q2 -120 12 0 Z', c.canela) + [[-150, -200], [-120, -280], [0, -320], [130, -280], [150, -200]].map(([a, b]) => P(`M14 -240 Q${(14 + a) / 2} ${b - 40} ${a} ${b} Q${(14 + a) / 2} ${b - 10} 14 -240 Z`, c.verde)).join('') + C(4, -232, 16, c.marron));
-const mountains = (y, f = c.lila) => P(`M6 ${y} L180 ${y - 260} L300 ${y - 150} L470 ${y - 330} L640 ${y - 160} L800 ${y - 290} L1018 ${y - 80} V${y} Z`, f) + P(`M130 ${y - 190} L180 ${y - 260} L230 ${y - 190} L200 ${y - 200} L180 ${y - 180} L160 ${y - 200} Z M410 ${y - 250} L470 ${y - 330} L530 ${y - 250} L500 ${y - 262} L470 ${y - 238} L440 ${y - 262} Z M750 ${y - 225} L800 ${y - 290} L860 ${y - 220} L825 ${y - 232} L800 ${y - 210} L775 ${y - 232} Z`, Wh);
+const pine = (x, y, s = 1) => ART.lib.pine(x, y, s, true);
+const aspenT = (x, y, s = 1, leaf = c.amarillo) => ART.lib.aspenTree(x, y, s, leaf);
+const palm = (x, y, s = 1) => ART.lib.palm(x, y, s);
+const mountains = (y, f = c.lila) => ART.lib.mountains(y, f);
 const chalet = (x, y, s = 1, f = c.marron) => G(x, y, s, R(-80, -100, 160, 100, 6, f) + P('M-110 -92 L0 -196 L110 -92 Z', Wh) + P('M-76 -100 L0 -150 L76 -100 Z', c.marron_oscuro) + R(-20, -60, 40, 60, 6, c.rojo) + R(-66, -80, 32, 28, 4, c.amarillo) + R(34, -80, 32, 28, 4, c.amarillo));
 const house = (x, y, f, door = c.verde_oscuro) => R(x, y - 160, 130, 160, 6, f) + R(x - 8, y - 176, 146, 20, 6, Wh) + R(x + 18, y - 130, 36, 50, 8, c.turquesa) + R(x + 76, y - 130, 36, 50, 8, c.turquesa) + P(`M${x + 10} ${y - 72} h110`, 'none', 'stroke-width="6"') + R(x + 44, y - 60, 42, 60, 20, door);
 const garita = (x, y, s = 1) => G(x, y, s, R(-60, -170, 120, 170, 10, c.melocoton) + P('M-70 -170 Q0 -270 70 -170 Z', c.melocoton) + C(0, -262, 14, c.canela) + R(-18, -140, 36, 56, 18, c.marron_oscuro) + R(-80, -20, 160, 30, 6, c.canela));
 const waves = y => P(`M6 ${y} q42 -26 84 0 t84 0 t84 0 t84 0 t84 0 t84 0 t84 0 t84 0 t84 0 t84 0 t84 0 t84 0 V${y + 200} H6 Z`, c.azul);
 const taxi = (x, y, s = 1) => G(x, y, s, R(-110, -70, 220, 60, 22, c.amarillo) + P('M-66 -70 L-42 -120 H42 L66 -70 Z', c.amarillo) + R(-34, -112, 30, 34, 6, c.celeste) + R(6, -112, 30, 34, 6, c.celeste) + R(-26, -142, 52, 20, 6, Wh) + C(-62, -10, 24, c.negro) + C(62, -10, 24, c.negro) + C(-62, -10, 9, c.gris_claro) + C(62, -10, 9, c.gris_claro));
 const skyscraper = (x, y, w, h, f, top = '') => R(x - w / 2, y - h, w, h, 6, f) + top + Array.from({ length: Math.floor(h / 70) }, (_, i) => R(x - w / 2 + 14, y - h + 20 + i * 70, w - 28, 34, 8, c.celeste)).join('');
-const fox = (x, y, s = 1, o = {}, flip = false) => { const k = s < 0.6 ? 1.3 : 1; return G(x, n(y - 128 * s * (k - 1)), n(s * k), A.foxStand(o), flip); };
+const fox = (x, y, s = 1, o = {}, flip = false) => { const k = s < 0.6 ? 1.3 : 1, S2 = n(s * k); return ART.lib.juniper(x, n(y - 128 * s * (k - 1) - 24 * S2), S2, o, flip); };
 // ---- scenes ----
 const S = {};
 S.nyc_bridge = () => { let s = frame(c.celeste) + sun(900, 100, 40) + cloud(200, 90);
@@ -570,7 +814,7 @@ S.nyc_skyline = () => { let s = frame(c.celeste) + cloud(500, 80) + sun(110, 100
   s += skyscraper(820, 620, 110, 280, c.lila) + skyscraper(100, 620, 90, 240, c.rosa);
   s += P('M6 600 H1018 V734 Q1018 762 990 762 H34 Q6 762 6 734 Z', c.gris) + [60, 220, 380, 540, 860].map(x => R(x, 672, 80, 16, 6, Wh)).join('') + taxi(700, 700, 1.05) + aspenG(330, 700, 0.6) + fox(150, 650, 0.5, {});
   return s; };
-const aspenG = (x, y, s) => { const k = s < 0.55 ? 1.3 : 1; return G(x, n(y - 170 * s * (k - 1)), n(s * k), aspenKid()); };
+const aspenG = (x, y, s) => { const k = s < 0.55 ? 1.3 : 1, S2 = n(s * k); return ART.lib.aspen(x, n(y - 170 * s * (k - 1) - 12 * S2), S2); };
 S.nyc_bow = () => { let s = frame(c.celeste) + cloud(180, 90) + cloud(780, 110, 0.8);
   s += skyscraper(150, 360, 80, 200, c.gris_claro) + skyscraper(860, 360, 90, 240, c.gris_claro) + skyscraper(720, 360, 70, 160, c.lila);
   s += P('M6 360 H1018 V460 H6 Z', c.verde) + P('M6 460 H1018 V600 H6 Z', c.celeste) + P('M220 480 Q512 290 804 480 L804 500 Q512 330 220 500 Z', c.crema) + P('M260 470 V500 M330 420 V470 M420 385 V445 M512 375 V430 M604 385 V445 M694 420 V470 M764 470 V500', 'none', 'stroke-width="6"');
@@ -665,8 +909,116 @@ S.pr_cuco = () => { let s = frame(c.lila) + P('M6 560 Q160 360 400 420 Q560 320 
   return s; };
 // install before 'blank'
 const bi = ART.pages.findIndex(p => p.id === 'blank');
-const add = WORLD_SCENES.map(([id, world, title, es, need]) => ({ id, world, title, es, need, svg: ART.svg(S[id]()) }));
+const add = WORLD_SCENES.map(([id, world, title, es, need]) => ({ id, world, title, es, need, svg: ART.svg(S[id]() + ART.lib.band()) }));
 ART.pages.splice(bi < 0 ? ART.pages.length : bi, 0, ...add);
+})();
+
+// ---------- v2 elegant page redraws (override page art by id; ids, titles and unlock logic unchanged) ----------
+(() => {
+const L = ART.lib, c = ART.parts.c, K = '#222', Wh = c.blanco;
+const { P, E, C, G, INK, clip, band, sky, cloud, sun, tree, pine, aspenTree, palm, mountains, hills, flower, tulip, grass, sparkle, heart, butterfly, swirl, stone, juniper, aspen, n } = L;
+const redo = (id, inner, bandF) => { const pg = ART.pages.find(p => p.id === id); if (pg) { pg.svg = ART.svg(inner + band(bandF)); pg.v2 = 1; } };
+const thin = (inner, w = 3) => `<g stroke-width="${w}">${inner}</g>`;
+const R = (x, y, w, h, r, f = Wh, ex = '') => `<rect x="${n(x)}" y="${n(y)}" width="${n(w)}" height="${n(h)}" rx="${r}" fill="${f}" ${ex}/>`;
+// arched window
+const archWin = (x, y, w, h, f = c.celeste) => P(`M${x} ${y + h} V${y + w / 2} A${w / 2} ${w / 2} 0 0 1 ${x + w} ${y + w / 2} V${y + h} Z`, f) + P(`M${x + w / 2} ${y + 4} V${y + h} M${x} ${y + h * 0.55} H${x + w}`, 'none', 'stroke-width="2"');
+// Tribeca loft with cornice and arched windows
+function loft(x, top, w, f, rows = 4, cols = 3, ground = 520) {
+  let s = R(x, top, w, ground - top, 2, f) + R(x - 8, top - 14, w + 16, 16, 3, Wh) + P(`M${x - 8} ${top - 14} L${x + w / 2} ${top - 34} L${x + w + 8} ${top - 14} Z`, f);
+  const cw = (w - 20) / cols;
+  for (let r = 0; r < rows; r++) for (let k = 0; k < cols; k++) { const wx = x + 14 + k * cw, wy = top + 20 + r * 66; if (wy + 50 > ground - 20) continue; s += archWin(n(wx), wy, n(cw - 14), 46); }
+  return thin(s, 3);
+}
+const snowflake = (x, y, s = 1) => G(x, y, s, `<g stroke-width="${n(2.6 / s)}" fill="none">` + [0, 60, 120, 180, 240, 300].map(a => G(0, 0, 1, '<path d="M0 0 V-22 M0 -12 L-6 -18 M0 -12 L6 -18 M0 -18 L-4 -22 M0 -18 L4 -22"/>', a)).join('') + '</g>' + C(0, 0, 4, Wh, `stroke-width="${n(2.4 / s)}"`));
+const lamp = (x, y, s = 1) => G(x, y, s, thin(P('M-6 0 L-4 -150 L4 -150 L6 0 Z', c.verde_oscuro) + P('M-16 0 C-16 -12 16 -12 16 0 Z', c.verde_oscuro) + P('M-18 -150 L18 -150 L12 -186 L-12 -186 Z', c.amarillo) + P('M-22 -186 C-12 -200 12 -200 22 -186 Z', c.verde_oscuro) + C(0, -204, 5, c.verde_oscuro) + P('M-6 -150 L-4 -186 M6 -150 L4 -186', 'none', 'stroke-width="2"'), 3.4 / s));
+const bench = (x, y, s = 1) => G(x, y, s, thin(R(-90, -70, 180, 14, 6, c.canela) + R(-90, -50, 180, 14, 6, c.canela) + R(-96, -30, 192, 14, 6, c.canela) + P('M-80 -16 C-82 -6 -86 0 -90 4 M80 -16 C82 -6 86 0 90 4 M-80 -76 L-80 -16 M80 -76 L80 -16', 'none', 'stroke-width="6"'), 3.4 / s));
+
+// ===== Juniper at the Gazebo (cover) =====
+redo('gazebo', (() => {
+  let s = sky(c.celeste) + sun(880, 120, 44) + cloud(220, 110, 0.9) + cloud(560, 80, 0.7);
+  s += loft(40, 210, 190, c.rojo, 5, 3) + loft(250, 280, 110, c.canela, 4, 2) + loft(800, 170, 190, c.melocoton, 5, 3) + loft(700, 300, 90, c.rojo, 3, 1);
+  s += hills(500, c.verde_lima, 26);
+  // gazebo
+  let g = '';
+  g += R(270, 470, 400, 40, 8, Wh) + P('M282 510 H658 V530 H282 Z', c.canela);
+  for (let x = 300; x < 650; x += 30) g += P(`M${x} 512 L${x + 15} 528 L${x + 30} 512`, 'none', 'stroke-width="2.4"');
+  g += P('M432 530 V500 C432 470 508 470 508 500 V530 Z', c.marron_oscuro); // Juniper's den
+  g += R(410, 530, 120, 14, 4, c.gris_claro) + R(396, 544, 148, 14, 4, c.gris_claro);
+  for (const x of [300, 380, 560, 640]) g += R(x - 9, 312, 18, 160, 4, Wh) + R(x - 13, 456, 26, 14, 3, Wh) + R(x - 13, 312, 26, 12, 3, Wh);
+  for (const [a, b] of [[309, 371], [569, 631]]) { g += R(a, 404, b - a, 10, 3, Wh) + R(a, 440, b - a, 8, 3, Wh); for (let x = a + 10; x < b - 4; x += 13) g += P(`M${x} 414 C${x - 3} 422 ${x + 3} 432 ${x} 440`, 'none', 'stroke-width="2.4"'); }
+  // valance with scallops + swirls
+  g += R(276, 296, 388, 22, 6, Wh);
+  let v = 'M276 318'; for (let x = 276; x < 664; x += 24.25) v += ` Q${n(x + 12)} 340 ${n(x + 24.25)} 318`; g += P(v + ' Z', c.rosa);
+  // bell roof
+  g += P('M262 300 C316 292 392 258 432 196 C448 172 460 156 470 140 C480 156 492 172 508 196 C548 258 624 292 678 300 C640 312 300 312 262 300 Z', c.rojo);
+  g += P('M470 144 C450 200 420 260 380 304 M470 144 C468 210 466 260 470 308 M470 144 C490 200 520 260 560 304', 'none', 'stroke-width="2.6"');
+  g += P('M444 148 C444 120 496 120 496 148 Z', c.verde) + R(440, 146, 60, 10, 4, Wh) + C(470, 108, 9, c.amarillo) + P('M470 99 L470 76', 'none', 'stroke-width="4"') + P('M470 76 L492 84 L470 92 Z', c.rosa);
+  s += thin(g, 3.6);
+  s += tree(110, 560, 0.95, c.verde) + tree(930, 520, 0.8, c.verde_oscuro);
+  s += lamp(700, 540, 0.9);
+  // winding path
+  s += P('M410 558 C380 620 330 690 300 762 H640 C600 690 560 620 530 558 Z', c.crema, 'stroke-width="3.6"') + thin([[380, 680, 40, 20], [520, 700, 46, 22], [460, 630, 34, 16], [560, 650, 30, 14]].map(([a, b, w, h]) => stone(a, b, w, h)).join(''), 2.6);
+  s += juniper(790, 560, 0.82, { armR: -12, armL: 40, bow: c.fucsia });
+  s += flower(230, 650, c.rosa, 1.1) + flower(290, 600, c.amarillo, 0.9) + tulip(180, 700, c.rojo, 1.1) + flower(120, 690, c.lila, 0.9) + tulip(680, 690, c.fucsia, 1.1) + flower(940, 680, c.rosa, 1.1) + flower(890, 720, c.amarillo, 0.9) + tulip(990 - 24, 620, c.morado, 0.9);
+  s += grass(340, 740) + grass(620, 600, 0.9) + grass(60, 620) + grass(720, 740);
+  s += butterfly(620, 200, 0.8, c.lila, c.amarillo) + butterfly(160, 300, 0.6, c.fucsia, c.celeste, 14) + sparkle(380, 210, 0.7) + sparkle(560, 230, 0.5, c.rosa);
+  return s; })());
+
+// ===== Juniper Ice Skating (Central Park at night) =====
+redo('skate', (() => {
+  let s = sky(c.azul_marino);
+  s += P('M860 70 A52 52 0 1 0 920 150 A42 42 0 1 1 860 70 Z', c.amarillo, 'stroke-width="3.6"');
+  for (const [x, y, sc] of [[110, 90, 0.7], [300, 70, 0.5], [520, 110, 0.6], [700, 60, 0.45], [420, 50, 0.4], [980 - 30, 250, 0.4]]) s += sparkle(x, y, sc, c.amarillo);
+  // skyline
+  let k = '';
+  k += P('M60 420 V250 H130 V200 H160 V250 H190 V420 Z', c.morado) + P('M200 420 V170 C200 150 250 150 250 170 V420 Z', c.lila) + P('M225 152 V110', 'none', 'stroke-width="3"');
+  k += P('M700 420 V230 L740 190 L780 230 V420 Z', c.lila) + P('M790 420 V150 L810 130 L830 150 L830 120 L850 100 L870 120 V150 L890 130 L910 150 V420 Z', c.morado) + P('M850 100 V60', 'none', 'stroke-width="3"') + P('M920 420 V260 H980 V420 Z', c.azul);
+  for (const [x0, x1, y0] of [[72, 180, 270], [210, 242, 190], [712, 768, 250], [800, 900, 170], [930, 970, 280]]) for (let y = y0; y < 400; y += 40) for (let x = x0; x < x1 - 10; x += 26) k += R(x, y, 12, 20, 3, c.amarillo, 'stroke-width="2"');
+  s += thin(k, 3);
+  s += hills(430, Wh, 20);
+  s += pine(110, 520, 0.9, true) + pine(220, 500, 0.6, true) + pine(920, 520, 0.95, true) + pine(820, 490, 0.6, true);
+  // rink with rail
+  s += P('M60 560 C60 470 964 470 964 560 C964 680 60 680 60 560 Z', c.celeste, 'stroke-width="4"');
+  s += P('M70 560 C70 482 954 482 954 560', 'none', 'stroke-width="2.4"');
+  s += thin(P('M190 600 C260 560 340 580 380 620 C420 650 470 640 500 610 M600 640 C660 600 760 610 820 590 M220 520 C300 510 360 520 420 530', 'none'), 2.4);
+  s += lamp(60 + 10, 700, 0.9) + lamp(964 - 20, 700, 0.9);
+  s += juniper(520, 470, 0.95, { feet: 'skate', scarf: c.rojo, armL: -50, armR: 20 }, false, -6);
+  for (const [x, y, sc] of [[150, 160, 1.2], [620, 200, 1], [400, 310, 0.9], [960, 400, 0.9], [330, 430, 0.8], [700, 380, 0.8], [50 + 40, 360, 0.9]]) s += snowflake(x, y, sc);
+  s += swirl(300, 650, 1) + swirl(720, 660, 1, true);
+  return s; })(), c.celeste);
+
+// ===== Light-Up Roller Blades (Hudson River Park) =====
+redo('blade', (() => {
+  let s = sky(c.celeste) + sun(880, 110, 42) + cloud(200, 100, 0.9) + cloud(560, 140, 0.6);
+  // river with far shore skyline + sailboat
+  s += thin(P('M6 330 H1018 V420 H6 Z', c.azul) + P('M40 330 V270 H90 V330 Z M100 330 V240 H140 V330 Z M150 330 V290 H200 V330 Z M820 330 V280 H860 V330 Z M870 330 V250 H920 V330 Z M930 330 V290 H980 V330 Z', c.gris_claro) + P('M120 380 C150 372 170 372 200 380 M420 360 C460 352 490 352 520 360 M700 390 C740 382 770 382 800 390', 'none', 'stroke-width="2.4"'), 3);
+  s += thin(P('M560 384 H680 L660 404 H580 Z', Wh) + P('M620 380 V290 L670 376 Z', c.rosa) + P('M612 380 V300 L574 376 Z', c.amarillo), 3);
+  s += P('M6 420 H1018 V762 H6 Z', c.verde_lima, 'stroke-width="3.6"');
+  // curving promenade
+  s += P('M6 560 C300 500 700 520 1018 470 V620 C700 680 300 650 6 720 Z', c.gris_claro, 'stroke-width="3.6"') + P('M6 640 C300 580 700 600 1018 545', 'none', 'stroke-width="2.4" stroke-dasharray="26 18"');
+  s += thin(P('M6 420 H1018', 'none') + [60, 180, 300, 420, 540, 660, 780, 900].map(x => P(`M${x} 420 V380 M${x - 4} 380 H${x + 64}`, 'none', 'stroke-width="3"')).join(''), 3);
+  s += tree(90, 560, 0.85) + tree(950, 500, 0.75, c.verde_oscuro) + bench(800, 520, 0.8);
+  s += juniper(500, 440, 0.9, { feet: 'blade', helmet: c.turquesa, armL: -20, armR: 10 }, false, 8);
+  s += thin(P('M300 540 C260 540 230 546 200 556 M310 570 C260 572 220 580 180 592 M300 600 C270 604 250 610 226 618', 'none'), 3.4);
+  s += sparkle(410, 655, 0.6, c.fucsia) + sparkle(600, 660, 0.5, c.turquesa) + sparkle(370, 610, 0.4, c.amarillo) + sparkle(640, 610, 0.4, c.verde_lima);
+  s += flower(230, 720, c.rosa) + flower(160, 690, c.amarillo, 0.8) + tulip(880, 700, c.rojo) + flower(950, 690, c.lila, 0.9) + grass(300, 740) + grass(760, 740);
+  return s; })());
+
+// ===== Golf on the Green =====
+redo('golf', (() => {
+  let s = sky(c.celeste) + cloud(170, 110, 0.9) + cloud(600, 80, 0.7) + sun(890, 110, 42);
+  s += hills(330, c.verde, 40) + tree(80, 380, 0.6, c.verde_oscuro) + tree(980 - 10, 360, 0.55) + pine(860, 380, 0.55) + pine(200, 370, 0.45);
+  s += P('M6 440 C200 400 420 420 620 410 C800 400 940 420 1018 430 V762 H6 Z', c.verde_lima, 'stroke-width="3.6"');
+  // putting green + bunker + pond
+  s += P('M430 560 C420 480 600 460 760 480 C900 500 940 560 880 610 C800 670 520 670 460 630 C436 612 432 590 430 560 Z', c.verde, 'stroke-width="3.6"');
+  s += P('M60 640 C60 590 240 580 290 620 C330 660 260 700 160 700 C90 700 60 680 60 640 Z', c.crema, 'stroke-width="3.6"') + thin(P('M100 640 q20 -8 40 0 M180 660 q20 -8 40 0 M140 680 q14 -6 28 0', 'none'), 2.2);
+  s += P('M780 700 C780 670 940 660 990 690 C1010 720 960 740 880 740 C810 740 780 724 780 700 Z', c.celeste, 'stroke-width="3.6"') + thin(P('M820 706 q20 -8 40 0 M880 720 q20 -8 40 0', 'none'), 2.2);
+  s += thin(P('M786 300 L792 300 L794 560 L784 560 Z', c.gris_claro) + P('M792 302 C830 292 860 316 900 306 C880 322 870 340 900 352 C860 360 830 340 792 350 Z', c.rojo) + E(790, 562, 24, 8, K), 3.4);
+  s += juniper(360, 420, 0.92, { golf: -18, bow: c.fucsia });
+  s += C(590, 586, 13, Wh, 'stroke-width="3.4"') + P('M440 590 C480 560 540 560 584 584', 'none', 'stroke-width="2.6" stroke-dasharray="4 12"');
+  s += thin(P('M110 520 L150 520 L154 548 L106 548 Z', Wh) + P('M130 520 V490', 'none'), 3);
+  s += flower(60, 560, c.rosa, 0.8) + tulip(250, 520, c.amarillo, 0.8) + flower(980 - 30, 560, c.lila, 0.8) + butterfly(560, 220, 0.7, c.amarillo, c.rosa) + grass(700, 720) + grass(420, 720);
+  return s; })());
 })();
 </script>
 <script>// Reward stickers unlocked in Juniper's Learning Park (shared by both apps, same origin).
@@ -1167,7 +1519,7 @@ window.JCP = { S, analyze, openPage, finish, gallery, pages: ART.pages, STICKERS
 })();
 
 // ---------- auto-update: poll cversion.json, reload when a new build is live ----------
-const CBUILD = '20261115173516-b021b1';
+const CBUILD = '20261115194014-a8737d';
 function checkUpdate() { if (location.protocol === 'file:') return; fetch('cversion.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.v && j.v !== CBUILD && !document.getElementById('paint').classList.contains('on')) location.reload(); }).catch(() => {}); }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); }); setInterval(checkUpdate, 5 * 60 * 1000); setTimeout(checkUpdate, 3000);
 setTimeout(() => window.JCP && JCP.celebrateScenes(), 600);
