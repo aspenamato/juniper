@@ -1476,6 +1476,89 @@ redo('nicolo', (() => {
   s += thin(P('M430 40 H594 V60 H430 Z', c.amarillo), 3) + heart(512, 30, 0.4, c.rojo);
   return s; })());
 })();
+// ===== checkpoint 5: second unlocks per world =====
+(() => {
+const L = ART.lib, c = ART.parts.c, K = '#222', Wh = c.blanco;
+const { P, E, C, G, INK, clip, band, sky, cloud, sun, tree, pine, aspenTree, palm, mountains, hills, flower, tulip, grass, sparkle, heart, butterfly, swirl, stone, juniper, aspen, n } = L;
+const redo = (id, inner, bandF) => { const pg = ART.pages.find(p => p.id === id); if (pg) { pg.svg = ART.svg(inner + band(bandF)); pg.v2 = 1; } };
+const thin = (inner, w = 3) => `<g stroke-width="${w}">${inner}</g>`;
+const R = (x, y, w, h, r, f = Wh, ex = '') => `<rect x="${n(x)}" y="${n(y)}" width="${n(w)}" height="${n(h)}" rx="${r}" fill="${f}" ${ex}/>`;
+const winGrid = (x0, x1, y0, y1, dx = 22, dy = 34, w = 10, h = 20) => { let s = ''; for (let y = y0; y + h <= y1; y += dy) for (let x = x0; x + w <= x1; x += dx) s += R(x, y, w, h, 2, c.amarillo, 'stroke-width="2.5"'); return s; };
+const bougain = (x, y, s = 1) => G(x, y, s, thin(P(L.lobes(0, 0, 60, 34, 10, x, 0.6), c.fucsia) + P('M-30 -4 q8 -8 16 -2 M10 6 q8 -8 16 -2', 'none', 'stroke-width="2.5"'), n(3 / s)));
+
+redo('nyc_skyline', (() => {
+  let s = sky(c.celeste) + sun(120, 100, 40) + cloud(470, 80, 0.7) + cloud(860, 120, 0.6);
+  // Empire State Building
+  let e = P('M300 560 V250 H320 V200 H340 V160 H352 V120 H372 V160 H384 V200 H404 V250 H424 V560 Z', c.gris_claro) + P('M352 120 L362 70 L372 120 Z', c.gris_claro) + P('M362 70 V30', 'none', 'stroke-width="4"');
+  e += P('M300 300 H424 M320 250 H404 M340 200 H384', 'none') + winGrid(310, 418, 312, 550, 18, 30, 8, 18);
+  // Chrysler Building with sunburst crown
+  let ch = P('M560 560 V280 H580 V250 C580 190 680 190 680 250 V280 H700 V560 Z', c.gris) + P('M590 250 C590 210 670 210 670 250 Z', c.gris_claro);
+  for (let i = 0; i < 4; i++) { const yy = 250 - i * 16, w = 40 - i * 8; ch += P(`M${630 - w} ${yy} C${630 - w} ${yy - w * 0.8} ${630 + w} ${yy - w * 0.8} ${630 + w} ${yy}`, 'none'); for (let k = -1; k <= 1; k++) ch += P(`M${630 + k * w * 0.55 - 4} ${yy - 4 - (1 - Math.abs(k)) * 6} l4 -10 l4 10 Z`, c.amarillo, 'stroke-width="2"'); }
+  ch += P('M630 186 L636 120 L624 120 Z', c.gris_claro) + P('M630 120 V70', 'none', 'stroke-width="4"') + P('M560 300 H700', 'none') + winGrid(572, 692, 312, 550, 20, 30, 8, 18);
+  s += thin(P('M6 560 V380 H90 V560 Z M100 560 V330 H170 V560 Z M190 560 V420 H260 V560 Z M460 560 V360 H530 V560 Z M740 560 V340 H820 V560 Z M840 560 V400 H930 V560 Z M940 560 V300 H1010 V560 Z', c.lila) + winGrid(16, 80, 396, 550) + winGrid(110, 160, 346, 550) + winGrid(750, 812, 356, 550) + winGrid(950, 1004, 316, 550), 2.8);
+  s += thin(e, 3.2) + thin(ch, 3.2);
+  // street + taxi
+  s += P('M6 560 H1018 V762 H6 Z', c.gris, 'stroke-width="3.6"') + P('M6 600 H1018', 'none', 'stroke-width="3"') + thin(P('M60 680 H140 M240 680 H320 M420 680 H500 M600 680 H680 M780 680 H860', 'none', 'stroke-width="6"'), 6);
+  s += P('M6 560 H1018 V600 H6 Z', c.gris_claro, 'stroke-width="3.4"');
+  s += G(800, 720, 0.9, thin(P('M-130 -20 C-130 -50 -110 -60 -80 -62 L-50 -110 H60 L96 -62 C120 -60 130 -50 130 -20 V0 H-130 Z', c.amarillo) + P('M-40 -100 H-4 V-64 H-66 Z M6 -100 H50 L76 -64 H6 Z', c.celeste) + R(-24, -132, 48, 20, 6, Wh) + P('M-130 -36 H130', 'none') + C(-74, 0, 26, c.negro) + C(74, 0, 26, c.negro) + C(-74, 0, 10, c.gris_claro) + C(74, 0, 10, c.gris_claro) + P('M-110 -40 h220', 'none', 'stroke-width="2.5" stroke-dasharray="10 10"'), 3.4));
+  s += juniper(300, 600, 0.6, { armL: -40, armR: -20, scarf: c.rosa }) + aspen(160, 630, 0.58);
+  s += sparkle(520, 120, 0.6) + sparkle(800, 220, 0.5, c.rosa) + L.pigeon(520, 590, 0.4);
+  return s; })());
+
+redo('vail_clock', (() => {
+  let s = sky(c.celeste) + cloud(170, 90, 0.8) + cloud(820, 70, 0.6);
+  s += mountains(430, c.lila, true, [[180, 260], [470, 330], [800, 290]]);
+  s += P('M6 430 C200 400 400 420 600 410 C800 400 900 420 1018 410 V560 H6 Z', c.verde_oscuro, 'stroke-width="3.4"') + [[60, 460], [130, 450], [880, 445], [950, 452]].map(([x, y]) => pine(x, y, 0.3, true)).join('');
+  // clock tower
+  let t = R(450, 250, 124, 370, 2, c.crema) + P('M430 256 L512 140 L594 256 Z', c.verde_oscuro) + P('M430 256 L512 140 L594 256 L580 262 L512 166 L444 262 Z', Wh) + P('M512 140 V110', 'none', 'stroke-width="4"') + C(512, 104, 6, c.amarillo);
+  t += C(512, 320, 44, Wh) + C(512, 320, 34, Wh, 'stroke-width="2.5"') + P('M512 320 V294 M512 320 L530 330', 'none', 'stroke-width="4.5"');
+  for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; t += P(`M${n(512 + 30 * Math.cos(a))} ${n(320 + 30 * Math.sin(a))} L${n(512 + 36 * Math.cos(a))} ${n(320 + 36 * Math.sin(a))}`, 'none', 'stroke-width="2.5"'); }
+  t += P('M484 440 V400 C484 376 540 376 540 400 V440 Z', c.celeste) + P('M512 380 V440', 'none', 'stroke-width="2.5"') + R(476, 440, 72, 14, 4, c.rojo) + P('M486 620 V560 C486 530 538 530 538 560 V620 Z', c.marron_oscuro);
+  s += thin(t, 3.4);
+  // alpine chalets with flower boxes
+  const chalet = (x, base, w, h, f) => { let c2 = R(x, base - h, w, h, 2, f) + P(`M${x - 22} ${base - h + 6} L${x + w / 2} ${base - h - 80} L${x + w + 22} ${base - h + 6} Z`, c.marron_oscuro) + P(`M${x - 22} ${base - h + 6} C${x} ${base - h - 6} ${x + 20} ${base - h - 30} ${x + 40} ${base - h - 46} L${x + w / 2} ${base - h - 80} L${x + w - 40} ${base - h - 46} C${x + w - 20} ${base - h - 30} ${x + w} ${base - h - 6} ${x + w + 22} ${base - h + 6} L${x + w + 6} ${base - h + 8} L${x + w / 2} ${base - h - 60} L${x - 6} ${base - h + 8} Z`, Wh);
+    for (const wx of [x + 22, x + w - 62]) c2 += R(wx, base - h + 30, 40, 44, 4, c.celeste) + P(`M${wx + 20} ${base - h + 30} V${base - h + 74}`, 'none', 'stroke-width="2.5"') + R(wx - 4, base - h + 74, 48, 14, 4, c.marron) + [0, 1, 2].map(i => C(wx + 6 + i * 14, base - h + 72, 6, [c.rojo, c.fucsia, c.rojo][i], 'stroke-width="2"')).join('');
+    c2 += R(x + w / 2 - 20, base - 70, 40, 70, 4, c.rojo); return thin(c2, 3.2); };
+  s += chalet(70, 640, 280, 210, c.canela) + chalet(680, 640, 280, 200, c.melocoton);
+  s += P('M6 630 C300 620 700 620 1018 630 V762 H6 Z', Wh, 'stroke-width="3.6"');
+  s += juniper(400, 610, 0.56, { scarf: c.rojo, armL: -50, armR: 30 }) + aspen(640, 640, 0.56);
+  for (const [x, y] of [[150, 120], [330, 200], [700, 160], [940, 260], [260, 360]]) s += G(x, y, 0.8, thin('<path d="M0 -14 V14 M-12 -7 L12 7 M-12 7 L12 -7" fill="none"/>', 3));
+  return s; })());
+
+redo('ca_mission', (() => {
+  let s = sky(c.celeste) + sun(120, 100, 40) + cloud(700, 90, 0.8);
+  s += hills(440, c.verde, 24);
+  // Mission Santa Clara de Asís: curved gable facade + bell tower
+  let m = P('M330 600 V300 C330 270 360 260 380 250 C400 200 440 180 470 170 C480 140 544 140 554 170 C584 180 624 200 644 250 C664 260 694 270 694 300 V600 Z', c.crema);
+  m += P('M512 150 V100 M496 116 H528', 'none', 'stroke-width="6"');
+  m += P('M470 600 V480 C470 440 554 440 554 480 V600 Z', c.marron) + P('M512 452 V600', 'none', 'stroke-width="2.5"');
+  for (const x of [380, 600]) m += P(`M${x} 440 V390 C${x} 366 ${x + 44} 366 ${x + 44} 390 V440 Z`, c.celeste);
+  m += C(512, 300, 34, c.celeste) + C(512, 300, 22, 'none', 'stroke-width="2.5"') + P('M330 360 H694 M330 520 H460 M564 520 H694', 'none', 'stroke-width="2.5"');
+  for (const x of [400, 624]) m += P(`M${x} 340 V300 C${x} 286 ${x + 20} 286 ${x + 20} 300 V340 Z`, Wh);
+  let b = R(206, 260, 124, 340, 2, c.crema) + R(196, 250, 144, 16, 3, c.crema) + P('M236 330 V290 C236 268 300 268 300 290 V330 Z', c.celeste) + P('M244 330 C246 312 290 312 292 330', 'none') + C(268, 300, 10, c.amarillo) + R(196, 330, 144, 14, 3, c.crema) + P('M216 250 C216 190 320 190 320 250 Z', c.rojo) + P('M268 196 V160 M256 172 H280', 'none', 'stroke-width="5"') + P('M236 420 V380 C236 360 300 360 300 380 V420 Z', c.celeste);
+  s += thin(b, 3.4) + thin(m, 3.4);
+  s += P('M6 600 C300 590 700 590 1018 600 V762 H6 Z', c.verde_lima, 'stroke-width="3.6"') + P('M440 762 C460 700 480 640 480 600 H544 C544 640 564 700 584 762 Z', c.crema, 'stroke-width="3"');
+  const rose = (x, y, sc, f) => G(x, y, sc, thin(P('M0 10 C2 30 -2 50 0 66', 'none') + P('M0 46 C-14 36 -26 40 -28 46 C-16 54 -6 52 0 46 Z', c.verde) + C(0, 0, 18, f) + P('M-8 0 C-8 -10 8 -12 8 -2 C8 6 -2 8 -4 2 M-14 6 C-10 14 10 14 14 4', 'none', 'stroke-width="2.4"'), n(3 / sc)));
+  s += rose(150, 640, 1.1, c.rojo) + rose(220, 670, 0.9, c.rosa) + rose(820, 640, 1.1, c.fucsia) + rose(890, 670, 0.9, c.rojo) + rose(960, 640, 0.8, c.amarillo);
+  s += palm(80, 600, 0.75) + tree(960 - 10, 590, 0.55, c.verde_oscuro);
+  s += juniper(330, 630, 0.5, { armL: -50, armR: 20 }) + aspen(690, 650, 0.5) + L.squirrel(600, 745, 0.4);
+  return s; })());
+
+redo('pr_sanjuan', (() => {
+  let s = sky(c.celeste) + cloud(500, 80, 0.8) + sun(900, 90, 36);
+  const house = (x, w, top, f, door) => { let h = R(x, top, w, 520 - top, 2, f) + R(x - 6, top - 18, w + 12, 20, 3, Wh) + P(`M${x - 6} ${top - 18} H${x + w + 6}`, 'none', 'stroke-width="4"');
+    for (const wx of [x + 18, x + w - 56]) h += R(wx, top + 40, 38, 70, 4, c.verde) + P(`M${wx + 19} ${top + 40} V${top + 110}`, 'none', 'stroke-width="2.5"') + P(`M${wx - 8} ${top + 110} H${wx + 46} V${top + 140} H${wx - 8} Z`, Wh) + P(`M${wx} ${top + 112} V${top + 138} M${wx + 12} ${top + 112} V${top + 138} M${wx + 24} ${top + 112} V${top + 138} M${wx + 36} ${top + 112} V${top + 138}`, 'none', 'stroke-width="2.5"');
+    h += P(`M${x + w / 2 - 26} 520 V${452} C${x + w / 2 - 26} 424 ${x + w / 2 + 26} 424 ${x + w / 2 + 26} 452 V520 Z`, door) + P(`M${x + w / 2} 432 V520`, 'none', 'stroke-width="2.5"'); return thin(h, 3.2); };
+  s += house(20, 180, 220, c.rosa, c.azul) + house(200, 160, 250, c.amarillo, c.verde_oscuro) + house(360, 170, 210, c.celeste, c.rojo) + house(530, 150, 240, c.verde_lima, c.azul_marino) + house(680, 170, 220, c.lila, c.marron) + house(850, 160, 250, c.naranja, c.verde_oscuro);
+  s += bougain(140, 230, 1) + bougain(610, 250, 0.9) + bougain(930, 260, 0.9);
+  // blue cobblestones (adoquines)
+  s += P('M6 520 H1018 V762 H6 Z', c.azul, 'stroke-width="3.6"');
+  let cb = ''; for (let r = 0; r < 6; r++) { const y = 540 + r * 38; for (let k = 0; k < 15; k++) { const x = 16 + k * 70 + (r % 2) * 35; if (x > 990) continue; cb += R(x, y, 60, 28, 8, c.celeste); } }
+  s += thin(clip('M6 520 H1018 V762 H6 Z', cb), 2.5);
+  s += G(110, 520, 1, thin(P('M-5 0 L-3 -180 H3 L5 0 Z', c.negro) + P('M-16 -180 H16 L12 -214 H-12 Z', c.amarillo) + P('M-20 -214 C-10 -228 10 -228 20 -214 Z', c.negro), 3.2));
+  s += juniper(420, 610, 0.56, { armL: -40, armR: 30 }) + aspen(600, 640, 0.56) + L.parrot(800, 700, 0.55);
+  return s; })());
+})();
 </script>
 <script>// Reward stickers unlocked in Juniper's Learning Park (shared by both apps, same origin).
 // Unlock list lives in localStorage key 'juniperRewards' as {v:1, stickers:[ids...]}.
@@ -1975,7 +2058,7 @@ window.JCP = { S, analyze, openPage, finish, gallery, pages: ART.pages, STICKERS
 })();
 
 // ---------- auto-update: poll cversion.json, reload when a new build is live ----------
-const CBUILD = '20261115195251-45a12e';
+const CBUILD = '20261115195504-a08936';
 function checkUpdate() { if (location.protocol === 'file:') return; fetch('cversion.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.v && j.v !== CBUILD && !document.getElementById('paint').classList.contains('on')) location.reload(); }).catch(() => {}); }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); }); setInterval(checkUpdate, 5 * 60 * 1000); setTimeout(checkUpdate, 3000);
 setTimeout(() => window.JCP && JCP.celebrateScenes(), 600);
