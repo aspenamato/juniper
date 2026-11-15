@@ -5,7 +5,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Juniper Learn">
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#fff7ec">
-<script>window.JBUILD='20261115171705-29649d';</script>
+<script>window.JBUILD='20261115172148-a22306';</script>
 <title>Juniper's Learning Park</title>
 <style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;height:100%;overflow:hidden;background:#fff7ec;font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold","Nunito","Avenir Next",system-ui,sans-serif;color:#3b2a20;touch-action:manipulation}
@@ -858,6 +858,41 @@ html,body{background:#fff4fb;color:var(--ol)}
 .tshelf.t4{background:linear-gradient(135deg,#ffffff,#f1ece6 40%,#fff 60%,#e9e2da)!important;border-color:#e6d9c8}
 .tshelf.t5::after,.tshelf.t4::after{content:"";position:absolute;inset:0;border-radius:24px;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.35) 38%,transparent 46%);background-size:250% 100%;animation:glassSweep 5s linear infinite}
 @keyframes glassSweep{0%{background-position:150% 0}100%{background-position:-100% 0}}
+.gw-tw{animation:gwTw 1.6s ease-in-out infinite}
+@keyframes gwTw{0%,100%{opacity:.25}50%{opacity:1}}
+/* ride Marengo */
+.rideov{position:fixed;inset:0;z-index:70;overflow:hidden;background:linear-gradient(180deg,#7ed6ff 0,#c8f0ff 55%,#a8e57c 56%)}
+.rd-sun{position:absolute;right:8%;top:7%;width:90px;height:90px;border-radius:50%;background:#ffe14d;box-shadow:0 0 50px #ffe14d;border:4px solid #3b2147}
+.rd-cloud{position:absolute;width:160px;height:50px;border-radius:30px;background:#fff;opacity:.9;animation:rdCloud 24s linear infinite}
+.rd-cloud.c1{top:12%;left:100%}.rd-cloud.c2{top:24%;left:100%;animation-delay:-12s;transform:scale(.7)}
+@keyframes rdCloud{to{left:-200px}}
+.rd-back,.rd-front{position:absolute;left:0;width:200%;display:flex}
+.rd-back{bottom:22%;height:46%;animation:rdScroll 14s linear infinite}
+.rd-front{bottom:0;height:26%;animation:rdScroll 4.5s linear infinite;z-index:3}
+.rd-back svg,.rd-front svg{width:100%;height:100%}
+@keyframes rdScroll{to{transform:translateX(-50%)}}
+.rd-horse{position:absolute;left:12%;bottom:12%;width:min(54vw,520px);z-index:4;animation:rdGallop .42s ease-in-out infinite;cursor:pointer}
+.rd-hz svg{width:100%;height:auto;overflow:visible}
+.rd-jun{position:absolute;left:25%;top:-11%;width:34%}
+.rd-jun svg{width:100%;height:auto}
+.rd-horse.munch{animation:rdMunch .5s ease-in-out 1,rdGallop .42s ease-in-out .5s infinite}
+@keyframes rdGallop{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-18px) rotate(2deg)}}
+@keyframes rdMunch{50%{transform:scale(1.06) rotate(-4deg)}}
+.rd-dust{position:absolute;left:-6%;bottom:2%}
+.rd-dust i{position:absolute;width:26px;height:26px;border-radius:50%;background:#e9d7b5;opacity:.8;animation:rdDust .9s linear infinite}
+.rd-dust i:nth-child(2){animation-delay:.3s}.rd-dust i:nth-child(3){animation-delay:.6s}
+@keyframes rdDust{0%{transform:translate(0,0) scale(.4);opacity:.9}100%{transform:translate(-80px,-30px) scale(1.4);opacity:0}}
+.rd-top{position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;z-index:7}
+.rd-count{display:flex;align-items:center;gap:6px;background:#fff;border:4px solid #3b2147;border-radius:24px;padding:6px 16px;font-weight:900;font-size:28px}
+.rd-count span svg{width:28px;height:40px}
+.rd-x{width:64px;height:64px;border-radius:50%;border:4px solid #3b2147;background:#fff;font-size:28px;font-weight:900}
+.rd-field{position:absolute;inset:0;z-index:6;pointer-events:none}
+.rd-carrot{position:absolute;left:100%;width:86px;height:110px;border:0;background:radial-gradient(circle,#fff8 0,#fff0 70%);pointer-events:auto;animation:rdCarrot 5s linear forwards;padding:0}
+.rd-carrot svg{width:100%;height:100%;animation:rdBob 1s ease-in-out infinite}
+@keyframes rdCarrot{to{left:-12%}}
+@keyframes rdBob{50%{transform:translateY(-12px) rotate(10deg)}}
+.rideBtn{display:flex;align-items:center;gap:8px;margin:10px auto 0;font:inherit;font-weight:900;font-size:20px;padding:8px 18px;border-radius:24px;border:4px solid #3b2147;background:#ffd93b;box-shadow:0 5px 0 #3b2147}
+.rideBtn span svg{width:56px;height:46px}
 </style></head>
 <body>
 <div id="start" class="screen on">
@@ -2531,8 +2566,14 @@ const OUTFITS = [
   { id: 'blades', name: 'Light-Up Roller Blades', slot: 'feet', stars: 39 }, { id: 'golf', name: 'Golf Club', slot: 'hand', stars: 48 }, { id: 'flowers', name: 'Flower Crown', slot: 'head', stars: 57 },
   { id: 'glasses', name: 'Star Glasses', slot: 'eyes', stars: 66 }, { id: 'party', name: 'Party Hat', slot: 'head', stars: 78 }, { id: 'cape', name: 'Super Cape', slot: 'body', stars: 90 },
   { id: 'medal', name: 'Gold Medal', slot: 'neck2', stars: 105 }, { id: 'crown', name: 'Gold Crown', slot: 'head', stars: 120 },
+  { id: 'ring', name: 'Light-Up Ring', slot: 'ring', stars: 33, aw: 'rb_clean' }, { id: 'tiara', name: 'Sparkle Tiara', slot: 'head', stars: 45, aw: 'rb_basic' },
+  { id: 'pinkgown', name: 'Pink Princess Ballgown', slot: 'body', stars: 54, aw: 'rb_es' }, { id: 'icegown', name: 'Ice Princess Gown', slot: 'body', stars: 84, aw: 'md_hot' },
+  { id: 'goldgown', name: 'Gold Royal Gown', slot: 'body', stars: 135, aw: 'gem_ruby' },
+  { id: 'rhelmet', name: 'Riding Helmet', slot: 'head', stars: 60, aw: 'md_step' }, { id: 'rjacket', name: 'Riding Jacket', slot: 'body', stars: 70, aw: 'md_collect' },
+  { id: 'rboots', name: 'Riding Boots', slot: 'feet', stars: 75, aw: 'gem_emerald' }, { id: 'rgloves', name: 'Riding Gloves', slot: 'hands', stars: 80, aw: 'gem_sapphire' },
 ];
-const outfitOpen = o => ST.stars >= o.stars;
+const outfitOpen = o => ST.stars >= o.stars || !!(o.aw && ST.trophies && ST.trophies[o.aw]);
+const outfitNeed = o => { const a = o.aw && typeof AWARDS !== 'undefined' && AWARDS.find(x => x.id === o.aw); return a ? `Collect ${o.stars} stars, or win the ${a.name}, to unlock the ${o.name}.` : `Collect ${o.stars} stars to unlock the ${o.name}.`; };
 const HEAD = inner => inner; // head items are drawn in Juniper's head space (they move with her head)
 const OV = {
   visor: HEAD(`<path d="M-80 -66 Q0 -92 80 -66 L78 -78 Q0 -104 -78 -78 Z" fill="#fff"/><path d="M-76 -66 Q0 -88 76 -66 Q66 -46 0 -50 Q-66 -46 -76 -66 Z" fill="${PC.verde}"/>`),
@@ -2543,8 +2584,15 @@ const OV = {
   glasses: HEAD(`<path d="${P.starD(-32, -40, 27, 13)}" fill="${PC.rosa}" opacity=".95"/><path d="${P.starD(32, -40, 27, 13)}" fill="${PC.amarillo}" opacity=".95"/><path d="M-8 -44 Q0 -50 8 -44" fill="none"/>`),
   tutu: `<path d="${P.scallop(0, 34, 66, 17, 14, 0.28)}" fill="${PC.rosa}"/><path d="${P.scallop(0, 30, 52, 11, 12, 0.25)}" fill="${PC.lila}"/>`,
   cape: `<path d="M-46 -86 Q0 -66 46 -86 L92 98 Q0 82 -92 98 Z" fill="${PC.rojo}"/>`,
+  tiara: HEAD(`<path d="M-46 -84 L-40 -112 L-22 -96 L0 -132 L22 -96 L40 -112 L46 -84 Q0 -96 -46 -84 Z" fill="#eef3ff"/><circle cx="0" cy="-108" r="8" fill="${PC.fucsia}"/><circle cx="-26" cy="-94" r="5" fill="${PC.celeste}"/><circle cx="26" cy="-94" r="5" fill="${PC.celeste}"/><path d="M-3 -112 l3 -3 l3 3" stroke="#fff" stroke-width="2" fill="none"/><g class="gw-tw"><path d="M0 -150 l3 -8 l3 8 l8 3 l-8 3 l-3 8 l-3 -8 l-8 -3 Z" fill="#fff36b" stroke="none"/></g>`),
+  rhelmet: HEAD(`<path d="M-84 -58 Q0 -72 84 -58 L100 -52 Q0 -64 -100 -52 Z" fill="#1a2348"/><circle cx="0" cy="-118" r="8" fill="#1a2348"/><path d="M-80 -48 Q-74 0 -40 14 M80 -48 Q74 0 40 14" stroke="#4a2e1f" stroke-width="5" fill="none"/>`),
+  rjacket: `<path d="M-50 -10 C-56 -62 -30 -84 0 -84 C30 -84 56 -62 50 -10 L58 40 Q0 56 -58 40 Z" fill="#24305e"/><path d="M-20 -82 L0 -40 L20 -82 Q0 -74 -20 -82 Z" fill="#fff"/><path d="M-26 -80 L-6 -30 L-18 -26 Z M26 -80 L6 -30 L18 -26 Z" fill="#1a2348"/><circle cx="0" cy="-20" r="4" fill="#ffd34d"/><circle cx="0" cy="0" r="4" fill="#ffd34d"/><path d="M-36 -44 h14" stroke="#ff4fa3" stroke-width="4"/>`,
   medal: `<path d="M-26 -78 L0 -30 L26 -78" fill="none" stroke="${PC.azul}" stroke-width="10"/><circle cx="0" cy="-20" r="18" fill="${PC.amarillo}"/><path d="${P.starD(0, -20, 10, 4.5)}" fill="#f9a825" stroke-width="2.5"/>`,
 };
+const GW = (c1, c2, trim, dots) => () => ({ dress: `<path d="M-36 6 Q-104 62 -112 112 Q0 136 112 112 Q104 62 36 6 Z" fill="${c1}"/><path d="M-112 112 ${[0, 1, 2, 3, 4, 5, 6, 7].map(() => 'q14 14 28 0').join(' ')}" fill="${c2}"/><path d="M-30 6 Q-72 60 -80 104 Q0 118 80 104 Q72 60 30 6 Z" fill="${c2}"/><path d="M-22 10 Q-46 60 -52 100 M22 10 Q46 60 52 100 M0 10 V110" fill="none" stroke="${c1}" stroke-width="4" opacity=".7"/><path d="M-60 40 Q-70 70 -66 100" stroke="#fff" stroke-width="6" fill="none" opacity=".45"/><path d="M-42 -70 Q0 -82 42 -70 L46 12 Q0 22 -46 12 Z" fill="${c1}"/><path d="M-46 6 Q0 18 46 6" stroke="${trim}" stroke-width="9" fill="none"/><circle cx="0" cy="12" r="8" fill="${trim}"/><path d="M-16 -70 Q0 -50 16 -70" fill="${c2}"/><g class="gw-tw">${dots.map(([x, y], i) => `<path d="M${x} ${y - 7} l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2 z" fill="${i % 2 ? '#fff' : '#fff36b'}" stroke="none"/>`).join('')}</g>`,
+  puff: `<ellipse cx="-38" cy="-56" rx="20" ry="16" fill="${c2}"/><ellipse cx="38" cy="-56" rx="20" ry="16" fill="${c2}"/><path d="M-50 -60 q12 -8 24 0 M26 -60 q12 -8 24 0" stroke="${c1}" stroke-width="3" fill="none"/>` });
+const GDOTS = [[-70, 70], [40, 50], [-20, 92], [70, 96], [-84, 104], [12, 36], [-40, 40], [56, 76]];
+const GOWN = { pinkgown: GW('#ff7eb6', '#ffc2de', '#c9a0ff', GDOTS), icegown: GW('#6fc3f2', '#d4f1ff', '#ffffff', GDOTS.concat([[-50, 60], [30, 88], [-6, 60]])), goldgown: GW('#ffc928', '#fff1b0', '#e53935', GDOTS) };
 function juniperSvg(outfit = ST.outfit, pose = 'stand', vb = '-200 -330 400 520', cls = '') {
   const o = { vb, cls: 'pose-' + pose + ' ' + cls }; const has = id => Object.values(outfit).includes(id);
   if (has('helmet')) o.helmet = '#26c6da'; if (has('scarf')) o.scarf = '#ff2f6e';
@@ -2552,10 +2600,14 @@ function juniperSvg(outfit = ST.outfit, pose = 'stand', vb = '-200 -330 400 520'
   if (has('golf')) o.golf = pose === 'stand' ? -10 : -14; if (pose === 'cheer') { o.armL = 55; o.armR = -55; } else if (pose === 'wave') { o.armL = -25; o.armR = -60; } else if (has('golf')) { o.armL = -60; o.armR = 25; }
   o.back = has('cape') ? OV.cape : ''; o.bodyExtra = ''; o.headExtra = '';
   ['tutu', 'medal'].forEach(k => { if (has(k)) o.bodyExtra += OV[k]; });
-  ['visor', 'party', 'crown', 'flowers', 'bow', 'glasses'].forEach(k => { if (has(k) && !(o.helmet && ['visor', 'party', 'crown', 'flowers'].includes(k))) o.headExtra += OV[k]; });
+  ['pinkgown', 'icegown', 'goldgown'].forEach(k => { if (has(k)) { const gw = GOWN[k](); o.dress = gw.dress; o.bodyExtra += gw.puff; } });
+  if (has('rjacket')) { o.dress = OV.rjacket; o.sleeve = '#24305e'; o.cuff = '#ffffff'; }
+  if (has('rboots')) o.feet = 'boot'; if (has('rgloves')) o.glove = '#4a2e1f'; if (has('ring')) o.ring = 1;
+  if (has('rhelmet')) { o.helmet = '#24305e'; o.headExtra += OV.rhelmet; }
+  ['visor', 'party', 'crown', 'flowers', 'bow', 'glasses', 'tiara'].forEach(k => { if (has(k) && !(o.helmet && ['visor', 'party', 'crown', 'flowers', 'tiara'].includes(k))) o.headExtra += OV[k]; });
   return CHARS.svg('juniper', o);
 }
-function outfitIcon(o) { const one = {}; one[o.slot] = o.id; return juniperSvg(one, 'stand', o.slot === 'feet' ? '-110 50 220 190' : o.slot === 'head' || o.slot === 'eyes' ? '-130 -330 260 260' : '-200 -300 400 480'); }
+function outfitIcon(o) { const one = {}; one[o.slot] = o.id; return juniperSvg(one, 'stand', o.slot === 'feet' ? '-110 50 220 190' : o.slot === 'ring' || o.slot === 'hands' ? '-10 -90 150 150' : o.slot === 'head' || o.slot === 'eyes' ? '-130 -330 260 260' : '-200 -300 400 480'); }
 // ---------- trophies ----------
 const pathTotal = C.PATH.reduce((s, x) => s + x.nodes.length, 0);
 const sectionEnd = i => C.PATH.slice(0, i + 1).reduce((s, x) => s + x.nodes.length, 0);
@@ -2608,6 +2660,7 @@ ADD(1, 'ribbon', '#22c3c9', 'rb_basic', 'Basic Blue Ribbon', 'Finish 5 basic gam
 ADD(1, 'ribbon', '#9b5cff', 'rb_es', 'Hola Ribbon', 'Finish 2 Spanish games', () => distinct('spanish') >= 2, P_(() => distinct('spanish'), 2));
 ADD(2, 'medal', '#c0c8d8', 'md_step', 'Step-Up Silver', 'Finish 5 step-up games', () => doneAt(2) >= 10, P_(() => doneAt(2), 10));
 ADD(2, 'medal', '#ff7a2e', 'md_hot', 'Hot Streak Medal', 'Finish 3 games in a row with no hints', () => (ST.bestClean || 0) >= 3, P_(() => ST.bestClean || 0, 3));
+ADD(2, 'medal', '#8d5a2b', 'md_ride', 'Marengo Rider', 'Ride Marengo and feed him 5 carrots', () => (ST.rides || 0) >= 1, P_(() => ST.rides || 0, 1));
 ADD(2, 'medal', '#cd7f32', 'md_collect', 'Medal Collector', 'Earn a medal in 15 different games', () => medalsAll() >= 15, P_(medalsAll, 15));
 ADD(3, 'gem', '#ff2f6e', 'gem_ruby', 'Ruby Trophy', 'Finish 3 challenge games', () => doneAt(3) >= 3, P_(() => doneAt(3), 3));
 ADD(3, 'gem', '#2a7cff', 'gem_sapphire', 'Sapphire Trophy', 'Finish 10 challenge games', () => doneAt(3) >= 10, P_(() => doneAt(3), 10));
@@ -3377,11 +3430,11 @@ function openTrophies() { setStars(); show('trophies');
 }
 // ---------- dress up ----------
 function openDress() { setStars(); show('dress'); renderDress(); speak('Dress up Juniper! Tap an outfit to try it on.'); }
-function renderDress() { $('dressFox').innerHTML = juniperSvg(ST.outfit, 'wave');
+function renderDress() { $('dressFox').innerHTML = juniperSvg(ST.outfit, 'wave'); if (!$('rideBtn')) { const b = document.createElement('button'); b.id = 'rideBtn'; b.className = 'rideBtn'; b.innerHTML = `<span>${CHARS.svg('marengo')}</span>Ride Marengo`; b.onclick = () => { SND.tap(); openRide(); }; $('dressFox').parentNode.appendChild(b); }
   $('closet').innerHTML = OUTFITS.map(o => { const open = outfitOpen(o); const on = ST.outfit[o.slot] === o.id;
     return `<button class="cl${on ? ' on' : ''}${open ? '' : ' locked'}" data-id="${o.id}"><span class="cli">${open ? outfitIcon(o) : ICON.lock}</span>${open ? o.name : `<span class="need">${ICON.star}${o.stars}</span>`}</button>`; }).join('');
   $('closet').querySelectorAll('.cl').forEach(b => b.onclick = () => { const o = OUTFITS.find(x => x.id === b.dataset.id);
-    if (!outfitOpen(o)) { SND.boop(); speak(`Collect ${o.stars} stars to unlock the ${o.name}. You have ${ST.stars}.`); return; }
+    if (!outfitOpen(o)) { SND.boop(); speak(outfitNeed(o) + ` You have ${ST.stars} stars.`); return; }
     if (ST.outfit[o.slot] === o.id) delete ST.outfit[o.slot]; else { ST.outfit[o.slot] = o.id; if (o.slot === 'feet' || o.id === 'helmet') {} }
     save(); SND.pop(); renderDress(); const df = $('dressFox'); df.classList.remove('hop'); void df.offsetWidth; df.classList.add('hop'); sparkEl(df, 22); if (ST.outfit[o.slot]) sayBub(df, ['Ta-da! ', 'Ooh, ', 'I love it! '][Math.floor(Math.random() * 3)] + o.name + '!'); }); }
 // ---------- runner ----------
@@ -3433,7 +3486,7 @@ function wrong(el, extra) { if (!RUN || RUN.locked) return; RUN.hinted = true; R
 function hideHint() { $('hintBox').classList.remove('on'); }
 $('hintBox').onclick = () => { speak(RUN && RUN.lastHint || $('hintTxt').textContent, { who: $('hintIc'), ch: 'marcus' }); };
 // ---------- finish ----------
-function finish() { if (RUN.mode === 'boss') { bossWin(); return; } const a = RUN.a, id = RUN.id; const before = { medal: medalOf(id), stars: ST.stars, stick: EXTRA_STICKERS.filter((s, i) => stickerUnlocked(i)).length, outfits: OUTFITS.filter(outfitOpen).length };
+function finish() { if (RUN.mode === 'boss') { bossWin(); return; } const a = RUN.a, id = RUN.id; const before = { medal: medalOf(id), stars: ST.stars, stick: EXTRA_STICKERS.filter((s, i) => stickerUnlocked(i)).length, outfits: OUTFITS.filter(outfitOpen).length, oid: new Set(OUTFITS.filter(outfitOpen).map(o => o.id)) };
   ST.plays[id] = (ST.plays[id] || 0) + 1; ST.done++; ST.stars += 3; const d = today(); ST.days[d] = (ST.days[d] || 0) + 1;
   let pathMsg = '';
   const wasOpen = WKEYS.filter(worldOpen);
@@ -3446,7 +3499,7 @@ function finish() { if (RUN.mode === 'boss') { bossWin(); return; } const a = RU
   const unl = [];
   if (newMedal) unl.push(`<div class="unl" role="button" data-k="medal" data-v="${md}"><span class="ui">${medalSvg(md)}</span>${md[0].toUpperCase() + md.slice(1)} medal!</div>`);
   EXTRA_STICKERS.forEach((s, i) => { if (i >= before.stick && stickerUnlocked(i)) unl.push(`<div class="unl" role="button" data-k="sticker" data-v="${i}"><span class="ui">${s.svg}</span>New coloring sticker: ${s.name}</div>`); });
-  OUTFITS.forEach((o, i) => { if (outfitOpen(o) && before.stars < o.stars) unl.push(`<div class="unl" role="button" data-k="outfit" data-v="${i}"><span class="ui">${outfitIcon(o)}</span>New outfit: ${o.name}</div>`); });
+  OUTFITS.forEach((o, i) => { if (outfitOpen(o) && !before.oid.has(o.id)) unl.push(`<div class="unl" role="button" data-k="outfit" data-v="${i}"><span class="ui">${outfitIcon(o)}</span>New outfit: ${o.name}</div>`); });
   newT.forEach(t => unl.push(`<div class="unl t${t.tier}" role="button" data-k="award" data-v="${AWARDS.indexOf(t)}"><span class="ui">${awardArt(t)}</span>${t.name}</div>`));
   newW.forEach(k => unl.push(`<div class="unl t5" role="button" data-k="world" data-v="${k}"><span class="ui sil">${CHARS.svg(WORLDS[k].friend)}</span>New world: ${WORLDS[k].name}!</div>`));
   if (newT.length || newW.length) setTimeout(() => revealAwards([...newT, ...newW.map(k => ({ world: k, tier: 5, name: WORLDS[k].name, desc: 'A new world and a new friend are waiting!' }))]), 1400);
@@ -3780,6 +3833,39 @@ function aspenCheer(line) { const a = document.querySelector('.hallAsp'); if (!a
 function wireHall() { const a = document.querySelector('.hallAsp'); if (a) a.onclick = () => aspenCheer();
   document.querySelectorAll('.hallPed,.hallCase').forEach(d => d.onclick = () => { const i = +d.dataset.i; SND.pop(); if (i >= 0) { aspenCheer(); setTimeout(() => awardCard(AWARDS[i]), 300); } else { aspenCheer('Let\u2019s go earn one!'); } }); }
 function mountHall() { let h = $('trHall'); if (!h) { h = document.createElement('div'); h.id = 'trHall'; document.querySelector('#trophies .trophyroom').prepend(h); } h.innerHTML = hallHtml(); wireHall(); }
+// ---------- Ride Marengo (Marengo's Meadow) ----------
+const RIDE_L = { go: "Neigh! Hold on tight, Aspen! Let's gallop through the meadow!", tap: 'Tap the carrots to feed Marengo!', crunch: ['Crunch crunch! Yummy!', 'Neigh! More carrots please!', 'Mmm, carrots are my favorite!', 'Crunch! Thank you, Aspen!'], done: "Neigh! That was the best ride ever! You are a Marengo Rider!" };
+{ const prevX = extraVoLines; extraVoLines = function (add, gen) { prevX(add, gen); add(RIDE_L.go, 'marengo'); add(RIDE_L.tap); RIDE_L.crunch.forEach(t => add(t, 'marengo')); add(RIDE_L.done, 'marengo'); add('Ride Marengo'); }; }
+const CARROT = '<svg viewBox="-40 -60 80 120" stroke="#3b2147" stroke-width="5" stroke-linejoin="round"><path d="M-6 -40 q-14 -16 -6 -18 q8 6 8 14 q2 -14 12 -16 q4 6 -6 20" fill="#3fbf5a"/><path d="M-18 -36 Q0 -44 18 -36 L4 50 Q0 56 -4 50 Z" fill="#ff8a1f"/><path d="M-12 -16 h10 M-6 6 h10 M-6 26 h8" stroke-width="4"/></svg>';
+function rideStrip(front) { let s = `<svg viewBox="0 0 2000 ${front ? 160 : 300}" preserveAspectRatio="none" stroke="#3b2147" stroke-width="5" stroke-linejoin="round">`;
+  for (let r = 0; r < 2; r++) { const o = r * 1000;
+    if (!front) { s += `<path d="M${o} 300 V160 Q${o + 160} 60 ${o + 330} 150 Q${o + 520} 40 ${o + 700} 140 Q${o + 860} 70 ${o + 1000} 160 V300 Z" fill="#8fd36a"/>` + `<g transform="translate(${o + 600} 170)"><rect x="-60" y="-80" width="120" height="80" fill="#c62828"/><path d="M-70 -76 L0 -130 L70 -76 Z" fill="#8e1b1b"/><rect x="-24" y="-50" width="48" height="50" fill="#fff"/><path d="M-24 -50 L24 0 M24 -50 L-24 0" stroke-width="4"/></g>` + [150, 850].map(x => `<g transform="translate(${o + x} 190)"><rect x="-8" y="-60" width="16" height="60" fill="#7a5236"/><circle cx="0" cy="-90" r="46" fill="#3fae5a"/><circle cx="-20" cy="-104" r="16" fill="#5fcf6a" stroke="none"/></g>`).join(''); }
+    else { s += `<rect x="${o}" y="100" width="1000" height="60" fill="#5fbf4a" stroke="none"/><path d="M${o} 70 H${o + 1000} M${o} 40 H${o + 1000}" stroke="#fff" stroke-width="10"/>` + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(k => `<rect x="${o + k * 100 + 20}" y="24" width="14" height="80" fill="#fff"/>`).join('') + [60, 230, 410, 560, 740, 900].map((x, k) => `<path d="M${o + x} 130 V112" stroke="#2fae4f" stroke-width="4"/><circle cx="${o + x}" cy="108" r="9" fill="${['#ff4fa3', '#ffd93b', '#9b5cff', '#fff', '#22aaf0', '#ff7043'][k]}"/>`).join(''); } }
+  return s + '</svg>'; }
+let RIDE = null;
+function openRide() { closeRide(); const ov = document.createElement('div'); ov.id = 'rideov'; ov.className = 'rideov';
+  const gear = Object.assign({}, ST.outfit, { head: 'rhelmet', body: 'rjacket', feet: 'rboots', hands: 'rgloves' }); delete gear.hand;
+  ov.innerHTML = `<div class="rd-sun"></div><div class="rd-cloud c1"></div><div class="rd-cloud c2"></div><div class="rd-back">${rideStrip(0)}</div><div class="rd-front">${rideStrip(1)}</div>
+  <div class="rd-horse"><div class="rd-hz">${CHARS.svg('marengo')}</div><div class="rd-jun">${juniperSvg(gear, 'cheer', '-200 -330 400 400')}</div><div class="rd-dust"><i></i><i></i><i></i></div></div>
+  <div class="rd-top"><div class="rd-count"><span>${CARROT}</span><b id="rdN">0</b>/5</div><button class="rd-x" aria-label="Close">✕</button></div><div class="rd-field" id="rdField"></div>`;
+  document.body.appendChild(ov); RIDE = { n: 0, t: 0, done: false };
+  ov.querySelector('.rd-x').onclick = () => { SND.tap(); closeRide(); };
+  const hz = ov.querySelector('.rd-horse'); hz.onclick = () => { SND.boop && SND.boop(); sayBub(hz, RIDE_L.crunch[1], { ch: 'marengo' }); };
+  SND.fanfare(); setTimeout(() => { if (RIDE) { bubbleOn(hz, RIDE_L.go); speak(RIDE_L.go, { ch: 'marengo' }); } }, 300);
+  setTimeout(() => { if (RIDE && !RIDE.done) speak(RIDE_L.tap, { ch: 'juniper' }); }, 4200);
+  RIDE.t = setInterval(spawnCarrot, 1700); setTimeout(spawnCarrot, 1200); }
+function spawnCarrot() { if (!RIDE || RIDE.done) return; const f = $('rdField'); if (!f) return; if (f.children.length > 3) return;
+  const c = document.createElement('button'); c.className = 'rd-carrot'; c.setAttribute('aria-label', 'Carrot'); c.innerHTML = CARROT; c.style.top = (18 + Math.random() * 46) + '%'; f.appendChild(c);
+  c.addEventListener('animationend', () => c.remove());
+  c.onclick = e => { e.stopPropagation(); if (!RIDE || RIDE.done) return; c.remove(); RIDE.n++; $('rdN').textContent = RIDE.n; SND.pop(); sparkAt(e.clientX, e.clientY, 14);
+    const hz = document.querySelector('.rd-horse'); hz.classList.remove('munch'); void hz.offsetWidth; hz.classList.add('munch');
+    if (RIDE.n >= 5) rideDone(); else if (RIDE.n % 2) { bubbleOn(hz, RIDE_L.crunch[(RIDE.n >> 1) % 4]); speak(RIDE_L.crunch[(RIDE.n >> 1) % 4], { ch: 'marengo' }); } }; }
+function rideDone() { RIDE.done = true; clearInterval(RIDE.t); ST.rides = (ST.rides || 0) + 1; const got = checkTrophies(); save(); SND.fanfare(); setTimeout(() => SND.medal && SND.medal(), 300); confetti && confetti();
+  const hz = document.querySelector('.rd-horse'); bubbleOn(hz, RIDE_L.done); speak(RIDE_L.done, { ch: 'marengo' });
+  const a = AWARDS.find(x => x.id === 'md_ride'); setTimeout(() => { if (!RIDE) return; infoCard({ art: awardArt(a), tag: got.some(t => t.id === 'md_ride') ? 'New award!' : 'Award', title: a.name, body: a.desc + '.', action: ['Ride again', () => openRide()] }); }, 2600); }
+function closeRide() { if (RIDE) clearInterval(RIDE.t); RIDE = null; const o = $('rideov'); if (o) o.remove(); const ic = $('infoov'); if (ic && ic.classList) ic.classList.remove('on'); }
+// entry points: Marengo on the map (meadow) and a button in dress-up
+document.addEventListener('click', e => { const m = e.target.closest && e.target.closest('#map .lmchar'); if (m && m.querySelector('.chr-marengo')) setTimeout(() => { if ($('map').classList.contains('on') && !RIDE) openRide(); }, 1700); }, true);
 
 // ---------- v3: every line the app can say (the build records these) ----------
 function voLines(N = 60) { const out = new Map(); const add = (t, ch = 'juniper', o = {}) => { if (!t) return; VO.need(String(t), ch, o).forEach(([k, v, s]) => { if (!out.has(k)) out.set(k, [k, v, s]); }); };
@@ -3796,7 +3882,7 @@ function voLines(N = 60) { const out = new Map(); const add = (t, ch = 'juniper'
   for (let n = 2; n <= 60; n++) add(`You have ${n} awards.`, 'juniper', gen);
   C.SUBJ.forEach(s => add(s[1]));
   ['Ta-da! ', 'Ooh, ', 'I love it! '].forEach(p => OUTFITS.forEach(o => add(p + o.name + '!')));
-  OUTFITS.forEach(o => add(`Collect ${o.stars} stars to unlock the ${o.name}. You have 7.`, 'juniper', gen));
+  OUTFITS.forEach(o => add(outfitNeed(o) + ' You have 7 stars.', 'juniper', gen));
   AWARDS.forEach(t => { add(`${t.name}! ${t.desc}.`); add(`Not yet, Aspen. ${t.desc}.`, 'juniper', gen); add(`You won the ${t.name}!`, 'juniper', gen); });
   for (let n = 2; n <= 40; n++) add(`Combo ${n}!`, 'juniper', gen);
   WKEYS.forEach(k => { const w = WORLDS[k]; add(w.hello, w.friend); w.cheer.forEach(c => add(c, w.friend)); add(`And a new world opened: ${w.name}!`); add(`Aspen, you finished ${w.name}! You are amazing!`);
@@ -3830,7 +3916,7 @@ function voLines(N = 60) { const out = new Map(); const add = (t, ch = 'juniper'
   ['Stop and check. ', 'Poco a poco. '].forEach(p => { ['That one is already in this row.', 'That one is already in this column.', 'Look at the row, the column, and the box. Which one is still missing?', 'That does not fit yet. Try another spot first, then come back.'].forEach(w => add(p + w, 'marcus')); });
   return [...out.values()]; }
 
-window.JLP = { SND, infoCard, awardCard, juniperSvg, CHARS, OV: typeof OV !== "undefined" ? OV : null, voLines, VO, BOSSES, BOSS, startBoss, bossState, openVault, openLore, useRelic, playStory, openChest, effPos, gateOf, activeRelic, RELICS, relicArt, openBossIntro, renderMap, get MAPW() { return MAPW; },  rightNow: () => { if (RUN) { RUN.locked = false; correct(); } }, finishNow: () => { if (RUN) { RUN.locked = true; finish(); } }, wrongNow: () => { if (RUN) { RUN.locked = false; wrong(null); } }, AWARDS, WORLDS, WKEYS, TIER, tierOf, worldOpen, openWorlds, checkTrophies, revealAwards, ST, C, startActivity, get RUN() { return RUN; }, cur: () => RUN && cur(), go: () => $('introGo').click(), goHome, openMap, openShelves, openTrophies, openDress, OUTFITS, TROPHIES, medalOf, speak, SP };
+window.JLP = { SND, infoCard, awardCard, openRide, closeRide, aspenCheer, mountHall, juniperSvg, CHARS, OV: typeof OV !== "undefined" ? OV : null, voLines, VO, BOSSES, BOSS, startBoss, bossState, openVault, openLore, useRelic, playStory, openChest, effPos, gateOf, activeRelic, RELICS, relicArt, openBossIntro, renderMap, get MAPW() { return MAPW; },  rightNow: () => { if (RUN) { RUN.locked = false; correct(); } }, finishNow: () => { if (RUN) { RUN.locked = true; finish(); } }, wrongNow: () => { if (RUN) { RUN.locked = false; wrong(null); } }, AWARDS, WORLDS, WKEYS, TIER, tierOf, worldOpen, openWorlds, checkTrophies, revealAwards, ST, C, startActivity, get RUN() { return RUN; }, cur: () => RUN && cur(), go: () => $('introGo').click(), goHome, openMap, openShelves, openTrophies, openDress, OUTFITS, TROPHIES, medalOf, speak, SP };
 })();
 </script>
 </body></html>
