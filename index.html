@@ -841,6 +841,86 @@ L.owl = (x, y, s = 1) => fig(x, y, s, L.owlKid());
 L.pigeon = (x, y, s = 1, f = false) => fig(x, y, s, L.pigeonKid(), f);
 L.coqui = (x, y, s = 1) => fig(x, y, s, L.coquiKid());
 })();
+// ---------- dogs, horse, Nicolò (v2) ----------
+(() => {
+const L = ART.lib, c = ART.parts.c, K = '#222', Wh = c.blanco;
+const { P, E, C, G, HL, INK, clip, fig, eye, lobes, n } = L;
+// curly sitting dog, front view. o: {fur, muzzle, poodle, topknot, collar, bowtie, bow, ears}
+L.dogKid = (o = {}) => {
+  const F = o.fur || c.crema, M = o.muzzle || F; let s = '';
+  if (o.poodle) s += P(lobes(96, -40, 30, 28, 8, 5, 0.6), F) + P('M50 -50 C70 -60 80 -50 84 -44', 'none', 'stroke-width="6"');
+  else s += P('M50 -30 C90 -30 120 -70 112 -110 C130 -80 120 -20 60 -10 Z', F);
+  s += P(lobes(0, -96, 74, 92, 15, 2, 0.6), F);
+  s += P(lobes(0, -110, 40, 54, 10, 7, 0.6), M === F ? F : M);
+  for (const k of [-1, 1]) { s += P(`M${k * 16} -110 C${k * 14} -70 ${k * 14} -40 ${k * 16} -18 L${k * 50} -18 C${k * 52} -50 ${k * 50} -80 ${k * 46} -110 Z`, F);
+    s += o.poodle ? P(lobes(k * 34, -14, 28, 18, 8, k + 3, 0.6), F) : P(`M${k * 10} -22 C${k * 8} 4 ${k * 58} 4 ${k * 56} -22 Z`, F);
+    s += P(`M${k * 26} -4 v-8 M${k * 38} -4 v-8`, 'none', 'stroke-width="2.4"'); }
+  if (o.collar) s += P('M-48 -176 C-20 -160 20 -160 48 -176 L50 -160 C20 -144 -20 -144 -50 -160 Z', o.collar) + P('M0 -150 C-14 -158 -18 -140 0 -128 C18 -140 14 -158 0 -150 Z', c.amarillo);
+  if (o.bandana) s += P('M-52 -172 C-20 -156 20 -156 52 -172 L0 -110 Z', o.bandana) + P('M-20 -150 l4 4 M14 -144 l4 4 M-2 -130 l4 4', 'none', 'stroke-width="3"');
+  if (o.bowtie) s += G(0, -158, 1, P('M0 0 L-30 -16 C-36 -6 -36 6 -30 16 Z', o.bowtie) + P('M0 0 L30 -16 C36 -6 36 6 30 16 Z', o.bowtie) + C(0, 0, 8, o.bowtie));
+  // ears behind head edges
+  for (const k of [-1, 1]) s += P(lobes(k * 74, -210, 30, 62, 9, k + 9, 0.62), F);
+  s += P(lobes(0, -238, 74, 66, 14, 4, 0.6), F);
+  if (o.poodle) s += P(lobes(0, -308, 46, 30, 10, 6, 0.6), F);
+  if (o.topknot) s += P('M-10 -300 C-30 -330 -10 -350 0 -330 C10 -350 30 -330 10 -300 Z', F) + G(0, -300, 1, P('M0 0 C-14 -20 -36 -14 -32 2 C-28 14 -12 10 0 0 Z', o.topknot) + P('M0 0 C14 -20 36 -14 32 2 C28 14 12 10 0 0 Z', o.topknot) + C(0, 0, 7, o.topknot));
+  if (o.bow) s += G(-50, -282, 0.8, P('M0 0 C-14 -20 -36 -14 -32 2 C-28 14 -12 10 0 0 Z', o.bow) + P('M0 0 C14 -20 36 -14 32 2 C28 14 12 10 0 0 Z', o.bow) + C(0, 0, 7, o.bow), -20);
+  const MZ = 'M0 -236 C30 -236 46 -218 44 -198 C42 -178 22 -168 0 -168 C-22 -168 -42 -178 -44 -198 C-46 -218 -30 -236 0 -236 Z';
+  s += P(MZ, M);
+  s += eye(-32, -250, 13) + eye(32, -250, 13);
+  s += P('M-14 -222 C-14 -232 14 -232 14 -222 C14 -212 6 -206 0 -206 C-6 -206 -14 -212 -14 -222 Z', K) + E(-4, -225, 4, 2.4, Wh, 'stroke="none"');
+  s += P('M0 -206 V-196 M-20 -194 C-12 -184 -4 -186 0 -196 C4 -186 12 -184 20 -194', 'none', 'stroke-width="3"') + P('M-10 -190 C-10 -170 10 -170 10 -190 C4 -186 -4 -186 -10 -190 Z', c.rosa, 'stroke-width="2.6"');
+  return s;
+};
+L.dog = (x, y, s, o, f = false) => fig(x, y, s, L.dogKid(o), f);
+// Marengo the horse, side view facing right, saddled. origin at hooves
+L.horseKid = (o = {}) => {
+  const H = o.coat || c.canela, M = o.mane || c.marron_oscuro; let s = '';
+  s += P('M-150 -232 C-206 -222 -236 -160 -224 -90 C-218 -60 -204 -40 -188 -28 C-196 -70 -190 -120 -172 -150 C-182 -110 -172 -70 -150 -46 C-158 -110 -152 -170 -138 -204 Z', M) + P('M-196 -150 C-206 -120 -204 -90 -196 -60', 'none', 'stroke-width="2.4"');
+  const leg = (x, back, f) => (back ? P(`M${x - 46} -196 C${x - 54} -146 ${x - 42} -112 ${x - 22} -88 C${x - 14} -76 ${x - 12} -60 ${x - 11} -40 L${x - 11} -18 L${x + 11} -18 L${x + 11} -48 C${x + 11} -70 ${x + 8} -84 ${x + 14} -110 C${x + 22} -140 ${x + 30} -170 ${x + 30} -198 Z`, f) : P(`M${x - 20} -160 C${x - 18} -116 ${x - 12} -88 ${x - 10} -70 C${x - 10} -50 ${x - 11} -30 ${x - 11} -18 L${x + 11} -18 C${x + 11} -30 ${x + 10} -50 ${x + 10} -70 C${x + 14} -92 ${x + 22} -124 ${x + 26} -160 Z`, f)) + P(`M${x - 14} -20 L${x + 14} -20 L${x + 18} 0 L${x - 18} 0 Z`, M);
+  s += leg(-96, 1, c.marron) + leg(140, 0, c.marron);
+  s += leg(-126, 1, H) + leg(110, 0, H);
+  s += P('M-162 -200 C-172 -250 -120 -272 -60 -264 C0 -256 60 -266 110 -254 C150 -244 170 -212 162 -172 C154 -138 120 -126 80 -128 C20 -130 -60 -124 -110 -128 C-150 -132 -160 -162 -162 -200 Z', H);
+  s += P('M-150 -150 C-120 -150 -96 -170 -90 -200 M150 -150 C140 -140 130 -134 116 -132', 'none', 'stroke-width="2.6"');
+  s += P('M70 -252 C92 -304 130 -362 180 -392 L238 -362 C212 -320 182 -262 162 -200 C132 -212 100 -232 70 -252 Z', H);
+  const HD = 'M168 -394 C188 -424 220 -428 242 -406 C264 -382 290 -344 302 -318 C310 -298 294 -282 272 -286 C250 -290 236 -318 220 -338 C206 -354 184 -362 168 -374 Z';
+  s += P('M206 -416 L210 -456 L228 -420 Z', H) + P(HD, H) + P('M184 -410 L186 -452 L204 -418 Z', H) + P('M190 -416 L190 -440 L198 -420 Z', c.rosa, 'stroke-width="2"');
+  // mane + forelock
+  s += P('M190 -414 C164 -404 148 -366 128 -334 C108 -302 92 -282 64 -256 C80 -284 70 -300 92 -320 C82 -344 104 -358 112 -374 C116 -396 148 -408 158 -424 C170 -428 182 -424 190 -414 Z', M) + P('M150 -400 C140 -380 128 -360 116 -350 M120 -340 C110 -320 100 -304 86 -290', 'none', 'stroke-width="2.4"');
+  s += P('M196 -416 C216 -410 224 -396 218 -380 C206 -390 196 -402 196 -416 Z', M);
+  // face: eye, nostril, smile, bridle
+  const ey = 'M214 -384 C216 -398 238 -400 242 -386 C244 -374 234 -366 226 -366 C218 -366 212 -374 214 -384 Z';
+  s += P(ey, Wh, 'stroke-width="2.4"') + clip(ey, C(230, -382, 9, c.marron) + C(230, -382, 6, K, 'stroke="none"') + HL(232, -385, 2.6)) + INK('M210 -384 C214 -402 240 -404 245 -388 C238 -398 220 -398 210 -384 Z') + INK('M240 -392 C246 -396 250 -398 254 -404 C252 -396 248 -392 243 -388 Z');
+  s += P('M286 -304 C290 -310 296 -308 296 -302', 'none', 'stroke-width="3"') + P('M276 -290 C284 -286 292 -288 298 -294', 'none', 'stroke-width="2.6"');
+  s += P('M200 -406 C230 -360 260 -330 288 -322 M250 -344 C240 -330 234 -320 228 -312 M244 -334 C220 -300 180 -250 160 -230', 'none', 'stroke-width="4"') + C(250, -340, 6, c.amarillo, 'stroke-width="2.4"');
+  // saddle
+  if (o.saddle !== false) { s += P('M-60 -264 C-40 -240 40 -240 60 -262 L66 -190 C30 -180 -30 -180 -64 -190 Z', o.pad || c.rosa) + P('M-70 -190 C-30 -180 30 -180 70 -190', 'none', 'stroke-width="2.4"');
+    s += P('M-50 -268 C-50 -296 -30 -290 -20 -272 C0 -262 30 -262 40 -278 C50 -296 64 -290 60 -264 C30 -250 -20 -250 -50 -268 Z', c.marron_oscuro) + P('M0 -250 V-150', 'none', 'stroke-width="3"') + P('M-14 -150 H14 L10 -136 H-10 Z', c.gris); }
+  return s;
+};
+L.horse = (x, y, s, o = {}, f = false) => fig(x, y, s, L.horseKid(o), f);
+// Old Nicolò, the café owner: cap, round glasses, big white moustache, apron, cup. origin at feet
+L.nicoloKid = () => {
+  let s = '';
+  for (const k of [-1, 1]) s += P(`M${k * 14} -120 L${k * 16} -14 L${k * 50} -14 L${k * 52} -120 Z`, c.gris) + P(`M${k * 10} -16 L${k * 58} -16 C${k * 70} -16 ${k * 72} 0 ${k * 60} 0 L${k * 10} 0 Z`, c.marron_oscuro);
+  s += P('M-70 -300 C-90 -260 -96 -180 -84 -120 L84 -120 C96 -180 90 -260 70 -300 C40 -316 -40 -316 -70 -300 Z', c.azul);
+  s += P('M-50 -296 L-50 -110 L50 -110 L50 -296 C30 -286 -30 -286 -50 -296 Z', Wh) + P('M-50 -296 L-60 -320 M50 -296 L60 -320', 'none', 'stroke-width="3"') + P('M-30 -190 H30 V-150 H-30 Z', Wh) + P('M-30 -176 H30', 'none', 'stroke-width="2.4"');
+  s += P('M-74 -292 C-110 -260 -118 -220 -100 -190 C-80 -180 -66 -190 -64 -204 C-72 -230 -66 -260 -60 -280 Z', c.azul) + C(-90, -186, 15, c.melocoton);
+  s += P('M74 -292 C110 -270 120 -230 104 -210 C94 -200 78 -204 74 -220 C80 -240 76 -262 66 -280 Z', c.azul) + C(96, -214, 15, c.melocoton);
+  s += G(110, -236, 1, P('M-16 -10 L18 -10 L14 22 C12 30 -12 30 -14 22 Z', Wh) + P('M18 0 C30 0 30 16 16 16', 'none', 'stroke-width="3"') + P('M-26 26 C-10 36 10 36 26 26 Z', Wh) + P('M-6 -18 C-10 -28 -2 -34 -6 -44 M6 -18 C2 -28 10 -34 6 -44', 'none', 'stroke-width="2.4"'));
+  s += P('M-12 -330 L-12 -300 C-4 -294 4 -294 12 -300 L12 -330 Z', c.melocoton);
+  const F = 'M0 -436 C40 -436 60 -406 58 -372 C56 -338 32 -318 0 -318 C-32 -318 -56 -338 -58 -372 C-60 -406 -40 -436 0 -436 Z';
+  for (const k of [-1, 1]) s += P(`M${k * 56} -380 C${k * 70} -384 ${k * 70} -360 ${k * 56} -358`, c.melocoton);
+  s += P(F, c.melocoton);
+  s += P('M-58 -390 C-64 -370 -60 -350 -52 -344 C-50 -364 -50 -380 -46 -394 Z M58 -390 C64 -370 60 -350 52 -344 C50 -364 50 -380 46 -394 Z', c.gris_claro);
+  s += P('M-62 -404 C-62 -450 62 -450 62 -404 C30 -414 -30 -414 -62 -404 Z', c.marron) + P('M-62 -404 C-40 -396 20 -396 76 -410 C74 -400 60 -396 50 -396', c.marron) + P('M0 -446 V-438', 'none', 'stroke-width="4"');
+  for (const k of [-1, 1]) s += C(k * 22, -376, 15, Wh, 'stroke-width="3"') + C(k * 22, -376, 5, K, 'stroke="none"') + HL(k * 22 + 2, -378, 1.8) + INK(`M${k * 10} -398 C${k * 18} -404 ${k * 30} -404 ${k * 36} -398 C${k * 28} -400 ${k * 18} -400 ${k * 10} -398 Z`);
+  s += P('M-7 -376 H7', 'none', 'stroke-width="3"') + P('M-8 -362 C-10 -350 10 -350 8 -362 C6 -370 -6 -370 -8 -362 Z', c.melocoton, 'stroke-width="2.6"');
+  s += P('M0 -350 C-14 -362 -40 -360 -52 -340 C-40 -344 -28 -338 -20 -334 C-10 -334 -4 -340 0 -344 C4 -340 10 -334 20 -334 C28 -338 40 -344 52 -340 C40 -360 14 -362 0 -350 Z', Wh);
+  s += P('M-12 -326 C-6 -320 6 -320 12 -326', 'none', 'stroke-width="3"');
+  return s;
+};
+L.nicolo = (x, y, s) => fig(x, y, s, L.nicoloKid());
+})();
 
 // ---------- World scenes (earned in Juniper's Learning Park). Smooth, rounded, chunky shapes: closed regions for fill + color-by-number ----------
 const WORLD_SCENES = [
@@ -1321,6 +1401,79 @@ redo('coqui', (() => {
   s += L.coqui(500, 650, 1.25);
   const hibiscus = (x, y, sc, f) => G(x, y, sc, thin([0, 72, 144, 216, 288].map(a => G(0, 0, 1, P('M0 0 C-20 -10 -26 -44 -6 -50 C6 -54 20 -44 20 -30 C20 -16 10 -6 0 0 Z', f), a)).join('') + P('M0 0 C10 -20 24 -34 36 -40', 'none', 'stroke-width="3"') + C(36, -40, 5, c.amarillo), n(3 / sc)));
   s += hibiscus(170, 540, 1, c.rojo) + hibiscus(880, 560, 0.9, c.fucsia) + hibiscus(800, 690, 0.7, c.amarillo) + butterfly(330, 330, 0.7, c.naranja, c.amarillo);
+  return s; })());
+})();
+// ===== checkpoint 4 pages: Toulouse, Winnie, Teddy, Marengo, Nicolò =====
+(() => {
+const L = ART.lib, c = ART.parts.c, K = '#222', Wh = c.blanco;
+const { P, E, C, G, INK, clip, band, sky, cloud, sun, tree, pine, hills, flower, tulip, grass, sparkle, heart, butterfly, swirl, stone, juniper, aspen, n } = L;
+const redo = (id, inner, bandF) => { const pg = ART.pages.find(p => p.id === id); if (pg) { pg.svg = ART.svg(inner + band(bandF)); pg.v2 = 1; } };
+const thin = (inner, w = 3) => `<g stroke-width="${w}">${inner}</g>`;
+const R = (x, y, w, h, r, f = Wh, ex = '') => `<rect x="${n(x)}" y="${n(y)}" width="${n(w)}" height="${n(h)}" rx="${r}" fill="${f}" ${ex}/>`;
+const archWin = (x, y, w, h, f = c.celeste) => P(`M${x} ${y + h} V${y + w / 2} A${w / 2} ${w / 2} 0 0 1 ${x + w} ${y + w / 2} V${y + h} Z`, f) + P(`M${x + w / 2} ${y + 4} V${y + h} M${x} ${y + h * 0.55} H${x + w}`, 'none', 'stroke-width="2.5"');
+const brown = (x, w, top, f, ground) => { let s = R(x, top, w, ground - top, 2, f) + R(x - 8, top - 14, w + 16, 16, 3, Wh); for (let y = top + 24; y < ground - 70; y += 74) for (let xx = x + 16; xx < x + w - 40; xx += 52) s += archWin(xx, y, 34, 50); return thin(s + P(`M${x + w / 2 - 22} ${ground} V${ground - 56} C${x + w / 2 - 22} ${ground - 80} ${x + w / 2 + 22} ${ground - 80} ${x + w / 2 + 22} ${ground - 56} V${ground} Z`, c.verde_oscuro), 3); };
+const ball = (x, y, r, f1, f2) => thin(C(x, y, r, f1) + P(`M${x - r} ${y} C${x - r / 2} ${y - r / 2} ${x + r / 2} ${y - r / 2} ${x + r} ${y} C${x + r / 2} ${y + r / 2} ${x - r / 2} ${y + r / 2} ${x - r} ${y} Z`, f2), 3.4);
+const bowl = (x, y, f) => thin(P(`M${x - 64} ${y - 30} H${x + 64} L${x + 50} ${y + 10} H${x - 50} Z`, f) + E(x, y - 30, 64, 12, c.canela) + P(`M${x - 30} ${y - 14} H${x + 30}`, 'none'), 3.4);
+
+redo('toulouse', (() => {
+  let s = sky(c.celeste) + sun(110, 100, 40) + cloud(560, 90, 0.8) + cloud(860, 130, 0.6);
+  s += brown(600, 190, 170, c.rojo, 520) + brown(800, 200, 230, c.canela, 520);
+  s += thin(P('M6 520 H1018 V560 H6 Z', c.gris_claro) + P('M120 520 V560 M300 520 V560 M480 520 V560 M660 520 V560 M840 520 V560', 'none'), 3);
+  s += P('M6 560 H1018 V762 H6 Z', c.verde_lima, 'stroke-width="3.6"');
+  s += tree(110, 560, 0.85) + L.dog(400, 690, 1.25, { fur: c.negro, poodle: true, bowtie: c.rojo });
+  s += ball(760, 690, 36, c.amarillo, c.azul) + heart(870, 640, 0.9, c.rosa) + heart(920, 600, 0.6, c.rojo);
+  s += flower(200, 700, c.rosa) + tulip(260, 720, c.amarillo, 0.9) + flower(960, 710, c.lila, 0.9) + grass(620, 740) + grass(60, 740) + butterfly(600, 300, 0.7, c.amarillo, c.celeste);
+  return s; })());
+
+redo('winnie', (() => {
+  let s = sky(c.lila) + cloud(800, 110, 0.85) + cloud(240, 90, 0.7);
+  for (const [x, y, sc, f] of [[110, 210, 1.1, c.rosa], [920, 260, 1, c.fucsia], [160, 430, 0.8, c.fucsia], [880, 440, 0.9, c.rosa], [300, 150, 0.6, c.rojo], [720, 170, 0.6, c.rosa]]) s += heart(x, y, sc, f);
+  s += hills(560, c.verde_lima, 20);
+  s += L.dog(512, 690, 1.25, { fur: c.crema, collar: c.fucsia, bow: c.rosa });
+  s += bowl(220, 700, c.azul) + bowl(800, 700, c.rojo) + thin(G(230, 660, 1, P('M-36 -8 C-40 -20 -24 -24 -20 -14 H20 C24 -24 40 -20 36 -8 C40 4 24 8 20 -2 H-20 C-24 8 -40 4 -36 -8 Z', c.crema), -12), 3.2);
+  s += flower(80, 640, c.amarillo) + flower(950, 640, c.amarillo) + tulip(330, 700, c.rosa, 0.9) + tulip(690, 700, c.lila, 0.9) + grass(420, 745) + grass(600, 745);
+  return s; })());
+
+redo('teddy', (() => {
+  let s = sky(c.amarillo);
+  for (const [x, y, sc] of [[120, 120, 1.2], [900, 140, 1.1], [100, 400, 0.9], [930, 420, 1], [300, 260, 0.6], [720, 240, 0.6]]) s += sparkle(x, y, sc, Wh);
+  s += P('M6 540 H1018 V762 H6 Z', c.celeste, 'stroke-width="3.6"') + thin(P('M6 620 H1018 M6 700 H1018', 'none'), 2.5);
+  // round cushion bed
+  s += P('M250 640 C250 560 774 560 774 640 C774 720 250 720 250 640 Z', c.morado, 'stroke-width="3.8"') + P('M300 640 C300 590 724 590 724 640 C724 690 300 690 300 640 Z', c.lila, 'stroke-width="3.4"');
+  s += L.dog(512, 660, 1.2, { fur: Wh, topknot: c.fucsia });
+  s += ball(820, 690, 34, c.rojo, c.amarillo) + thin(G(180, 680, 1, P('M-46 -12 C-50 -26 -30 -30 -26 -18 H26 C30 -30 50 -26 46 -12 C50 2 30 6 26 -6 H-26 C-30 6 -50 2 -46 -12 Z', c.azul), -18), 3.2);
+  return s; })());
+
+redo('marengo', (() => {
+  let s = sky(c.celeste) + sun(900, 100, 40) + cloud(200, 100, 0.85) + cloud(560, 130, 0.6);
+  s += hills(380, c.verde, 34) + tree(110, 420, 0.6) + tree(940, 400, 0.5, c.verde_oscuro);
+  // stable / barn
+  s += thin(P('M700 400 V280 L780 220 L860 280 V400 Z', c.rojo) + P('M690 284 L780 210 L870 284', 'none', 'stroke-width="6"') + P('M750 400 V330 H810 V400 Z', Wh) + P('M750 330 L810 400 M810 330 L750 400', 'none') + C(780, 270, 16, Wh), 3.2);
+  s += P('M6 470 C300 450 700 460 1018 470 V762 H6 Z', c.verde_lima, 'stroke-width="3.6"');
+  // white paddock fence
+  let f = ''; for (const x of [40, 160, 860, 980]) f += R(x - 10, 440, 20, 150, 4, Wh) + P(`M${x - 10} 440 L${x} 428 L${x + 10} 440`, Wh);
+  f += R(30, 470, 140, 16, 4, Wh) + R(30, 520, 140, 16, 4, Wh) + R(850, 470, 140, 16, 4, Wh) + R(850, 520, 140, 16, 4, Wh);
+  s += thin(f, 3.2);
+  s += L.horse(470, 680, 1.15, { pad: c.rosa });
+  s += flower(120, 680, c.amarillo) + flower(200, 720, c.rosa, 0.8) + tulip(880, 690, c.rojo) + flower(950, 720, c.lila, 0.9) + grass(760, 740) + grass(340, 740) + butterfly(240, 300, 0.7, c.lila, c.amarillo);
+  return s; })());
+
+redo('nicolo', (() => {
+  let s = sky(c.celeste);
+  s += thin(R(40, 50, 944, 600, 4, c.melocoton) + R(30, 40, 964, 20, 4, c.canela), 3.6);
+  // striped scalloped awning
+  let a = ''; for (let i = 0; i < 8; i++) { const x = 60 + i * 113; a += P(`M${x} 90 H${x + 113} V170 Q${x + 113} 200 ${x + 85} 200 Q${x + 56.5} 220 ${x + 28} 200 Q${x} 200 ${x} 170 Z`, i % 2 ? Wh : c.rojo); }
+  s += thin(a + R(50, 76, 924, 20, 6, c.verde), 3.4);
+  // arched shop windows + door
+  s += thin(P('M100 520 V300 C100 240 330 240 330 300 V520 Z', c.celeste) + P('M215 250 V520 M100 400 H330', 'none') + P('M694 520 V300 C694 240 924 240 924 300 V520 Z', c.celeste) + P('M809 250 V520 M694 400 H924', 'none'), 3.4);
+  s += thin(R(90, 520, 250, 30, 6, c.verde) + R(684, 520, 250, 30, 6, c.verde), 3.2);
+  s += thin(P('M150 520 C150 490 200 490 200 520 Z M230 520 C230 494 280 494 280 520 Z', c.canela) + P('M744 520 C744 490 794 490 794 520 Z M824 520 C824 494 874 494 874 520 Z', c.amarillo), 3);
+  s += P('M6 650 H1018 V762 H6 Z', c.gris_claro, 'stroke-width="3.6"') + thin(P('M6 700 H1018 M120 650 L100 762 M340 650 L330 762 M560 650 V762 M780 650 L790 762', 'none'), 2.5);
+  // café tables
+  const table = (x) => thin(E(x, 640, 90, 18, Wh) + P(`M${x - 6} 656 V740 M${x - 30} 744 H${x + 30}`, 'none', 'stroke-width="6"') + G(x - 30, 616, 1, P('M-14 -10 L14 -10 L10 18 C8 24 -8 24 -10 18 Z', Wh) + P('M14 0 C24 0 24 12 12 12', 'none', 'stroke-width="3"') + P('M-4 -16 C-8 -24 0 -28 -4 -36', 'none', 'stroke-width="2.5"')) + G(x + 30, 624, 1, P('M-24 0 C-20 -18 20 -18 24 0 Z', c.canela) + P('M-14 -6 C-8 -12 0 -12 4 -6', 'none', 'stroke-width="2.5"')), 3.4);
+  s += table(200) + table(824);
+  s += L.nicolo(512, 690, 1.0);
+  s += thin(P('M430 40 H594 V60 H430 Z', c.amarillo), 3) + heart(512, 30, 0.4, c.rojo);
   return s; })());
 })();
 </script>
@@ -1822,7 +1975,7 @@ window.JCP = { S, analyze, openPage, finish, gallery, pages: ART.pages, STICKERS
 })();
 
 // ---------- auto-update: poll cversion.json, reload when a new build is live ----------
-const CBUILD = '20261115194921-d09297';
+const CBUILD = '20261115195251-45a12e';
 function checkUpdate() { if (location.protocol === 'file:') return; fetch('cversion.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.v && j.v !== CBUILD && !document.getElementById('paint').classList.contains('on')) location.reload(); }).catch(() => {}); }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); }); setInterval(checkUpdate, 5 * 60 * 1000); setTimeout(checkUpdate, 3000);
 setTimeout(() => window.JCP && JCP.celebrateScenes(), 600);
