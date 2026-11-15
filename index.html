@@ -491,6 +491,90 @@ const EXTRA_STICKERS = (() => {
 })();
 if (typeof module !== 'undefined') module.exports = { EXTRA_STICKERS };
 </script>
+<script>// Juniper's voice: shared by Learning Park and Coloring Park (same origin, localStorage 'juniperVoice').
+const JVOICE = (() => {
+  const OK = typeof window !== 'undefined' && 'speechSynthesis' in window;
+  const KEY = 'juniperVoice';
+  const DEF = { en: '', es: '', pitch: 1.3, rate: 1.0 };
+  let cfg = Object.assign({}, DEF); try { Object.assign(cfg, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(cfg)); } catch (e) {} };
+  const fold = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const L = v => (v.lang || '').replace('_', '-');
+  const NOVELTY = /\b(bubbles|bells|whisper|albert|bad news|good news|zarvox|trinoids|boing|cellos|deranged|hysterical|jester|organ|superstar|wobble|ralph|junior|kathy|grandma|grandpa|eddy|flo|reed|rocko|sandy|shelley)\b/i;
+  const MALE = /\b(fred|daniel|alex|tom|aaron|arthur|gordon|lee|oliver|rishi|evan|nathan|david|mark|guy|james|george|ryan|eric|christopher|roger|steffan|thomas|jorge|diego|juan|carlos|pablo|enrique|raul|alvaro)\b/i;
+  const EN_PREF = ['ava', 'zoe', 'samantha', 'allison', 'susan', 'nicky', 'karen'];
+  const EN_FEM = /\b(ava|zoe|samantha|allison|susan|nicky|karen|victoria|tessa|moira|fiona|veena|serena|kate|joelle|noelle|aria|jenny|zira|michelle|emma|ana|sonia|libby|google us english|google uk english female)\b/i;
+  const ES_PREF = ['paulina', 'monica', 'marisol', 'angelica'];
+  const bad = v => NOVELTY.test(v.name) || MALE.test(v.name);
+  const quality = v => (/premium/i.test(v.name) ? 40 : /enhanced|natural|neural/i.test(v.name) ? 25 : 0);
+  function score(v, pref, femRe, lang0) { const n = fold(v.name); if (bad(v)) return -1; let s = 0;
+    const i = pref.findIndex(p => new RegExp('\\b' + p + '\\b').test(n)); if (i >= 0) s += 100 - i * 8; else if (femRe && femRe.test(v.name)) s += 40;
+    s += quality(v); if (L(v) === lang0) s += 6; if (v.localService) s += 2; return s; }
+  const all = () => OK ? speechSynthesis.getVoices() : [];
+  const english = () => all().filter(v => /^en/i.test(L(v)));
+  const spanish = () => all().filter(v => /^es/i.test(L(v)));
+  function rank(list, pref, femRe, lang0) { return list.map(v => [v, score(v, pref, femRe, lang0)]).sort((a, b) => b[1] - a[1]); }
+  function autoEn() { const r = rank(english(), EN_PREF, EN_FEM, 'en-US'); const ok = r.filter(x => x[1] >= 0); return (ok.find(x => x[1] > 0) || ok.find(x => L(x[0]) === 'en-US') || ok[0] || r[0] || [null])[0]; }
+  function autoEs() { const r = rank(spanish(), ES_PREF, null, 'es-MX'); const ok = r.filter(x => x[1] >= 0); return (ok[0] || r[0] || [null])[0]; }
+  const byName = (list, n) => n ? list.find(v => v.name === n) || null : null;
+  let EN = null, ES = null;
+  function refresh() { EN = byName(english(), cfg.en) || autoEn(); ES = byName(spanish(), cfg.es) || autoEs(); return all().length; }
+  if (OK) { refresh(); speechSynthesis.addEventListener ? speechSynthesis.addEventListener('voiceschanged', refresh) : (speechSynthesis.onvoiceschanged = refresh);
+    // Safari sometimes loads voices late and never fires voiceschanged: retry a few times
+    let tries = 0; const t = setInterval(() => { if (refresh() || ++tries > 20) { if (all().length || tries > 20) clearInterval(t); } }, 250); }
+  function utter(text, es, o = {}) { const u = new SpeechSynthesisUtterance(text); const v = es ? ES : EN;
+    u.lang = v ? v.lang : (es ? 'es-MX' : 'en-US'); if (v) u.voice = v;
+    u.pitch = o.pitch != null ? o.pitch : cfg.pitch; u.rate = o.rate != null ? o.rate : (es ? Math.max(0.7, cfg.rate - 0.08) : cfg.rate); return u; }
+  function test(name, es) { if (!OK) return; try { speechSynthesis.cancel(); } catch (e) {} const v = (es ? spanish() : english()).find(x => x.name === name); const u = new SpeechSynthesisUtterance(es ? '¡Hola Aspen! ¡Soy Juniper!' : "Hi Aspen! I'm Juniper!");
+    if (v) { u.voice = v; u.lang = v.lang; } else u.lang = es ? 'es-MX' : 'en-US'; u.pitch = cfg.pitch; u.rate = cfg.rate; speechSynthesis.speak(u); }
+  // ---------- grown-up panel ----------
+  const CSS = `#jvPanel{position:fixed;inset:0;z-index:200;background:rgba(40,30,20,.5);display:none;align-items:center;justify-content:center;font-family:ui-rounded,"SF Pro Rounded","Avenir Next",system-ui,sans-serif;color:#3b2a20}
+#jvPanel.on{display:flex}#jvPanel .jvc{background:#fff;border-radius:26px;width:min(620px,94vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 10px 0 #e8d3bd}
+#jvPanel h2{margin:0;padding:16px 20px 4px;font-size:26px;color:#e0631a}#jvPanel .jvsub{padding:0 20px 8px;font-size:14px;opacity:.7}
+#jvPanel .jvbody{overflow-y:auto;padding:0 16px 10px;-webkit-overflow-scrolling:touch}
+#jvPanel .jvrow{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:14px;border:3px solid transparent;margin:4px 0;background:#fff8ef;cursor:pointer}
+#jvPanel .jvrow.sel{border-color:#43a047;background:#e8f5e9}#jvPanel .jvrow .nm{flex:1;font-weight:800;font-size:17px}#jvPanel .jvrow small{font-weight:600;opacity:.6;margin-left:6px}
+#jvPanel .jvrow .rec{color:#f9a825}#jvPanel button.jvt{border:0;border-radius:12px;background:#1e88e5;color:#fff;font:inherit;font-weight:800;padding:8px 14px}
+#jvPanel h3{margin:14px 6px 4px;font-size:18px}#jvPanel .jvsl{display:flex;align-items:center;gap:10px;padding:4px 8px;font-weight:800}#jvPanel input[type=range]{flex:1;height:30px}
+#jvPanel select{font:inherit;font-size:16px;padding:6px;border-radius:10px;flex:1;min-width:0}
+#jvPanel .jvfoot{display:flex;gap:10px;justify-content:flex-end;padding:12px 16px;border-top:2px solid #f3e6d6}
+#jvPanel .jvfoot button{border:0;border-radius:14px;font:inherit;font-weight:900;font-size:18px;padding:10px 18px;background:#eee}#jvPanel .jvfoot .done{background:#43a047;color:#fff}
+.jvgear{opacity:.35}.jvgear svg{width:30px!important;height:30px!important}`;
+  let panel = null, openedAt = 0;
+  function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+  function render() { if (!panel) return; refresh(); const auto = autoEn(); const en = english();
+    const ranked = rank(en, EN_PREF, EN_FEM, 'en-US').map(x => x[0]);
+    const rows = [`<div class="jvrow${!cfg.en ? ' sel' : ''}" data-n=""><span class="nm">Automatic (best girl voice)<small>${auto ? esc(auto.name) : 'device default'}</small></span><button class="jvt" data-t="${auto ? esc(auto.name) : ''}">Test</button></div>`]
+      .concat(ranked.map(v => `<div class="jvrow${cfg.en === v.name ? ' sel' : ''}" data-n="${esc(v.name)}"><span class="nm">${score(v, EN_PREF, EN_FEM, 'en-US') >= 60 ? '<span class="rec">★</span> ' : ''}${esc(v.name)}<small>${esc(L(v))}</small></span><button class="jvt" data-t="${esc(v.name)}">Test</button></div>`));
+    const es = rank(spanish(), ES_PREF, null, 'es-MX').map(x => x[0]);
+    panel.querySelector('.jvbody').innerHTML = `<h3>English voice</h3>${en.length ? rows.join('') : '<div class="jvsub">No English voices found on this device yet.</div>'}
+      <h3>Brightness (pitch)</h3><div class="jvsl"><span>Low</span><input type="range" id="jvPitch" min="0.8" max="1.8" step="0.05" value="${cfg.pitch}"><span>High</span><b id="jvPv">${(+cfg.pitch).toFixed(2)}</b></div>
+      <h3>Speed</h3><div class="jvsl"><span>Slow</span><input type="range" id="jvRate" min="0.7" max="1.2" step="0.05" value="${cfg.rate}"><span>Fast</span><b id="jvRv">${(+cfg.rate).toFixed(2)}</b></div>
+      <h3>Spanish voice</h3><div class="jvsl"><select id="jvEs"><option value="">Automatic${ES ? ' (' + esc(ES.name) + ')' : ''}</option>${es.map(v => `<option value="${esc(v.name)}"${cfg.es === v.name ? ' selected' : ''}>${esc(v.name)} (${esc(L(v))})</option>`).join('')}</select><button class="jvt" id="jvEsT">Test</button></div>`;
+    panel.querySelectorAll('.jvrow').forEach(r => r.onclick = e => { if (e.target.classList.contains('jvt')) return; cfg.en = r.dataset.n; save(); refresh(); render(); test(EN ? EN.name : '', false); });
+    panel.querySelectorAll('.jvrow .jvt').forEach(b => b.onclick = e => { e.stopPropagation(); test(b.dataset.t, false); });
+    const pi = panel.querySelector('#jvPitch'); pi.oninput = () => { cfg.pitch = +pi.value; panel.querySelector('#jvPv').textContent = cfg.pitch.toFixed(2); save(); }; pi.onchange = () => test(EN ? EN.name : '', false);
+    const ra = panel.querySelector('#jvRate'); ra.oninput = () => { cfg.rate = +ra.value; panel.querySelector('#jvRv').textContent = cfg.rate.toFixed(2); save(); }; ra.onchange = () => test(EN ? EN.name : '', false);
+    const se = panel.querySelector('#jvEs'); se.onchange = () => { cfg.es = se.value; save(); refresh(); test(ES ? ES.name : '', true); };
+    panel.querySelector('#jvEsT').onclick = () => test(ES ? ES.name : '', true); }
+  function open() { if (!panel) { const st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
+      panel = document.createElement('div'); panel.id = 'jvPanel'; panel.innerHTML = `<div class="jvc"><h2>Juniper's Voice</h2><div class="jvsub">For grown-ups. Pick a voice and tap Test. Saved on this iPad. Tip: Settings → Accessibility → Spoken Content → Voices can download Premium voices like Ava or Zoe.</div><div class="jvbody"></div><div class="jvfoot"><button class="reset">Reset</button><button class="done">Done</button></div></div>`;
+      document.body.appendChild(panel);
+      panel.querySelector('.done').onclick = close; panel.querySelector('.reset').onclick = () => { cfg = Object.assign({}, DEF); save(); refresh(); render(); };
+      panel.addEventListener('click', e => { if (e.target === panel && Date.now() - openedAt > 600) close(); }); }
+    openedAt = Date.now(); render(); panel.classList.add('on'); }
+  function close() { if (panel) panel.classList.remove('on'); try { speechSynthesis.cancel(); } catch (e) {} }
+  // gear: opens only on 3 quick taps or a 1-second long-press, so little hands don't wander in
+  function gear(el) { if (!el) return; el.classList.add('jvgear'); el.setAttribute('aria-label', 'Grown-up voice settings');
+    el.innerHTML = '<svg viewBox="0 0 48 48"><path d="M24 4l4 5 6-2 1 6 6 2-2 6 5 4-5 4 2 6-6 2-1 6-6-2-4 5-4-5-6 2-1-6-6-2 2-6-5-4 5-4-2-6 6-2 1-6 6 2z" fill="#bdbdbd" stroke="#666" stroke-width="2.5" stroke-linejoin="round"/><circle cx="24" cy="24" r="7" fill="#fff" stroke="#666" stroke-width="2.5"/></svg>';
+    let taps = [], timer = null;
+    el.addEventListener('pointerdown', e => { e.stopPropagation(); timer = setTimeout(() => { timer = null; taps = []; open(); }, 1000); });
+    const cancel = () => { if (timer) { clearTimeout(timer); timer = null; } };
+    el.addEventListener('pointerup', e => { e.stopPropagation(); if (!timer) return; cancel(); const now = Date.now(); taps = taps.filter(t => now - t < 1200); taps.push(now); if (taps.length >= 3) { taps = []; open(); } });
+    el.addEventListener('pointerleave', cancel); el.addEventListener('pointercancel', cancel); el.addEventListener('click', e => e.stopPropagation()); }
+  return { ok: OK, refresh, utter, test, open, close, gear, en: () => EN, es: () => ES, cfg: () => cfg, english, spanish, autoEn, autoEs };
+})();
+</script>
 <script>(() => {
 'use strict';
 const W = 1024, H = 768, N = W * H;
@@ -588,8 +672,7 @@ const SND = {
 };
 function say(txt) {
   if (!prefs.speak || !('speechSynthesis' in window)) return;
-  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(txt); u.lang = 'es-ES'; u.rate = 0.85;
-    const v = speechSynthesis.getVoices().find(v => /^es/i.test(v.lang)); if (v) u.voice = v; speechSynthesis.speak(u); } catch (e) {}
+  try { speechSynthesis.cancel(); const u = typeof JVOICE !== 'undefined' ? JVOICE.utter(txt, true) : new SpeechSynthesisUtterance(txt); if (typeof JVOICE === 'undefined') { u.lang = 'es-MX'; u.rate = 0.9; u.pitch = 1.3; } speechSynthesis.speak(u); } catch (e) {}
 }
 
 // ---------- page analysis ----------
