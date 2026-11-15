@@ -5,7 +5,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Juniper Learn">
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#fff7ec">
-<script>window.JBUILD='20261115180634-700e26';</script>
+<script>window.JBUILD='20261115192729-86fb69';</script>
 <title>Juniper's Learning Park</title>
 <style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;height:100%;overflow:hidden;background:#fff7ec;font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold","Nunito","Avenir Next",system-ui,sans-serif;color:#3b2a20;touch-action:manipulation}
@@ -406,10 +406,10 @@ html,body{background:#fff4fb;color:var(--ol)}
 .alive .chr .ch-spark,.alive .twk{transform-box:fill-box;transform-origin:50% 50%;animation:twinkle 1.6s ease-in-out infinite}
 @keyframes twinkle{0%,100%{transform:scale(.6) rotate(0);opacity:.6}50%{transform:scale(1.15) rotate(45deg);opacity:1}}
 .alive .chr-juniper.pose-wave .ch-armR{transform-origin:0 0;animation:wave 1.1s ease-in-out infinite}
-@keyframes wave{0%,100%{transform:rotate(0)}50%{transform:rotate(-28deg)}}
+@keyframes wave{0%,100%{transform:rotate(0)}50%{transform:rotate(-14deg)}}
 .alive .chr-juniper.pose-cheer .ch-armR{transform-origin:0 0;animation:wave .6s ease-in-out infinite}
 .alive .chr-juniper.pose-cheer .ch-armL{transform-origin:0 0;animation:waveL .6s ease-in-out infinite}
-@keyframes waveL{0%,100%{transform:rotate(0)}50%{transform:rotate(28deg)}}
+@keyframes waveL{0%,100%{transform:rotate(0)}50%{transform:rotate(14deg)}}
 .alive .chr-juniper.talking .ch-armR{transform-origin:0 0;animation:wave .5s ease-in-out infinite}
 .alive .chr-oscar .ch-armR,.alive .chr-oscar .ch-armL{transform-box:fill-box;transform-origin:50% 0;animation:flapw 2.6s ease-in-out infinite}
 @keyframes flapw{0%,85%,100%{transform:rotate(0)}90%{transform:rotate(12deg)}95%{transform:rotate(-6deg)}}
@@ -1629,9 +1629,9 @@ function juniperInner(o = {}) { const feet = o.feet || 'shoe'; let s = o.back ||
   const arm = (side, ang, cls) => `<g transform="translate(${side * 36} -52)"><g class="${cls}"><g transform="rotate(${ang})">` + r(side > 0 ? -2 : -70, -12, 72, 28, 14, o.sleeve || FOX) + (o.sleeve && o.cuff ? r(side > 0 ? 44 : -54, -12, 10, 28, 3, o.cuff) : '') + c(side > 0 ? 68 : -68, 2, 16, o.glove || SOCK) + (o.glove ? p(`M${side * 60} -8 l${side * 10} 0`, 'none', 'stroke-width="3"') : '') + (side > 0 && o.ring ? ringSvg(68, 2) : '') + `</g></g></g>`;
   if (o.dress) body += o.dress;
   if (o.golf) body += `<g class="golfclub" transform="translate(-70 0) rotate(${o.golf} 0 -30)">` + r(-6, -40, 13, 158, 6, '#c9d2ee') + r(-3, -36, 4, 150, 2, '#ffffff', 'stroke="none" opacity=".7"') + p('M-14 112 L46 108 Q58 108 58 120 L58 132 Q58 138 50 138 L-14 138 Z', '#eef2ff') + r(-11, -54, 26, 50, 9, '#ff4fa3') + p('M-11 -40 h26 M-11 -28 h26 M-11 -16 h26', 'none', 'stroke-width="3"') + `</g>` + c(-12, 142, 11, '#fff');
-  body += arm(-1, o.armL ?? -25, 'ch-armL') + arm(1, o.armR ?? 25, 'ch-armR');
   if (o.scarf) body += p('M-50 -74 Q0 -52 50 -74 L52 -54 Q0 -30 -52 -54 Z', o.scarf) + r(14, -56, 24, 58, 9, o.scarf) + sheen(-20, -64, 16, 4, 5, 0.4) + p('M20 -4 L20 6 M27 -4 L27 6 M34 -4 L34 6', 'none');
-  s += g('ch-body', body + (o.bodyExtra || '') + `<g transform="translate(0 -108) scale(.92)">${g('ch-head', foxHeadInner({ helmet: o.helmet }) + (o.headExtra || ''))}</g>`);
+  const arms = arm(-1, o.armL ?? -25, 'ch-armL') + arm(1, o.armR ?? 25, 'ch-armR');
+  s += g('ch-body', body + (o.bodyExtra || '') + `<g transform="translate(0 -108) scale(.92)">${g('ch-head', foxHeadInner({ helmet: o.helmet }) + (o.headExtra || ''))}</g>` + arms);
   return s; }
 function mamaInner() { let s = '';
   s += g('ch-tail', p('M40 70 C130 80 176 20 160 -44 C150 -80 112 -84 108 -58 C122 -16 100 38 40 42 Z', FOX) + p('M160 -44 C150 -80 112 -84 108 -58 C120 -46 138 -38 162 -34 Z', CRM));
@@ -2617,7 +2617,7 @@ function juniperSvg(outfit = ST.outfit, pose = 'stand', vb = '-200 -330 400 520'
   const o = { vb, cls: 'pose-' + pose + ' ' + cls }; const has = id => Object.values(outfit).includes(id);
   if (has('helmet')) o.helmet = '#26c6da'; if (has('scarf')) o.scarf = '#ff2f6e';
   if (has('skates')) o.feet = 'skate'; if (has('blades')) o.feet = 'blade';
-  if (has('golf')) o.golf = pose === 'stand' ? -10 : -14; if (pose === 'cheer') { o.armL = 55; o.armR = -55; } else if (pose === 'wave') { o.armL = -25; o.armR = -60; } else if (has('golf')) { o.armL = -60; o.armR = 25; }
+  if (has('golf')) o.golf = pose === 'stand' ? -10 : -14; if (pose === 'cheer') { o.armL = 28; o.armR = -28; } else if (pose === 'wave') { o.armL = -40; o.armR = -16; } else if (has('golf')) { o.armL = -60; o.armR = 25; }
   o.back = has('cape') ? OV.cape : ''; o.bodyExtra = ''; o.headExtra = '';
   ['tutu', 'medal'].forEach(k => { if (has(k)) o.bodyExtra += OV[k]; });
   ['pinkgown', 'icegown', 'goldgown'].forEach(k => { if (has(k)) { const gw = GOWN[k](); o.dress = gw.dress; o.bodyExtra += gw.puff; } });
