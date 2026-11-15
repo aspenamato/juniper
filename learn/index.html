@@ -5,7 +5,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Juniper Learn">
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#fff7ec">
-<script>window.JBUILD='20261115143337-44943b';</script>
+<script>window.JBUILD='20261115144140-f32c89';</script>
 <title>Juniper's Learning Park</title>
 <style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;height:100%;overflow:hidden;background:#fff7ec;font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold","Nunito","Avenir Next",system-ui,sans-serif;color:#3b2a20;touch-action:manipulation}
@@ -776,6 +776,16 @@ html,body{background:#fff4fb;color:var(--ol)}
 #mapSvg .bosschr.locked .chr{filter:brightness(0) opacity(.22)}
 .curglow.boss{aspect-ratio:2.3/1!important;height:auto!important;border-radius:50%}
 @media (orientation:portrait){.homefox{height:24vh}.tiles .tile{min-height:0;padding:10px 8px}.tiles .tic{width:60px;height:60px}.tiles .t-path{min-height:0}.tiles .t-path .tic{width:64px;height:64px}}
+/* boss speech bubble (its own, pink) */
+.bb-bub{position:absolute;left:calc(100% + 10px);top:6px;z-index:8;width:max-content;max-width:260px;background:#fff0f8;border:4px solid #ff4fa3;border-radius:20px;padding:8px 14px;font-weight:900;font-size:clamp(16px,2.2vmin,21px);color:#7a1450;box-shadow:0 5px 0 rgba(255,79,163,.3);opacity:0;transform:scale(.4);transform-origin:0 30%;pointer-events:none;transition:opacity .2s,transform .35s cubic-bezier(.2,1.6,.4,1)}
+.bb-bub.on{opacity:1;transform:none}
+.bb-bub:before{content:"";position:absolute;left:-20px;top:22px;border:10px solid transparent;border-right:14px solid #ff4fa3;border-left:0}
+@media (orientation:portrait){.bb-bub{left:6px;top:calc(100% + 8px);transform-origin:20% 0;max-width:62vw}.bb-bub:before{left:30px;top:-20px;border:10px solid transparent;border-bottom:14px solid #ff4fa3;border-top:0}}
+#mapSvg .bosschr{z-index:3}
+#mapSvg .bosschr.done .chr{transform:none;filter:saturate(.75)}
+.relic .rl-runes{transform-origin:0 0;animation:rlspin 18s linear infinite reverse}
+.relic .rl-shine{animation:rltw 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 50%}
+.relic .rl-ped{animation:none}
 </style></head>
 <body>
 <div id="start" class="screen on">
@@ -2566,6 +2576,29 @@ function pathD(pts, upto) { let d = `M${pts[0][0]} ${pts[0][1] - 130} L${pts[0][
 let MAPLAST = null;
 function mapDef(wk) { if (wk === 'park') return { secs: C.PATH.map((sec, i) => Object.assign({}, sec, SEC[i], { scene: i, lm: LM[i] })), pos: ST.path, bg: '#a8e57c', name: 'Washington Market Park' };
   const w = WORLDS[wk]; return { secs: w.secs, pos: (ST.wp || {})[wk] || 0, bg: w.bg, name: w.name }; }
+// ---------- v3 map landmarks: small world props along the edges ----------
+const PROPS = {
+  lamp: (x, y) => `<g transform="translate(${x} ${y})"><rect x="-5" y="-120" width="10" height="120" fill="#4b4f6b"/><rect x="-16" y="-6" width="32" height="10" rx="4" fill="#4b4f6b"/><path d="M-18 -120 h36 l-8 -26 h-20 z" fill="#3b3f58"/><circle cx="0" cy="-112" r="9" fill="#fff6a8" stroke="none" opacity=".9"/><circle cx="0" cy="-130" r="26" fill="#fff6a8" stroke="none" opacity=".25"/></g>`,
+  bench: (x, y) => `<g transform="translate(${x} ${y})"><rect x="-44" y="-40" width="88" height="12" rx="4" fill="#c97a3a"/><rect x="-44" y="-22" width="88" height="12" rx="4" fill="#e09050"/><path d="M-36 -10 v12 M36 -10 v12" stroke-width="6"/></g>`,
+  flag: (x, y) => `<g transform="translate(${x} ${y})"><ellipse cx="0" cy="0" rx="34" ry="10" fill="#7fe07a"/><ellipse cx="4" cy="0" rx="8" ry="3" fill="#3b2147"/><path d="M4 0 V-96" stroke-width="5"/><path d="M4 -96 l36 12 l-36 12 z" fill="#ff4f6d"/><circle cx="-18" cy="-6" r="6" fill="#fff"/></g>`,
+  kite: (x, y) => `<g transform="translate(${x} ${y})"><path d="M0 -150 l22 30 l-22 38 l-22 -38 z" fill="#ffd93b"/><path d="M0 -150 v68 M-22 -120 h44" stroke-width="3"/><path d="M0 -82 q10 20 -6 40 q-14 20 4 42" fill="none" stroke-width="3" stroke-dasharray="6 6"/></g>`,
+  garita: (x, y) => `<g transform="translate(${x} ${y})"><rect x="-30" y="-70" width="60" height="70" fill="#f2c48d"/><path d="M-36 -70 h72 l-8 -10 h-56 z" fill="#e0a868"/><path d="M-30 -80 q30 -50 60 0 z" fill="#f2c48d"/><circle cx="0" cy="-122" r="6" fill="#e0a868"/><rect x="-8" y="-56" width="16" height="26" rx="8" fill="#3b2147"/></g>`,
+  coqui: (x, y) => `<g transform="translate(${x} ${y})"><path d="M-40 0 q30 -60 80 -40 q-30 50 -80 40 z" fill="#3fbf5a"/><ellipse cx="2" cy="-26" rx="16" ry="11" fill="#b9864a"/><circle cx="-6" cy="-36" r="5" fill="#fff"/><circle cx="8" cy="-36" r="5" fill="#fff"/><circle cx="-6" cy="-36" r="2" fill="#3b2147" stroke="none"/><circle cx="8" cy="-36" r="2" fill="#3b2147" stroke="none"/></g>`,
+  flamboyan: (x, y) => `<g transform="translate(${x} ${y})"><path d="M-6 0 V-60 q-20 -16 -36 -18 M6 0 V-60 q20 -16 36 -18" fill="none" stroke="#8a5a3a" stroke-width="10"/><ellipse cx="0" cy="-92" rx="62" ry="30" fill="#ff4b2b"/><circle cx="-30" cy="-98" r="6" fill="#ffb300" stroke="none"/><circle cx="20" cy="-104" r="6" fill="#ffb300" stroke="none"/><circle cx="34" cy="-86" r="5" fill="#ffb300" stroke="none"/></g>`,
+  lighthouse: (x, y) => `<g transform="translate(${x} ${y})"><path d="M-22 0 l8 -110 h28 l8 110 z" fill="#fff"/><path d="M-19 -40 h38 l-2 -22 h-34 z M-16 -84 h32 l-1 -16 h-30 z" fill="#ff4f6d"/><rect x="-14" y="-128" width="28" height="18" fill="#ffd93b"/><path d="M-18 -128 h36 l-18 -14 z" fill="#3b2147"/></g>`,
+  taxi: (x, y) => `<g transform="translate(${x} ${y})"><path d="M-46 -12 v-18 q0 -8 8 -8 h10 l12 -16 h30 l12 16 h12 q8 0 8 8 v18 z" fill="#ffd21f"/><rect x="-8" y="-62" width="18" height="8" rx="2" fill="#fff"/><circle cx="-26" cy="-10" r="10" fill="#3b2147"/><circle cx="26" cy="-10" r="10" fill="#3b2147"/><path d="M-12 -36 h16 v-14 h-8 z M10 -36 h14 l-8 -14 h-6 z" fill="#bfe8ff" stroke-width="3"/></g>`,
+  hydrant: (x, y) => `<g transform="translate(${x} ${y})"><rect x="-14" y="-50" width="28" height="50" rx="6" fill="#ff3b3b"/><path d="M-14 -50 q14 -22 28 0 z" fill="#ff3b3b"/><rect x="-24" y="-34" width="48" height="10" rx="4" fill="#d81b1b"/><rect x="-18" y="-4" width="36" height="8" rx="3" fill="#d81b1b"/></g>`,
+  pretzel: (x, y) => `<g transform="translate(${x} ${y})"><rect x="-40" y="-56" width="80" height="44" rx="6" fill="#e9eef7"/><path d="M-46 -56 h92 l-10 -22 h-72 z" fill="#2a7cff"/><circle cx="-26" cy="-6" r="8" fill="#3b2147"/><circle cx="26" cy="-6" r="8" fill="#3b2147"/><path d="M-10 -36 q-12 -14 0 -16 q10 0 10 10 q0 -10 10 -10 q12 2 0 16 q-10 8 -20 0 z" fill="#c97a3a" stroke-width="3"/></g>`,
+  apple: (x, y) => `<g transform="translate(${x} ${y})"><path d="M0 -10 q-34 4 -32 -30 q4 -30 32 -18 q28 -12 32 18 q2 34 -32 30 z" fill="#ff3b5c"/><path d="M0 -56 q2 -14 12 -18" fill="none" stroke-width="4"/><path d="M4 -60 q14 -12 22 -2 q-12 10 -22 2 z" fill="#3fbf5a" stroke-width="3"/></g>`,
+  snowman: (x, y) => `<g transform="translate(${x} ${y})"><circle cx="0" cy="-26" r="28" fill="#fff"/><circle cx="0" cy="-76" r="20" fill="#fff"/><path d="M-2 -76 l18 4 l-18 4 z" fill="#ff8a1f" stroke-width="3"/><circle cx="-7" cy="-82" r="3" fill="#3b2147" stroke="none"/><circle cx="7" cy="-82" r="3" fill="#3b2147" stroke="none"/><path d="M-20 -60 h40 v8 h-40 z" fill="#ff4f6d" stroke-width="3"/><rect x="-14" y="-118" width="28" height="22" fill="#3b2147"/><rect x="-22" y="-98" width="44" height="6" fill="#3b2147"/></g>`,
+  skis: (x, y) => `<g transform="translate(${x} ${y})"><path d="M-30 0 l50 -110 q4 -8 8 -2 l-48 112 z" fill="#2a7cff" stroke-width="4"/><path d="M30 0 l-50 -110 q-4 -8 -8 -2 l48 112 z" fill="#ff4fa3" stroke-width="4"/><path d="M-6 -40 v40 M6 -40 v40" stroke-width="3"/></g>`,
+  cabin: (x, y) => `<g transform="translate(${x} ${y})"><rect x="-36" y="-44" width="72" height="44" fill="#a0603a"/><path d="M-46 -40 l46 -40 l46 40 z" fill="#fff"/><rect x="-10" y="-28" width="20" height="28" fill="#5a3320"/><rect x="18" y="-34" width="12" height="12" fill="#ffd93b" stroke-width="3"/><rect x="18" y="-92" width="12" height="26" fill="#7a4a30"/></g>`,
+  rocket: (x, y) => `<g transform="translate(${x} ${y})"><path d="M0 -130 q22 26 20 80 h-40 q-2 -54 20 -80 z" fill="#fff"/><circle cx="0" cy="-82" r="9" fill="#7fd3ff"/><path d="M-20 -50 l-16 22 h16 z M20 -50 l16 22 h-16 z" fill="#ff4f6d"/><path d="M-10 -28 q10 30 20 0 z" fill="#ffb300" stroke-width="3"/></g>`,
+  orange: (x, y) => `<g transform="translate(${x} ${y})"><rect x="-6" y="-46" width="12" height="46" fill="#8a5a3a"/><circle cx="0" cy="-78" r="40" fill="#3fbf5a"/><circle cx="-16" cy="-86" r="7" fill="#ff9a1f"/><circle cx="14" cy="-70" r="7" fill="#ff9a1f"/><circle cx="12" cy="-98" r="7" fill="#ff9a1f"/></g>`,
+  dish: (x, y) => `<g transform="translate(${x} ${y})"><path d="M-8 0 l8 -40 l8 40 z" fill="#c9d3e6"/><path d="M-40 -70 q40 60 70 -10 z" fill="#e9eef7" transform="rotate(-20 0 -50)"/><path d="M0 -50 l18 -26" stroke-width="4"/><circle cx="20" cy="-78" r="5" fill="#ff4f6d"/></g>`,
+  rover: (x, y) => `<g transform="translate(${x} ${y})"><rect x="-34" y="-40" width="68" height="24" rx="6" fill="#ffb300"/><circle cx="-22" cy="-10" r="10" fill="#3b2147"/><circle cx="0" cy="-10" r="10" fill="#3b2147"/><circle cx="22" cy="-10" r="10" fill="#3b2147"/><path d="M10 -40 v-22" stroke-width="4"/><rect x="0" y="-74" width="22" height="14" rx="4" fill="#7fd3ff"/></g>`,
+};
+const PROPSET = { park: ['lamp', 'bench', 'flag', 'kite'], pr: ['garita', 'coqui', 'flamboyan', 'lighthouse'], nyc: ['taxi', 'hydrant', 'pretzel', 'apple'], vail: ['snowman', 'skis', 'cabin', 'snowman'], sc: ['rocket', 'orange', 'dish', 'rover'] };
 // ---------- v3 map: stops, boss arenas with relic gates, ambient life (clouds, birds, shimmer), parallax ----------
 function mapStops(w) { const SECS = mapDef(w).secs; const out = []; let gi = 0;
   SECS.forEach((sec, si) => { sec.nodes.forEach(id => out.push({ t: 'act', id, gi: gi++, si })); const b = BOSS[w + ':' + si]; if (b) out.push({ t: 'boss', b, si }); }); return out; }
@@ -2592,7 +2625,7 @@ function renderMap() { const MD0 = mapDef(MAPW); const SECS = MD0.secs; const PO
     for (let k = 0; k < 6; k++) s += `<ellipse cx="${(k * 263 + b.si * 97) % W}" cy="${b.top + 120 + (k * 211) % (b.h - 160)}" rx="${90 + k * 14}" ry="${40 + k * 6}" fill="${c.g2}" stroke="none"/>`;
     // little ground details: grass tufts and pebbles
     for (let k = 0; k < 10; k++) { const gx = (k * 151 + b.si * 61) % 980 + 10, gy = b.top + 60 + (k * 137) % (b.h - 80); s += MAPW === 'vail' ? `<circle cx="${gx}" cy="${gy}" r="4" fill="#fff" stroke="none" opacity=".8"/>` : `<path d="M${gx - 8} ${gy} q4 -14 8 0 q4 -16 8 0" fill="none" stroke="${shadeHex(c.g2, -0.18)}" stroke-width="3"/>`; } });
-  let dk = 0; for (let yy = 140; yy < H - 100; yy += 165) { const x1 = (dk % 2 ? 50 : 950); s += dk % 3 === 0 ? (MAPW === 'vail' ? MD.pine(x1, yy + 80, 0.7) : MAPW === 'pr' ? MD.palm(x1, yy + 80, 0.55) : MD.tree(x1, yy + 80, 0.6, dk % 2)) : dk % 3 === 1 ? (MAPW === 'vail' ? MD.spark(x1, yy, 2, '#fff') : MD.flower(x1, yy, 1.1, ['#ff4fa3', '#ffd93b', '#9b5cff', '#22aaf0'][dk % 4])) : (MAPW === 'vail' ? MD.pine(x1, yy + 60, 0.5) : MD.bush(x1, yy, 0.9)); dk++; }
+  let dk = 0; for (let yy = 140; yy < H - 100; yy += 165) { const x1 = (dk % 2 ? 50 : 950); const PS = PROPSET[MAPW] || PROPSET.park; if (dk % 4 === 3) { s += PROPS[PS[(dk >> 2) % PS.length]](dk % 2 ? 78 : 922, yy + 70); dk++; continue; } s += dk % 3 === 0 ? (MAPW === 'vail' ? MD.pine(x1, yy + 80, 0.7) : MAPW === 'pr' ? MD.palm(x1, yy + 80, 0.55) : MD.tree(x1, yy + 80, 0.6, dk % 2)) : dk % 3 === 1 ? (MAPW === 'vail' ? MD.spark(x1, yy, 2, '#fff') : MD.flower(x1, yy, 1.1, ['#ff4fa3', '#ffd93b', '#9b5cff', '#22aaf0'][dk % 4])) : (MAPW === 'vail' ? MD.pine(x1, yy + 60, 0.5) : MD.bush(x1, yy, 0.9)); dk++; }
   const dAll = pathD(pts, pts.length - 1), dDone = pathD(pts, Math.max(0, ci)), dPrev = pathD(pts, Math.max(0, ci - 1));
   s += `<path d="${dAll}" fill="none" stroke="#000" stroke-opacity=".12" stroke-width="66" transform="translate(0 6)"/><path d="${dAll}" fill="none" stroke="#e6d6bb" stroke-width="58" stroke-linecap="round"/><path d="${dAll}" fill="none" stroke="#cdb995" stroke-width="10" stroke-dasharray="2 28" stroke-linecap="round"/>`;
   if (ci > 0 || (cur && cur.t === 'act' && cur.gi > 0)) s += `<path id="trailGlow" d="${dDone}" fill="none" stroke="url(#mgPath)" stroke-opacity=".35" stroke-width="70" stroke-linecap="round"/><path id="trail" d="${dDone}" fill="none" stroke="url(#mgPath)" stroke-width="46" stroke-linecap="round" data-prev="${dPrev}"/><path d="${dDone}" fill="none" stroke="#fff" stroke-width="9" stroke-dasharray="1 26" stroke-linecap="round" opacity=".9"/>`;
@@ -2627,7 +2660,7 @@ function renderMap() { const MD0 = mapDef(MAPW); const SECS = MD0.secs; const PO
     ov += `<button class="mstory" data-si="${b.si}" style="left:${pct(500 + 268, W)};top:${pct(b.top + 30, H)}" aria-label="Story">${STORYIC}</button>`; });
   // boss characters, prize chest and the relic gate slot
   stops.forEach(n => { if (n.t !== 'boss') return; const b = n.b, st = bossState(b), pb = prevBoss(b); const rec = ST.boss[b.id];
-    ov += `<div class="mchr bosschr ${st}" data-b="${b.id}" style="left:${pct(n.x, W)};top:${pct(n.y - 50, H)};width:${pct(170, W)}">${CHARS.svg(b.ch, { form: b.form })}</div>`;
+    ov += `<div class="mchr bosschr ${st}" data-b="${b.id}" style="left:${pct(n.x, W)};top:${pct(n.y + (st === 'done' ? 4 : 12), H)};width:${pct(st === 'done' ? 96 : 138, W)}">${CHARS.svg(b.ch, { form: b.form })}</div>`;
     ov += `<div class="mprize ${rec ? 'got r' + rec.r : ''}" data-b="${b.id}" style="left:${pct(n.x + 168, W)};top:${pct(n.y - 10, H)};width:${pct(96, W)}">${rec ? relicArt(b.relic, rec.r) : `<span class="mchest">${chestSvg(0)}</span>`}</div>`;
     if (pb) ov += `<div class="mslot ${hasRelic(pb.relic) ? 'full' : 'empty'}" data-b="${b.id}" style="left:${pct(n.x - 168, W)};top:${pct(n.y - 10, H)};width:${pct(86, W)}">${relicArt(pb.relic, hasRelic(pb.relic) ? ST.relics[pb.relic] : 0, { sil: !hasRelic(pb.relic) })}</div>`; });
   if (cur) { ov += `<div class="curglow${cur.t === 'boss' ? ' boss' : ''}" style="left:${pct(cur.x, W)};top:${pct(cur.y, H)};width:${pct(cur.t === 'boss' ? 330 : 230, W)}"></div><div class="mchr mapjun" id="mapJun" style="left:${pct(cur.t === 'boss' ? cur.x - 100 : cur.x, W)};top:${pct(cur.y - 44, H)};width:${pct(118, W)}">${juniperSvg(ST.outfit, 'wave')}</div>`; }
@@ -2820,7 +2853,11 @@ function relicArt(id, r = 0, o = {}) { const u = 'rl' + (++RLN); const R = RAR[r
   if (!o.sil) { s += `<circle r="${80 + r * 6}" fill="url(#${u}au)" stroke="none" class="rl-aura"/>`;
     if (r >= 3) s += `<g class="rl-rays" opacity="${r === 4 ? .7 : .5}">${[...Array(12)].map((_, i) => `<path d="M0 0 L${Math.cos(i * 30 * Math.PI / 180 - .1) * 98} ${Math.sin(i * 30 * Math.PI / 180 - .1) * 98} L${Math.cos(i * 30 * Math.PI / 180 + .1) * 98} ${Math.sin(i * 30 * Math.PI / 180 + .1) * 98} Z" fill="${r === 4 ? ['#ff5fb8', '#ffd93b', '#5ef08a', '#4fb3ff'][i % 4] : '#fff6a8'}" stroke="none"/>`).join('')}</g>`;
     if (r >= 2) s += `<circle r="74" fill="none" stroke="${R.col}" stroke-width="4" stroke-dasharray="4 10" class="rl-ring"/>`; }
+  s += `<ellipse cx="0" cy="88" rx="${o.sil ? 34 : 44}" ry="7" fill="#3b2147" opacity=".18" stroke="none" class="rl-shadow"/>`;
+  if (!o.sil && r >= 2) s += `<g class="rl-ped"><path d="M-46 84 q46 -24 92 0 q-46 16 -92 0 z" fill="${R.col}" stroke="#3b2147" stroke-width="4"/><path d="M-30 80 q30 -12 60 0" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="3"/>${[-36, 0, 36].map(x => `<circle cx="${x}" cy="${x ? 84 : 78}" r="4" fill="#ffd93b" stroke="#3b2147" stroke-width="2"/>`).join('')}</g>`;
+  if (!o.sil && r >= 3) s += `<g class="rl-runes">${[...Array(8)].map((_, i) => { const a = i * 45 * Math.PI / 180; return `<path transform="translate(${(Math.cos(a) * 90).toFixed(1)} ${(Math.sin(a) * 90).toFixed(1)}) rotate(${i * 45 + 45})" d="M0 -6 L5 0 L0 6 L-5 0 Z" fill="${r === 4 ? ['#ff5fb8', '#ffd93b', '#5ef08a', '#4fb3ff'][i % 4] : '#ffe27a'}" stroke="#fff" stroke-width="1.5"/>`; }).join('')}</g>`;
   s += `<g class="rl-obj" stroke="#3b2147" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round">${relicObj(id, r, u)}</g>`;
+  if (!o.sil && r >= 1) s += `<path class="rl-shine" transform="translate(-30 -40)" d="M0 -14 Q2 -2 14 0 Q2 2 0 14 Q-2 2 -14 0 Q-2 -2 0 -14Z" fill="#fff" stroke="none"/>`;
   if (!o.sil && r >= 1) s += [...Array(2 + r * 2)].map((_, i) => { const a = i * 2.4, rr = 62 + (i % 3) * 10; return `<path class="rl-tw" style="animation-delay:${(i * .37).toFixed(2)}s" transform="translate(${(Math.cos(a) * rr).toFixed(1)} ${(Math.sin(a) * rr).toFixed(1)}) scale(${.5 + (i % 2) * .4})" d="M0 -12 Q2 -2 12 0 Q2 2 0 12 Q-2 2 -12 0 Q-2 -2 0 -12Z" fill="${r === 4 ? ['#ff5fb8', '#ffd93b', '#5ef08a', '#4fb3ff'][i % 4] : '#fff'}" stroke="none"/>`; }).join('');
   if (!o.sil && r === 4) s += `<g class="rl-orbit">${[0, 120, 240].map((a, i) => `<circle cx="${Math.cos(a * Math.PI / 180) * 84}" cy="${Math.sin(a * Math.PI / 180) * 84}" r="6" fill="${['#ff5fb8', '#5ef08a', '#4fb3ff'][i]}" stroke="#fff" stroke-width="2"/>`).join('')}</g>`;
   return `<svg class="relic r${r}${o.sil ? ' sil' : ''}" viewBox="-100 -100 200 200" xmlns="http://www.w3.org/2000/svg">${defs}${s}</svg>`; }
@@ -2940,19 +2977,20 @@ function startBoss(b) { const items = bossItems(b);
   RUN = { a: { id: 'boss', title: b.name, icon: 'star', subj: 'logic' }, id: 'boss:' + b.id, mode: 'boss', boss: b, sec: b.id, world: b.w, level: 9, items, i: 0, hinted: false, miss: false, got: [], fixes: 0, hp: items.length, hpMax: items.length, first: 0, shieldAt: Math.ceil(items.length / 2), shieldDone: false };
   backTo = 'map'; RUN.relic = activeRelic(); RUN.charges = RUN.relic ? RAR[RUN.relic.r].ch + (RUN.relic.r >= 3 ? 1 : 0) : 0;
   $('play').classList.add('bossmode'); show('play'); $('guideFox').innerHTML = juniperSvg(ST.outfit, 'wave');
-  $('bossBox').innerHTML = `<div class="bb-chr alive" id="bbChr">${CHARS.svg(b.ch, { form: b.form })}</div><div class="hpbar"><i id="bbHp" style="width:100%"></i><em id="bbHpT">${RUN.hp}/${RUN.hpMax}</em></div><div class="bb-shield" id="bbShield"></div>`;
+  $('bossBox').innerHTML = `<div class="bb-chr alive" id="bbChr">${CHARS.svg(b.ch, { form: b.form })}</div><div class="hpbar"><i id="bbHp" style="width:100%"></i><em id="bbHpT">${RUN.hp}/${RUN.hpMax}</em></div><div class="bb-shield" id="bbShield"></div><div class="bb-bub" id="bbBub"></div>`;
   renderItem(); }
 function bossHit() { const b = RUN.boss; RUN.hp = Math.max(0, RUN.hp - 1); const pct = 100 * RUN.hp / RUN.hpMax; $('bbHp').style.width = pct + '%'; $('bbHpT').textContent = RUN.hp + '/' + RUN.hpMax;
   const c = $('bbChr'); c.classList.remove('hit'); void c.offsetWidth; c.classList.add('hit'); sparkEl(c, 16); tone(220, 0, 0.12, 'square', 0.08, 120); setTimeout(() => tone(660, 0, 0.18, 'triangle', 0.12, 990), 80); }
 function bossLine(kind) { const L = BOSS_LINES[RUN.boss.ch]; return kind === 'hit' ? L.hit[RUN.i % L.hit.length] : L[kind]; }
 function raiseShield(then) { RUN.shield = then; RUN.shieldDone = true; const sh = $('bbShield'); sh.className = 'bb-shield on s-' + RUN.boss.ch; SND.whoosh();
   const pr = $('pRelic'); if (!RUN.relic) { pr.style.display = ''; pr.innerHTML = `<span class="pr-art">${sparkRelic()}</span>`; } pr.classList.add('call');
-  speak(bossLine('shield'), { who: $('bbChr'), onend: () => { if (RUN && RUN.shield) speak('Use your relic, Aspen! Tap it to break the shield!', { who: $('guideFox') }); } }); }
+  bossSay(bossLine('shield'), () => { if (RUN && RUN.shield) speak('Use your relic, Aspen! Tap it to break the shield!', { who: $('guideFox') }); }, true); }
+function bossSay(t, then, stay) { const bb = $('bbBub'); if (bb) { bb.innerHTML = shown(t); bb.classList.remove('on'); void bb.offsetWidth; bb.classList.add('on'); clearTimeout(bossSay.tm); } speak(t, { who: $('bbChr'), onend: () => { if (bb && !stay) bossSay.tm = setTimeout(() => bb.classList.remove('on'), 900); if (then) then(); } }); }
 function breakShield() { const then = RUN.shield; RUN.shield = null; const pr = $('pRelic'); pr.classList.remove('call'); const sh = $('bbShield');
   const r0 = pr.getBoundingClientRect(), r1 = $('bbChr').getBoundingClientRect(); const fly = document.createElement('div'); fly.className = 'relicfly'; fly.innerHTML = pr.querySelector('.pr-art').innerHTML;
   fly.style.left = r0.left + 'px'; fly.style.top = r0.top + 'px'; document.body.appendChild(fly); fly.getBoundingClientRect();
   fly.style.transform = `translate(${r1.left + r1.width / 2 - r0.left - 40}px,${r1.top + r1.height / 2 - r0.top - 40}px) scale(1.6) rotate(360deg)`;
-  SND.whoosh(); setTimeout(() => { fly.remove(); sh.classList.add('pop'); SND.medal(); sparkEl($('bbChr'), 40); confettiBit(); setTimeout(() => { sh.className = 'bb-shield'; }, 600);
+  SND.whoosh(); setTimeout(() => { fly.remove(); sh.classList.add('pop'); const bbb = $('bbBub'); if (bbb) bbb.classList.remove('on'); SND.medal(); sparkEl($('bbChr'), 40); confettiBit(); setTimeout(() => { sh.className = 'bb-shield'; }, 600);
     if (!RUN.relic) pr.style.display = 'none'; else relicBtn(); speak('Your relic broke the shield! Hooray!', { who: $('guideFox'), onend: () => setTimeout(then, 200) }); }, 700); }
 function confettiBit() { burst(24); }
 function bossWin() { const b = RUN.boss; const acc = RUN.first / RUN.hpMax, med = sectionMedals(b.w, b.si); const r = rarityOf(acc, med);
@@ -3106,7 +3144,7 @@ function correct(sayFirst) { if (!RUN || RUN.locked) return; RUN.locked = true; 
   const bb = $('bubble'); bb.classList.remove('pop'); void bb.offsetWidth; bb.classList.add('pop');
   const go = () => { if (!RUN) return; RUN.i++; gf.innerHTML = juniperSvg(ST.outfit, 'wave'); if (RUN.i >= RUN.items.length) finish(); else if (RUN.mode === 'boss' && !RUN.shieldDone && RUN.hp <= RUN.shieldAt) raiseShield(renderItem); else renderItem(); };
   let left = 2; const step = () => { if (--left <= 0) go(); };
-  if (RUN.mode === 'boss') { const bl = bossLine('hit'); $('bubble').innerHTML = shown(bl); speak(bl, { who: $('bbChr'), onend: step }); } else
+  if (RUN.mode === 'boss') { bossSay(bossLine('hit'), step); } else
   speak((sayFirst ? sayFirst + '. ' : '') + p, { onend: step }); setTimeout(step, 1300); setTimeout(() => { if (RUN && RUN.locked && RUN.items[RUN.i] && left > 0) { left = 0; go(); } }, 4000); }
 function wrong(el, extra) { if (!RUN || RUN.locked) return; RUN.hinted = true; RUN.miss = true; RUN.itemMiss = true; SND.boop(); if (RUN.mode === 'boss') { const c = $('bbChr'); if (c) { c.classList.remove('laugh'); void c.offsetWidth; c.classList.add('laugh'); } }
   if (el) { el.classList.remove('wrong'); void el.offsetWidth; el.classList.add('wrong'); }
