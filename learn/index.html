@@ -5,7 +5,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Juniper Learn">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=5"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=5"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=5"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#fff7ec">
-<script>window.JBUILD='20261116085256-f25adf';</script>
+<script>window.JBUILD='20261116090642-66550a';</script>
 <title>Juniper's Learning Park</title>
 <style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;height:100%;overflow:hidden;background:#fff7ec;font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold","Nunito","Avenir Next",system-ui,sans-serif;color:#3b2a20;touch-action:manipulation}
@@ -928,6 +928,37 @@ html,body{background:#fff4fb;color:var(--ol)}
 .fx-ring{position:absolute;width:30vmin;height:30vmin;margin:-15vmin 0 0 -15vmin;border-radius:50%;border:2.2vmin solid;opacity:0;transform:scale(.1);animation:fxRing .85s cubic-bezier(.2,.8,.3,1) var(--d,0s) forwards}
 @keyframes fxRing{0%{opacity:0;transform:scale(.1)}25%{opacity:.95}100%{opacity:0;transform:scale(4.2)}}
 @media (prefers-reduced-motion: reduce){#fxHost{display:none}}
+/* v6 new games */
+.g6svg{display:block;max-width:min(92%,660px);height:auto;margin:4px auto}
+.g6svg.tf{width:min(40vmin,300px);max-width:none}.g6svg.nl{width:min(78vw,700px);max-width:none}.g6svg.b10{height:min(24vmin,200px);width:auto}.g6svg.scale{width:min(70vmin,520px);max-width:none}
+.flashfr{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.flashfr .dot{animation:g6peek 2.6s ease-in forwards}
+@keyframes g6peek{0%,70%{opacity:1}100%{opacity:.16}}
+.hoparc{animation:g6dash 1s linear infinite}
+@keyframes g6dash{to{stroke-dashoffset:-24}}
+.gator{position:relative;display:inline-flex;align-items:center;justify-content:center;width:100%;height:100%}
+.gator::before{content:'';position:absolute;inset:8% 6%;border-radius:40% 40% 30% 30%;background:radial-gradient(circle at 35% 30%,#b9f6ca,#43a047 60%,#1b5e20);opacity:.35}
+.gator::after{content:'';position:absolute;top:8%;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 4px #1b5e20}
+.gator.gat-r::after{left:16%}.gator.gat-l::after{right:16%}.gator.gat-e::after{left:calc(50% - 7px)}
+.gator .sign{position:relative;z-index:1}
+.g6gator .opt:active .gator::before{transform:scale(1.08)}
+.shop{display:flex;gap:18px;justify-content:center;align-items:center;flex-wrap:wrap}
+.ptag{display:inline-flex;flex-direction:column;align-items:center;background:#fff8e1;border:4px solid #8d5524;border-radius:16px;padding:8px 14px;box-shadow:0 5px 0 #6d4c41;transform:rotate(-3deg)}
+.ptag:nth-child(2){transform:rotate(3deg)}.ptag .ic{width:min(12vmin,90px);height:min(12vmin,90px)}.ptag b{font-size:min(6vmin,40px);color:#c62828}.ptag i{font-style:normal;font-weight:800;color:#5d4037}
+.purse{font-size:min(7vmin,46px);font-weight:900;background:linear-gradient(#ffe082,#ffb300);border:4px solid #8d6e00;border-radius:50% 50% 40% 40%;padding:16px 22px;color:#3b2147;box-shadow:0 5px 0 #8d6e00}
+.lgrid{display:grid;grid-template-columns:repeat(3,min(12vmin,96px));gap:8px;justify-content:center;padding:10px;background:#ede7f6;border-radius:18px;border:4px solid #7e57c2}
+.lgrid .lc{background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;aspect-ratio:1}.lgrid .lc .ic{width:80%;height:80%}
+.lgrid .lc.miss{background:#fff59d;animation:g6pulse 1.2s ease-in-out infinite}
+@keyframes g6pulse{50%{transform:scale(1.06)}}
+.sbw{display:flex;align-items:center;justify-content:center;gap:14px;font-size:min(8vmin,56px)}.sbw .bigic{width:min(16vmin,120px);height:min(16vmin,120px)}
+.sboxes{display:flex;gap:8px;justify-content:center;margin-top:8px}.sbx{width:min(9vmin,64px);height:min(9vmin,64px);border:4px dashed #ec407a;border-radius:12px;background:#fce4ec}
+.wtrain{display:flex;align-items:flex-end;justify-content:center;gap:6px;flex-wrap:wrap}.wtrain>.ic{width:min(14vmin,110px);height:min(14vmin,110px);margin-right:10px}
+.wtrain .eng{font-size:min(12vmin,86px);line-height:1}
+.wtrain .car{display:inline-flex;align-items:center;justify-content:center;width:min(11vmin,84px);height:min(11vmin,84px);font-size:min(8vmin,58px);font-weight:900;color:#3b2147;background:linear-gradient(#ffcdd2,#ef5350);border:4px solid #3b2147;border-radius:12px 12px 6px 6px;position:relative}
+.wtrain .car::after{content:'';position:absolute;bottom:-14px;left:12%;right:12%;height:14px;background:radial-gradient(circle at 20% 50%,#3b2147 0 6px,transparent 7px),radial-gradient(circle at 80% 50%,#3b2147 0 6px,transparent 7px)}
+.wtrain .car.miss{background:linear-gradient(#fff59d,#ffd54f);animation:g6pulse 1.2s ease-in-out infinite}
+.g6sprint .opt{animation:g6pop .35s ease-out backwards}
+@keyframes g6pop{from{transform:scale(.6)}}
 </style></head>
 <body>
 <div id="start" class="screen on">
@@ -2325,6 +2356,85 @@ K.board = (bi) => () => { const b = BOARDS[Math.max(0, bi)]; const N = 18; const
   const turns = []; let pos = 0; for (let t = 0; t < 5; t++) { const maxRoll = Math.min(6, N - pos); if (maxRoll < 1) break; const roll = int(1, maxRoll); let land = pos + roll; const sp = special[land]; if (sp) land = Math.max(0, Math.min(N, land + sp[1])); turns.push({ start: pos, roll, ans: land }); pos = land; }
   const name = b.title.replace('Game: ', ''); return { type: 'board', title: name, cells: N, special, rule: b.rule, turns, say: `${name}! Roll the die, count the hops, and tap where you land. ${b.rule}`, hint: hint('Hop one square at a time and count. Then look: is there a picture on that square?'), meta: { kind: 'board', special, turns } }; };
 K.finish = () => (rnd() < 0.5 ? Rd.edge(false) : Rd.letters)();
+// ================= v6: new learning games (proven methods: subitizing, CRA, balance, phonemes, interleaving, fluency) =================
+const G6 = {};
+const svgw = (vb, inner, cls = '') => `<svg class="g6svg ${cls}" viewBox="${vb}" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
+// ten frame: n dots, filled row by row (concrete -> pictorial)
+const tenFrameSvg = (n, col = '#e53935') => { let s = '<rect x="2" y="2" width="246" height="102" rx="12" fill="#fff" stroke="#3b2147" stroke-width="5"/>';
+  for (let i = 1; i < 5; i++) s += `<line x1="${2 + i * 49.2}" y1="2" x2="${2 + i * 49.2}" y2="104" stroke="#3b2147" stroke-width="3"/>`; s += '<line x1="2" y1="53" x2="248" y2="53" stroke="#3b2147" stroke-width="3"/>';
+  for (let i = 0; i < n; i++) { const cx = 26.6 + (i % 5) * 49.2, cy = 28 + Math.floor(i / 5) * 51; s += `<circle class="dot" cx="${cx}" cy="${cy}" r="17" fill="${col}" stroke="#3b2147" stroke-width="3"/><circle cx="${cx - 6}" cy="${cy - 6}" r="5" fill="#fff" opacity=".7"/>`; }
+  return svgw('0 0 250 106', s, 'tf'); };
+G6.flash = () => { const two = rnd() < 0.35; const a = int(1, 10), b = two ? int(1, 10) : 0, n = a + b;
+  const pr = `<div class="flashfr">${tenFrameSvg(a)}${two ? tenFrameSvg(b, '#1e88e5') : ''}</div>`;
+  return choice(two ? 'Quick look! How many dots in both frames?' : 'Quick look! How many dots?', pr, numOpts(n, 4, 2, 1), n,
+    two ? 'A full frame is ten. Then count the extra.' : 'A full row is five. Then count the extra.', { kind: 'flash', n }, { style: 'g6flash' }); };
+// Marengo hops along a number line
+const lineSvg = (lo, hi, from, to) => { const W = 640, x = v => 30 + (v - lo) * (W - 60) / (hi - lo); let s = `<line x1="20" y1="90" x2="${W - 20}" y2="90" stroke="#3b2147" stroke-width="5" stroke-linecap="round"/>`;
+  for (let v = lo; v <= hi; v++) s += `<line x1="${x(v)}" y1="80" x2="${x(v)}" y2="100" stroke="#3b2147" stroke-width="${v % 5 ? 3 : 5}"/>` + (v % (hi - lo > 12 ? 2 : 1) === 0 || v === from ? `<text x="${x(v)}" y="124" font-size="20" font-weight="900" text-anchor="middle" font-family="Nunito,Arial" fill="#3b2147">${v}</text>` : '');
+  const dir = Math.sign(to - from); for (let v = from; v !== to; v += dir) { const a = x(v), b = x(v + dir); s += `<path class="hoparc" d="M${a} 78 Q${(a + b) / 2} 28 ${b} 78" fill="none" stroke="#ff9f1c" stroke-width="4" stroke-dasharray="6 6" style="animation-delay:${(Math.abs(v - from)) * 0.15}s"/>`; }
+  s += `<circle cx="${x(from)}" cy="90" r="11" fill="#43a047" stroke="#3b2147" stroke-width="3"/>${(IC.icon('marengo') || '').replace('<svg ', `<svg x="${x(from) - 26}" y="20" width="52" height="52" `)}`;
+  return svgw(`0 0 ${W} 135`, s, 'nl'); };
+G6.hop = () => { const back = rnd() < 0.4; const lo = 0, hi = 20; let a, d; if (back) { a = int(6, 20); d = int(2, Math.min(9, a)); } else { a = int(0, 14); d = int(2, Math.min(9, 20 - a)); }
+  const to = back ? a - d : a + d;
+  return choice(`Marengo starts at ${a} and hops ${d} ${back ? 'back' : 'forward'}. Where does he land?`, lineSvg(lo, hi, a, to) + big(`${a} ${back ? '−' : '+'} ${d} = ${Q}`), numOpts(to, 4, 3, 0), to,
+    `Put your finger on ${a}. Count ${d} hops ${back ? 'back' : 'forward'}, one at a time.`, { kind: 'arith', expr: `${a}${back ? '-' : '+'}${d}` }); };
+// base-ten blocks: rods of ten and loose ones
+const b10Svg = (t, o) => { let s = ''; for (let i = 0; i < t; i++) { const x = 6 + i * 30; s += `<rect x="${x}" y="6" width="24" height="150" rx="4" fill="#4cd964" stroke="#1b5e20" stroke-width="3"/>`; for (let k = 1; k < 10; k++) s += `<line x1="${x}" y1="${6 + k * 15}" x2="${x + 24}" y2="${6 + k * 15}" stroke="#1b5e20" stroke-width="1.6"/>`; }
+  for (let i = 0; i < o; i++) { const x = 20 + t * 30 + (i % 3) * 28, y = 156 - 24 - Math.floor(i / 3) * 28; s += `<rect x="${x}" y="${y}" width="24" height="24" rx="4" fill="#ffd60a" stroke="#8d6e00" stroke-width="3"/>`; }
+  return svgw(`0 0 ${Math.max(140, 40 + t * 30 + 3 * 28)} 162`, s, 'b10'); };
+G6.base10 = () => { const t = int(1, 9), o = int(0, 9), ans = t * 10 + o; const vals = new Set([ans, o * 10 + t, ans + 10 > 99 ? ans - 10 : ans + 10, t + o]); vals.delete(0);
+  let ex = ans + 1; while (vals.size < 4) vals.add(ex++);
+  return choice('Toulouse built a number with blocks. Each tall rod is ten. Each small cube is one. What number is it?', b10Svg(t, o), valOpts([...vals].slice(0, 4)), ans,
+    `Count the rods by tens: ${t} tens. Then count the cubes: ${o} ones.`, { kind: 'arith', expr: `${t}*10+${o}` }); };
+// balance scale: both sides must weigh the same (the meaning of equals)
+const scaleSvg = (L, R) => svgw('0 0 420 190', `<path d="M210 30 L210 170 M160 172 H260" stroke="#6d4c41" stroke-width="10" stroke-linecap="round"/><path d="M50 60 H370" stroke="#8d6e63" stroke-width="9" stroke-linecap="round"/><circle cx="210" cy="56" r="12" fill="#ffd60a" stroke="#3b2147" stroke-width="3"/>
+  <path d="M50 60 L20 120 H120 L90 60 M330 60 L300 120 H400 L370 60" fill="none" stroke="#8d6e63" stroke-width="3"/><path d="M14 120 H126 Q70 150 14 120 Z M294 120 H406 Q350 150 294 120 Z" fill="#ffcc80" stroke="#3b2147" stroke-width="4"/>
+  <text x="70" y="112" font-size="30" font-weight="900" text-anchor="middle" font-family="Nunito,Arial" fill="#3b2147">${L}</text><text x="350" y="112" font-size="30" font-weight="900" text-anchor="middle" font-family="Nunito,Arial" fill="#3b2147">${R}</text>`, 'scale');
+G6.balance = () => { const s = int(6, 20), a = int(1, s - 1), b = s - a; const c = int(1, s - 1), ans = s - c;
+  return choice(`Make the scale balance, Aspen. ${a} plus ${b} on one side. ${c} plus what on the other side?`, scaleSvg(`${a} + ${b}`, `${c} + ?`), numOpts(ans, 4, 3, 0), ans,
+    `First find ${a} plus ${b}. That is ${s}. Then ask: ${c} and how many more make ${s}?`, { kind: 'arith', expr: `${a}+${b}-${c}` }); };
+// comparison alligator: the hungry mouth opens toward the bigger number
+G6.gator = () => { const hi = pick([20, 50, 99]); const a = int(0, hi), b = rnd() < 0.15 ? a : int(0, hi); const ans = a > b ? '>' : a < b ? '<' : '=';
+  return choice(`Snap snap! The hungry alligator always eats the bigger number. ${a} and ${b}. Which way does his mouth open?`, big(`${a} ${Q} ${b}`),
+    [['>', 'gat-r'], ['<', 'gat-l'], ['=', 'gat-e']].map(([s, c]) => ({ h: `<span class="gator ${c}"><span class="num sign">${s}</span></span>`, v: s, say: s === '>' ? 'is greater than' : s === '<' ? 'is less than' : 'is equal to' })), ans,
+    hi > 20 ? 'Look at the tens first. The mouth opens to the bigger one.' : 'Which number is bigger? The mouth opens to it.', { kind: 'cmp', a, b }, { style: 'g6gator' }); };
+// Old Nicolò's café shop: money and making change
+const MENU = [['biscotto', 'biscotto', 8], ['juice', 'apple', 15], ['muffin', 'acorn', 12], ['cocoa', 'sun', 20], ['cookie', 'star', 6], ['milk', 'snowflake', 10], ['orange', 'carrot', 9]];
+G6.shop = () => { const [nm, icn, p] = pick(MENU); const kind = rnd() < 0.5 ? 'left' : 'two';
+  const tag = (n, ic2, pr) => `<span class="ptag">${ic(IC.has(ic2) ? ic2 : 'star')}<b>${pr}¢</b><i>${n}</i></span>`;
+  if (kind === 'left') { const have = pick([10, 20, 25, 30, 40, 50].filter(h => h > p)); const ans = have - p;
+    return choice(`Welcome to my café, Aspen! You have ${have} cents. The ${nm} costs ${p} cents. How many cents are left?`, `<div class="shop">${tag(nm, icn, p)}<span class="purse">${have}¢</span></div>`, numOpts(ans, 4, 4, 0), ans,
+      `Start at ${p}. Count up to ${have}. How many did you count?`, { kind: 'arith', expr: `${have}-${p}` }); }
+  const [n2, i2, p2] = pick(MENU.filter(m => m[0] !== nm)); const ans = p + p2;
+  return choice(`One ${nm} and one ${n2}, please! How many cents is that in all?`, `<div class="shop">${tag(nm, icn, p)}${tag(n2, i2, p2)}</div>`, numOpts(ans, 4, 4, 1), ans,
+    `Start with the bigger price. Then count on the smaller one.`, { kind: 'arith', expr: `${p}+${p2}` }); };
+// Oscar's pattern grid: every row and column has one of each (logic, like a tiny sudoku)
+const GRIDSETS = [['star', 'heart', 'moon'], ['apple', 'carrot', 'acorn'], ['golfball', 'skate', 'snowflake'], ['cat', 'dog', 'pig'], ['sun', 'flower', 'star']];
+G6.grid = () => { const set = pick(GRIDSETS.filter(s => s.every(n => IC.has(n)))) || ['star', 'heart', 'sun']; const p = shuffle([0, 1, 2]), sh = rnd() < 0.5 ? 1 : 2;
+  const cell = (r, c) => set[p[(c + r * sh) % 3]]; const mr = int(0, 2), mc = int(0, 2), ans = cell(mr, mc); let g = '<div class="lgrid">';
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) g += r === mr && c === mc ? `<span class="lc miss">${Q}</span>` : `<span class="lc">${ic(cell(r, c))}</span>`; g += '</div>';
+  return choice('Oscar made a picture grid. Every row and every column has one of each. What goes in the empty box?', g, shuffle(set).map(w => ({ h: ic(w), v: w })), ans,
+    'Look at the row with the empty box. Which picture is missing from that row?', { kind: 'grid', ans }); };
+// sound boxes (Elkonin): one box for each sound, not each letter
+const SNDW = [['cat', 3], ['dog', 3], ['sun', 3], ['pig', 3], ['map', 3], ['ship', 3], ['fish', 3], ['chick', 3], ['bath', 3], ['moth', 3], ['frog', 4], ['stop', 4], ['crab', 4], ['flag', 4], ['nest', 4], ['jump', 4], ['skate', 4], ['go', 2], ['me', 2], ['up', 2], ['tree', 3], ['boat', 3], ['kite', 3], ['cake', 3], ['plant', 5], ['frost', 5]];
+G6.boxes = () => { const [w, n] = pick(SNDW); const pic = IC.has(w) ? ic(w, 'bigic') : '';
+  const boxes = `<div class="sboxes">${Array.from({ length: 5 }, () => '<span class="sbx"></span>').join('')}</div>`;
+  return choice(`Pearl's sound boxes! Say the word slowly: ${w}. How many sounds do you hear?`, `<div class="sbw">${pic}${wd(w)}</div>${boxes}`, [2, 3, 4, 5].map(v => ({ h: num(v), v })), n,
+    `Stretch it like gum: say each sound and hold up a finger. Two letters like sh or ee can make just one sound.`, { kind: 'snd', w, n }); };
+// word builder train: find the missing letter car
+G6.train = () => { const w = pick(CVC_ALL.concat(['ship', 'fish', 'frog', 'stop', 'crab', 'flag', 'nest', 'jump'])); const k = int(0, w.length - 1), L = w[k];
+  const cars = w.split('').map((ch, i) => `<span class="car${i === k ? ' miss' : ''}">${i === k ? '?' : ch}</span>`).join('');
+  const pool = 'abcdefghijklmnoprstuvw'.split('').filter(x => x !== L); const opts = shuffle([L, ...sample(pool, 2)]).map(x => ({ h: `<span class="lt">${x}</span>`, v: x, say: '‹' + x + '›' }));
+  return choice(`All aboard the word train! The word is ${w}. Which letter car is missing?`, `<div class="wtrain">${IC.has(w) ? ic(w) : ''}<span class="eng">🚂</span>${cars}</div>`, opts, L,
+    `Say ${w} slowly. Listen for each sound in order. Which sound goes in the empty car?`, { kind: 'train', w, k }); };
+// fluency sprint: short mixed facts, interleaved plus and minus (gentle, no clock penalty)
+G6.sprint = () => { const plus = rnd() < 0.55; let a, b; if (plus) { a = int(1, 10); b = int(1, 10); } else { a = int(5, 20); b = int(1, Math.min(10, a)); } const ans = plus ? a + b : a - b;
+  return choice(`Sprint! ${a} ${plus ? 'plus' : 'minus'} ${b}.`, eqh(`${a} ${plus ? '+' : '-'} ${b} = ?`), numOpts(ans, 3, 2, 0), ans,
+    plus ? 'Start with the bigger number and count on.' : 'Think addition: what plus the small number makes the big one?', { kind: 'arith', expr: `${a}${plus ? '+' : '-'}${b}` }, { style: 'g6sprint' }); };
+// interleaved review: mixes skills, and brings back the ones that were missed before (spaced retrieval)
+const MIXPOOL = ['m_compare', 'm_add10', 'm_sub10', 'm_missing', 'm_tens', 'm_coins', 'r_vowel', 'r_rhyme', 'r_digraph', 'r_silente', 'l_odd', 'l_npat', 'm_doubles', 'm_bonds10'];
+G6.mix = () => { let ids = []; try { ids = (typeof window !== 'undefined' && window.JMISS) ? window.JMISS().filter(id => MIXPOOL.includes(id)) : []; } catch (e) {}
+  const id = ids.length && rnd() < 0.6 ? pick(ids) : pick(MIXPOOL); const it = BY[id].gen(); it.meta = Object.assign({}, it.meta, { from: id }); return it; };
 // ================= CATALOG =================
 const A = [];
 const add = (id, subj, title, who, line, icon, gen, n = 5) => A.push({ id, subj, title, who, line, icon, gen, n });
@@ -2409,6 +2519,17 @@ add('k_rink', 'skate', 'Ice Rink Race', 'juniper', 'Skate, slide, and count.', '
 add('k_trail', 'skate', "Marengo's Trail", 'marengo', 'Carrots are my favorite! Walk with me.', 'marengo', K.board(BOARDS.findIndex(b => /Marengo/.test(b.title))), 1);
 add('k_baldwin', 'skate', 'Baldwin All-Around', 'juniper', 'Roll to school with your friends!', 'school', K.board(BOARDS.findIndex(b => /Baldwin/.test(b.title))), 1);
 add('k_finish', 'skate', 'Finish-Line Check', 'marcus', 'A calm check, not a race.', 'medal', K.finish);
+add('m_flash', 'math', 'Ten-Frame Flash', 'juniper', 'Quick eyes! See the five, then the rest.', 'golfball', G6.flash, 6);
+add('m_hop', 'math', "Marengo's Number Hops", 'marengo', 'Neigh! Hop with me, one step at a time.', 'marengo', G6.hop);
+add('m_base10', 'math', "Toulouse's Block Builder", 'toulouse', 'Tens are tall rods. Ones are little cubes.', 'box', G6.base10);
+add('m_balance', 'math', 'Balance the Scale', 'marcus', 'Equal means both sides weigh the same.', 'tortoise', G6.balance);
+add('m_gator', 'math', 'Hungry Alligator', 'scramble', 'Snap! The mouth eats the bigger number.', 'medal', G6.gator, 6);
+add('m_shop', 'math', "Nicolò's Café Shop", 'nicolo', 'Buon giorno, Aspen! Count your cents with care.', 'nicolo', G6.shop);
+add('m_sprint', 'math', "Winnie's Fact Sprint", 'winnie', 'Quick and calm! Right first, then fast.', 'star', G6.sprint, 8);
+add('r_boxes', 'read', "Pearl's Sound Boxes", 'pearl', 'One box for every sound you hear.', 'chalkboard', G6.boxes);
+add('r_train', 'read', 'Word Builder Train', 'teddy', 'Yip! Fill the missing letter car!', 'pencil', G6.train);
+add('l_grid', 'logic', "Oscar's Picture Grid", 'oscar', 'One of each in every row and column.', 'owl', G6.grid);
+add('m_mix', 'math', "Juniper's Mix-Up Review", 'juniper', 'A little of everything, and the tricky ones come back!', 'foxhead', G6.mix, 6);
 const BY = Object.fromEntries(A.map(a => [a.id, a]));
 const SUBJ = [['math', 'Math', 'golfball', '#1e88e5'], ['read', 'Reading', 'book', '#e53935'], ['logic', 'Logic', 'owl', '#8e24aa'], ['spanish', 'Spanish', 'coqui', '#43a047'], ['skate', 'Skating Fun', 'rollerblade', '#00acc1']];
 const PATH = [
@@ -2498,6 +2619,8 @@ const SND = {
   fanfare() { [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tone(f, i * 0.13, i === 5 ? 0.7 : 0.18, 'triangle', 0.2)); [1568, 2093].forEach((f, i) => tone(f, 0.8 + i * 0.1, 0.4, 'sine', 0.08)); },
   medal() { [784, 988, 1175, 1568].forEach((f, i) => tone(f, 0.9 + i * 0.1, 0.35, 'sine', 0.15)); },
 };
+// spaced review: skills Aspen missed come back in the Mix-Up Review until she gets them right
+window.JMISS = () => Object.entries(ST.miss || {}).filter(e => e[1] > 0).sort((a, b) => b[1] - a[1]).map(e => e[0]);
 // ---------- v5: background music — three original little tunes synthesized live with WebAudio ----------
 // park (bouncy, for the map and menus), boss (brave and bright), calm (music box, for coloring and reading)
 const MUSIC = (() => {
@@ -3668,7 +3791,7 @@ function correct(sayFirst) { if (!RUN || RUN.locked) return; RUN.locked = true; 
   let left = 2; const step = () => { if (left > 0 && --left === 0) go(); };
   if (RUN.mode === 'boss') { bossSay(bossLine('hit'), step); } else
   speak((sayFirst ? sayFirst + '. ' : '') + p, { onend: step }); setTimeout(step, 1300); setTimeout(() => { if (RUN && RUN.locked && RUN.items[RUN.i] && left > 0) { left = 0; go(); } }, 4000); }
-function wrong(el, extra) { if (!RUN || RUN.locked) return; RUN.hinted = true; RUN.miss = true; RUN.itemMiss = true; SND.boop(); if (RUN.mode === 'boss') { const c = $('bbChr'); if (c) { c.classList.remove('laugh'); void c.offsetWidth; c.classList.add('laugh'); } }
+function wrong(el, extra) { if (!RUN || RUN.locked) return; try { if (RUN.mode !== 'boss' && RUN.id) { const fid = (cur() && cur().meta && cur().meta.from) || RUN.id; ST.miss = ST.miss || {}; ST.miss[fid] = Math.min(9, (ST.miss[fid] || 0) + 1); } } catch (e) {} RUN.hinted = true; RUN.miss = true; RUN.itemMiss = true; SND.boop(); if (RUN.mode === 'boss') { const c = $('bbChr'); if (c) { c.classList.remove('laugh'); void c.offsetWidth; c.classList.add('laugh'); } }
   if (el) { el.classList.remove('wrong'); void el.offsetWidth; el.classList.add('wrong'); }
   const it = cur(); let h = extra || it.hint || 'Patience, Aspen. Stop and check. Try again.'; if (!/^Patience, Aspen/.test(h)) h = 'Patience, Aspen. ' + h; RUN.lastHint = h;
   $('hintIc').innerHTML = CHARS.svg('marcus'); $('hintTxt').innerHTML = shown(h); $('hintBox').classList.add('on');
@@ -3676,7 +3799,7 @@ function wrong(el, extra) { if (!RUN || RUN.locked) return; RUN.hinted = true; R
 function hideHint() { $('hintBox').classList.remove('on'); }
 $('hintBox').onclick = () => { speak(RUN && RUN.lastHint || $('hintTxt').textContent, { who: $('hintIc'), ch: 'marcus' }); };
 // ---------- finish ----------
-function finish() { if (RUN.mode === 'boss') { bossWin(); return; } const a = RUN.a, id = RUN.id; const before = { medal: medalOf(id), stars: ST.stars, stick: EXTRA_STICKERS.filter((s, i) => stickerUnlocked(i)).length, outfits: OUTFITS.filter(outfitOpen).length, oid: new Set(OUTFITS.filter(outfitOpen).map(o => o.id)) };
+function finish() { if (RUN.mode === 'boss') { bossWin(); return; } try { ST.miss = ST.miss || {}; RUN.items.forEach((it, i) => { const fid = (it.meta && it.meta.from) || RUN.id; if (RUN.got && RUN.got[i] && ST.miss[fid] && !RUN.miss) ST.miss[fid] = Math.max(0, ST.miss[fid] - 1); }); } catch (e) {} const a = RUN.a, id = RUN.id; const before = { medal: medalOf(id), stars: ST.stars, stick: EXTRA_STICKERS.filter((s, i) => stickerUnlocked(i)).length, outfits: OUTFITS.filter(outfitOpen).length, oid: new Set(OUTFITS.filter(outfitOpen).map(o => o.id)) };
   ST.plays[id] = (ST.plays[id] || 0) + 1; ST.done++; ST.stars += 3; const d = today(); ST.days[d] = (ST.days[d] || 0) + 1;
   let pathMsg = '';
   const wasOpen = WKEYS.filter(worldOpen);
