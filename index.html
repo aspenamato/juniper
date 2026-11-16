@@ -140,6 +140,8 @@ html,body{background:linear-gradient(180deg,#bfe6ff 0,#e6f6ff 220px,#fff7ec 520p
 .empty3 .ui3{width:90px;height:90px;margin:0 10px}
 #gallery .homebar{background:rgba(255,255,255,.75);border-radius:26px;padding:10px 14px;box-shadow:0 6px 0 rgba(0,0,0,.08)}
 @media (max-width:700px){.homebar.hero3{flex-wrap:wrap;min-height:190px}.homebar.hero3 .modes{margin-right:0}.hero-fox{height:120px;top:-6px;bottom:auto}}
+
+.empty3 .emptyMsg{margin:14px auto 8px;font-weight:900;font-size:30px;color:#3b2a4a;line-height:1.25;text-shadow:0 2px 0 #fff}.empty3 .emptyMsg span{font-size:21px;font-weight:800;color:#6a4f7a}
 /* v5 transitions: transform/opacity only, overlay never takes taps */
 #fxHost{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;contain:strict}
 .fx{position:absolute;inset:0;pointer-events:none}
@@ -2659,7 +2661,7 @@ $('cHome').onclick = () => { $('celebrate').classList.remove('on'); $('bHome').o
 $('cGal').onclick = () => { $('celebrate').classList.remove('on'); storeWork(); S.an = null; openGallery(); };
 function openGallery() {
   show('gallery'); const g = $('galGrid'); g.innerHTML = ''; const list = gallery().slice().reverse();
-  if (!list.length) { g.innerHTML = `<div class="empty empty3" style="grid-column:1/-1;text-align:center"><img src="art/chars/juniper_think.webp" alt=""><div>${UI3('palette')}${UI3('brush')}</div></div>`; return; }
+  if (!list.length) { g.innerHTML = `<div class="empty empty3" style="grid-column:1/-1;text-align:center"><img src="art/chars/juniper_think.webp" alt=""><p class="emptyMsg">No pictures yet!<br><span>Finish a coloring page and it will hang here.</span></p><div>${UI3('palette')}${UI3('brush')}</div></div>`; return; }
   list.forEach(it => { const b = document.createElement('button'); b.className = 'card'; b.innerHTML = `<img src="${it.img}" alt="">`;
     b.onclick = () => { viewing = it; $('vImg').src = it.img; $('viewer').classList.add('on'); SND.tick(); }; g.appendChild(b); });
 }
@@ -2690,7 +2692,7 @@ window.JCP = { S, analyze, peek, openPage, finish, gallery, pages: ART.pages, ST
 })();
 
 // ---------- auto-update: poll cversion.json, reload when a new build is live ----------
-const CBUILD = '20261116115721-a130df';
+const CBUILD = '20261116141651-dc494f';
 function checkUpdate() { if (location.protocol === 'file:') return; fetch('cversion.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.v && j.v !== CBUILD && !document.getElementById('paint').classList.contains('on')) location.reload(); }).catch(() => {}); }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); }); setInterval(checkUpdate, 5 * 60 * 1000); setTimeout(checkUpdate, 3000);
 setTimeout(() => window.JCP && JCP.celebrateScenes(), 600);
