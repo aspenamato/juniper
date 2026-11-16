@@ -2690,7 +2690,7 @@ window.JCP = { S, analyze, peek, openPage, finish, gallery, pages: ART.pages, ST
 })();
 
 // ---------- auto-update: poll cversion.json, reload when a new build is live ----------
-const CBUILD = '20261116105318-cdfc79';
+const CBUILD = '20261116105728-cdfc79';
 function checkUpdate() { if (location.protocol === 'file:') return; fetch('cversion.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.v && j.v !== CBUILD && !document.getElementById('paint').classList.contains('on')) location.reload(); }).catch(() => {}); }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); }); setInterval(checkUpdate, 5 * 60 * 1000); setTimeout(checkUpdate, 3000);
 setTimeout(() => window.JCP && JCP.celebrateScenes(), 600);
