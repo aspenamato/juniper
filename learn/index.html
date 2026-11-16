@@ -4,8 +4,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Juniper Learn">
-<link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#fff7ec">
-<script>window.JBUILD='20261115192729-86fb69';</script>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=5"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=5"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=5"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#fff7ec">
+<script>window.JBUILD='20261116081103-bcc763';</script>
 <title>Juniper's Learning Park</title>
 <style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;height:100%;overflow:hidden;background:#fff7ec;font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold","Nunito","Avenir Next",system-ui,sans-serif;color:#3b2a20;touch-action:manipulation}
@@ -918,7 +918,7 @@ html,body{background:#fff4fb;color:var(--ol)}
   </div>
 </div>
 <div id="home" class="screen">
-  <div class="topbar"><div class="starcount" id="hStars"></div><div class="hello" id="hHello"></div><button class="tb" id="hGear"></button><button class="tb" id="hSound" aria-label="Sound"></button></div>
+  <div class="topbar"><div class="starcount" id="hStars"></div><div class="hello" id="hHello"></div><button class="tb" id="hGear"></button><button class="tb" id="hMusic" aria-label="Music"></button><button class="tb" id="hSound" aria-label="Sound"></button></div>
   <div class="homegrid">
     <div class="homefoxwrap"><div class="hbubble" id="hBubble"></div><div class="homefox alive" id="homeFox"></div></div>
     <div class="tiles">
@@ -2422,6 +2422,8 @@ const ICON = {
   back: sv('<path d="M30 10 L16 24 L30 38" fill="none" stroke-width="5"/>'),
   close: sv('<path d="M14 14 L34 34 M34 14 L14 34" stroke-width="5" stroke="#e53935"/>'),
   speak: sv('<path d="M8 19 H15 L25 10 V38 L15 29 H8 Z" fill="#ffcc80"/><path d="M31 17 q5 7 0 14 M35 12 q9 12 0 24" fill="none"/>'),
+  music: sv('<path d="M18 33 V12 L36 8 V29" fill="none" stroke-width="3.5"/><ellipse cx="14" cy="34" rx="6" ry="4.6" fill="#ffcc80"/><ellipse cx="32" cy="30" rx="6" ry="4.6" fill="#ffcc80"/><path d="M18 16 L36 12" stroke-width="3.5"/>'),
+  musicOff: sv('<path d="M18 33 V12 L36 8 V29" fill="none" stroke-width="3.5" opacity=".55"/><ellipse cx="14" cy="34" rx="6" ry="4.6" fill="#ffcc80" opacity=".55"/><ellipse cx="32" cy="30" rx="6" ry="4.6" fill="#ffcc80" opacity=".55"/><path d="M8 8 L40 40" stroke="#e53935" stroke-width="4"/>'),
   soundOff: sv('<path d="M8 19 H15 L25 10 V38 L15 29 H8 Z" fill="#ffcc80"/><path d="M31 18 l10 12 M41 18 l-10 12" stroke="#e53935" stroke-width="3.5"/>'),
   star: sv('<path d="M24 3 l6.2 13 14.3 1.6 -10.6 9.7 2.9 14.1 -12.8 -7.2 -12.8 7.2 2.9 -14.1 L3.5 17.6 17.8 16z" fill="#fdd835"/>'),
   starOff: sv('<path d="M24 3 l6.2 13 14.3 1.6 -10.6 9.7 2.9 14.1 -12.8 -7.2 -12.8 7.2 2.9 -14.1 L3.5 17.6 17.8 16z" fill="#fff" stroke="#d7c3ad"/>'),
@@ -2441,8 +2443,26 @@ const medalSvg = (kind, ic) => { const [a, b] = MCOL[kind] || ['#e0e0e0', '#f5f5
 const trophySvg = (inner, col = '#fdd835') => `<svg viewBox="0 0 100 100"><g stroke="#222" stroke-width="4" stroke-linejoin="round"><path d="M26 10 H74 V36 Q74 62 50 64 Q26 62 26 36 Z" fill="${col}"/><path d="M26 16 Q8 16 10 32 Q12 44 28 44 M74 16 Q92 16 90 32 Q88 44 72 44" fill="none" stroke-width="5"/><rect x="44" y="62" width="12" height="14" fill="#f9a825"/><rect x="26" y="75" width="48" height="17" rx="4" fill="#8d5524"/></g><g transform="translate(35 16) scale(.3)">${inner}</g></svg>`;
 const icInner = n => { const s = ICONS.icon(n) || ''; return s.replace(/^<svg[^>]*viewBox="([^"]+)"[^>]*>/, (m, vb) => { const [x, y, w, h] = vb.split(' ').map(Number); const k = 100 / Math.max(w, h); return `<g transform="scale(${k}) translate(${-x} ${-y})">`; }).replace(/<\/svg>$/, '</g>'); };
 // ---------- sound ----------
-let AC = null;
-function ac() { if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } if (AC && AC.state === 'suspended') AC.resume(); return AC; }
+// v5 audio core: one AudioContext, revived whenever iOS suspends or 'interrupts' it (screen lock, app switch, calls),
+// rebuilt if it gets closed or its clock freezes; resumed inside every tap.
+let AC = null; const AUD = { gen: 0, log: [], lastT: -1, lastW: 0 };
+const alog = m => { AUD.log.push(Math.round(performance.now()) + ' ' + m); if (AUD.log.length > 200) AUD.log.shift(); };
+function acNew() { try { if (AC && AC.state !== 'closed') AC.close(); } catch (e) {}
+  try { AC = new (window.AudioContext || window.webkitAudioContext)(); AUD.gen++; alog('ctx new #' + AUD.gen + ' ' + AC.state); AC.onstatechange = () => alog('ctx ' + AC.state); } catch (e) { AC = null; }
+  AUD.lastT = -1; if (window.MUSIC) MUSIC.rebuild(); }
+function acKick(a) { if (a && a.state !== 'running') { try { const p = a.resume(); if (p && p.catch) p.catch(() => {}); } catch (e) {} } }
+function ac() { if (!AC || AC.state === 'closed') acNew(); acKick(AC); return AC; }
+// resolves true once the context is really running (or false after ms)
+function acReady(ms = 800) { const a = ac(); if (!a) return Promise.resolve(false); if (a.state === 'running') return Promise.resolve(true);
+  return new Promise(res => { let done = false; const fin = () => { if (!done) { done = true; res(a.state === 'running'); } };
+    try { const p = a.resume(); if (p && p.then) p.then(fin, fin); } catch (e) {} const iv = setInterval(() => { if (a.state === 'running') { clearInterval(iv); fin(); } }, 50); setTimeout(() => { clearInterval(iv); fin(); }, ms); }); }
+// called from inside a real tap: resume, and rebuild a context whose clock stopped (a known iOS glitch after waking)
+function acGesture() { const a = ac(); if (!a) return; const now = performance.now();
+  if (a.state === 'running' && AUD.lastT >= 0 && now - AUD.lastW > 1500 && a.currentTime === AUD.lastT) { alog('ctx frozen, rebuild'); acNew(); acKick(AC); }
+  AUD.lastT = AC.currentTime; AUD.lastW = now; if (window.MUSIC && MUSIC.on && ST.sound && document.querySelector('.screen.on:not(#start)')) MUSIC.start();
+  try { const b = AC.createBuffer(1, 1, 22050), s = AC.createBufferSource(); s.buffer = b; s.connect(AC.destination); s.start(0); } catch (e) {} }
+window.JAUD = { get ctx() { return AC; }, AUD, ac, acNew, acReady };
+['visibilitychange', 'pageshow', 'focus'].forEach(ev => window.addEventListener(ev, () => { if (!document.hidden && AC) { acKick(AC); AUD.lastT = -1; } }));
 function tone(f, t0, dur, type = 'sine', vol = 0.18, f2) { const a = ac(); if (!a || !ST.sound) return;
   const o = a.createOscillator(), g = a.createGain(); o.type = type; const t = a.currentTime + t0; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
   g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + dur + 0.05); }
@@ -2458,6 +2478,72 @@ const SND = {
   fanfare() { [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tone(f, i * 0.13, i === 5 ? 0.7 : 0.18, 'triangle', 0.2)); [1568, 2093].forEach((f, i) => tone(f, 0.8 + i * 0.1, 0.4, 'sine', 0.08)); },
   medal() { [784, 988, 1175, 1568].forEach((f, i) => tone(f, 0.9 + i * 0.1, 0.35, 'sine', 0.15)); },
 };
+// ---------- v5: background music — three original little tunes synthesized live with WebAudio ----------
+// park (bouncy, for the map and menus), boss (brave and bright), calm (music box, for coloring and reading)
+const MUSIC = (() => {
+  const NOTE = n => { const m = /^([A-G])(#|b)?(\d)$/.exec(n); if (!m) return 0; const b = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[m[1]] + (m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0); return 440 * Math.pow(2, (b + 12 * (+m[3] + 1) - 69) / 12); };
+  const seq = s => s.trim().split(/\s+/);
+  const SONGS = {
+    park: { bpm: 112, vol: 1, lead: 'mar', chords: ['C4 E4 G4', 'A3 C4 E4', 'F3 A3 C4', 'G3 B3 D4', 'C4 E4 G4', 'A3 C4 E4', 'F3 A3 C4|G3 B3 D4', 'C4 E4 G4'], bass: ['C3', 'A2', 'F2', 'G2', 'C3', 'A2', 'F2|G2', 'C3'],
+      mel: seq(`E5 G5 . E5 C5 D5 E5 .  A5 G5 E5 . C5 . A4 .  F5 A5 . F5 C5 D5 F5 .  G5 . B4 D5 G5 F5 D5 .
+                E5 G5 C6 . B5 G5 E5 .  A5 . G5 E5 C5 D5 E5 .  F5 E5 D5 C5 D5 . B4 G4  C5 . E5 G5 C6 - - .`), drums: 1 },
+    boss: { bpm: 128, vol: .9, lead: 'mar', chords: ['A3 C4 E4', 'F3 A3 C4', 'C4 E4 G4', 'E3 G#3 B3', 'A3 C4 E4', 'F3 A3 C4', 'D4 F4 A4|E3 G#3 B3', 'A3 C4 E4'], bass: ['A2', 'F2', 'C3', 'E2', 'A2', 'F2', 'D3|E2', 'A2'],
+      mel: seq(`A4 . C5 E5 A5 . G5 E5  F5 . E5 C5 A4 . C5 .  G5 . E5 G5 C6 B5 G5 .  G#5 . E5 . B4 . E5 .
+                A5 . E5 A5 C6 . B5 A5  F5 A5 . F5 C5 . A4 .  D5 F5 A5 F5 E5 . G#5 B5  A5 - - . E5 . A4 .`), drums: 2 },
+    calm: { bpm: 84, vol: .85, lead: 'box', chords: ['F3 A3 C4', 'D3 F3 A3', 'Bb3 D4 F4', 'C4 E4 G4', 'F3 A3 C4', 'D3 F3 A3', 'Bb3 D4 F4|C4 E4 G4', 'F3 A3 C4'], bass: ['F2', 'D2', 'Bb2', 'C3', 'F2', 'D2', 'Bb2|C3', 'F2'],
+      mel: seq(`A5 . C6 . A5 G5 F5 .  D5 . F5 . A5 . G5 .  F5 . D5 . Bb4 . D5 F5  E5 . G5 . C6 - - .
+                A5 . C6 . D6 C6 A5 .  G5 . F5 . D5 . F5 .  E5 . D5 . C5 . E5 G5  F5 - - . . . . .`), drums: 0 },
+  };
+  const KEY = 'juniperMusic';
+  let getCtx = () => null, a = null, bus = null, duckG = null, noise = null, mode = 'park', on = (() => { try { return localStorage.getItem(KEY) !== '0'; } catch (e) { return true; } })();
+  let running = false, timer = 0, nextT = 0, step = 0, level = 0.11, ducks = 0, quietOn = false, duckOff = 0;
+  function setup() { a = getCtx(); if (!a) return false; if (bus && bus.context === a) return true;
+    bus = a.createGain(); duckG = a.createGain(); const lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200;
+    bus.gain.value = 0; duckG.gain.value = 1; bus.connect(lp); lp.connect(duckG); duckG.connect(a.destination);
+    const len = a.sampleRate * 0.5, nb = a.createBuffer(1, len, a.sampleRate), d = nb.getChannelData(0); for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1; noise = nb;
+    nextT = a.currentTime + 0.15; return true; }
+  const target = () => (!on || !running || document.hidden) ? 0 : level * SONGS[mode].vol * (quietOn ? 0 : 1);
+  function fade(t = 0.6) { if (!bus) return; const g = bus.gain, n = a.currentTime; g.cancelScheduledValues(n); g.setValueAtTime(g.value, n); g.linearRampToValueAtTime(target(), n + t); }
+  // ---- instruments ----
+  function env(g, t, at, peak, dec) { g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + at); g.gain.exponentialRampToValueAtTime(0.0001, t + at + dec); }
+  function osc(type, f, t, dur, peak, at, dec, dest, det = 0) { const o = a.createOscillator(), g = a.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); o.detune.value = det; env(g, t, at, peak, dec); o.connect(g); g.connect(dest); o.start(t); o.stop(t + at + dec + 0.05); }
+  function lead(kind, f, t, len) { if (kind === 'box') { osc('sine', f, t, len, .5, .004, .9 + len, bus); osc('sine', f * 3, t, len, .08, .002, .25, bus); osc('sine', f * 2, t, len, .12, .003, .5, bus); }
+    else { osc('sine', f, t, len, .55, .005, .32 + len * .6, bus); osc('sine', f * 4, t, len, .1, .002, .08, bus); osc('triangle', f * 2, t, len, .08, .004, .18, bus, 4); } }
+  function chord(ns, t, len) { ns.split(' ').forEach((n, i) => { const f = NOTE(n); osc('triangle', f, t, len, .09, .03, len * .9, bus, i % 2 ? 6 : -6); }); }
+  function bass(n, t, len) { const f = NOTE(n); osc('triangle', f, t, len, .45, .01, len * .8, bus); osc('sine', f / 2, t, len, .25, .01, len * .7, bus); }
+  function hit(kind, t) { if (kind === 'kick') { const o = a.createOscillator(), g = a.createGain(); o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(48, t + .14); env(g, t, .004, .32, .14); o.connect(g); g.connect(bus); o.start(t); o.stop(t + .25); return; }
+    const s = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain(); s.buffer = noise; f.type = kind === 'shk' ? 'highpass' : 'bandpass'; f.frequency.value = kind === 'shk' ? 7000 : 1600; f.Q.value = kind === 'shk' ? .7 : 1.2;
+    env(g, t, .002, kind === 'shk' ? .022 : .08, kind === 'shk' ? .04 : .11); s.connect(f); f.connect(g); g.connect(bus); s.start(t, Math.random() * .3); s.stop(t + .2); }
+  // ---- sequencer: eighth notes, looked ahead a little so it never stutters ----
+  function tick() { if (!running || !a) return; if (a.state !== 'running') { nextT = a.currentTime + 0.1; return; } const S = SONGS[mode], e8 = 30 / S.bpm;
+    if (nextT < a.currentTime - 0.2) nextT = a.currentTime + 0.05;
+    while (nextT < a.currentTime + 0.35) { const t = nextT, i = step % S.mel.length, bar = Math.floor(i / 8) % 8, pos = i % 8;
+      const m = S.mel[i]; if (m !== '.' && m !== '-') { let n = 1; while (S.mel[(i + n) % S.mel.length] === '-') n++; lead(S.lead, NOTE(m), t, e8 * n); }
+      const cs = S.chords[bar].split('|'), bs = S.bass[bar].split('|'), half = pos >= 4 ? cs.length - 1 : 0;
+      if (S.drums) { if (pos === 2 || pos === 6) chord(cs[pos >= 4 ? cs.length - 1 : 0], t, e8 * 1.6); } else if (pos === 0 || pos === 4) chord(cs[half], t, e8 * 3.6);
+      if (pos === 0 || pos === 4) bass(bs[pos >= 4 ? bs.length - 1 : 0], t, e8 * 1.8); else if (S.drums && (pos === 3 || pos === 7)) bass(bs[pos >= 4 ? bs.length - 1 : 0], t, e8 * .8);
+      if (S.drums) { if (pos === 0 || pos === 4) hit('kick', t); if (pos === 2 || pos === 6) hit('clap', t); hit('shk', t); hit('shk', t + e8 / 2); if (S.drums === 2 && pos === 7) hit('kick', t + e8 / 2); }
+      step++; nextT += e8; } }
+  function start() { if (!on) return; if (!setup()) return; if (!running) { running = true; nextT = a.currentTime + 0.12; clearInterval(timer); timer = setInterval(tick, 90); tick(); } fade(1.2); }
+  function stop() { running = false; clearInterval(timer); if (bus) fade(0.3); }
+  function setMode(m) { if (!SONGS[m] || m === mode) return; mode = m; step = 0; if (running && a) { nextT = a.currentTime + 0.25; fade(0.2); setTimeout(() => fade(0.8), 260); } }
+  // voice ducking: music dips quickly when someone talks and comes back gently a moment after
+  function duck(v) { if (!duckG) return; const g = duckG.gain, n = a.currentTime; clearTimeout(duckOff);
+    if (v) { g.cancelScheduledValues(n); g.setValueAtTime(g.value, n); g.linearRampToValueAtTime(0.28, n + 0.12); }
+    else duckOff = setTimeout(() => { if (!duckG) return; const m = a.currentTime; g.cancelScheduledValues(m); g.setValueAtTime(g.value, m); g.linearRampToValueAtTime(1, m + 0.9); }, 700); }
+  function quiet(v) { quietOn = !!v; fade(0.5); }
+  function toggle(v) { on = v === undefined ? !on : !!v; try { localStorage.setItem(KEY, on ? '1' : '0'); } catch (e) {} if (on) start(); else stop(); return on; }
+  document.addEventListener('visibilitychange', () => fade(document.hidden ? 0.05 : 1));
+  return { init(f) { getCtx = f; }, start, stop, setMode, duck, quiet, toggle, rebuild() { bus = null; if (running) { running = false; start(); } }, get on() { return on; }, get mode() { return mode; }, SONGS, NOTE,
+    // render a sample offline (used to make an mp3 preview)
+    async render(m, secs) { const oc = new OfflineAudioContext(1, 44100 * secs, 44100); const keep = [getCtx, a, bus, duckG, running, mode, step, nextT];
+      getCtx = () => oc; bus = null; mode = m; step = 0; setup(); running = true; on = true; bus.gain.value = level * SONGS[m].vol * 2.2; nextT = 0.05;
+      while (nextT < secs - 0.5) { const save = nextT; Object.defineProperty(oc, 'currentTime', { value: save - 0.3, configurable: true }); Object.defineProperty(oc, 'state', { value: 'running', configurable: true }); tick(); }
+      const buf = await oc.startRendering(); [getCtx, a, bus, duckG, running, mode, step, nextT] = keep; return buf.getChannelData(0); } };
+})();
+window.MUSIC = MUSIC;
+
+MUSIC.init(ac);
 // ---------- speech ----------
 const SP = { ok: JVOICE.ok, n: 0 };
 const loadVoices = () => JVOICE.refresh();
@@ -2515,40 +2601,56 @@ const VO = (() => {
       if (!/\d/.test(s) || o.full) out.push([key(v, s), v, s]);
       if (/\d/.test(s) && !o.full) frags(s).forEach(f => out.push([key(v, f.t), v, f.t])); }); });
     return out; }
-  function load() { if (MAN || loading) return loading; loading = fetch('vo/manifest.json?b=' + (window.JBUILD || '')).then(r => r.json()).then(m => { MAN = m; return m; }).catch(() => { MAN = MAN || {}; }); return loading; }
+  // the clip list; a failed or slow load is retried later instead of silently switching every line to device speech
+  function load() { if (MAN) return Promise.resolve(MAN); if (loading) return loading;
+    const tmo = new Promise(r => setTimeout(r, 6000, null));
+    loading = Promise.race([fetch('vo/manifest.json?b=' + (window.JBUILD || '')).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }), tmo])
+      .then(m => { if (m && typeof m === 'object') { MAN = m; alog('manifest ok'); } else throw new Error('timeout'); return MAN; })
+      .catch(e => { alog('manifest fail ' + e); setTimeout(() => { loading = null; }, 1500); return null; });
+    return loading; }
   let loading = null;
   function buf(k) { if (BUF.has(k)) { const b = BUF.get(k); BUF.delete(k); BUF.set(k, b); return Promise.resolve(b); } if (PEND.has(k)) return PEND.get(k);
     const a = ac(); if (!a) return Promise.resolve(null);
-    const p = fetch('vo/' + k + '.mp3').then(r => { if (!r.ok) throw new Error('404'); return r.arrayBuffer(); })
-      .then(ab => new Promise((res, rej) => { try { const pr = a.decodeAudioData(ab, res, rej); if (pr && pr.catch) pr.catch(rej); } catch (e) { rej(e); } }))
-      .then(b => { BUF.set(k, b); PEND.delete(k); while (BUF.size > 90) BUF.delete(BUF.keys().next().value); return b; })
-      .catch(() => { PEND.delete(k); return null; });
+    const get = (n) => fetch('vo/' + k + '.mp3' + (n ? '?r=' + n : ''), n ? { cache: 'reload' } : undefined).then(r => { if (!r.ok || r.status === 206) throw new Error('http ' + r.status); return r.arrayBuffer(); })
+      .then(ab => { if (!ab || ab.byteLength < 200) throw new Error('short'); return new Promise((res, rej) => { let d = false; const ok = b => { if (!d) { d = true; res(b); } }, no = e => { if (!d) { d = true; rej(e || new Error('decode')); } };
+        try { const pr = a.decodeAudioData(ab, ok, no); if (pr && pr.then) pr.then(ok, no); } catch (e) { no(e); } setTimeout(() => no(new Error('decode timeout')), 5000); }); });
+    const p = get(0).catch(e => { alog('clip retry ' + k + ' ' + e); return new Promise(r => setTimeout(r, 250)).then(() => get(1)); })
+      .then(b => { BUF.set(k, b); PEND.delete(k); while (BUF.size > 140) BUF.delete(BUF.keys().next().value); return b; })
+      .catch(e => { alog('clip fail ' + k + ' ' + e); PEND.delete(k); return null; });
     PEND.set(k, p); return p; }
   function prefetch(text, ch, esOnly) { if (!MAN) return; plan(text, ch, esOnly).forEach(u => { if (u.k) buf(u.k); }); }
-  let tok = 0, src = null, an = null, raf = 0;
-  function stop() { tok++; if (src) { try { src.onended = null; src.stop(); } catch (e) {} src = null; } cancelAnimationFrame(raf); try { speechSynthesis.cancel(); } catch (e) {} }
+  let tok = 0, src = null, an = null, raf = 0, pending = null, wd = 0, curLine = null;
+  function stop() { if (curLine && !curLine.st) stats.cut = (stats.cut || 0) + 1; curLine = null; tok++; pending = null; clearTimeout(wd); if (window.MUSIC) MUSIC.duck(false); if (src) { try { src.onended = null; src.stop(); } catch (e) {} src = null; } cancelAnimationFrame(raf); try { speechSynthesis.cancel(); } catch (e) {} }
   function ttsSay(s, es, cb) { if (!JVOICE.ok) { setTimeout(cb, 60 * s.length); return; } try { const u = JVOICE.utter(s, es); let fired = false; const fin = () => { if (!fired) { fired = true; cb(); } }; u.onend = fin; u.onerror = fin; speechSynthesis.speak(u); setTimeout(fin, 900 + 110 * s.length); } catch (e) { cb(); } }
   // play a playlist; hooks.onstart / onflap / onend drive the talking mouth
-  function play(units, hooks = {}) { stop(); const my = tok; const a = ac(); let i = 0, started = false;
-    if (a && !an) { an = a.createAnalyser(); an.fftSize = 512; an.connect(a.destination); }
+  function play(units, hooks = {}, from = 0) { stop(); const my = tok; let a = ac(); let i = from, started = false;
+    const out = () => { a = ac(); if (a && (!an || an.context !== a)) { an = a.createAnalyser(); an.fftSize = 512; an.connect(a.destination); } return an; };
+    out(); stats.lines = (stats.lines || 0) + 1; const line = curLine = { st: 0 }; if (window.MUSIC) MUSIC.duck(true);
     const data = an ? new Uint8Array(an.fftSize) : null; let lastOpen = false;
     const meter = () => { if (my !== tok) return; if (an && src) { an.getByteTimeDomainData(data); let s = 0; for (let j = 0; j < data.length; j += 4) { const d = (data[j] - 128) / 128; s += d * d; } const rms = Math.sqrt(s / (data.length / 4)); const open = rms > 0.035; if (open !== lastOpen) { lastOpen = open; hooks.onmouth && hooks.onmouth(open); } } raf = requestAnimationFrame(meter); };
-    const next = () => { if (my !== tok) return; if (i >= units.length) { src = null; cancelAnimationFrame(raf); hooks.onmouth && hooks.onmouth(false); hooks.onend && hooks.onend(); return; }
+    const next = () => { if (my !== tok) return; if (i >= units.length) { src = null; stats.done = (stats.done || 0) + 1; if (window.MUSIC) MUSIC.duck(false); cancelAnimationFrame(raf); hooks.onmouth && hooks.onmouth(false); hooks.onend && hooks.onend(); return; }
       const u = units[i++]; stats.units++;
       const go = () => { if (my !== tok) return;
-        if (u.tts) { stats.tts++; if (stats.missing.length < 300) stats.missing.push(u.tts); if (!started) { started = true; hooks.onstart && hooks.onstart(); } hooks.onfake && hooks.onfake(u.tts); ttsSay(u.tts, u.es, next); return; }
-        buf(u.k).then(b => { if (my !== tok) return; if (!b) { stats.tts++; if (stats.missing.length < 300) stats.missing.push('[load] ' + u.s); ttsSay(u.s, false, next); return; }
-          stats.clip++; const s = a.createBufferSource(); s.buffer = b; s.connect(an); src = s; s.onended = () => { if (src === s) src = null; next(); };
-          if (!started) { started = true; hooks.onstart && hooks.onstart(); cancelAnimationFrame(raf); raf = requestAnimationFrame(meter); }
-          s.start(); }); };
+        if (u.tts) { stats.tts++; if (stats.missing.length < 300) stats.missing.push(u.tts); if (!started) { started = true; line.st = 1; stats.heardTts = (stats.heardTts || 0) + 1; hooks.onstart && hooks.onstart(); } hooks.onfake && hooks.onfake(u.tts); ttsSay(u.tts, u.es, next); return; }
+        Promise.all([buf(u.k), acReady(900)]).then(([b, live]) => { if (my !== tok) return; if (!b) { stats.tts++; if (stats.missing.length < 300) stats.missing.push('[load] ' + u.s); ttsSay(u.s, false, next); return; }
+          // audio still asleep (iOS wants a tap first): keep this line and say it on the very next tap instead of losing it
+          if (!live) { stats.held = (stats.held || 0) + 1; alog('held: ' + u.s.slice(0, 40)); pending = { units, hooks, from: i - 1, t: Date.now(), my }; return; }
+          out(); stats.clip++; const s = a.createBufferSource(); s.buffer = b; s.connect(an); src = s; let ended = false;
+          const fin = () => { if (ended) return; ended = true; clearTimeout(wd); if (src === s) src = null; next(); };
+          s.onended = fin; clearTimeout(wd); wd = setTimeout(() => { if (ended || my !== tok) return; alog('watchdog ' + a.state + ' ' + u.s.slice(0, 30)); stats.stall = (stats.stall || 0) + 1;
+            if (a.state !== 'running') { ended = true; try { s.onended = null; s.stop(); } catch (e) {} pending = { units, hooks, from: i - 1, t: Date.now(), my }; } else fin(); }, b.duration * 1000 + 1500);
+          if (!started) { started = true; line.st = 1; stats.heard = (stats.heard || 0) + 1; hooks.onstart && hooks.onstart(); cancelAnimationFrame(raf); raf = requestAnimationFrame(meter); }
+          try { s.start(); stats.started = (stats.started || 0) + 1; } catch (e) { alog('start err ' + e); fin(); } }); };
       if (i > 1 && u.gap) setTimeout(go, u.gap); else go(); };
     load().then(() => { if (my === tok) next(); }); return my; }
+  // replay a line that was held because audio was asleep, as long as it is still fresh
+  function resumeHeld() { const p = pending; if (!p) return; pending = null; if (Date.now() - p.t > 12000) { p.hooks.onend && p.hooks.onend(); return; } alog('replay held'); stats.replayed = (stats.replayed || 0) + 1; play(p.units, p.hooks, p.from); }
   // iOS: the first tap unlocks audio; also let it play with the ring switch on silent (iOS 17+)
-  function unlock() { try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {} const a = ac(); if (!a) return;
-    try { const b = a.createBuffer(1, 1, 22050), s = a.createBufferSource(); s.buffer = b; s.connect(a.destination); s.start(0); } catch (e) {} }
-  ['pointerdown', 'touchend', 'click'].forEach(ev => document.addEventListener(ev, unlock, { capture: true, passive: true }));
+  function unlock() { try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {} acGesture();
+    if (pending) acReady(900).then(ok => { if (ok) resumeHeld(); }); }
+  ['touchstart', 'touchend', 'pointerdown', 'pointerup', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, unlock, { capture: true, passive: true }));
   load();
-  return { LNAME, LKW, sndKey, names, plan, need, play, stop, prefetch, load, key, norm, sentences, segments, frags, vOf, CH, stats, get MAN() { return MAN; } };
+  return { resumeHeld, get pending() { return pending; }, LNAME, LKW, sndKey, names, plan, need, play, stop, prefetch, load, key, norm, sentences, segments, frags, vOf, CH, stats, get MAN() { return MAN; } };
 })();
 
 function chName(el) { const c = chrOf(el); const m = c && c.getAttribute && (c.getAttribute('class') || '').match(/\bchr-([a-z]+)/); return m ? m[1] : 'juniper'; }
@@ -2556,6 +2658,10 @@ function speak(text, opts = {}) { window.__spk = (window.__spk || 0) + 1;
   if (SP.talker) talkOff(SP.talker); SP.talker = null; const my = ++SP.n;
   if (!ST.voice || !text) { VO.stop(); if (opts.onend) setTimeout(opts.onend, 300); return; }
   const who = opts.who === undefined ? defaultTalker() : opts.who; SP.talker = who; const ch = opts.ch || chName(who);
+  // the clip list may still be loading right after launch: wait for it (briefly) so early lines use the recorded voice
+  if (!VO.MAN) { VO.stop(); VO.load().then(() => { if (my === SP.n) speakNow(text, opts, who, ch, my); }); return; }
+  speakNow(text, opts, who, ch, my); }
+function speakNow(text, opts, who, ch, my) {
   const units = VO.plan(String(text), ch, !!opts.es); SP.last = { text: String(text), ch, units };
   if (!units.length) { VO.stop(); if (opts.onend) opts.onend(); return; }
   const c = chrOf(who); const shownCh = c ? chName(who) : null; // speaker check: the animated face must use the same voice as the clip
@@ -2762,12 +2868,13 @@ let REVT = 0; // a tap anywhere hurries the reveal along but still reaches the b
 document.addEventListener('pointerdown', () => { if (!revOn) return; const L = $('reveal'); if (L.classList.contains('out')) return; clearTimeout(REVT); L.classList.add('out'); REVT = setTimeout(nextReveal, 300); }, true);
 
 // ---------- navigation ----------
-function show(id) { const so = $('story'); if (so && so.classList.contains('on') && id !== 'map') { so.className = 'story'; hush(); } document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id)); window.scrollTo(0, 0); bubbleOff(); }
+function musicFor(id) { if (!window.MUSIC) return; MUSIC.setMode(id === 'play' && $('play').classList.contains('bossmode') ? 'boss' : 'park'); MUSIC.quiet(false); if (ST.sound && MUSIC.on && AC && AC.state === 'running') MUSIC.start(); }
+function show(id) { const so = $('story'); if (so && so.classList.contains('on') && id !== 'map') { so.className = 'story'; hush(); } document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id)); musicFor(id); window.scrollTo(0, 0); bubbleOff(); }
 const starHtml = () => `${ICON.star}<span>${ST.stars}</span>`;
 // ---------- start ----------
 $('startFox').innerHTML = juniperSvg(ST.outfit, 'wave');
 $('startFriends').innerHTML = ['mamafox', 'scramble', 'marcus', 'pearl', 'toulouse', 'winnie', 'oscar'].map((n, i) => `<span class="sf" style="--i:${i}">${CHARS.svg(n)}</span>`).join('');
-$('start').onclick = () => { ac(); SND.fanfare(); loadVoices();
+$('start').onclick = () => { ac(); SND.fanfare(); setTimeout(() => { if (ST.sound) MUSIC.start(); }, 1600); loadVoices();
   if (SP.ok) { try { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); } catch (e) {} } VO.load();
   const first = !ST.done; goHome(); setTimeout(() => sayBub($('homeFox'), first ? "Hi Aspen! I'm Juniper. Let's play and learn in Washington Market Park!" : `Hi Aspen! Welcome back. Let's play!`), 450); };
 // ---------- home ----------
@@ -2782,8 +2889,10 @@ function goHome() { checkUpdate(); setStars(); show('home');
   { const nr = BOSSES.filter(b => hasRelic(b.relic)).length; $('tVaultIc').innerHTML = ST.equip && hasRelic(ST.equip) ? relicArt(ST.equip, ST.relics[ST.equip]) : chestSvg(0); $('tVaultSub').textContent = nr ? `${nr} of ${BOSSES.length} relics` : 'Beat a boss to win treasure'; }
   $('tDressSub').textContent = `${OUTFITS.filter(outfitOpen).length} of ${OUTFITS.length} outfits`;
   const ns = typeof EXTRA_STICKERS !== 'undefined' ? EXTRA_STICKERS.filter((s, i) => stickerUnlocked(i)).length : 0; $('tColorSub').textContent = `${ns} new sticker${ns === 1 ? '' : 's'} unlocked`;
-  $('hSound').innerHTML = ST.sound ? ICON.speak : ICON.soundOff; }
-$('hSound').onclick = () => { ST.sound = !ST.sound; ST.voice = ST.sound; save(); if (!ST.sound) hush(); goHome(); SND.tick(); };
+  $('hSound').innerHTML = ST.sound ? ICON.speak : ICON.soundOff; musicBtn(); }
+$('hMusic').onclick = () => { SND.tick(); MUSIC.toggle(); musicBtn(); };
+function musicBtn() { $('hMusic').innerHTML = MUSIC.on && ST.sound ? ICON.music : ICON.musicOff; $('hMusic').classList.toggle('off', !(MUSIC.on && ST.sound)); }
+$('hSound').onclick = () => { ST.sound = !ST.sound; ST.voice = ST.sound; save(); if (!ST.sound) { hush(); MUSIC.stop(); } else MUSIC.start(); goHome(); SND.tick(); };
 $('homeFox').onclick = e => { charTap($('homeFox'), JUNI[Math.floor(Math.random() * JUNI.length)]); sparkAt(e.clientX, e.clientY, 12); };
 $('tPath').onclick = () => { SND.tap(); openMap('park'); };
 $('tShelf').onclick = () => { SND.tap(); openShelves(); };
@@ -3497,7 +3606,7 @@ $('guideFox').onclick = () => { if (RUN && !RUN.locked) { bounceChr($('guideFox'
 $('pSpeak').onclick = () => { if (RUN) { SND.tick(); speak(cur().say); } };
 const cur = () => RUN.items[RUN.i];
 function progress() { $('pProg').innerHTML = RUN.items.map((_, k) => `<i>${k < RUN.i || RUN.got[k] ? ICON.star : ICON.starOff}</i>`).join(''); }
-function renderItem() { const it = cur(); RUN.hinted = false; RUN.locked = false; RUN.itemMiss = false; RUN.itemPow = false; RUN.help = null; hideHint(); progress(); relicBtn();
+function renderItem() { const it = cur(); RUN.hinted = false; RUN.locked = false; RUN.itemMiss = false; RUN.itemPow = false; RUN.help = null; hideHint(); progress(); relicBtn(); if (window.MUSIC) MUSIC.quiet(it.type === 'read');
   $('bubble').innerHTML = shown(it.say); stage.className = 'stage swap'; stage.innerHTML = ''; setTimeout(() => stage.classList.remove('swap'), 500); setTimeout(() => stage.classList.remove('swap'), 1500);
   (R[it.type] || R.choice)(it, stage); bindSay(stage);
   speak(it.say); if (it.hint) VO.prefetch(it.hint, 'marcus'); const nx = RUN.items[RUN.i + 1]; if (nx) VO.prefetch(nx.say, 'juniper'); }
