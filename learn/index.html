@@ -5,7 +5,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Juniper Learn">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=5"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=5"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=5"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#fff7ec">
-<script>window.JBUILD='20261116092925-3f157c';</script>
+<script>window.JBUILD='20261116100938-b36e58';</script>
 <title>Juniper's Learning Park</title>
 <style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;height:100%;overflow:hidden;background:#fff7ec;font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold","Nunito","Avenir Next",system-ui,sans-serif;color:#3b2a20;touch-action:manipulation}
@@ -979,6 +979,12 @@ html,body{background:#fff4fb;color:var(--ol)}
 .relicbtn.nudge{animation:g6nudge 1.1s ease-in-out infinite;box-shadow:0 0 0 4px #ffd60a,0 0 26px 8px rgba(255,214,10,.8)!important}
 @keyframes g6nudge{0%,100%{transform:scale(1) rotate(0)}30%{transform:scale(1.12) rotate(-6deg)}60%{transform:scale(1.06) rotate(6deg)}}
 .relicbtn .rtip{position:absolute;top:50%;right:100%;transform:translateY(-50%);margin-right:10px;z-index:60;white-space:nowrap;background:#ffd60a;color:#3b2147;font-weight:900;font-size:15px;padding:3px 10px;border-radius:12px;border:3px solid #3b2147;pointer-events:none;animation:g6pop .3s ease-out backwards}
+/* v6-3 relic powers */
+.relicbtn.zapped{animation:rzap .7s ease}
+@keyframes rzap{0%{transform:scale(1)}30%{transform:scale(1.25) rotate(-8deg);filter:drop-shadow(0 0 14px #ffe36b)}100%{transform:scale(1)}}
+#hintBox.relicshow{box-shadow:0 0 0 5px #ffd93b,0 0 30px #ffd93b}
+.ve-txt em.bestfor{font-style:normal;font-weight:800;background:#ffd93b;color:#3b2147;border-radius:14px;padding:3px 12px;font-size:clamp(13px,1.8vmin,17px)}
+.stage.relicpeek .flashfr .dot{animation:none;opacity:1}
 </style></head>
 <body>
 <div id="start" class="screen on">
@@ -3509,6 +3515,15 @@ const RELICS = {
   seed: { name: 'Golden Orange Sun Seed', power: 'Sunshine', does: 'grows the right answer', lore: 'One golden seed from the sunniest orange tree in the orchard. Plant an idea and watch it grow.' },
   chip: { name: 'Silicon Starchip Relic', power: 'Compute', does: 'computes the right answer', lore: 'The star-shaped chip from the very first robot in Santa Clara. It hums a happy beep when you think hard.' },
 };
+// v6: every relic has a favorite kind of problem and its own way of helping
+const RFIT = { moonstone: ['read', 'light'], compass: ['logic', 'light'], spoon: ['spanish', 'scoop'], skate: ['skate', 'light'], tee: ['math', 'light'], lantern: ['read', 'echo'],
+  coqui: ['spanish', 'echo'], sunkey: ['logic', 'light'], amulet: ['logic', 'show'], acorn: ['math', 'scoop'], prism: ['read', 'light'], torch: ['spanish', 'light'],
+  glacier: ['logic', 'scoop'], mirror: ['read', 'show'], crown: ['skate', 'echo'], lens: ['math', 'show'], seed: ['math', 'scoop'], chip: ['math', 'show'] };
+const SUBW = { math: 'math', read: 'reading', logic: 'thinking', spanish: 'Spanish', skate: 'skating' };
+const KINDW = { light: 'lights the way to the answer', scoop: 'scoops away two wrong answers', echo: 'reads the question again, then helps', show: 'shows Marcus\'s way to solve it' };
+const relicFit = id => { const f = RFIT[id] || ['any', 'light']; return { best: f[0], kind: f[1] }; };
+const relicMatch = (id, subj) => relicFit(id).best === subj;
+const relicShort = id => RELICS[id].name.replace(/^.*'s /, '').replace(/ Relic$/, '').replace(/^(Ancient|Gazebo|Crystal|Diamond|Fox Spirit|Coquí|El Morro|Taíno|Central Park|Rockefeller|Liberty|Glacier|Frozen Pond|Vail Aurora|Telescope|Golden Orange|Silicon) /, '');
 const relicName = (id, r) => RPRE[r || 0] + RELICS[id].name;
 let RLN = 0;
 function relicObj(id, r, u) { const M = r >= 3 ? `url(#${u}gd)` : r === 2 ? '#d8c2ff' : r === 1 ? '#e4ecf7' : '#d9b48a'; // metal trim gets fancier with rarity
@@ -3633,10 +3648,17 @@ function relicBtn() { const b = $('pRelic'); if (!RUN) { b.style.display = 'none
   b.classList.toggle('empty', left <= 0); }
 function useRelic() { if (!RUN) return; if (RUN.shield) { if (!RUN.shieldBusy) { RUN.shieldBusy = true; breakShield(); } return; } if (RUN.locked) return; const ar = RUN.relic; if (!ar) return;
   if (RUN.charges <= 0) { SND.boop(); wiggle($('pRelic')); speak('Your relic is resting. It will be ready in the next game.'); return; }
-  const strong = ar.r >= 3; const ok = RUN.help ? RUN.help(strong) : false;
-  if (!ok) { SND.boop(); wiggle($('pRelic')); speak('Your relic cannot help with this one. You can do it!'); return; }
-  relicCalm(); RUN.charges--; RUN.itemPow = true; RUN.powUsed = (RUN.powUsed || 0) + 1; SND.medal(); sparkEl($('pRelic'), 18); relicBtn();
-  const R0 = RELICS[ar.id]; speak(`${R0.power}! It ${R0.does}.`); }
+  const F = relicFit(ar.id), match = RUN.mode !== 'boss' && F.best === RUN.a.subj; const strong = ar.r >= 3 || match; const it = cur();
+  if (typeof RUN.help !== 'function') { SND.boop(); wiggle($('pRelic')); speak('Your relic cannot help with this one. You can do it!'); return; }
+  const fire = () => { if (!RUN || RUN.locked) return false; if (F.kind === 'scoop') { const ok = RUN.help(false); if (ok) { RUN.help(false); if (strong) RUN.help(false); } return ok; } return RUN.help(strong); };
+  let ok;
+  if (F.kind === 'echo' && it && it.say) { ok = true; relicFx(); speak(relicUseLine(ar.id, match), { who: $('guideFox'), onend: () => speak(it.say, { onend: () => fire() }) }); }
+  else if (F.kind === 'show' && it && it.hint) { ok = true; relicFx(); const sg = document.getElementById('stage'); if (sg) sg.classList.add('relicpeek'); const ht = it.hint.replace(/^Patience, Aspen\.\s*/, ''); RUN.lastHint = ht; $('hintIc').innerHTML = CHARS.svg('marcus'); $('hintTxt').innerHTML = shown(ht); $('hintBox').classList.add('on', 'relicshow');
+    setTimeout(() => $('hintBox').classList.remove('relicshow'), 1600); speak(relicUseLine(ar.id, match), { who: $('guideFox'), onend: () => speak(ht, { who: $('hintIc'), ch: 'marcus', onend: () => fire() }) }); }
+  else { ok = fire(); if (ok) { relicFx(); speak(relicUseLine(ar.id, match)); } }
+  if (!ok) { SND.boop(); wiggle($('pRelic')); speak('Your relic cannot help with this one. You can do it!'); return; } }
+function relicFx() { relicCalm(); RUN.charges--; RUN.itemPow = true; RUN.powUsed = (RUN.powUsed || 0) + 1; SND.medal(); sparkEl($('pRelic'), 18); relicBtn(); const b = $('pRelic'); b.classList.remove('zapped'); void b.offsetWidth; b.classList.add('zapped'); }
+function relicUseLine(id, match) { const R0 = RELICS[id], F = relicFit(id); return match ? `${R0.power}! Super match! It ${KINDW[F.kind]}.` : `${R0.power}! It ${KINDW[F.kind]}.`; }
 // ---------- boss gate on the map ----------
 function tapBoss(b) { const st = bossState(b);
   if (st === 'locked') { SND.boop(); sayBub($('mapJun'), `Finish every stop in ${secsOf(b.w)[b.si].name} to meet the boss!`); return; }
@@ -3701,7 +3723,7 @@ function openChest(b, r, info) { const L = $('chest'); const R0 = RELICS[b.relic
   L.className = 'chest on r' + r; RUN && (RUN.locked = true);
   L.innerHTML = `<div class="ch-rays"></div><div class="ch-card"><div class="ch-box">${chestSvg(r)}<div class="ch-beam"></div><div class="ch-relic">${relicArt(b.relic, r)}</div></div>
     <div class="ch-rar">${RR.n}${info.upgraded ? ' · Upgraded!' : ''}</div><div class="ch-name">${relicName(b.relic, r)}</div>
-    <div class="ch-lore">${R0.lore}</div><div class="ch-pow"><b>Power: ${R0.power}</b> · ${R0.does}${r >= 3 ? ' (super strong!)' : ''} · ${RR.ch + (r >= 3 ? 1 : 0)} use${RR.ch + (r >= 3 ? 1 : 0) > 1 ? 's' : ''} each game</div>
+    <div class="ch-lore">${R0.lore}</div><div class="ch-pow"><b>Power: ${R0.power}</b> · it ${KINDW[relicFit(b.relic).kind]} · best for ${SUBW[relicFit(b.relic).best]}${r >= 3 ? ' (super strong!)' : ''} · ${RR.ch + (r >= 3 ? 1 : 0)} use${RR.ch + (r >= 3 ? 1 : 0) > 1 ? 's' : ''} each game</div>
     <div class="ch-mast"><span>First try: <b>${RUN ? RUN.first : 0}/${RUN ? RUN.hpMax : 0}</b></span><span>Section medals: <b>${Math.round(info.med * 100)}%</b></span>${info.best > r ? `<span>Your best: <b>${RAR[info.best].n}</b></span>` : ''}</div>
     <button class="playbtn" id="chGo"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#43a047" stroke="#222" stroke-width="5"/><path d="M28 52 l14 14 30 -30" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Hooray!</span></button></div>`;
   SND.whoosh(); setTimeout(() => { L.classList.add('shake'); tone(200, 0, 0.1, 'square', 0.06); }, 300);
@@ -3712,7 +3734,7 @@ function openChest(b, r, info) { const L = $('chest'); const R0 = RELICS[b.relic
 // ---------- relic vault ----------
 function openVault() { setStars(); show('vault'); renderVault(); speak('This is your Relic Vault, Aspen! Tap a treasure to hear its story.'); }
 function renderVault() { const eq = ST.equip && hasRelic(ST.equip) ? ST.equip : null;
-  $('vEquip').innerHTML = eq ? `<div class="ve-ped"><span class="ve-art">${relicArt(eq, ST.relics[eq])}</span></div><div class="ve-txt"><small>Equipped relic</small><b>${relicName(eq, ST.relics[eq])}</b><span class="rpill r${ST.relics[eq]}">${RAR[ST.relics[eq]].n}</span><em>${RELICS[eq].power}: ${RELICS[eq].does}</em></div>`
+  $('vEquip').innerHTML = eq ? `<div class="ve-ped"><span class="ve-art">${relicArt(eq, ST.relics[eq])}</span></div><div class="ve-txt"><small>Equipped relic</small><b>${relicName(eq, ST.relics[eq])}</b><span class="rpill r${ST.relics[eq]}">${RAR[ST.relics[eq]].n}</span><em>${RELICS[eq].power}: it ${KINDW[relicFit(eq).kind]}</em><em class="bestfor">Best for ${SUBW[relicFit(eq).best]} games (extra use + super help!)</em></div>`
     : `<div class="ve-ped empty"><span class="ve-art">${relicArt('moonstone', 0, { sil: true })}</span></div><div class="ve-txt"><small>Equipped relic</small><b>No relic yet</b><em>Beat a boss at the end of a park section to win your first treasure!</em></div>`;
   const n = BOSSES.filter(b => hasRelic(b.relic)).length;
   $('vCount').textContent = `${n} of ${BOSSES.length} relics`;
@@ -3722,7 +3744,7 @@ function renderVault() { const eq = ST.equip && hasRelic(ST.equip) ? ST.equip : 
     if (!hasRelic(b.relic)) { SND.boop(); wiggle(c); speak(`Beat the ${bossName(b)} to find this treasure!`); return; } SND.pop(); openLore(b); }); }
 function openLore(b) { const r = ST.relics[b.relic], R0 = RELICS[b.relic]; const L = $('lore'); L.className = 'lore on r' + r;
   L.innerHTML = `<div class="lo-card"><div class="lo-art spin">${relicArt(b.relic, r)}</div><div class="lo-name">${relicName(b.relic, r)}</div><div class="rarladder">${RAR.map((x, k) => `<span class="rpill r${k}${k <= r ? '' : ' off'}">${x.n}</span>`).join('')}</div>
-    <div class="lo-txt">${R0.lore}</div><div class="lo-pow"><b>Power: ${R0.power}</b> · ${R0.does}</div><div class="lo-from">Won from the ${bossName(b)}${r < 4 ? '. Beat the boss again with fewer hints to upgrade it!' : '. It is Mythic, the rarest of all!'}</div>
+    <div class="lo-txt">${R0.lore}</div><div class="lo-pow"><b>Power: ${R0.power}</b> · it ${KINDW[relicFit(b.relic).kind]} · best for ${SUBW[relicFit(b.relic).best]}</div><div class="lo-from">Won from the ${bossName(b)}${r < 4 ? '. Beat the boss again with fewer hints to upgrade it!' : '. It is Mythic, the rarest of all!'}</div>
     <div class="bi-btns"><button class="bigbtn back" id="loBack">${ICON.back}</button><button class="bigbtn go" id="loEq">${ST.equip === b.relic ? 'Equipped' : 'Equip'}</button></div></div>`;
   speak(`${relicName(b.relic, r)}. ${R0.lore}`);
   $('loBack').onclick = () => { SND.tick(); hush(); L.className = 'lore'; };
@@ -3755,7 +3777,7 @@ function extraVoLines(add, gen) {
   ['Use your relic, Aspen! Tap it to break the shield!', 'Your relic broke the shield! Hooray!', 'Your relic is resting. It will be ready in the next game.', 'Your relic cannot help with this one. You can do it!',
    'This is your Relic Vault, Aspen! Tap a treasure to hear its story.', 'Finish the stops before this one first. Poco a poco!'].forEach(t => add(t));
   BOSSES.forEach(b => { add(b.intro, b.ch); add(b.defeat, b.ch); const R0 = RELICS[b.relic], pb = prevBoss(b);
-    add(`${R0.power}! It ${R0.does}.`); add(`${R0.power} is ready!`);
+    add(relicUseLine(b.relic, true)); add(relicUseLine(b.relic, false)); add(`Psst, Aspen! Your ${relicShort(b.relic)} is great for ${SUBW[relicFit(b.relic).best]} problems. Tap it!`); add(`${R0.power} is ready!`);
     add(`Beat the ${bossName(b)} to find this treasure!`); add(`A mystery treasure! Beat the ${bossName(b)} to open it.`); add(`Beat the ${bossName(b)} to open this part of the map!`);
     add(`Finish every stop in ${secsOf(b.w)[b.si].name} to meet the boss!`, 'juniper', gen);
     if (pb) { add(`You need the ${RELICS[pb.relic].name} first. Beat the ${bossName(pb)}!`); add(`The ${RELICS[pb.relic].name} opens this boss gate!`); add(`This gate needs the ${RELICS[pb.relic].name}.`); }
@@ -3806,7 +3828,7 @@ function startActivity(id, mode = 'free', ctx = {}) { const a = C.BY[id]; if (!a
   const world = mode.startsWith('path') ? (ctx.world || 'park') : null, level = ctx.level || 0;
   const items = C.makeItems(a); const extra = a.n >= 3 ? (level >= 3 ? 4 : level >= 2 ? 2 : 0) : 0;
   for (let k = 0; k < 3 && items.length < a.n + extra; k++) C.makeItems(a).forEach(it => { if (items.length < a.n + extra) items.push(it); });
-  RUN = { a, id, mode, world, level, items, i: 0, hinted: false, miss: false, got: [], fixes: 0, sec: mode.startsWith('path') ? ctx.sec || null : null }; RUN.relic = activeRelic(); RUN.charges = RUN.relic ? RAR[RUN.relic.r].ch + (RUN.relic.r >= 3 ? 1 : 0) : 0; $('play').classList.remove('bossmode');
+  RUN = { a, id, mode, world, level, items, i: 0, hinted: false, miss: false, got: [], fixes: 0, sec: mode.startsWith('path') ? ctx.sec || null : null }; RUN.relic = activeRelic(); RUN.charges = RUN.relic ? RAR[RUN.relic.r].ch + (RUN.relic.r >= 3 ? 1 : 0) + (relicMatch(RUN.relic.id, a.subj) ? 1 : 0) : 0; $('play').classList.remove('bossmode');
   const W0 = world && world !== 'park' ? WORLDS[world] : null; const t = tierOf(id);
   const spk = W0 ? W0.friend : (CHARS.has(a.who) ? a.who : 'juniper'); // the face shown is always the voice heard
   $('introIc').innerHTML = CHARS.svg(spk);
@@ -3823,7 +3845,7 @@ $('guideFox').onclick = () => { if (RUN && !RUN.locked) { bounceChr($('guideFox'
 $('pSpeak').onclick = () => { if (RUN) { SND.tick(); speak(cur().say); } };
 const cur = () => RUN.items[RUN.i];
 function progress() { $('pProg').innerHTML = RUN.items.map((_, k) => `<i>${k < RUN.i || RUN.got[k] ? ICON.star : ICON.starOff}</i>`).join(''); }
-function renderItem() { const it = cur(); RUN.hinted = false; RUN.locked = false; RUN.itemMiss = false; RUN.itemPow = false; RUN.help = null; hideHint(); progress(); relicBtn(); relicCalm(); if (RUN.mode === 'boss' || tierOf(RUN.id) >= 3) setTimeout(() => { if (RUN && cur() && RUN.itemMiss === false && RUN.relic && RUN.charges > 0) { const b = $('pRelic'); if (b && b.style.display !== 'none' && typeof RUN.help === 'function') b.classList.add('nudge'); } }, 2500); if (window.MUSIC) MUSIC.quiet(it.type === 'read');
+function renderItem() { const it = cur(); RUN.hinted = false; RUN.locked = false; RUN.itemMiss = false; RUN.itemPow = false; RUN.help = null; hideHint(); progress(); relicBtn(); relicCalm(); if (RUN.mode === 'boss' || tierOf(RUN.id) >= 3 || (RUN.relic && relicMatch(RUN.relic.id, RUN.a.subj) && RUN.i > 0)) setTimeout(() => { if (RUN && cur() && RUN.itemMiss === false && !RUN.itemPow && RUN.relic && RUN.charges > 0) { const b = $('pRelic'); if (b && b.style.display !== 'none' && typeof RUN.help === 'function') b.classList.add('nudge'); } }, 2500); if (window.MUSIC) MUSIC.quiet(it.type === 'read');
   $('bubble').innerHTML = shown(it.say); stage.className = 'stage swap'; stage.innerHTML = ''; setTimeout(() => stage.classList.remove('swap'), 500); setTimeout(() => stage.classList.remove('swap'), 1500);
   (R[it.type] || R.choice)(it, stage); bindSay(stage);
   speak(it.say); if (it.hint) VO.prefetch(it.hint, 'marcus'); const nx = RUN.items[RUN.i + 1]; if (nx) VO.prefetch(nx.say, 'juniper'); }
@@ -3846,10 +3868,11 @@ function wrong(el, extra) { if (!RUN || RUN.locked) return; try { if (RUN.mode !
   speak(h, { who: $('hintIc'), ch: 'marcus', onend: () => relicNudge(true) }); relicNudge(false); }
 // v6: when a relic can help with this problem, it glows and Juniper points it out (once per problem)
 const NUDGE_LINES = ['Psst, Aspen! Your relic can help with this one. Tap it if you want!', 'Ooh! Your relic is glowing. It can help you here!', 'Remember your relic, Aspen. It can help with tricky ones like this!'];
-function relicNudge(talk) { if (!RUN || RUN.locked || !RUN.relic || !(RUN.charges > 0) || typeof RUN.help !== 'function') return; const b = $('pRelic'); if (!b || b.style.display === 'none') return;
+function relicNudge(talk) { if (!RUN || RUN.locked || RUN.itemPow || !RUN.relic || !(RUN.charges > 0) || typeof RUN.help !== 'function') return; const b = $('pRelic'); if (!b || b.style.display === 'none') return;
   b.classList.add('nudge'); if (!b.querySelector('.rtip')) b.insertAdjacentHTML('beforeend', '<span class="rtip">Tap me!</span>');
   if (!talk) return; RUN.nudged = RUN.nudged || {}; if (RUN.nudged[RUN.i]) return; RUN.nudged[RUN.i] = 1; RUN.nudges = (RUN.nudges || 0) + 1; if (RUN.nudges > 3) return;
-  speak(NUDGE_LINES[(RUN.nudges - 1) % NUDGE_LINES.length], { who: $('guideFox') }); }
+  const m = relicMatch(RUN.relic.id, RUN.a.subj); speak(m && RUN.nudges !== 2 ? relicNudgeLine(RUN.relic.id) : NUDGE_LINES[(RUN.nudges - 1) % NUDGE_LINES.length], { who: $('guideFox') }); }
+const relicNudgeLine = id => `Psst, Aspen! Your ${relicShort(id)} is great for ${SUBW[relicFit(id).best]} problems. Tap it!`;
 function relicCalm() { const b = $('pRelic'); if (b) { b.classList.remove('nudge'); const t = b.querySelector('.rtip'); if (t) t.remove(); } }
 function hideHint() { $('hintBox').classList.remove('on'); }
 $('hintBox').onclick = () => { speak(RUN && RUN.lastHint || $('hintTxt').textContent, { who: $('hintIc'), ch: 'marcus' }); };
@@ -4300,7 +4323,7 @@ function voLines(N = 60) { const out = new Map(); const add = (t, ch = 'juniper'
   ['Stop and check. ', 'Poco a poco. '].forEach(p => { ['That one is already in this row.', 'That one is already in this column.', 'Look at the row, the column, and the box. Which one is still missing?', 'That does not fit yet. Try another spot first, then come back.'].forEach(w => add(p + w, 'marcus')); });
   return [...out.values()]; }
 
-window.JLP = { SND, infoCard, awardCard, awardArt, scenesEarned, sceneAnnounce, syncRewards, medalSvg, openRide, closeRide, aspenCheer, mountHall, juniperSvg, CHARS, OV: typeof OV !== "undefined" ? OV : null, voLines, VO, BOSSES, BOSS, startBoss, bossState, openVault, openLore, useRelic, playStory, openChest, effPos, gateOf, activeRelic, RELICS, relicArt, openBossIntro, renderMap, get MAPW() { return MAPW; },  rightNow: () => { if (RUN) { RUN.locked = false; correct(); } }, finishNow: () => { if (RUN) { RUN.locked = true; finish(); } }, wrongNow: () => { if (RUN) { RUN.locked = false; wrong(null); } }, AWARDS, WORLDS, WKEYS, TIER, tierOf, worldOpen, openWorlds, checkTrophies, revealAwards, ST, C, startActivity, get RUN() { return RUN; }, cur: () => RUN && cur(), go: () => $('introGo').click(), goHome, openMap, openShelves, openTrophies, openDress, OUTFITS, TROPHIES, medalOf, speak, SP };
+window.JLP = { relicFit, relicNudgeLine, relicShort, RFIT, SUBW, KINDW, relicUseLine: (id, m) => relicUseLine(id, m), SND, infoCard, awardCard, awardArt, scenesEarned, sceneAnnounce, syncRewards, medalSvg, openRide, closeRide, aspenCheer, mountHall, juniperSvg, CHARS, OV: typeof OV !== "undefined" ? OV : null, voLines, VO, BOSSES, BOSS, startBoss, bossState, openVault, openLore, useRelic, playStory, openChest, effPos, gateOf, activeRelic, RELICS, relicArt, openBossIntro, renderMap, get MAPW() { return MAPW; },  rightNow: () => { if (RUN) { RUN.locked = false; correct(); } }, finishNow: () => { if (RUN) { RUN.locked = true; finish(); } }, wrongNow: () => { if (RUN) { RUN.locked = false; wrong(null); } }, AWARDS, WORLDS, WKEYS, TIER, tierOf, worldOpen, openWorlds, checkTrophies, revealAwards, ST, C, startActivity, get RUN() { return RUN; }, cur: () => RUN && cur(), go: () => $('introGo').click(), goHome, openMap, openShelves, openTrophies, openDress, OUTFITS, TROPHIES, medalOf, speak, SP };
 })();
 </script>
 </body></html>
