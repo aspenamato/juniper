@@ -102,11 +102,20 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;pad
 .sc-burst{position:absolute;inset:-40px;z-index:-1;border-radius:50%;background:repeating-conic-gradient(#fdd835 0 10deg,#fff0 10deg 20deg);animation:spin 8s linear infinite;opacity:.6}
 @keyframes scPop{0%{transform:scale(.3) rotate(-8deg)}100%{transform:scale(1) rotate(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+.tb.peekb{padding:3px;overflow:hidden;width:auto;aspect-ratio:4/3}
+.tb.peekb img{height:100%;border-radius:10px;display:block}
+.peek-ov{position:fixed;inset:0;background:rgba(40,20,60,.55);display:none;align-items:center;justify-content:center;z-index:60}
+.peek-ov.on{display:flex;animation:pkIn .35s cubic-bezier(.2,1.4,.4,1)}
+.peek-card{position:relative;background:#fff;padding:12px;border-radius:26px;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.peek-card img{display:block;max-width:86vw;max-height:78vh;border-radius:18px}
+.peek-x{position:absolute;top:-14px;right:-14px;width:48px;height:48px;border-radius:50%;border:0;background:#ff6f91;color:#fff;font-size:24px;font-weight:900;box-shadow:0 4px 0 #c2185b}
+@keyframes pkIn{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
 /* v5 transitions: transform/opacity only, overlay never takes taps */
 #fxHost{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;contain:strict}
 .fx{position:absolute;inset:0;pointer-events:none}
 .fx *{pointer-events:none}
-.fx-band{position:absolute;top:-25%;left:0;height:150%;width:58vw;display:flex;transform:translateX(-70vw) skewX(-14deg);animation:fxBand .78s cubic-bezier(.45,.05,.4,1) forwards;filter:drop-shadow(0 0 18px rgba(255,255,255,.7))}
+.fx-band{position:absolute;top:-25%;left:0;height:150%;width:58vw;display:flex;transform:translateX(-70vw) skewX(-14deg);animation:fxBand .78s cubic-bezier(.45,.05,.4,1) forwards;will-change:transform}
 .fx-wipe.rev .fx-band{animation-name:fxBandR}
 .fx-band b{flex:1;opacity:.92}
 .fx-band b:first-child{border-radius:40px 0 0 40px}.fx-band b:last-child{border-radius:0 40px 40px 0}
@@ -121,6 +130,20 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;pad
 @keyframes fxShoot{0%{opacity:0;transform:translate(0,0) rotate(22deg)}15%{opacity:1}100%{opacity:0;transform:translate(70vw,28vw) rotate(22deg)}}
 .fx-ring{position:absolute;width:30vmin;height:30vmin;margin:-15vmin 0 0 -15vmin;border-radius:50%;border:2.2vmin solid;opacity:0;transform:scale(.1);animation:fxRing .85s cubic-bezier(.2,.8,.3,1) var(--d,0s) forwards}
 @keyframes fxRing{0%{opacity:0;transform:scale(.1)}25%{opacity:.95}100%{opacity:0;transform:scale(4.2)}}
+/* theatre */
+.fx-cur{position:absolute;top:0;bottom:0;width:52%;background:repeating-linear-gradient(90deg,#b71c1c 0 22px,#d32f2f 22px 40px,#8e0000 40px 48px);box-shadow:inset 0 -30px 60px rgba(0,0,0,.35);animation:fxCurL 1.05s cubic-bezier(.6,0,.3,1) .12s forwards}
+.fx-cur.l{left:0;border-radius:0 0 40% 0}.fx-cur.r{right:0;border-radius:0 0 0 40%;animation-name:fxCurR}
+@keyframes fxCurL{0%{transform:translateX(0)}100%{transform:translateX(-102%) skewX(6deg)}}
+@keyframes fxCurR{0%{transform:translateX(0)}100%{transform:translateX(102%) skewX(-6deg)}}
+.fx-valance{position:absolute;left:0;right:0;top:0;height:9vh;background:radial-gradient(circle at 50% -20%,#ffd54f 0 30%,transparent 31%),repeating-radial-gradient(circle at 50% -40px,#c62828 0 18px,#8e0000 18px 22px);border-bottom:5px solid #ffca28;animation:fxVal 2.4s ease forwards}
+@keyframes fxVal{0%,70%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-100%)}}
+.fx-spot{position:absolute;left:50%;top:-10%;width:90vmin;height:120vmin;margin-left:-45vmin;background:radial-gradient(ellipse at 50% 85%,rgba(255,250,200,.55),rgba(255,250,200,0) 60%);transform-origin:50% 0;opacity:0;animation:fxSpot 2.4s ease forwards}
+.fx-theater.gold .fx-spot{background:radial-gradient(ellipse at 50% 85%,rgba(255,215,64,.6),rgba(255,215,64,0) 60%)}
+@keyframes fxSpot{0%{opacity:0;transform:rotate(-14deg)}25%{opacity:1}55%{transform:rotate(10deg)}80%{opacity:1;transform:rotate(0)}100%{opacity:0}}
+.fx-cheer{position:absolute;left:0;right:0;bottom:-2vh;display:flex;justify-content:center;gap:2vw}
+.fx-cheer>span{width:min(15vmin,120px);height:min(15vmin,120px);transform:translateY(120%);animation:fxCheer 2.3s cubic-bezier(.3,1.4,.5,1) forwards}
+.fx-cheer>span svg{width:100%;height:100%}
+@keyframes fxCheer{0%{transform:translateY(120%)}25%{transform:translateY(0)}35%{transform:translateY(-14%)}45%{transform:translateY(0)}55%{transform:translateY(-10%)}65%,80%{transform:translateY(0)}100%{transform:translateY(130%)}}
 @media (prefers-reduced-motion: reduce){#fxHost{display:none}}
 </style></head>
 <body>
@@ -145,6 +168,7 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;pad
     <button class="tb" id="bMagic" aria-label="Stay inside the lines"></button>
     <button class="tb" id="bClear" aria-label="Start over"></button>
     <span class="sp"></span>
+    <button class="tb peekb" id="bPeek" aria-label="See example colors" style="display:none"></button>
     <button class="tb" id="bSpeak" aria-label="Spanish color names"></button>
     <button class="tb" id="bSound" aria-label="Sound"></button>
     <button class="tb done" id="bDone" aria-label="Finished!"></button>
@@ -2000,6 +2024,10 @@ redo('pr_cuco', (() => {
   for (const [x, y] of [[160, 120], [880, 140], [760, 90]]) s += G(x, y, 0.8, thin(P('M0 -16 L10 -2 H2 L8 16 L-10 0 H-2 Z', c.amarillo), 3));
   return s; })(), c.morado);
 })();
+
+// raster storybook pages (generated by /workspace/juniper-art/gen_art5.py)
+(()=>{const R={'gazebo':'a912429e','marcus':'d3e93464','oscar':'c77b8106','pearl':'d69b4d0e','scramble':'672028a0','toulouse':'169548db','winnie':'ee1677eb'};
+ART.pages.forEach(p=>{const q=R[p.id];if(!q)return;const b='art/pages/'+p.id;p.line=b+'_line.png?v='+q;p.wall=b+'_wall.png?v='+q;p.color=b+'_color.webp?v='+q;p.thumb=b+'_thumb.png?v='+q;p.cthumb=b+'_cthumb.webp?v='+q;});})();
 </script>
 <script>// Reward stickers unlocked in Juniper's Learning Park (shared by both apps, same origin).
 // Unlock list lives in localStorage key 'juniperRewards' as {v:1, stickers:[ids...]}.
@@ -2283,7 +2311,12 @@ const FX = (() => {
     box.innerHTML = RB.map((c, i) => `<b class="fx-ring" style="left:${x}%;top:${y}%;border-color:${c};--d:${i * .045}s"></b>`).join(''); stars(box, big ? 26 : 16, { x, y, min: 14, max: big ? 60 : 42 }); if (big) shoot(box, 4); L.appendChild(box); kill(box, 1100); }
   function screen(kind) { if (RM()) return; const t = Date.now(); if (t - last < 450) return; last = t; (kind || (n % 3 === 2 ? 'burst' : 'wipe')) === 'burst' ? (n++, burst()) : wipe(); }
   function cele() { if (RM()) return; last = Date.now(); burst(50, 45, true); }
-  return { screen, cele, wipe, burst };
+  // theatre moment for big wins: velvet curtains swing open, a spotlight, a star burst and friends cheering from below
+  function theater(o = {}) { if (RM()) return; last = Date.now(); const L = layer(), box = document.createElement('div'); box.className = 'fx fx-theater' + (o.gold ? ' gold' : '');
+    box.innerHTML = `<b class="fx-spot"></b><b class="fx-cur l"></b><b class="fx-cur r"></b><b class="fx-valance"></b>${o.cheer ? `<div class="fx-cheer">${o.cheer}</div>` : ''}`; L.appendChild(box);
+    setTimeout(() => burst(50, 42, true), 380); if (o.gold) setTimeout(() => burst(30, 30), 700), setTimeout(() => burst(70, 32), 900); kill(box, 2600); }
+  function poofAt(el) { if (RM() || !el) return; const r = el.getBoundingClientRect(); burst((r.left + r.width / 2) / innerWidth * 100, (r.top + r.height / 2) / innerHeight * 100, true); }
+  return { screen, cele, wipe, burst, theater, poofAt };
 })();
 window.FX = FX;
 
@@ -2314,9 +2347,12 @@ function say(txt) {
 // ---------- page analysis ----------
 const cache = {};
 function loadImg(svgStr) { return new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgStr); }); }
+function loadUrl(u, tries = 3) { return new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = () => tries > 1 ? setTimeout(() => loadUrl(u, tries - 1).then(res, rej), 600) : rej(new Error('img ' + u)); im.src = u; }); }
 async function analyze(page) {
   if (cache[page.id]) return cache[page.id];
-  const [li, ri, wi] = await Promise.all([loadImg(ART.toLine(page.svg)), loadImg(page.svg), loadImg(ART.toWall ? ART.toWall(page.svg) : ART.toLine(page.svg))]);
+  let li, ri, wi;
+  if (page.line) { try { [li, ri, wi] = await Promise.all([loadUrl(page.line), loadUrl(page.color), loadUrl(page.wall)]); } catch (e) { li = null; } }
+  if (!li) [li, ri, wi] = await Promise.all([loadImg(ART.toLine(page.svg)), loadImg(page.svg), loadImg(ART.toWall ? ART.toWall(page.svg) : ART.toLine(page.svg))]);
   const c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d', { willReadFrequently: true });
   x.fillStyle = '#fff'; x.fillRect(0, 0, W, H); x.drawImage(li, 0, 0, W, H); const ld = x.getImageData(0, 0, W, H).data;
   x.fillStyle = '#fff'; x.fillRect(0, 0, W, H); x.drawImage(ri, 0, 0, W, H); const rd = x.getImageData(0, 0, W, H).data;
@@ -2459,7 +2495,10 @@ function buildPalette() {
 function numDone(num) { if (!S.an || !S.filled) return false; return S.an.reg.every(r => !r || r.num !== num || S.filled.has(r.id)); }
 
 // ---------- home ----------
-function thumb(page) { return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(ART.toLine(page.svg)); }
+function thumb(page) { return page.thumb || 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(ART.toLine(page.svg)); }
+function peek() { const pg = S.page; if (!pg || !pg.color) return; let ov = $('peekOv'); if (!ov) { ov = document.createElement('div'); ov.id = 'peekOv'; ov.className = 'peek-ov'; ov.innerHTML = '<div class="peek-card"><img alt="Example colors"><button class="peek-x" aria-label="Close">✕</button></div>'; document.body.appendChild(ov); ov.onclick = () => ov.classList.remove('on'); }
+  ov.querySelector('img').src = pg.color; ov.classList.add('on'); try { SND.tick(); } catch (e) {} }
+function updPeek() { const b = $('bPeek'); if (!b) return; const pg = S.page; b.style.display = pg && pg.color ? '' : 'none'; if (pg && pg.cthumb) b.innerHTML = `<img src="${pg.cthumb}" alt="">`; }
 // ---------- world scenes earned in Juniper's Learning Park ----------
 function rewardScenes() { try { const r = JSON.parse(localStorage.getItem('juniperRewards') || 'null'); return r && Array.isArray(r.scenes) ? r.scenes : []; } catch (e) { return []; } }
 const sceneOpen = pg => !pg.world || rewardScenes().includes(pg.id);
@@ -2492,7 +2531,7 @@ async function openPage(pg) {
   if (w) { xP.putImageData(w.p, 0, 0); xS.putImageData(w.s, 0, 0); if (w.f) S.filled = new Set(w.f); S.galId = w.galId; }
   else if (S.mode === 'num') { for (const r of an.reg) if (r && !r.num) fillRegion(r.id, PALETTE[r.ref][2]); }
   if (S.mode === 'num') { for (let k = 1; k <= an.numColors.length; k++) if (!numDone(k)) { S.selNum = k; break; } }
-  buildTools(); buildPalette(); drawNums(); updToggles(); fitBoard();
+  buildTools(); buildPalette(); drawNums(); updToggles(); updPeek(); fitBoard();
 }
 function fitBoard() { const st = $('stage'), b = $('board'); const sw = st.clientWidth - 16, sh = st.clientHeight - 16; const w = Math.min(sw, sh * 4 / 3); b.style.width = w + 'px'; b.style.height = (w * 3 / 4) + 'px'; }
 window.addEventListener('resize', fitBoard);
@@ -2606,11 +2645,12 @@ function sparkleBurst(p, n) { const r = board.getBoundingClientRect(); const x =
 updToggles(); buildHome();
 const _rw = () => { applyRewards(true); celebrateScenes(); }; document.addEventListener('visibilitychange', () => { if (!document.hidden) _rw(); }); window.addEventListener('pageshow', _rw); window.addEventListener('storage', e => { if (e.key === 'juniperRewards') _rw(); });
 if ($('toLearn')) { $('toLearn').innerHTML = `<img src="learn/apple-touch-icon.png?v=5" alt="" style="width:56px;height:56px;border-radius:14px" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'🦊',style:'font-size:40px;line-height:56px'}))">`; }
-window.JCP = { S, analyze, openPage, finish, gallery, pages: ART.pages, STICKERS, applyRewards, celebrateScenes, buildHome };
+{ const pb = $('bPeek'); if (pb) pb.onclick = peek; }
+window.JCP = { S, analyze, peek, openPage, finish, gallery, pages: ART.pages, STICKERS, applyRewards, celebrateScenes, buildHome };
 })();
 
 // ---------- auto-update: poll cversion.json, reload when a new build is live ----------
-const CBUILD = '20261116081524-41d6d4';
+const CBUILD = '20261116095734-a7eb45';
 function checkUpdate() { if (location.protocol === 'file:') return; fetch('cversion.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.v && j.v !== CBUILD && !document.getElementById('paint').classList.contains('on')) location.reload(); }).catch(() => {}); }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); }); setInterval(checkUpdate, 5 * 60 * 1000); setTimeout(checkUpdate, 3000);
 setTimeout(() => window.JCP && JCP.celebrateScenes(), 600);
