@@ -5,7 +5,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Juniper Learn">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=5"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=5"><link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=5"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#fff7ec">
-<script>window.JBUILD='20261116081537-178345';</script>
+<script>window.JBUILD='20261116085256-f25adf';</script>
 <title>Juniper's Learning Park</title>
 <style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{margin:0;height:100%;overflow:hidden;background:#fff7ec;font-family:ui-rounded,"SF Pro Rounded","Arial Rounded MT Bold","Nunito","Avenir Next",system-ui,sans-serif;color:#3b2a20;touch-action:manipulation}
@@ -912,7 +912,7 @@ html,body{background:#fff4fb;color:var(--ol)}
 #fxHost{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;contain:strict}
 .fx{position:absolute;inset:0;pointer-events:none}
 .fx *{pointer-events:none}
-.fx-band{position:absolute;top:-25%;left:0;height:150%;width:58vw;display:flex;transform:translateX(-70vw) skewX(-14deg);animation:fxBand .78s cubic-bezier(.45,.05,.4,1) forwards;filter:drop-shadow(0 0 18px rgba(255,255,255,.7))}
+.fx-band{position:absolute;top:-25%;left:0;height:150%;width:58vw;display:flex;transform:translateX(-70vw) skewX(-14deg);animation:fxBand .78s cubic-bezier(.45,.05,.4,1) forwards;will-change:transform}
 .fx-wipe.rev .fx-band{animation-name:fxBandR}
 .fx-band b{flex:1;opacity:.92}
 .fx-band b:first-child{border-radius:40px 0 0 40px}.fx-band b:last-child{border-radius:0 40px 40px 0}
@@ -2478,8 +2478,8 @@ function acReady(ms = 800) { const a = ac(); if (!a) return Promise.resolve(fals
     try { const p = a.resume(); if (p && p.then) p.then(fin, fin); } catch (e) {} const iv = setInterval(() => { if (a.state === 'running') { clearInterval(iv); fin(); } }, 50); setTimeout(() => { clearInterval(iv); fin(); }, ms); }); }
 // called from inside a real tap: resume, and rebuild a context whose clock stopped (a known iOS glitch after waking)
 function acGesture() { const a = ac(); if (!a) return; const now = performance.now();
-  if (a.state === 'running' && AUD.lastT >= 0 && now - AUD.lastW > 1500 && a.currentTime === AUD.lastT) { alog('ctx frozen, rebuild'); acNew(); acKick(AC); }
-  AUD.lastT = AC.currentTime; AUD.lastW = now; if (window.MUSIC && MUSIC.on && ST.sound && document.querySelector('.screen.on:not(#start)')) MUSIC.start();
+  if (a.state === 'running' && AUD.lastT >= 0 && now - AUD.lastW > 1500 && a.currentTime === AUD.lastT && now - (AUD.rebuiltAt || -1e9) > 20000) { AUD.rebuiltAt = now; alog('ctx frozen, rebuild'); acNew(); acKick(AC); }
+  if (!AC) return; AUD.lastT = AC.currentTime; AUD.lastW = now; if (window.MUSIC && MUSIC.on && ST.sound && document.querySelector('.screen.on:not(#start)')) MUSIC.start();
   try { const b = AC.createBuffer(1, 1, 22050), s = AC.createBufferSource(); s.buffer = b; s.connect(AC.destination); s.start(0); } catch (e) {} }
 window.JAUD = { get ctx() { return AC; }, AUD, ac, acNew, acReady };
 ['visibilitychange', 'pageshow', 'focus'].forEach(ev => window.addEventListener(ev, () => { if (!document.hidden && AC) { acKick(AC); AUD.lastT = -1; } }));
@@ -2638,7 +2638,7 @@ const VO = (() => {
       sentences(seg.t).forEach((s, si) => { let done = false;
         for (const v of vs) { const k = key(v, s); if (has(k)) { units.push({ k, s, gap: 170 }); done = true; break; } }
         if (!done && /\d/.test(s)) for (const v of vs) { const fr = frags(s).map(f => ({ k: key(v, f.t), s: f.t, gap: 40 })); if (fr.length && fr.every(f => has(f.k))) { fr[0].gap = 170; units.push(...fr); done = true; break; } }
-        if (!done) units.push({ tts: s, es: seg.es, gap: 100 }); }); });
+        if (!done) units.push({ tts: s, es: seg.es, gap: 100, v: vs[0] }); }); });
     return units; }
   // every clip a line could need (used by the build to know what to record)
   function need(text, ch = 'juniper', o = {}) { const out = [];
@@ -2677,7 +2677,7 @@ const VO = (() => {
     const next = () => { if (my !== tok) return; if (i >= units.length) { src = null; stats.done = (stats.done || 0) + 1; if (window.MUSIC) MUSIC.duck(false); cancelAnimationFrame(raf); hooks.onmouth && hooks.onmouth(false); hooks.onend && hooks.onend(); return; }
       const u = units[i++]; stats.units++;
       const go = () => { if (my !== tok) return;
-        if (u.tts) { stats.tts++; if (stats.missing.length < 300) stats.missing.push(u.tts); if (!started) { started = true; line.st = 1; stats.heardTts = (stats.heardTts || 0) + 1; hooks.onstart && hooks.onstart(); } hooks.onfake && hooks.onfake(u.tts); ttsSay(u.tts, u.es, next); return; }
+        if (u.tts) { stats.tts++; if (stats.missing.length < 600) stats.missing.push(u.tts); (stats.miss2 = stats.miss2 || []).push([u.v || '', u.tts]); if (!started) { started = true; line.st = 1; stats.heardTts = (stats.heardTts || 0) + 1; hooks.onstart && hooks.onstart(); } hooks.onfake && hooks.onfake(u.tts); ttsSay(u.tts, u.es, next); return; }
         Promise.all([buf(u.k), acReady(900)]).then(([b, live]) => { if (my !== tok) return; if (!b) { stats.tts++; if (stats.missing.length < 300) stats.missing.push('[load] ' + u.s); ttsSay(u.s, false, next); return; }
           // audio still asleep (iOS wants a tap first): keep this line and say it on the very next tap instead of losing it
           if (!live) { stats.held = (stats.held || 0) + 1; alog('held: ' + u.s.slice(0, 40)); pending = { units, hooks, from: i - 1, t: Date.now(), my }; return; }
@@ -3663,8 +3663,9 @@ function correct(sayFirst) { if (!RUN || RUN.locked) return; RUN.locked = true; 
   const gf = $('guideFox'); gf.innerHTML = juniperSvg(ST.outfit, 'cheer'); gf.classList.remove('hop'); void gf.offsetWidth; gf.classList.add('hop');
   const p = PRAISE[Math.floor(Math.random() * PRAISE.length)]; $('bubble').innerHTML = shown(p); burst(12); sparkAt(LASTP.x, LASTP.y, 18, 1.4); const le = LASTP.el; if (le && stage.contains(le)) { le.classList.remove('yay'); void le.offsetWidth; le.classList.add('yay'); }
   const bb = $('bubble'); bb.classList.remove('pop'); void bb.offsetWidth; bb.classList.add('pop');
-  const go = () => { if (!RUN) return; RUN.i++; gf.innerHTML = juniperSvg(ST.outfit, 'wave'); if (RUN.i >= RUN.items.length) finish(); else if (RUN.mode === 'boss' && !RUN.shieldDone && RUN.hp <= RUN.shieldAt) raiseShield(renderItem); else renderItem(); };
-  let left = 2; const step = () => { if (--left <= 0) go(); };
+  const myRun = RUN, myI = RUN.i; let went = false; // advance exactly once, and only from the item that was answered
+  const go = () => { if (!RUN || went || RUN !== myRun || RUN.i !== myI) return; went = true; RUN.i++; gf.innerHTML = juniperSvg(ST.outfit, 'wave'); if (RUN.i >= RUN.items.length) finish(); else if (RUN.mode === 'boss' && !RUN.shieldDone && RUN.hp <= RUN.shieldAt) raiseShield(renderItem); else renderItem(); };
+  let left = 2; const step = () => { if (left > 0 && --left === 0) go(); };
   if (RUN.mode === 'boss') { bossSay(bossLine('hit'), step); } else
   speak((sayFirst ? sayFirst + '. ' : '') + p, { onend: step }); setTimeout(step, 1300); setTimeout(() => { if (RUN && RUN.locked && RUN.items[RUN.i] && left > 0) { left = 0; go(); } }, 4000); }
 function wrong(el, extra) { if (!RUN || RUN.locked) return; RUN.hinted = true; RUN.miss = true; RUN.itemMiss = true; SND.boop(); if (RUN.mode === 'boss') { const c = $('bbChr'); if (c) { c.classList.remove('laugh'); void c.offsetWidth; c.classList.add('laugh'); } }
