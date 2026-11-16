@@ -924,6 +924,60 @@ L.nicoloKid = () => {
 };
 L.nicolo = (x, y, s) => fig(x, y, s, L.nicoloKid());
 })();
+// ---------- villains & critters (v2) ----------
+(() => {
+const L = ART.lib, c = ART.parts.c, K = '#222', Wh = c.blanco;
+const { P, E, C, G, HL, INK, clip, fig, eye, lobes, n } = L;
+const D = (d, w = 2.5) => P(d, 'none', `stroke-width="${w}" class="dt"`);
+const sly = (x, y, r, iris) => { const d = `M${x - r} ${y} C${x - r * 0.6} ${y - r * 1.1} ${x + r * 0.6} ${y - r * 1.1} ${x + r} ${y - r * 0.2} C${x + r * 0.6} ${y + r * 0.9} ${x - r * 0.6} ${y + r * 0.9} ${x - r} ${y} Z`;
+  return P(d, Wh, 'stroke-width="2.4"') + clip(d, C(x, y, r * 0.6, iris) + C(x, y, r * 0.32, K, 'stroke="none"') + HL(x + r * 0.1, y - r * 0.1, r * 0.12)) + INK(`M${x - r - 4} ${y - r * 0.5} C${x - r * 0.3} ${y - r * 1.3} ${x + r * 0.5} ${y - r * 1.2} ${x + r + 4} ${y - r * 0.6} C${x + r * 0.5} ${y - r * 0.9} ${x - r * 0.3} ${y - r} ${x - r - 4} ${y - r * 0.5} Z`); };
+// The Rat King: royal cape, crown, curly tail, mischievous grin (kid-safe)
+L.ratKingKid = () => {
+  let s = '';
+  s += P('M60 -10 C130 0 170 -60 140 -100 C126 -118 104 -110 110 -92 C116 -78 130 -84 126 -96', 'none', 'stroke-width="9"');
+  s += P('M-70 -200 C-120 -120 -130 -40 -110 0 C-40 12 40 12 110 0 C130 -40 120 -120 70 -200 Z', c.morado) + P('M-70 -200 C-60 -150 -60 -60 -50 0 L-110 0 C-130 -40 -120 -120 -70 -200 Z M70 -200 C60 -150 60 -60 50 0 L110 0 C130 -40 120 -120 70 -200 Z', c.rojo);
+  s += P('M-80 -200 C-40 -180 40 -180 80 -200 C76 -186 70 -176 60 -172 C40 -164 -40 -164 -60 -172 C-70 -176 -76 -186 -80 -200 Z', Wh) + D('M-60 -190 l4 6 M-30 -184 l4 6 M0 -182 l4 6 M30 -184 l4 6 M56 -190 l4 6');
+  s += P('M-40 -170 C-50 -110 -44 -40 -30 -6 L30 -6 C44 -40 50 -110 40 -170 Z', c.gris);
+  s += P('M-20 -160 C-26 -110 -22 -50 -14 -10 L14 -10 C22 -50 26 -110 20 -160 Z', c.gris_claro);
+  for (const k of [-1, 1]) s += P(`M${k * 14} -8 C${k * 14} 4 ${k * 46} 6 ${k * 46} -6 Z`, c.rosa);
+  for (const k of [-1, 1]) s += C(k * 56, -292, 30, c.gris) + C(k * 56, -292, 18, c.rosa);
+  const H = 'M0 -320 C46 -320 72 -290 70 -258 C68 -230 44 -212 24 -204 L0 -186 L-24 -204 C-44 -212 -68 -230 -70 -258 C-72 -290 -46 -320 0 -320 Z';
+  s += P(H, c.gris) + P('M-10 -196 C-10 -188 10 -188 10 -196 C10 -202 -10 -202 -10 -196 Z', c.rosa);
+  s += sly(-24, -262, 15, c.rojo) + sly(24, -262, 15, c.rojo) + D('M-18 -196 l-40 -6 M-18 -192 l-40 6 M18 -196 l40 -6 M18 -192 l40 6', 2.2);
+  s += P('M-26 -220 C-12 -206 12 -206 30 -224', 'none', 'stroke-width="4"') + P('M8 -214 L12 -204 L16 -214 Z', Wh, 'stroke-width="2"');
+  s += P('M-46 -312 L-56 -366 L-28 -336 L0 -378 L28 -336 L56 -366 L46 -312 C20 -322 -20 -322 -46 -312 Z', c.amarillo) + C(0, -340, 8, c.rojo) + C(-30, -326, 5, c.turquesa) + C(30, -326, 5, c.turquesa);
+  s += G(-92, -110, 1, P('M-6 0 V-90', 'none', 'stroke-width="6"') + P('M-6 -90 C-20 -100 -20 -120 -6 -126 C8 -120 8 -100 -6 -90 Z', c.amarillo) + C(-6, -110, 6, c.fucsia));
+  return s;
+};
+// The Avalanche Abominable: big fluffy snow beast, grumpy-cute
+L.yetiKid = () => {
+  let s = '';
+  for (const k of [-1, 1]) s += P(lobes(k * 120, -180, 44, 70, 10, k + 4, 0.6), Wh) + P(`M${k * 128} -120 C${k * 140} -110 ${k * 150} -104 ${k * 160} -110 M${k * 112} -116 C${k * 118} -104 ${k * 122} -100 ${k * 130} -100`, 'none', 'stroke-width="3"');
+  s += P(lobes(0, -170, 120, 160, 22, 2, 0.6), Wh);
+  s += P('M0 -250 C60 -250 80 -200 80 -150 C80 -90 50 -60 0 -60 C-50 -60 -80 -90 -80 -150 C-80 -200 -60 -250 0 -250 Z', c.celeste);
+  s += eye(-30, -190, 16, c.azul) + eye(30, -190, 16, c.azul);
+  s += INK('M-56 -222 C-40 -214 -20 -208 -8 -206 C-24 -216 -40 -224 -56 -226 Z M56 -222 C40 -214 20 -208 8 -206 C24 -216 40 -224 56 -226 Z');
+  s += P('M-12 -160 C-12 -170 12 -170 12 -160 C12 -150 -12 -150 -12 -160 Z', c.azul_marino);
+  s += P('M-34 -120 C-14 -100 14 -100 34 -120 C14 -112 -14 -112 -34 -120 Z', c.azul_marino) + P('M-20 -114 L-16 -104 L-12 -113 Z M12 -113 L16 -104 L20 -114 Z', Wh, 'stroke-width="2"');
+  for (const k of [-1, 1]) s += P(lobes(k * 50, -14, 46, 20, 9, k + 7, 0.6), Wh) + E(k * 50, -6, 34, 10, c.celeste);
+  s += D('M-80 -40 C-60 -30 -40 -36 -30 -50 M80 -40 C60 -30 40 -36 30 -50 M-60 -270 C-50 -290 -30 -296 -14 -290');
+  return s;
+};
+// Snow hare (Vail), sitting
+L.hareKid = () => {
+  let s = '';
+  for (const k of [-1, 1]) s += P(`M${k * 20} -150 C${k * 34} -230 ${k * 20} -260 ${k * 6} -244 C${k * -2} -220 ${k * 2} -180 ${k * 8} -148 Z`, Wh) + P(`M${k * 18} -160 C${k * 26} -214 ${k * 18} -236 ${k * 10} -226 C${k * 6} -206 ${k * 8} -180 ${k * 12} -160 Z`, c.rosa);
+  s += P(lobes(0, -60, 64, 66, 14, 3, 0.6), Wh) + P('M-34 -10 C-34 6 -4 6 -4 -10 Z M34 -10 C34 6 4 6 4 -10 Z', Wh) + P(lobes(64, -30, 18, 16, 7, 2, 0.6), Wh);
+  s += P('M0 -190 C40 -190 56 -160 52 -132 C48 -106 26 -96 0 -96 C-26 -96 -48 -106 -52 -132 C-56 -160 -40 -190 0 -190 Z', Wh);
+  s += eye(-20, -148, 11) + eye(20, -148, 11) + P('M-6 -126 C-6 -132 6 -132 6 -126 C6 -122 0 -118 0 -118 C0 -118 -6 -122 -6 -126 Z', c.rosa) + P('M0 -118 V-112 M-10 -108 C-4 -104 0 -106 0 -112 C0 -106 4 -104 10 -108', 'none', 'stroke-width="2.6"');
+  s += P('M-46 -96 C-20 -84 20 -84 46 -96 L46 -80 C20 -68 -20 -68 -46 -80 Z', c.turquesa);
+  return s;
+};
+L.ratKing = (x, y, s, f) => fig(x, y, s, L.ratKingKid(), f);
+L.yeti = (x, y, s) => fig(x, y, s, L.yetiKid());
+L.hare = (x, y, s, f) => fig(x, y, s, L.hareKid(), f);
+L.D = D;
+})();
 
 // ---------- World scenes (earned in Juniper's Learning Park). Smooth, rounded, chunky shapes: closed regions for fill + color-by-number ----------
 const WORLD_SCENES = [
@@ -1562,6 +1616,158 @@ redo('pr_sanjuan', (() => {
   s += juniper(420, 610, 0.56, { armL: -40, armR: 30 }) + aspen(600, 640, 0.56) + L.parrot(800, 700, 0.55);
   return s; })());
 })();
+// ===== checkpoint B: NYC + Vail world scenes v2 =====
+(() => {
+const L = ART.lib, c = ART.parts.c, K = '#222', Wh = c.blanco;
+const { P, E, C, G, INK, clip, band, sky, cloud, sun, tree, pine, aspenTree, palm, mountains, hills, flower, tulip, grass, sparkle, heart, butterfly, swirl, stone, juniper, aspen, D, n } = L;
+const redo = (id, inner, bandF) => { const pg = ART.pages.find(p => p.id === id); if (pg) { pg.svg = ART.svg(inner + band(bandF)); pg.v2 = 1; } };
+const thin = (inner, w = 3) => `<g stroke-width="${w}">${inner}</g>`;
+const R = (x, y, w, h, r, f = Wh, ex = '') => `<rect x="${n(x)}" y="${n(y)}" width="${n(w)}" height="${n(h)}" rx="${r}" fill="${f}" ${ex}/>`;
+const water = (y0, y1, f = c.azul) => P(`M6 ${y0} H1018 V${y1} H6 Z`, f, 'stroke-width="3.4"') + D(Array.from({ length: 10 }, (_, i) => { const x = 40 + (i * 113) % 940, y = y0 + 20 + ((i * 41) % Math.max(10, y1 - y0 - 34)); return `M${x} ${y} q16 -10 32 0 q16 10 32 0`; }).join(' '));
+const snowfall = pts => pts.map(([x, y, s]) => G(x, y, s || 1, thin('<path d="M0 -12 V12 M-10 -6 L10 6 M-10 6 L10 -6" fill="none" class="dt"/>', 3))).join('');
+const snowGround = (y, amp = 16) => P(`M6 ${y} C200 ${y - amp} 380 ${y + amp * 0.5} 560 ${y - amp * 0.4} C740 ${y - amp} 880 ${y + amp * 0.3} 1018 ${y - amp * 0.5} V762 H6 Z`, Wh, 'stroke-width="3.6"');
+const rocks = (pts) => thin(pts.map(([x, y, w, h]) => stone(x, y, w, h, c.gris)).join(''), 3.2);
+
+// ----- Bow Bridge, Central Park (San Remo towers behind) -----
+redo('nyc_bow', (() => {
+  let s = sky(c.celeste) + cloud(160, 90, 0.8) + cloud(760, 80, 0.6);
+  // The San Remo twin towers + skyline
+  let k = P('M300 360 V180 H420 V360 Z', c.crema) + P('M600 360 V180 H720 V360 Z', c.crema);
+  for (const tx of [330, 630]) k += R(tx, 120, 60, 60, 2, c.crema) + P(`M${tx - 4} 120 H${tx + 64} L${tx + 54} 104 H${tx + 6} Z`, c.crema) + P(`M${tx + 14} 104 C${tx + 14} 74 ${tx + 46} 74 ${tx + 46} 104 Z`, c.verde) + P(`M${tx + 30} 76 V56`, 'none', 'stroke-width="3"') + D(`M${tx + 12} 130 V170 M${tx + 30} 130 V170 M${tx + 48} 130 V170`);
+  k += D('M310 220 H410 M310 260 H410 M310 300 H410 M610 220 H710 M610 260 H710 M610 300 H710') + P('M420 360 V240 H600 V360 Z', c.crema) + P('M60 360 V250 H180 V360 Z M820 360 V230 H960 V360 Z', c.gris_claro) + D('M80 280 H160 M80 310 H160 M840 260 H940 M840 290 H940 M840 320 H940');
+  s += thin(k, 2.8);
+  s += P('M6 360 C200 340 400 352 600 344 C800 336 900 350 1018 344 V460 H6 Z', c.verde, 'stroke-width="3.4"') + tree(80, 420, 0.55, c.verde_oscuro) + tree(240, 410, 0.45) + tree(800, 410, 0.5) + tree(960, 420, 0.55, c.verde_oscuro);
+  s += water(450, 620);
+  // Bow Bridge: shallow cast-iron arch with ornamental railing + planters
+  let b = P('M170 470 C320 420 704 420 854 470 L854 500 C704 452 320 452 170 500 Z', c.crema);
+  b += P('M170 470 C320 420 704 420 854 470 L854 440 C704 392 320 392 170 440 Z', Wh) + D(Array.from({ length: 22 }, (_, i) => { const x = 190 + i * 30, t = (x - 512) / 342, y = 452 - 34 * (1 - t * t); return `M${n(x)} ${n(y - 20)} C${n(x + 8)} ${n(y - 10)} ${n(x + 8)} ${n(y + 2)} ${n(x)} ${n(y + 12)} C${n(x - 8)} ${n(y + 2)} ${n(x - 8)} ${n(y - 10)} ${n(x)} ${n(y - 20)}`; }).join(' '));
+  b += P('M200 500 C340 470 684 470 824 500 C700 520 324 520 200 500 Z', c.azul_marino);
+  for (const x of [190, 834]) b += P(`M${x - 22} 440 H${x + 22} L${x + 16} 470 H${x - 16} Z`, c.canela) + P(L.lobes(x, 426, 26, 18, 7, x, 0.6), c.rosa);
+  s += thin(b, 3.4);
+  // rowboat
+  s += thin(P('M240 560 C260 590 420 590 440 560 Z', c.rojo) + P('M300 560 L260 600 M380 560 L420 600', 'none', 'stroke-width="4"'), 3.2) + L.hare(340, 560, 0.25);
+  s += P('M6 610 C300 596 700 600 1018 610 V762 H6 Z', c.verde_lima, 'stroke-width="3.6"');
+  s += juniper(720, 600, 0.56, { armL: -40, armR: 30, bow: c.fucsia }) + L.pigeon(470, 730, 0.5) + L.owl(250, 740, 0.42);
+  s += flower(90, 700, c.rosa) + tulip(150, 720, c.amarillo) + flower(930, 700, c.lila) + tulip(870, 730, c.rojo) + butterfly(560, 300, 0.6, c.amarillo, c.rosa);
+  return s; })());
+
+// ----- Statue of Liberty from the ferry -----
+redo('nyc_liberty', (() => {
+  let s = sky(c.celeste) + sun(130, 100, 40) + cloud(420, 80, 0.7) + cloud(900, 110, 0.6);
+  s += thin(P('M820 420 V330 H860 V420 Z M870 420 V300 L890 270 L910 300 V420 Z M920 420 V350 H990 V420 Z', c.gris_claro) + P('M890 270 V240', 'none'), 2.6);
+  s += water(420, 640);
+  // Liberty Island + star fort
+  s += P('M440 470 C480 430 820 430 860 470 C820 490 480 490 440 470 Z', c.verde, 'stroke-width="3.4"') + P('M560 456 L600 430 H700 L740 456 L700 470 H600 Z', c.gris_claro, 'stroke-width="3.2"');
+  // pedestal
+  s += thin(P('M600 432 V350 H700 V432 Z', c.gris_claro) + P('M590 350 H710 V336 H590 Z', c.gris_claro) + P('M612 336 V290 H688 V336 Z', c.gris_claro) + P('M622 400 V372 C622 360 640 360 640 372 V400 Z M660 400 V372 C660 360 678 360 678 372 V400 Z', c.gris) + P('M604 290 H696 V280 H604 Z', c.gris_claro), 3.2);
+  // statue: robe, raised arm with torch, crown, tablet
+  let t = P('M624 282 C622 230 626 190 636 160 C640 146 662 146 666 160 C676 190 680 230 678 282 Z', c.turquesa) + D('M640 180 C636 220 634 250 636 282 M652 170 C652 210 654 250 656 282 M664 180 C668 220 668 250 668 282');
+  t += P('M664 168 C672 150 680 120 686 92 L698 94 C692 124 684 154 676 172 Z', c.turquesa) + P('M680 96 H704 L700 84 H684 Z', c.amarillo) + P('M692 84 C680 70 686 52 692 44 C698 52 706 70 692 84 Z', c.naranja);
+  t += P('M626 200 L612 210 L620 236 L636 228 Z', c.gris_claro) + C(651, 140, 13, c.turquesa) + P('M636 132 L628 118 L642 128 L644 112 L652 126 L660 112 L662 128 L674 118 L666 132 Z', c.turquesa);
+  s += thin(t, 3.2);
+  // ferry with Juniper & Aspen on deck
+  let f = P('M60 640 L110 700 H480 L520 640 Z', c.blanco) + P('M60 640 H520 L514 656 H66 Z', c.azul) + R(140, 580, 260, 60, 10, c.amarillo) + [170, 230, 290, 350].map(x => R(x, 596, 40, 28, 8, c.celeste)).join('') + R(150, 568, 240, 14, 6, c.rojo) + P('M400 568 V530 H430 V568 Z', c.rojo);
+  s += thin(f, 3.4) + D('M110 690 H480 M140 670 H460');
+  s += juniper(230, 494, 0.4, { armL: -50, armR: -20 }) + aspen(330, 492, 0.4);
+  s += G(820, 200, 1, thin(P('M-30 0 C-20 -12 -8 -12 0 0 C8 -12 20 -12 30 0', 'none', 'stroke-width="4"'), 4)) + G(900, 250, 0.7, thin(P('M-30 0 C-20 -12 -8 -12 0 0 C8 -12 20 -12 30 0', 'none', 'stroke-width="4"'), 4));
+  s += water(700, 762);
+  return s; })());
+
+// ----- Rockefeller Center rink at holiday time -----
+redo('nyc_rink', (() => {
+  let s = sky(c.azul_marino) + snowfall([[110, 90], [300, 160], [880, 90], [700, 60, 0.8], [420, 50, 0.7], [960, 260, 0.8], [70, 300, 0.8]]);
+  // 30 Rock art-deco tower + side buildings
+  s += thin(P('M410 420 V120 H470 V90 H554 V120 H614 V420 Z', c.gris) + D('M440 150 V410 M470 130 V410 M500 100 V410 M524 100 V410 M554 130 V410 M584 150 V410') + P('M60 420 V200 H220 V420 Z M804 420 V180 H964 V420 Z', c.gris_claro) + D('M80 240 H200 M80 290 H200 M80 340 H200 M824 220 H944 M824 270 H944 M824 320 H944'), 2.8);
+  // tree
+  let tr = P('M512 120 C540 170 560 190 580 200 C566 204 556 204 548 202 C574 250 600 270 624 282 C606 288 590 288 576 286 C606 330 636 352 660 366 C620 384 404 384 364 366 C388 352 418 330 448 286 C434 288 418 288 400 282 C424 270 450 250 476 202 C468 204 458 204 444 200 C464 190 484 170 512 120 Z', c.verde_oscuro);
+  tr += P('M496 380 H528 V420 H496 Z', c.marron) + P(L.starD ? '' : '', 'none');
+  tr += P('M512 86 L522 110 L548 112 L528 128 L534 154 L512 140 L490 154 L496 128 L476 112 L502 110 Z', c.amarillo);
+  for (const [x, y, f] of [[490, 190, c.rojo], [534, 230, c.celeste], [470, 270, c.amarillo], [560, 300, c.fucsia], [440, 340, c.celeste], [590, 350, c.rojo], [512, 320, c.amarillo]]) tr += C(x, y, 11, f);
+  tr += D('M470 220 C500 236 540 236 560 224 M430 300 C480 320 560 320 600 304 M410 352 C480 368 560 368 620 352');
+  s += thin(tr, 3.2);
+  // flags + golden statue ring
+  for (const x of [120, 230, 794, 904]) s += thin(P(`M${x} 470 V360`, 'none', 'stroke-width="4"') + P(`M${x} 362 C${x + 20} 356 ${x + 34} 372 ${x + 52} 366 V398 C${x + 34} 404 ${x + 20} 388 ${x} 394 Z`, [c.rojo, c.amarillo, c.verde, c.azul][[120, 230, 794, 904].indexOf(x)]), 3);
+  s += thin(P('M430 470 C430 410 594 410 594 470 L574 470 C574 430 450 430 450 470 Z', c.amarillo), 3.2);
+  // rink
+  s += P('M40 600 C40 480 984 480 984 600 C984 720 40 720 40 600 Z', c.celeste, 'stroke-width="4"') + D('M60 600 C60 500 964 500 964 600') + D('M200 640 C280 600 360 620 400 650 M620 660 C700 620 780 630 840 610');
+  s += juniper(330, 540, 0.62, { feet: 'skate', scarf: c.rojo, armL: -20, armR: 50 }, false, -6) + aspen(690, 560, 0.6);
+  return s; })(), c.celeste);
+
+// ----- The Rat King in the subway -----
+redo('nyc_rat', (() => {
+  let s = sky(c.crema);
+  // tiled vaulted station
+  s += P('M6 120 C300 40 724 40 1018 120 V520 H6 Z', c.crema, 'stroke-width="3.4"') + D(Array.from({ length: 9 }, (_, i) => `M6 ${160 + i * 40} H1018`).join(' ') + ' ' + Array.from({ length: 20 }, (_, i) => `M${30 + i * 52} 120 V520`).join(' '));
+  s += thin(R(100, 230, 300, 70, 10, c.verde) + R(624, 230, 300, 70, 10, c.verde) + C(160, 265, 24, Wh) + C(684, 265, 24, Wh), 3.2) + `<text x="160" y="276" font-size="30" font-family="Arial" font-weight="800" text-anchor="middle" fill="#222" stroke="none">1</text><text x="684" y="276" font-size="30" font-family="Arial" font-weight="800" text-anchor="middle" fill="#222" stroke="none">A</text>`;
+  // subway car
+  s += thin(P('M40 500 V350 C40 330 60 320 80 320 H940 C964 320 984 330 984 350 V500 Z', c.gris_claro) + R(40, 420, 944, 26, 2, c.morado) + [80, 260, 600, 780].map(x => R(x, 344, 130, 60, 10, c.celeste)).join('') + R(430, 340, 70, 150, 6, c.gris) + R(510, 340, 70, 150, 6, c.gris) + D('M465 350 V480 M545 350 V480'), 3.2);
+  // platform
+  s += P('M6 520 H1018 V762 H6 Z', c.gris, 'stroke-width="3.6"') + P('M6 520 H1018 V550 H6 Z', c.amarillo, 'stroke-width="3.4"') + D('M6 640 H1018 M200 550 L180 762 M512 550 V762 M820 550 L840 762');
+  s += L.ratKing(512, 720, 0.95) + juniper(170, 610, 0.56, { armL: -70, armR: 20 }) + aspen(860, 640, 0.58);
+  s += sparkle(360, 430, 0.8) + sparkle(680, 410, 0.6, c.rosa);
+  return s; })(), c.morado);
+
+// ----- Covered bridge over Gore Creek, Vail -----
+redo('vail_bridge', (() => {
+  let s = sky(c.celeste) + cloud(170, 90, 0.8) + cloud(820, 70, 0.6);
+  s += mountains(400, c.lila, true);
+  s += P('M6 400 C200 380 400 396 600 386 C800 378 900 390 1018 384 V520 H6 Z', c.verde_oscuro, 'stroke-width="3.4"') + [[70, 420], [150, 410], [860, 410], [950, 420]].map(([x, y]) => pine(x, y + 20, 0.3, true)).join('');
+  // Gore Creek
+  s += P('M6 560 C200 520 380 540 512 530 C680 518 860 540 1018 520 V640 C860 650 680 620 512 640 C340 660 180 630 6 660 Z', c.celeste, 'stroke-width="3.4"') + D('M80 600 q20 -10 40 0 M300 590 q20 -10 40 0 M600 590 q20 -10 40 0 M820 580 q20 -10 40 0') + rocks([[120, 616, 50, 26], [420, 620, 60, 28], [860, 600, 44, 24]]);
+  s += snowGround(520, 10).replace('V762 H6 Z', 'V560 H6 Z');
+  // covered bridge
+  let b = P('M250 540 V430 H774 V540 Z', c.rojo) + P('M226 436 L512 330 L798 436 Z', c.marron_oscuro) + P('M226 436 C260 420 300 420 330 400 L512 330 L694 400 C724 420 764 420 798 436 L780 442 L512 346 L244 442 Z', Wh) + P('M440 540 V470 C440 430 584 430 584 470 V540 Z', c.marron_oscuro);
+  b += D('M250 470 H440 M584 470 H774 M250 505 H440 M584 505 H774') + R(280, 450, 40, 30, 4, c.amarillo) + R(704, 450, 40, 30, 4, c.amarillo) + P('M230 540 H794 V556 H230 Z', c.marron);
+  s += thin(b, 3.4);
+  s += snowGround(660, 14);
+  s += aspenTree(90, 700, 0.75) + aspenTree(180, 690, 0.55, c.naranja) + pine(950, 720, 0.8, true) + pine(870, 700, 0.55, true);
+  s += L.horse(640, 740, 0.42, { pad: c.rosa }) + juniper(380, 640, 0.5, { scarf: c.rojo, armL: -40, armR: 30 });
+  s += snowfall([[300, 140, 0.8], [640, 200, 0.7], [960, 300, 0.8]]);
+  return s; })());
+
+// ----- Chairlift with Aspen -----
+redo('vail_lift', (() => {
+  let s = sky(c.celeste) + cloud(820, 80, 0.7) + cloud(200, 110, 0.6);
+  s += mountains(560, c.lila, true);
+  s += P('M6 560 C200 500 400 420 700 360 C820 336 920 330 1018 330 V762 H6 Z', Wh, 'stroke-width="3.6"');
+  s += P('M300 520 C360 470 420 440 520 410 L560 420 C470 450 410 490 360 540 Z', c.celeste, 'stroke-width="3"') + D('M100 640 C240 560 360 520 460 470 M140 700 C260 640 380 600 520 520');
+  s += [[620, 420, 0.35], [700, 400, 0.3], [780, 380, 0.3], [860, 370, 0.28], [940, 360, 0.28], [80, 600, 0.4]].map(([x, y, sc]) => pine(x, y, sc, true)).join('');
+  // lift line + towers
+  s += P('M6 600 L1018 150', 'none', 'stroke-width="4"') + P('M6 616 L1018 166', 'none', 'stroke-width="2.5"');
+  for (const [x, top] of [[180, 523], [860, 220]]) s += thin(P(`M${x - 10} ${top} L${x + 10} ${top} L${x + 16} 762 L${x - 16} 762 Z`, c.gris) + R(x - 40, top - 10, 80, 14, 4, c.gris) + D(`M${x - 12} ${top + 80} H${x + 12} M${x - 13} ${top + 160} H${x + 13}`), 3.2);
+  // chair with Aspen and Juniper
+  const cx = 500, cy = 6 + 0; const yc = 600 - (cx - 6) * 450 / 1012;
+  s += thin(P(`M${cx} ${n(yc)} V${n(yc + 80)}`, 'none', 'stroke-width="5"') + C(cx, n(yc), 8, c.gris), 3);
+  s += thin(P(`M${cx - 150} ${n(yc + 80)} H${cx + 150} V${n(yc + 96)} H${cx - 150} Z`, c.azul) + P(`M${cx - 150} ${n(yc + 96)} V${n(yc + 150)} M${cx + 150} ${n(yc + 96)} V${n(yc + 150)}`, 'none', 'stroke-width="5"'), 3.4);
+  s += aspen(430, n(yc + 92), 0.6) + juniper(580, n(yc + 102), 0.5, { helmet: c.turquesa, armL: -60, armR: 60 });
+  s += thin(P(`M${cx - 160} ${n(yc + 150)} H${cx + 160} V${n(yc + 172)} H${cx - 160} Z`, c.azul) + P(`M${cx - 130} ${n(yc + 210)} H${cx + 130}`, 'none', 'stroke-width="5"'), 3.4);
+  s += pine(80, 760, 0.8, true) + pine(970, 760, 0.7, true) + aspenTree(760, 750, 0.6) + aspenTree(840, 760, 0.5, c.naranja);
+  s += snowfall([[300, 120, 0.8], [640, 90, 0.7], [960, 80, 0.7]]);
+  return s; })());
+
+// ----- Aspen grove in gold -----
+redo('vail_aspens', (() => {
+  let s = sky(c.celeste) + sun(880, 100, 40) + cloud(200, 90, 0.7);
+  s += mountains(420, c.lila, true);
+  s += P('M6 420 C200 400 420 410 620 400 C800 392 920 404 1018 398 V520 H6 Z', c.verde_oscuro, 'stroke-width="3.4"') + [[80, 430], [160, 424], [860, 420], [940, 428]].map(([x, y]) => pine(x, y + 20, 0.3, true)).join('');
+  s += snowGround(500, 12);
+  s += [[90, 640, 1.0, c.amarillo], [230, 600, 0.85, c.naranja], [370, 620, 0.95, c.amarillo], [660, 610, 0.9, c.amarillo], [800, 630, 1.0, c.naranja], [940, 600, 0.85, c.amarillo]].map(([x, y, sc, f]) => aspenTree(x, y, sc, f)).join('');
+  for (const [x, y, r, f] of [[300, 400, 20, c.amarillo], [560, 360, -30, c.naranja], [700, 440, 40, c.amarillo], [180, 300, 10, c.naranja]]) s += G(x, y, 1, thin(P('M0 -16 C12 -10 12 8 0 16 C-12 8 -12 -10 0 -16 Z', f) + D('M0 -14 V16', 2.4), 2.8), r);
+  s += juniper(512, 610, 0.56, { scarf: c.rojo, armL: -50, armR: 50 }) + L.hare(330, 730, 0.5) + L.dog(720, 740, 0.42, { fur: Wh, topknot: c.fucsia });
+  return s; })());
+
+// ----- The Avalanche Abominable -----
+redo('vail_yeti', (() => {
+  let s = sky(c.celeste) + cloud(170, 80, 0.7) + cloud(860, 100, 0.6);
+  s += mountains(500, c.lila, true);
+  s += snowGround(520, 14);
+  s += thin(P('M300 300 C320 270 360 270 380 300 C400 280 440 286 440 316 C420 330 320 330 300 300 Z', Wh) + P('M620 250 C640 222 680 222 696 250 C716 234 750 242 748 270 C730 282 640 282 620 250 Z', Wh), 3) + D('M310 330 l-10 30 M350 332 l-6 30 M640 284 l-8 26 M700 284 l6 26');
+  s += pine(90, 640, 0.95, true) + pine(190, 600, 0.6, true) + pine(930, 640, 0.95, true) + pine(840, 600, 0.6, true);
+  s += L.yeti(512, 560, 1.1);
+  s += juniper(220, 610, 0.52, { helmet: c.turquesa, armL: -60, armR: 30 }) + aspen(800, 640, 0.52);
+  s += snowfall([[120, 120], [300, 200, 0.8], [700, 120, 0.8], [900, 250], [470, 90, 0.7]]);
+  return s; })());
+})();
 </script>
 <script>// Reward stickers unlocked in Juniper's Learning Park (shared by both apps, same origin).
 // Unlock list lives in localStorage key 'juniperRewards' as {v:1, stickers:[ids...]}.
@@ -2070,7 +2276,7 @@ window.JCP = { S, analyze, openPage, finish, gallery, pages: ART.pages, STICKERS
 })();
 
 // ---------- auto-update: poll cversion.json, reload when a new build is live ----------
-const CBUILD = '20261115200256-8424d6';
+const CBUILD = '20261115200707-ae45f0';
 function checkUpdate() { if (location.protocol === 'file:') return; fetch('cversion.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.v && j.v !== CBUILD && !document.getElementById('paint').classList.contains('on')) location.reload(); }).catch(() => {}); }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); }); setInterval(checkUpdate, 5 * 60 * 1000); setTimeout(checkUpdate, 3000);
 setTimeout(() => window.JCP && JCP.celebrateScenes(), 600);
