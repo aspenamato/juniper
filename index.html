@@ -111,6 +111,35 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;pad
 .peek-card img{display:block;max-width:86vw;max-height:78vh;border-radius:18px}
 .peek-x{position:absolute;top:-14px;right:-14px;width:48px;height:48px;border-radius:50%;border:0;background:#ff6f91;color:#fff;font-size:24px;font-weight:900;box-shadow:0 4px 0 #c2185b}
 @keyframes pkIn{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+
+/* ===== v3 storybook chrome (soft-3D) ===== */
+html,body{background:linear-gradient(180deg,#bfe6ff 0,#e6f6ff 220px,#fff7ec 520px)}
+#home{background:linear-gradient(rgba(255,250,240,.35),rgba(255,247,236,.55)),url(art/bg/home_sm.webp) center/cover fixed #cfeeff}
+#gallery{background:linear-gradient(rgba(255,250,240,.35),rgba(255,247,236,.55)),url(art/bg/pr_sm.webp) center/cover fixed #cfeeff}
+.homebar.hero3{position:relative;min-height:150px;padding:18px 22px;border-radius:30px;background:url(art/bg/home.webp) center 22%/cover;box-shadow:0 8px 0 rgba(90,150,60,.35),0 14px 30px rgba(40,80,140,.25);align-items:flex-end;overflow:visible}
+.homebar.hero3 .logo{align-self:flex-start;color:#fff;font-size:clamp(24px,4vw,40px);text-shadow:0 3px 0 #e0631a,0 0 2px #e0631a,0 6px 14px rgba(120,50,0,.45);-webkit-text-stroke:1px #e0631a;letter-spacing:.5px}
+.homebar.hero3 .modes{align-self:flex-end;margin-right:150px;background:rgba(255,255,255,.55);padding:8px;border-radius:26px;backdrop-filter:blur(4px)}
+.hero-fox{position:absolute;right:6px;bottom:-14px;height:178px;pointer-events:none;filter:drop-shadow(0 8px 10px rgba(60,40,10,.3));animation:fox3 3.2s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes fox3{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(2deg) translateY(-6px)}}
+.bigbtn{background:linear-gradient(180deg,#fff 0,#fff3e0 100%);box-shadow:inset 0 3px 0 rgba(255,255,255,.9),inset 0 -5px 0 rgba(240,170,90,.25),0 5px 0 #e9b77f,0 8px 16px rgba(120,70,20,.2);border-radius:24px}
+.bigbtn.sel{background:linear-gradient(180deg,#ffe9a8,#ffc94d);box-shadow:inset 0 3px 0 rgba(255,255,255,.8),0 5px 0 #e09a1a,0 0 0 4px #fff,0 0 0 7px #f57c00}
+.bigbtn.has3 .ui3{width:58px;height:58px;object-fit:contain;filter:drop-shadow(0 3px 3px rgba(80,40,0,.25))}
+.tb.has3 .ui3{width:46px;height:46px;object-fit:contain}
+.homebar .logo .ui3{width:64px;height:64px}
+.grid{gap:20px}
+.card{border-radius:26px;padding:9px;background:linear-gradient(180deg,#fff,#fff8ee);box-shadow:inset 0 2px 0 #fff,0 6px 0 #f2c89a,0 12px 22px rgba(120,70,20,.16)}
+.card img{border-radius:18px;box-shadow:inset 0 0 0 2px #f6e6d4}
+.card .cap{font-size:14px;color:#7a4b2a;font-weight:800}
+.card:hover{transform:translateY(-3px)}
+.wtag{box-shadow:0 2px 0 rgba(0,0,0,.18);font-size:13px;padding:3px 10px;border-radius:12px}
+.stars3 .ui3{width:64px;height:64px;animation:pop .6s both}
+.stars3 .ui3:nth-child(2){animation-delay:.2s;width:86px;height:86px}.stars3 .ui3:nth-child(3){animation-delay:.4s}
+.cele{border-radius:34px;background:linear-gradient(180deg,#fff,#fff6e6);box-shadow:0 8px 0 #f2c89a,0 20px 50px rgba(0,0,0,.25)}
+.empty3{opacity:1;margin-top:30px}
+.empty3 img{height:240px;filter:drop-shadow(0 10px 12px rgba(60,40,10,.25));animation:fox3 3.2s ease-in-out infinite;transform-origin:50% 100%}
+.empty3 .ui3{width:90px;height:90px;margin:0 10px}
+#gallery .homebar{background:rgba(255,255,255,.75);border-radius:26px;padding:10px 14px;box-shadow:0 6px 0 rgba(0,0,0,.08)}
+@media (max-width:700px){.homebar.hero3{flex-wrap:wrap;min-height:190px}.homebar.hero3 .modes{margin-right:0}.hero-fox{height:120px;top:-6px;bottom:auto}}
 /* v5 transitions: transform/opacity only, overlay never takes taps */
 #fxHost{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;contain:strict}
 .fx{position:absolute;inset:0;pointer-events:none}
@@ -2454,6 +2483,17 @@ function setIcon(el, svg) { el.innerHTML = svg; }
 [['bHome', 'home'], ['bUndo', 'undo'], ['bRedo', 'redo'], ['bMagic', 'magic'], ['bClear', 'clear'], ['bSpeak', 'speak'], ['bDone', 'done'], ['modeFree', 'free'], ['modeNum', 'num'], ['openGallery', 'gallery'], ['gHome', 'home'], ['cDown', 'down'], ['cGal', 'gallery'], ['cMore', 'more'], ['cHome', 'home'], ['vDown', 'down'], ['vDel', 'trash'], ['vClose', 'close']].forEach(([id, ic]) => setIcon($(id), ICON[ic]));
 $('logoFox').innerHTML = `<img src="apple-touch-icon.png?v=5" alt="" style="width:54px;height:54px;border-radius:22%;box-shadow:0 3px 10px rgba(120,60,20,.3);display:block" onerror="this.parentNode.innerHTML=STICKERS.fox">`; $('galIcon').innerHTML = ICON.gallery;
 $('cStars').innerHTML = (STICKERS.star).repeat(3);
+// ---------- v3 storybook chrome (soft-3D art library) ----------
+const UI3 = n => `<img class="ui3" src="art/ui/${n}.webp" alt="" draggable="false">`;
+function chrome3() {
+  [['modeFree', 'brush'], ['openGallery', 'gallery'], ['gHome', 'home'], ['cGal', 'gallery'], ['cHome', 'home'], ['bHome', 'home']].forEach(([id, n]) => { const el = $(id); if (el) { el.innerHTML = UI3(n); el.classList.add('has3'); } });
+  $('galIcon').innerHTML = UI3('gallery');
+  $('cStars').innerHTML = UI3('star').repeat(3);
+  const hb = document.querySelector('#home .homebar');
+  if (hb && !hb.querySelector('.hero-fox')) { hb.classList.add('hero3');
+    hb.insertAdjacentHTML('beforeend', '<img class="hero-fox" src="art/chars/juniper_wave.webp" alt="" draggable="false">'); }
+}
+chrome3();
 function updToggles() { setIcon($('bSound'), prefs.sound ? ICON.soundOn : ICON.soundOff); $('bSpeak').classList.toggle('off', !prefs.speak); $('bMagic').classList.toggle('off', !prefs.magic); }
 const TOOLS = ['fill', 'crayon', 'marker', 'glitter', 'eraser', 'sticker'];
 function buildTools() {
@@ -2619,7 +2659,7 @@ $('cHome').onclick = () => { $('celebrate').classList.remove('on'); $('bHome').o
 $('cGal').onclick = () => { $('celebrate').classList.remove('on'); storeWork(); S.an = null; openGallery(); };
 function openGallery() {
   show('gallery'); const g = $('galGrid'); g.innerHTML = ''; const list = gallery().slice().reverse();
-  if (!list.length) { g.innerHTML = `<div class="empty" style="grid-column:1/-1;text-align:center">${ICON.gallery}</div>`; return; }
+  if (!list.length) { g.innerHTML = `<div class="empty empty3" style="grid-column:1/-1;text-align:center"><img src="art/chars/juniper_think.webp" alt=""><div>${UI3('palette')}${UI3('brush')}</div></div>`; return; }
   list.forEach(it => { const b = document.createElement('button'); b.className = 'card'; b.innerHTML = `<img src="${it.img}" alt="">`;
     b.onclick = () => { viewing = it; $('vImg').src = it.img; $('viewer').classList.add('on'); SND.tick(); }; g.appendChild(b); });
 }
@@ -2650,7 +2690,7 @@ window.JCP = { S, analyze, peek, openPage, finish, gallery, pages: ART.pages, ST
 })();
 
 // ---------- auto-update: poll cversion.json, reload when a new build is live ----------
-const CBUILD = '20261116102336-072432';
+const CBUILD = '20261116103241-55c6fb';
 function checkUpdate() { if (location.protocol === 'file:') return; fetch('cversion.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.v && j.v !== CBUILD && !document.getElementById('paint').classList.contains('on')) location.reload(); }).catch(() => {}); }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); }); setInterval(checkUpdate, 5 * 60 * 1000); setTimeout(checkUpdate, 3000);
 setTimeout(() => window.JCP && JCP.celebrateScenes(), 600);
