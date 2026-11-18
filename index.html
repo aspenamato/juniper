@@ -2371,7 +2371,7 @@ const SND = {
   fanfare() { [523, 659, 784, 1047, 784, 1047].forEach((f, i) => tone(f, i * 0.13, i === 5 ? 0.7 : 0.18, 'triangle', 0.2)); [1568, 2093].forEach((f, i) => tone(f, 0.8 + i * 0.1, 0.4, 'sine', 0.08)); },
 };
 // recorded Spanish clips in Juniper's Learning Park voice (device speech only if a clip cannot load)
-const CVO = {"rojo": "f85bc184d1", "naranja": "0b6b0c4c63", "amarillo": "99c37a02dc", "verde lima": "7abbab2b52", "verde": "d8a4c6c54f", "verde oscuro": "aeb712dce5", "turquesa": "a977aaed38", "celeste": "63be26dc56", "azul": "6af12bab9b", "azul marino": "942bc1870b", "morado": "7c93a4e24e", "lila": "9cdf07339c", "rosa": "87deddd032", "fucsia": "3155ee46b6", "melocotón": "94c930d5ef", "crema": "a4695c84ab", "canela": "622acf6c6b", "marrón": "ead913d9b9", "marrón oscuro": "458113f66c", "gris claro": "be1539a28d", "gris": "fed6458220", "negro": "71e2d91e9d", "blanco": "67eda0056c", "arcoíris": "1a5cc597ee", "brillo": "d9cad965d7", "¡Hola, Aspen! Vamos a colorear.": "6177ffc87c", "¡Muy bien, Aspen! ¡Excelente!": "c813afd8a0"};
+const CVO = {"rojo": "35b84fdb64", "naranja": "6979af58c0", "amarillo": "dd2f065653", "verde lima": "1208310753", "verde": "359083888e", "verde oscuro": "5fd2e2596e", "turquesa": "8e9757af85", "celeste": "1cf9897bf7", "azul": "7247c3b860", "azul marino": "86ebafb8fa", "morado": "a7831f6579", "lila": "4b30b1955d", "rosa": "0de24f8d87", "fucsia": "0eaab56d4d", "melocotón": "9859ae07f9", "crema": "853b2f1964", "canela": "81d6ff5232", "marrón": "35511c3417", "marrón oscuro": "a213df882b", "gris claro": "a99897945f", "gris": "6144353cb0", "negro": "11638cbd46", "blanco": "6ed23b70b8", "arcoíris": "abb0a06bd7", "brillo": "913e81532c", "¡Hola, Aspen! Vamos a colorear.": "e93a253fe2", "¡Muy bien, Aspen! ¡Excelente!": "ae0b502db9"};
 const CBUF = {}; let CSRC = null;
 function sayClip(txt) { const f = CVO[txt]; const a = f && ac(); if (!a) return false;
   const get = CBUF[f] || (CBUF[f] = fetch('cvo/' + f + '.mp3').then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }).then(b => new Promise((res, rej) => a.decodeAudioData(b, res, rej))));
@@ -2700,7 +2700,7 @@ window.JCP = { S, analyze, peek, openPage, finish, gallery, pages: ART.pages, ST
 })();
 
 // ---------- auto-update: poll cversion.json, reload when a new build is live ----------
-const CBUILD = '20261117195813-a2d33b';
+const CBUILD = '20261117204152-65f119';
 function checkUpdate() { if (location.protocol === 'file:') return; fetch('cversion.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.v && j.v !== CBUILD && !document.getElementById('paint').classList.contains('on')) location.reload(); }).catch(() => {}); }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); }); setInterval(checkUpdate, 5 * 60 * 1000); setTimeout(checkUpdate, 3000);
 setTimeout(() => window.JCP && JCP.celebrateScenes(), 600);
