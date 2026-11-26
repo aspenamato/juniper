@@ -1,0 +1,125 @@
+/* ---------- v21 t108u: labels and banners shrink-to-fit, never cut words ---------- */
+
+/* Hello: never ellipsize "Hi, Aspen!" */
+#hHello,
+.hello{
+  white-space:nowrap;
+  overflow:visible;
+  text-overflow:clip;
+  min-width:0;
+  flex:1 1 auto;
+  font-size:clamp(14px,3.6vmin,38px);
+  line-height:1.1;
+  text-align:center;
+}
+@media (max-width:600px){
+  #home .topbar{gap:4px}
+  #hStars{min-width:0;padding:4px 8px 4px 4px;font-size:clamp(16px,5vw,22px)}
+  #hStars svg{width:28px!important;height:28px!important}
+  #hHello{font-size:clamp(13px,4.6vw,20px);letter-spacing:0}
+  #home .topbar .tb{width:46px;height:46px}
+  #home .topbar .tb svg{width:26px;height:26px}
+}
+
+/* Screen titles (Bro Math Academy, Juniper's Arcade, Dress Up Juniper, ...) */
+.topbar .hdr,
+.hdr{
+  min-width:0;
+  flex:1 1 auto;
+  text-align:center;
+  line-height:1.1;
+  overflow:visible;
+  white-space:normal;
+  text-wrap:balance;
+  overflow-wrap:normal;
+  hyphens:manual;
+  font-size:clamp(16px,3.6vmin,38px);
+  padding:0 6px;
+}
+#acad .hdr,#atrick .hdr{font-size:clamp(16px,3.4vmin,36px)}
+
+/* Map title plate: show the full world name, wrap to two lines, never ellipsis */
+.maptitle{
+  flex:1 1 auto;
+  min-width:0;
+  max-width:none;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  text-wrap:balance;
+  line-height:1.15;
+  font-size:clamp(13px,2.2vmin,22px);
+  padding:5px 12px;
+  hyphens:manual;
+}
+/* skate had hidden the title on phones to dodge overflow — show it, fitted */
+@media (max-width:520px){
+  #map.sk-map .maptitle{display:block!important}
+}
+@media (max-width:700px){
+  #map .topbar{
+    display:grid;grid-template-columns:auto auto 1fr auto auto;
+    grid-template-areas:"home worlds . daily stars" "title title title title title";
+    gap:6px 8px;min-height:0;padding:8px 10px 8px;align-items:center;
+  }
+  #mHome{grid-area:home}
+  #mWorlds{grid-area:worlds}
+  #mDaily,#mDaily.daily{grid-area:daily;margin:0;font-size:12px;padding:4px 8px;gap:3px;flex:none}
+  #mDaily.daily i{width:14px;height:14px}
+  #mStars,#map .starcount{grid-area:stars;margin:0;font-size:clamp(16px,4.5vw,22px);flex:none;min-width:92px;overflow:visible}
+  #mTitle,#map .maptitle{grid-area:title;order:unset;flex:none;width:100%;max-width:none;margin:0;box-sizing:border-box;font-size:clamp(14px,4vw,20px)}
+}
+
+/* Home tiles: two-line wrap, text stays inside the tile, names never shortened */
+.tile b,.tile small{
+  max-width:100%;
+  min-width:0;
+  overflow:visible;
+  text-overflow:clip;
+  white-space:normal;
+  text-wrap:balance;
+  overflow-wrap:normal;
+  hyphens:manual;
+  line-height:1.12;
+}
+.tile .tic{margin-bottom:6px}
+.tile b{font-size:clamp(14px,2.6vmin,30px)}
+.tile small{font-size:clamp(10px,1.7vmin,15px)}
+.tile{padding-left:8px;padding-right:8px}
+
+/* Bro Math Academy step pills (Watch / Practice / Speed) must stay inside the card */
+.acgrid{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:auto;grid-template-rows:none;align-content:start}
+@media (max-width:900px){.acgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.accard{overflow:hidden;padding:10px 8px 12px;min-width:0;height:auto;align-content:start}
+.accard .abro{height:120px;width:auto;max-height:none}
+.accard b{font-size:clamp(14px,2.2vw,20px);text-align:center;max-width:100%;line-height:1.1;text-wrap:balance}
+.acsteps{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;max-width:100%;min-width:0}
+.acsteps span{font:800 clamp(9px,1.5vw,11px)/1 system-ui;padding:4px 6px;white-space:nowrap;flex:0 1 auto}
+
+/* World postcards, shelf cards, arcade cards */
+.pc-name,.pc-special{max-width:100%;overflow:visible;text-overflow:clip;white-space:normal;text-wrap:balance;line-height:1.15}
+.card b,.arcard b,.skcard b,.cl b,.vcard .vc-n,.vc-n{
+  max-width:100%;overflow:visible;text-overflow:clip;white-space:normal;text-wrap:balance;line-height:1.12
+}
+
+/* Travel Journal captions and reward labels */
+.tjrw-i{min-width:0;overflow:visible}
+.tjrw-i b{font-size:clamp(10px,2.6vw,13px);line-height:1.15;max-width:100%;text-wrap:balance;overflow:visible}
+.tjrw-i small{font-size:clamp(9px,2.3vw,11px);line-height:1.15;max-width:100%;overflow:visible;white-space:normal}
+.tjpg{padding-bottom:42px}
+.tjpg-nm{
+  height:auto;min-height:28px;max-height:40px;line-height:1.15;
+  white-space:normal;text-wrap:balance;overflow:visible;
+  font-size:clamp(11px,2.8vw,17px);align-items:flex-end;
+  right:48px;
+}
+
+/* Star count: leave room for 3–4 digits */
+.starcount{min-width:0;padding-left:6px;padding-right:12px;white-space:nowrap}
+
+/* Story titles already pill-shaped — keep words inside */
+.st-title{max-width:min(92vw,720px);white-space:normal;text-wrap:balance;line-height:1.15;text-align:center}
+
+/* Coloring Park (same origin, inlined in index.html when we ship CSS there too) */
+.logo{min-width:0;max-width:100%;overflow:visible;text-wrap:balance;line-height:1.15}
+.card .cap{overflow:visible;white-space:normal;text-wrap:balance;line-height:1.15;padding:4px 6px 2px}
