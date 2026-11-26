@@ -56,3 +56,12 @@ Push plan: 3-way merge shared /workspace/juniper-learn/src changes (other worker
 - 14:44 re-render in progress (12/60)
 - 14:52 resumed: pp21 re-synced, rebuilt; phase A = mirror fix push (index only, re-render still running 36/60)
 - 14:56 phase A tests: tpass 87/87, tpassfit 0, tskate 32/32, tfit 0 both sizes; ttj errors on LIVE too (obsolete after passport moved journal) — not mine. Pushing phase A
+- 14:57 phase A PUSHED 466ef03d
+- 14:57 phase A verified live (20261126145247-9d0be6). re-render 44/60
+- 15:08 re-render 60/60
+- 15:15 re-render round 1 done: 27/60 now heard as 'Aspen' (incl Winnie 'Let's glide'), Teri 'Nicolò's Cocoa Stand.' fixed. Round 2: Emma sentence-initial 'Espen' clips re-rendered from spoken 'Asspen' (tested: heard 'Aspen'), + Teri champion line
+- 15:18 Winnie (en-GB Maisie) says 'Aspen' like 'Aston' after most words; 'Glide with me, Aspen!' heard as Aspen by both models in win+tou -> skate cheer reworded; built. Waiting on round 2 before render (manifest)
+- 15:29 round 2: 5 Emma clips now heard 'Aspen' by both models; retrying the rest accepting >=1 model
+- 15:34 new cheer 'Glide with me, Aspen!' rendered (11 voices; Winnie heard 'Aspen' by both models); scr re-taken
+- 15:35 one-time voice-cache refresh for the 40 re-recorded clips added to skate21.js (tested: old clip dropped, others kept, progress untouched). Built 20261126153453-067b61; running tests
+- 15:40 phase B tests: tpass 87/87, tpassfit 0, tfit 0, tstale 184, tdress 43 both sizes; tskate 390 PASS, 1180 one flaky cast-tap voice check under 4-way load, PASS on rerun. Pushing phase B

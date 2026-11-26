@@ -1,0 +1,132 @@
+---
+pid: 986956
+cwd: "/workspace/wt21"
+command: "cd /workspace/wt21; TAKES=4 MINOK=2 python3 v21/tools/rerender_say.py v21/vo/rerender_jobs2.json 2>&1 | grep -v Warn | cut -c1-220"
+status: succeeded
+started_at: 2026-11-26T20:23:37.139Z
+running_for_ms: 320321   
+---
+['2278e11fmqe', 'jun', 'Aspen has the medal.', 'Asspen has the medal.', 2, 0.95, ['Aspen has the metal.', 'Aspen has the medal.']]
+['nk4olneu9n', 'jun', 'Aspen has the cocoa.', 'Asspen has the cocoa.', 1, 0.95, ['Aspen has the cocoa.', 'Espen has the cocoa.']]
+['1wg5tpfoty6', 'jun', 'Aspen does not have the cocoa.', 'Asspen does not have the cocoa.', 2, 1.0, ['Aspen does not have the cocoa.', 'Aspen does not have the cocoa.']]
+['mg6782f9ng', 'jun', 'Aspen glides around the big tree at Rockefeller Center.', 'Asspen glides around the big tree at Rockefeller Center.', 0, 0.97, ['As Ben glides around the big tree at Rockefeller Center.', 'As Ben g
+['1dmu24i3gvg', 'jun', 'Aspen glides around the big tree at Rockefeller Center', 'Asspen glides around the big tree at Rockefeller Center', 0, 0.97, ['As Ben glides around the big tree at Rockefeller Center.', 'As Ben gl
+['1muhnfcd9lt', 'jun', 'Aspen and Sofia land in San Juan.', 'Asspen and Sofia land in San Juan.', 1, 0.81, ["I've been in Sofia land in San Juan", 'Aspen in Sofia land in San Juan']]
+['1a8mq8mgpi3', 'jun', 'Aspen can roll on her skates.', 'Asspen can roll on her skates.', 1, 0.96, ['Aspen can roll on her skates.', 'Aspyn can roll on her skates.']]
+['254iz6blp6j', 'jun', 'Aspen does not have the acorn.', 'Asspen does not have the acorn.', 1, 0.97, ['Aspen does not have the acorn.', 'Espen does not have the acorn.']]
+['1hq55xx9oll', 'jun', 'Aspen is taller than Nikko.', 'Asspen is taller than Nikko.', 2, 0.98, ['Aspen is taller than Niko.', 'Aspen is taller than Nikko.']]
+['1syarxr4er', 'jun', 'Aspen finished before Marengo.', 'Asspen finished before Marengo.', 1, 0.85, ['has been finished before Moringo', 'Aspen finished before Marengo.']]
+['28f4vnhpqkt', 'jun', 'Aspen skated faster than Juniper.', 'Asspen skated faster than Juniper.', 1, 0.93, ['has been skated faster than Juniper.', 'Aspen skated faster than Juniper.']]
+['1f8j8vro490', 'jun', 'Aspen puts on her ice skates.', 'Asspen puts on her ice skates.', 2, 1.0, ['Aspen puts on her ice skates.', 'Aspen puts on her ice skates.']]
+['1get49olj2a', 'jun', 'Does Aspen finish?', 'Does Asspen finish?', 0, 0.62, ['Does that spin finish?', 'Has that been finished?']]
+['15bctgo6wxd', 'jun', 'Aspen hits the ball', 'Asspen hits the ball', 1, 0.95, ['Aspin hits the ball.', 'Aspen hits the ball.']]
+Traceback (most recent call last):
+  File "/home/box/.local/lib/python3.13/site-packages/aiohttp/connector.py", line 1322, in _wrap_create_connection
+    sock = await aiohappyeyeballs.start_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/home/box/.local/lib/python3.13/site-packages/aiohappyeyeballs/impl.py", line 75, in start_connection
+    sock = await _connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/home/box/.local/lib/python3.13/site-packages/aiohappyeyeballs/impl.py", line 210, in _connect_sock
+    await loop.sock_connect(sock, address)
+  File "/usr/lib/python3.13/asyncio/selector_events.py", line 641, in sock_connect
+    return await fut
+           ^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/box/.local/lib/python3.13/site-packages/aiohttp/client.py", line 854, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        req, traces=traces, timeout=real_timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/box/.local/lib/python3.13/site-packages/aiohttp/connector.py", line 665, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/box/.local/lib/python3.13/site-packages/aiohttp/connector.py", line 1263, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/box/.local/lib/python3.13/site-packages/aiohttp/connector.py", line 1641, in _create_direct_connection
+    raise last_exc
+  File "/home/box/.local/lib/python3.13/site-packages/aiohttp/connector.py", line 1610, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/home/box/.local/lib/python3.13/site-packages/aiohttp/connector.py", line 1319, in _wrap_create_connection
+    async with ceil_timeout(
+               ~~~~~~~~~~~~^
+        timeout.sock_connect, ceil_threshold=timeout.ceil_threshold
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/usr/lib/python3.13/asyncio/timeouts.py", line 116, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspace/wt21/v21/tools/rerender_say.py", line 16, in <module>
+    asyncio.run(edge_tts.Communicate(say, voice, rate=rate, pitch=pitch).save(raw))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/home/box/.local/lib/python3.13/site-packages/edge_tts/communicate.py", line 613, in save
+    async for message in self.stream():
+    ...<7 lines>...
+            metadata.write("\n")
+  File "/home/box/.local/lib/python3.13/site-packages/edge_tts/communicate.py", line 588, in stream
+    async for message in self.__stream():
+        yield message
+  File "/home/box/.local/lib/python3.13/site-packages/edge_tts/communicate.py", line 465, in __stream
+    ) as session, session.ws_connect(
+                  ~~~~~~~~~~~~~~~~~~^
+        f"{WSS_URL}&ConnectionId={connect_id()}"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        ssl=_SSL_CTX,
+        ^^^^^^^^^^^^^
+    ) as websocket:
+    ^
+  File "/home/box/.local/lib/python3.13/site-packages/aiohttp/client.py", line 1756, in __aenter__
+    self._resp: _RetType_co = await self._coro
+                              ^^^^^^^^^^^^^^^^
+  File "/home/box/.local/lib/python3.13/site-packages/aiohttp/client.py", line 1312, in _ws_connect
+    resp = await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "/home/box/.local/lib/python3.13/site-packages/aiohttp/client.py", line 900, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/box/.local/lib/python3.13/site-packages/aiohttp/client.py", line 858, in _connect_and_send_request
+    raise ConnectionTimeoutError(
+        f"Connection timeout to host {req.url}"
+    ) from exc
+aiohttp.client_exceptions.ConnectionTimeoutError: Connection timeout to host wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=6A5AA1D4EAFF4E9FB37E23D68491D6F4&ConnectionId=fb
+
+---
+exit_code: 0
+elapsed_ms: 320321
+ended_at: 2026-11-26T20:28:57.461Z
+---

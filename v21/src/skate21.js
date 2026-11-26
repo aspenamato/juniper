@@ -39,7 +39,7 @@ const SK21 = (() => {
   WORLDS.skate = { name: 'Ice Skating World', short: 'Ice Skating', friend: 'teri', friend2: 'juniper', fname: 'Coach Juniper and Teri', stars: 0, bg: '#e3f4ff', sky: ['#9fd4ff', '#eaf8ff'], ground: '#ffffff',
     need: () => [1, 1], needTxt: 'lace up your skates',
     hello: "«¡Hola, Aspen!» I'm Teri, your biggest fan! Juniper is your skating coach, and Mama Fox is your coach too. We will skate at your home rinks in Vail, New York and San Jose, then at the most beautiful rinks in the world! Every time you land a trick, I will cheer!",
-    cheer: ['Lace up, Aspen!', "Let's glide, Aspen!", 'Skates on, brain on, Aspen!'],
+    cheer: ['Lace up, Aspen!', 'Glide with me, Aspen!', 'Skates on, brain on, Aspen!'],
     secs: RK.map(r => ({ name: r.name, sub: r.sub, scene: 'pond', col: r.col, g1: '#eef6ff', g2: '#dcebff', level: r.level, nodes: r.ids.filter(id => C.BY[id]), lm: r.lm.map(a => L_(...a)) })) };
   { const w = WORLDS.skate; w.total = w.secs.reduce((a, s) => a + s.nodes.length, 0); }
   if (!WKEYS.includes('skate')) WKEYS.push('skate');
@@ -304,3 +304,10 @@ const SK21 = (() => {
   return { save: () => save(), scenes: () => scenesEarned(), startBoss: b => startBoss(b), RK, NB, SKX, skOn, openHub, renderHub, forgeUp, emblemCheck, S, COST, tile, TERI_W, SKG, SKT, CAST, SKV };
 })();
 window.JLPSK = SK21;
+
+// t106u voice polish: 40 clips were re-recorded in place (same text, clearer "Aspen" / "Nicolò's"). The service worker keeps clips forever,
+// so drop just those old copies from the voice cache once; they re-download fresh. Saved progress (juniperLearn) is never touched.
+(function () { const TAG = 'aspen1', KEYS = ['10ivjrrvcxg','15bctgo6wxd','1a8mq8mgpi3','1c8nfb7qoay','1csfxklb8e5','1dii0xduc4q','1dxt5zbcpq4','1f8j8vro490','1hq55xx9oll','1muhnfcd9lt','1nr5xlyd1jk','1peo2s9nrdp','1syarxr4er','1uh4795g4h1','1wg5tpfoty6','1x293iq9kzu','21t0ms0wgvk','2278e11fmqe','254iz6blp6j','28f4vnhpqkt','2agsg1a43z','2bevudrl7uk','2bwltkkukkr','2df8qb9qjym','356j3rtaea','3olmp038y1','a1xplgvoqy','a3oikiae83','btbesr4uba','ccb827irkd','inov7v1sfz','jgpeoilbz3','k12dwled7n','kvlowrvzmn','ljqabq269j','nk4olneu9n','q0ep75c2p5','qda4n11w1p','tw6rp905ky','xno4lvqs8q'];
+  try { if (!window.caches || localStorage.getItem('jlVoRefresh') === TAG) return;
+    caches.open('jl-vo').then(c => Promise.all(KEYS.map(k => c.delete(new URL('vo/' + k + '.mp3', location.href).origin + new URL('vo/' + k + '.mp3', location.href).pathname)))).then(() => { try { localStorage.setItem('jlVoRefresh', TAG); } catch (e) {} }).catch(() => {});
+  } catch (e) {} })();
