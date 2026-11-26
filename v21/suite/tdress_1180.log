@@ -1,7 +1,7 @@
 PASS 23 Juniper jewelry/clothes items
-PASS 24 Aspen items
+PASS 23 Aspen items
 PASS each Aspen item tied to a different real boss
-PASS closet shows 87 items
+PASS closet shows 86 items
 PASS j_pearls: worn on Juniper
 PASS j_beads: worn on Juniper
 PASS j_bowtie: worn on Juniper
@@ -27,7 +27,7 @@ PASS j_unicorn: worn on Juniper
 PASS j_rcape: worn on Juniper
 PASS look shows on home
 PASS Dress Up Aspen button on closet
-FAIL all 18 Aspen items locked at start
+PASS all Aspen items locked at start
 PASS locked labels say Beat <villain> to unlock
 PASS journal items say how to unlock
 PASS tapping locked item voices the boss
@@ -39,6 +39,6 @@ PASS Aspen wears 4 items (head, neck, hand, side)
 PASS Aspen visible on screen
 PASS items fit width
 PASS Aspen look saved
-FAIL all wear art loads ['http://127.0.0.1:8821/art/wear/a_tjcase.webp', 'http://127.0.0.1:8821/art/wear/a_tjcase.webp', 'http://127.0.0.1:8821/art/wear/a_tjcase.webp']
+PASS all wear art loads []
 PASS no page errors []
-FAILS 2
+FAILS 0

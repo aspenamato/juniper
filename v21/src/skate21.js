@@ -294,6 +294,8 @@ const SK21 = (() => {
     const _aav = aspenArt; aspenArt = function (on = aspState().on, cls = '') { const sw = []; const on2 = {}; Object.entries(on || {}).forEach(([k, id]) => { const v = WV.items[id]; if (v) { sw.push([v[0], id]); on2[k] = v[0]; } else on2[k] = id; });
       let s = _aav.call(this, on2, cls); sw.forEach(([b, id]) => { s = s.split(`asp__${b}.webp`).join(`asp__${id}.webp`).split(`wear/${b}${WEAR17.has(b) ? '_v17' : ''}.webp`).join(`wear/${id}.webp`).split(`data-w="${b}"`).join(`data-w="${id}"`); }); return s; };
     try { JLPDRESS.aspenArt = aspenArt; } catch (e) {} } catch (e) { console.warn('skate wear', e); }
-  return { RK, NB, SKX, skOn, openHub, renderHub, forgeUp, emblemCheck, S, COST, tile, TERI_W, SKG, SKT, CAST, SKV };
+  // test hook (v21/tskate.py): boss with only tap-to-answer questions, so an automated run can win it
+  { const _bi = bossItems; bossItems = function (b) { let a = _bi(b); if (SKX.tb && /^skate:/.test(b.id)) { a = a.filter(it => (it.type || 'choice') === 'choice'); while (a.length && a.length < b.hp) a = a.concat(a); a = a.slice(0, b.hp); } return a; }; }
+  return { save: () => save(), scenes: () => scenesEarned(), startBoss: b => startBoss(b), RK, NB, SKX, skOn, openHub, renderHub, forgeUp, emblemCheck, S, COST, tile, TERI_W, SKG, SKT, CAST, SKV };
 })();
 window.JLPSK = SK21;

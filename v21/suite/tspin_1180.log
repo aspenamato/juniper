@@ -23,6 +23,6 @@ PASS Aspen side draws items
 PASS Aspen 315 draws items
 PASS Aspen back hides rosette
 PASS progress still saved
-FAIL no missing art ['http://127.0.0.1:8821/art/tj21/journal.webp', 'http://127.0.0.1:8821/art/items/tjpass.webp', 'http://127.0.0.1:8821/art/wear/a_tjcase.webp']
+PASS no missing art []
 PASS no page errors []
-FAILS 1 ["no missing art ['http://127.0.0.1:8821/art/tj21/journal.webp', 'http://127.0.0.1:8821/art/items/tjpass.webp', 'http://127.0.0.1:8821/art/wear/a_tjcase.webp']"]
+FAILS 0 []

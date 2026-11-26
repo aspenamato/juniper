@@ -129,7 +129,7 @@ PASS outfit worn through the closet
 PASS after reload {"back": "j_wings", "head": "j_daisy"}: spin set == dress-up ['j_daisy', 'j_wings'] relic None (spin ['j_daisy', 'j_wings'] None)
 PASS after reload {"back": "j_wings", "head": "j_daisy"}: every visible item drawn in the spin ['j_wings', 'j_daisy']
 PASS reloaded spin wears the saved outfit ['j_wings', 'j_daisy']
-24 aspen items
+23 aspen items
 PASS A a_visor: spin set == dress-up ['a_visor'] relic None (spin ['a_visor'] None)
 PASS A a_visor: every visible item drawn in the spin ['a_visor']
 PASS A a_driver: spin set == dress-up ['a_driver'] relic None (spin ['a_driver'] None)
@@ -166,8 +166,6 @@ PASS A a_smedal: spin set == dress-up ['a_smedal'] relic None (spin ['a_smedal']
 PASS A a_smedal: every visible item drawn in the spin ['a_smedal']
 PASS A a_strophy: spin set == dress-up ['a_strophy'] relic None (spin ['a_strophy'] None)
 PASS A a_strophy: every visible item drawn in the spin []
-PASS A a_tjcase: spin set == dress-up ['a_tjcase'] relic None (spin ['a_tjcase'] None)
-PASS A a_tjcase: every visible item drawn in the spin []
 PASS A a_pscarf: spin set == dress-up ['a_pscarf'] relic None (spin ['a_pscarf'] None)
 PASS A a_pscarf: every visible item drawn in the spin ['a_pscarf']
 PASS A a_rmedal: spin set == dress-up ['a_rmedal'] relic None (spin ['a_rmedal'] None)

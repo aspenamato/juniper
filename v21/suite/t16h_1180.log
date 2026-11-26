@@ -105,12 +105,10 @@ PASS m_add10 sunkey(spot,r0): did not answer/advance
 PASS m_add10 sunkey(spot,r0): right answer not hidden
 PASS m_add10 sunkey(spot,r0): at least one wrong choice still live
 PASS m_add10 sunkey(spot,r0): right answer not marked ('')
-PASS m_add10 sunkey(spot,r0): voice does not say the answer []
 PASS m_add10 sunkey tap2: did not answer/advance
 PASS m_add10 sunkey tap2: right answer not hidden
 PASS m_add10 sunkey tap2: at least one wrong choice still live
 PASS m_add10 sunkey tap2: right answer not marked ('')
-PASS m_add10 sunkey tap2: voice does not say the answer []
 PASS m_add20 amulet(step,r0): did not answer/advance
 PASS m_add20 amulet(step,r0): right answer not hidden
 PASS m_add20 amulet(step,r0): at least one wrong choice still live
@@ -245,12 +243,12 @@ PASS m_shapes hourglass(step,r0): did not answer/advance
 PASS m_shapes hourglass(step,r0): right answer not hidden
 PASS m_shapes hourglass(step,r0): at least one wrong choice still live
 PASS m_shapes hourglass(step,r0): right answer not marked ('')
-PASS m_shapes hourglass(step,r0): voice does not say the answer word []
+PASS m_shapes hourglass(step,r0): voice does not say the answer []
 PASS m_shapes hourglass tap2: did not answer/advance
 PASS m_shapes hourglass tap2: right answer not hidden
 PASS m_shapes hourglass tap2: at least one wrong choice still live
 PASS m_shapes hourglass tap2: right answer not marked ('')
-PASS m_shapes hourglass tap2: voice does not say the answer word []
+PASS m_shapes hourglass tap2: voice does not say the answer []
 PASS m_halves feather(sound,r0): did not answer/advance
 PASS m_halves feather(sound,r0): right answer not hidden
 PASS m_halves feather(sound,r0): at least one wrong choice still live
@@ -289,227 +287,1178 @@ PASS r_begin rheart tap2: did not answer/advance
 PASS r_begin rheart tap2: right answer not hidden
 PASS r_begin rheart tap2: at least one wrong choice still live
 PASS r_begin rheart tap2: right answer not marked ('')
-PASS r_end tjpass(two,r0): did not answer/advance
-PASS r_end tjpass(two,r0): right answer not hidden
-PASS r_end tjpass(two,r0): at least one wrong choice still live
-PASS r_end tjpass(two,r0): right answer not marked ('')
-PASS r_end tjpass tap2: did not answer/advance
-PASS r_end tjpass tap2: right answer not hidden
-PASS r_end tjpass tap2: at least one wrong choice still live
-PASS r_end tjpass tap2: right answer not marked ('')
-PASS r_vowel sksilver(dots,r0): did not answer/advance
-PASS r_vowel sksilver(dots,r0): right answer not hidden
-PASS r_vowel sksilver(dots,r0): at least one wrong choice still live
-PASS r_vowel sksilver(dots,r0): right answer not marked ('')
-PASS r_vowel sksilver tap2: did not answer/advance
-PASS r_vowel sksilver tap2: right answer not hidden
-PASS r_vowel sksilver tap2: at least one wrong choice still live
-PASS r_vowel sksilver tap2: right answer not marked ('')
-PASS r_blend skstar(spot,r0): did not answer/advance
-PASS r_blend skstar(spot,r0): right answer not hidden
-PASS r_blend skstar(spot,r0): at least one wrong choice still live
-PASS r_blend skstar(spot,r0): right answer not marked ('')
-PASS r_blend skstar(spot,r0): voice does not say the answer word []
-PASS r_blend skstar tap2: did not answer/advance
-PASS r_blend skstar tap2: right answer not hidden
-PASS r_blend skstar tap2: at least one wrong choice still live
-PASS r_blend skstar tap2: right answer not marked ('')
-PASS r_blend skstar tap2: voice does not say the answer word []
-PASS r_build skwave(step,r0): did not answer/advance
-PASS r_build skwave tap2: did not answer/advance
-PASS r_family skmaple(sound,r0): did not answer/advance
-PASS r_family skmaple(sound,r0): right answer not hidden
-PASS r_family skmaple(sound,r0): at least one wrong choice still live
-PASS r_family skmaple(sound,r0): right answer not marked ('')
-PASS r_family skmaple(sound,r0): voice does not say the answer word []
-PASS r_family skmaple tap2: did not answer/advance
-PASS r_family skmaple tap2: right answer not hidden
-PASS r_family skmaple tap2: at least one wrong choice still live
-PASS r_family skmaple tap2: right answer not marked ('')
-PASS r_family skmaple tap2: voice does not say the answer word []
-PASS r_rhyme skaurora(two,r0): did not answer/advance
-PASS r_rhyme skaurora(two,r0): right answer not hidden
-PASS r_rhyme skaurora(two,r0): at least one wrong choice still live
-PASS r_rhyme skaurora(two,r0): right answer not marked ('')
-PASS r_rhyme skaurora(two,r0): voice does not say the answer word []
-PASS r_rhyme skaurora tap2: did not answer/advance
-PASS r_rhyme skaurora tap2: right answer not hidden
-PASS r_rhyme skaurora tap2: at least one wrong choice still live
-PASS r_rhyme skaurora tap2: right answer not marked ('')
-PASS r_rhyme skaurora tap2: voice does not say the answer word []
-PASS r_wordpic ltag(spot,r1): did not answer/advance
-PASS r_wordpic ltag tap2: did not answer/advance
-PASS r_digraph wings(two,r1): did not answer/advance
-PASS r_digraph wings(two,r1): right answer not hidden
-PASS r_digraph wings(two,r1): at least one wrong choice still live
-PASS r_digraph wings(two,r1): right answer not marked ('')
-PASS r_digraph wings(two,r1): voice does not say the answer word []
-PASS r_digraph wings tap2: did not answer/advance
-PASS r_digraph wings tap2: right answer not hidden
-PASS r_digraph wings tap2: at least one wrong choice still live
-PASS r_digraph wings tap2: right answer not marked ('')
-PASS r_digraph wings tap2: voice does not say the answer word []
-PASS r_silente taxilight(step,r1): did not answer/advance
-PASS r_silente taxilight(step,r1): right answer not hidden
-PASS r_silente taxilight(step,r1): at least one wrong choice still live
-PASS r_silente taxilight(step,r1): right answer not marked ('')
-PASS r_silente taxilight(step,r1): voice does not say the answer word []
-PASS r_silente taxilight tap2: did not answer/advance
-PASS r_silente taxilight tap2: right answer not hidden
-PASS r_silente taxilight tap2: at least one wrong choice still live
-PASS r_silente taxilight tap2: right answer not marked ('')
-PASS r_silente taxilight tap2: voice does not say the answer word []
-PASS r_vteam pearlball(dots,r1): did not answer/advance
-PASS r_vteam pearlball(dots,r1): right answer not hidden
-PASS r_vteam pearlball(dots,r1): at least one wrong choice still live
-PASS r_vteam pearlball(dots,r1): right answer not marked ('')
-PASS r_vteam pearlball(dots,r1): voice does not say the answer word []
-PASS r_vteam pearlball tap2: did not answer/advance
-PASS r_vteam pearlball tap2: right answer not hidden
-PASS r_vteam pearlball tap2: at least one wrong choice still live
-PASS r_vteam pearlball tap2: right answer not marked ('')
-PASS r_vteam pearlball tap2: voice does not say the answer word []
-PASS r_hf snowglobe(step,r1): did not answer/advance
-PASS r_hf snowglobe(step,r1): right answer not hidden
-PASS r_hf snowglobe(step,r1): at least one wrong choice still live
-PASS r_hf snowglobe(step,r1): right answer not marked ('')
-PASS r_hf snowglobe(step,r1): voice does not say the answer word []
-PASS r_hf snowglobe tap2: did not answer/advance
-PASS r_hf snowglobe tap2: right answer not hidden
-PASS r_hf snowglobe tap2: at least one wrong choice still live
-PASS r_hf snowglobe tap2: right answer not marked ('')
-PASS r_hf snowglobe tap2: voice does not say the answer word []
-PASS r_sw1 skypass(two,r1): did not answer/advance
-PASS r_sw1 skypass(two,r1): right answer not hidden
-PASS r_sw1 skypass(two,r1): at least one wrong choice still live
-PASS r_sw1 skypass(two,r1): right answer not marked ('')
-PASS r_sw1 skypass(two,r1): voice does not say the answer word []
-PASS r_sw1 skypass tap2: did not answer/advance
-PASS r_sw1 skypass tap2: right answer not hidden
-PASS r_sw1 skypass tap2: at least one wrong choice still live
-PASS r_sw1 skypass tap2: right answer not marked ('')
-PASS r_sw1 skypass tap2: voice does not say the answer word []
-PASS r_sw2 moonstone(sound,r1): did not answer/advance
-PASS r_sw2 moonstone(sound,r1): right answer not hidden
-PASS r_sw2 moonstone(sound,r1): at least one wrong choice still live
-PASS r_sw2 moonstone(sound,r1): right answer not marked ('')
-PASS r_sw2 moonstone(sound,r1): voice does not say the answer word []
-PASS r_sw2 moonstone tap2: did not answer/advance
-PASS r_sw2 moonstone tap2: right answer not hidden
-PASS r_sw2 moonstone tap2: at least one wrong choice still live
-PASS r_sw2 moonstone tap2: right answer not marked ('')
-PASS r_sw2 moonstone tap2: voice does not say the answer word []
-PASS r_sw3 compass(spot,r1): did not answer/advance
-PASS r_sw3 compass(spot,r1): right answer not hidden
-PASS r_sw3 compass(spot,r1): at least one wrong choice still live
-PASS r_sw3 compass(spot,r1): right answer not marked ('')
-PASS r_sw3 compass(spot,r1): voice does not say the answer word []
-PASS r_sw3 compass tap2: did not answer/advance
-PASS r_sw3 compass tap2: right answer not hidden
-PASS r_sw3 compass tap2: at least one wrong choice still live
-PASS r_sw3 compass tap2: right answer not marked ('')
-PASS r_sw3 compass tap2: voice does not say the answer word []
-PASS r_sw4 spoon(two,r1): did not answer/advance
-PASS r_sw4 spoon(two,r1): right answer not hidden
-PASS r_sw4 spoon(two,r1): at least one wrong choice still live
-PASS r_sw4 spoon(two,r1): right answer not marked ('')
-PASS r_sw4 spoon(two,r1): voice does not say the answer word []
-PASS r_sw4 spoon tap2: did not answer/advance
-PASS r_sw4 spoon tap2: right answer not hidden
-PASS r_sw4 spoon tap2: at least one wrong choice still live
-PASS r_sw4 spoon tap2: right answer not marked ('')
-PASS r_sw4 spoon tap2: voice does not say the answer word []
-PASS r_fill skate(step,r1): did not answer/advance
-PASS r_fill skate(step,r1): right answer not hidden
-PASS r_fill skate(step,r1): at least one wrong choice still live
-PASS r_fill skate(step,r1): right answer not marked ('')
-PASS r_fill skate(step,r1): voice does not say the answer word []
-PASS r_fill skate tap2: did not answer/advance
-PASS r_fill skate tap2: right answer not hidden
-PASS r_fill skate tap2: at least one wrong choice still live
-PASS r_fill skate tap2: right answer not marked ('')
-PASS r_fill skate tap2: voice does not say the answer word []
-PASS r_check tee(dots,r1): did not answer/advance
-PASS r_check tee(dots,r1): right answer not hidden
-PASS r_check tee(dots,r1): at least one wrong choice still live
-PASS r_check tee(dots,r1): right answer not marked ('')
-PASS r_check tee(dots,r1): voice does not say the answer word []
-PASS r_check tee tap2: did not answer/advance
-PASS r_check tee tap2: right answer not hidden
-PASS r_check tee tap2: at least one wrong choice still live
-PASS r_check tee tap2: right answer not marked ('')
-PASS r_check tee tap2: voice does not say the answer word []
-PASS r_pick lantern(sound,r1): did not answer/advance
-PASS r_pick lantern(sound,r1): right answer not hidden
-PASS r_pick lantern(sound,r1): at least one wrong choice still live
-PASS r_pick lantern(sound,r1): right answer not marked ('')
-PASS r_pick lantern(sound,r1): voice does not say the answer word []
-PASS r_pick lantern tap2: did not answer/advance
-PASS r_pick lantern tap2: right answer not hidden
-PASS r_pick lantern tap2: at least one wrong choice still live
-PASS r_pick lantern tap2: right answer not marked ('')
-PASS r_pick lantern tap2: voice does not say the answer word []
-PASS r_sentence coqui(sound,r1): did not answer/advance
-PASS r_sentence coqui(sound,r1): voice does not say the answer word []
-PASS r_sentence coqui tap2: did not answer/advance
-PASS r_sentence coqui tap2: voice does not say the answer word []
-PASS r_fix sunkey(spot,r1): did not answer/advance
-PASS r_fix sunkey(spot,r1): right answer not hidden
-PASS r_fix sunkey(spot,r1): at least one wrong choice still live
-PASS r_fix sunkey(spot,r1): right answer not marked ('')
-PASS r_fix sunkey(spot,r1): voice does not say the answer word []
-PASS r_fix sunkey tap2: did not answer/advance
-PASS r_fix sunkey tap2: right answer not hidden
-PASS r_fix sunkey tap2: at least one wrong choice still live
-PASS r_fix sunkey tap2: right answer not marked ('')
-PASS r_fix sunkey tap2: voice does not say the answer word []
-PASS r_stories amulet(step,r1): did not answer/advance
-PASS r_stories amulet tap2: did not answer/advance
-PASS l_ppat acorn(two,r1): did not answer/advance
-PASS l_ppat acorn(two,r1): right answer not hidden
-PASS l_ppat acorn(two,r1): at least one wrong choice still live
-PASS l_ppat acorn(two,r1): right answer not marked ('')
-PASS l_ppat acorn(two,r1): voice does not say the answer word []
-PASS l_ppat acorn tap2: did not answer/advance
-PASS l_ppat acorn tap2: right answer not hidden
-PASS l_ppat acorn tap2: at least one wrong choice still live
-PASS l_ppat acorn tap2: right answer not marked ('')
-PASS l_ppat acorn tap2: voice does not say the answer word []
-PASS l_npat prism(spot,r1): did not answer/advance
-PASS l_npat prism(spot,r1): right answer not hidden
-PASS l_npat prism(spot,r1): at least one wrong choice still live
-PASS l_npat prism(spot,r1): right answer not marked ('')
-PASS l_npat prism(spot,r1): voice does not say the answer []
-PASS l_npat prism tap2: did not answer/advance
-PASS l_npat prism tap2: right answer not hidden
-PASS l_npat prism tap2: at least one wrong choice still live
-PASS l_npat prism tap2: right answer not marked ('')
-PASS l_npat prism tap2: voice does not say the answer []
-PASS l_grow torch(spot,r1): did not answer/advance
-PASS l_grow torch(spot,r1): right answer not hidden
-PASS l_grow torch(spot,r1): at least one wrong choice still live
-PASS l_grow torch(spot,r1): right answer not marked ('')
-PASS l_grow torch(spot,r1): voice does not say the answer []
-PASS l_grow torch tap2: did not answer/advance
-PASS l_grow torch tap2: right answer not hidden
-PASS l_grow torch tap2: at least one wrong choice still live
-PASS l_grow torch tap2: right answer not marked ('')
-PASS l_grow torch tap2: voice does not say the answer []
-PASS l_odd glacier(two,r1): did not answer/advance
-PASS l_odd glacier(two,r1): right answer not hidden
-PASS l_odd glacier(two,r1): at least one wrong choice still live
-PASS l_odd glacier(two,r1): right answer not marked ('')
-PASS l_odd glacier(two,r1): voice does not say the answer word []
-PASS l_odd glacier tap2: did not answer/advance
-PASS l_odd glacier tap2: right answer not hidden
-PASS l_odd glacier tap2: at least one wrong choice still live
-PASS l_odd glacier tap2: right answer not marked ('')
-PASS l_odd glacier tap2: voice does not say the answer word []
-PASS l_seq mirror(step,r1): did not answer/advance
-PASS l_seq mirror(step,r1): voice does not say the answer word []
-PASS l_seq mirror tap2: did not answer/advance
-PASS l_seq mirror tap2: voice does not say the answer word []
-PASS l_who3 crown(spot,r1): did not answer/advance
-PASS l_who3 crown tap2: did not answer/advance
-PASS l_who4 lens(dots,r1): did not answer/advance
-PASS l_who4 lens tap2: did not answer/advance
+PASS r_end sksilver(dots,r0): did not answer/advance
+PASS r_end sksilver(dots,r0): right answer not hidden
+PASS r_end sksilver(dots,r0): at least one wrong choice still live
+PASS r_end sksilver(dots,r0): right answer not marked ('')
+PASS r_end sksilver tap2: did not answer/advance
+PASS r_end sksilver tap2: right answer not hidden
+PASS r_end sksilver tap2: at least one wrong choice still live
+PASS r_end sksilver tap2: right answer not marked ('')
+PASS r_vowel skstar(spot,r0): did not answer/advance
+PASS r_vowel skstar(spot,r0): right answer not hidden
+PASS r_vowel skstar(spot,r0): at least one wrong choice still live
+PASS r_vowel skstar(spot,r0): right answer not marked ('')
+PASS r_vowel skstar tap2: did not answer/advance
+PASS r_vowel skstar tap2: right answer not hidden
+PASS r_vowel skstar tap2: at least one wrong choice still live
+PASS r_vowel skstar tap2: right answer not marked ('')
+PASS r_blend skwave(step,r0): did not answer/advance
+PASS r_blend skwave(step,r0): right answer not hidden
+PASS r_blend skwave(step,r0): at least one wrong choice still live
+PASS r_blend skwave(step,r0): right answer not marked ('')
+PASS r_blend skwave(step,r0): voice does not say the answer word []
+PASS r_blend skwave tap2: did not answer/advance
+PASS r_blend skwave tap2: right answer not hidden
+PASS r_blend skwave tap2: at least one wrong choice still live
+PASS r_blend skwave tap2: right answer not marked ('')
+PASS r_blend skwave tap2: voice does not say the answer word []
+PASS r_build skmaple(sound,r0): did not answer/advance
+PASS r_build skmaple tap2: did not answer/advance
+PASS r_family skaurora(two,r0): did not answer/advance
+PASS r_family skaurora(two,r0): right answer not hidden
+PASS r_family skaurora(two,r0): at least one wrong choice still live
+PASS r_family skaurora(two,r0): right answer not marked ('')
+PASS r_family skaurora(two,r0): voice does not say the answer word []
+PASS r_family skaurora tap2: did not answer/advance
+PASS r_family skaurora tap2: right answer not hidden
+PASS r_family skaurora tap2: at least one wrong choice still live
+PASS r_family skaurora tap2: right answer not marked ('')
+PASS r_family skaurora tap2: voice does not say the answer word []
+PASS r_rhyme ltag(spot,r1): did not answer/advance
+PASS r_rhyme ltag(spot,r1): right answer not hidden
+PASS r_rhyme ltag(spot,r1): at least one wrong choice still live
+PASS r_rhyme ltag(spot,r1): right answer not marked ('')
+PASS r_rhyme ltag(spot,r1): voice does not say the answer word []
+PASS r_rhyme ltag tap2: did not answer/advance
+PASS r_rhyme ltag tap2: right answer not hidden
+PASS r_rhyme ltag tap2: at least one wrong choice still live
+PASS r_rhyme ltag tap2: right answer not marked ('')
+PASS r_rhyme ltag tap2: voice does not say the answer word []
+PASS r_wordpic wings(two,r1): did not answer/advance
+PASS r_wordpic wings tap2: did not answer/advance
+PASS r_digraph taxilight(step,r1): did not answer/advance
+PASS r_digraph taxilight(step,r1): right answer not hidden
+PASS r_digraph taxilight(step,r1): at least one wrong choice still live
+PASS r_digraph taxilight(step,r1): right answer not marked ('')
+PASS r_digraph taxilight(step,r1): voice does not say the answer word []
+PASS r_digraph taxilight tap2: did not answer/advance
+PASS r_digraph taxilight tap2: right answer not hidden
+PASS r_digraph taxilight tap2: at least one wrong choice still live
+PASS r_digraph taxilight tap2: right answer not marked ('')
+PASS r_digraph taxilight tap2: voice does not say the answer word []
+PASS r_silente pearlball(dots,r1): did not answer/advance
+PASS r_silente pearlball(dots,r1): right answer not hidden
+PASS r_silente pearlball(dots,r1): at least one wrong choice still live
+PASS r_silente pearlball(dots,r1): right answer not marked ('')
+PASS r_silente pearlball(dots,r1): voice does not say the answer word []
+PASS r_silente pearlball tap2: did not answer/advance
+PASS r_silente pearlball tap2: right answer not hidden
+PASS r_silente pearlball tap2: at least one wrong choice still live
+PASS r_silente pearlball tap2: right answer not marked ('')
+PASS r_silente pearlball tap2: voice does not say the answer word []
+PASS r_vteam snowglobe(step,r1): did not answer/advance
+PASS r_vteam snowglobe(step,r1): right answer not hidden
+PASS r_vteam snowglobe(step,r1): at least one wrong choice still live
+PASS r_vteam snowglobe(step,r1): right answer not marked ('')
+PASS r_vteam snowglobe(step,r1): voice does not say the answer word []
+PASS r_vteam snowglobe tap2: did not answer/advance
+PASS r_vteam snowglobe tap2: right answer not hidden
+PASS r_vteam snowglobe tap2: at least one wrong choice still live
+PASS r_vteam snowglobe tap2: right answer not marked ('')
+PASS r_vteam snowglobe tap2: voice does not say the answer word []
+PASS r_hf skypass(two,r1): did not answer/advance
+PASS r_hf skypass(two,r1): right answer not hidden
+PASS r_hf skypass(two,r1): at least one wrong choice still live
+PASS r_hf skypass(two,r1): right answer not marked ('')
+PASS r_hf skypass tap2: did not answer/advance
+PASS r_hf skypass tap2: right answer not hidden
+PASS r_hf skypass tap2: at least one wrong choice still live
+PASS r_hf skypass tap2: right answer not marked ('')
+PASS r_sw1 moonstone(sound,r1): did not answer/advance
+PASS r_sw1 moonstone(sound,r1): right answer not hidden
+PASS r_sw1 moonstone(sound,r1): at least one wrong choice still live
+PASS r_sw1 moonstone(sound,r1): right answer not marked ('')
+PASS r_sw1 moonstone(sound,r1): voice does not say the answer word []
+PASS r_sw1 moonstone tap2: did not answer/advance
+PASS r_sw1 moonstone tap2: right answer not hidden
+PASS r_sw1 moonstone tap2: at least one wrong choice still live
+PASS r_sw1 moonstone tap2: right answer not marked ('')
+PASS r_sw1 moonstone tap2: voice does not say the answer word []
+PASS r_sw2 compass(spot,r1): did not answer/advance
+PASS r_sw2 compass(spot,r1): right answer not hidden
+PASS r_sw2 compass(spot,r1): at least one wrong choice still live
+PASS r_sw2 compass(spot,r1): right answer not marked ('')
+PASS r_sw2 compass(spot,r1): voice does not say the answer word []
+PASS r_sw2 compass tap2: did not answer/advance
+PASS r_sw2 compass tap2: right answer not hidden
+PASS r_sw2 compass tap2: at least one wrong choice still live
+PASS r_sw2 compass tap2: right answer not marked ('')
+PASS r_sw2 compass tap2: voice does not say the answer word []
+PASS r_sw3 spoon(two,r1): did not answer/advance
+PASS r_sw3 spoon(two,r1): right answer not hidden
+PASS r_sw3 spoon(two,r1): at least one wrong choice still live
+PASS r_sw3 spoon(two,r1): right answer not marked ('')
+PASS r_sw3 spoon(two,r1): voice does not say the answer word []
+PASS r_sw3 spoon tap2: did not answer/advance
+PASS r_sw3 spoon tap2: right answer not hidden
+PASS r_sw3 spoon tap2: at least one wrong choice still live
+PASS r_sw3 spoon tap2: right answer not marked ('')
+PASS r_sw3 spoon tap2: voice does not say the answer word []
+PASS r_sw4 skate(step,r1): did not answer/advance
+PASS r_sw4 skate(step,r1): right answer not hidden
+PASS r_sw4 skate(step,r1): at least one wrong choice still live
+PASS r_sw4 skate(step,r1): right answer not marked ('')
+PASS r_sw4 skate(step,r1): voice does not say the answer word []
+PASS r_sw4 skate tap2: did not answer/advance
+PASS r_sw4 skate tap2: right answer not hidden
+PASS r_sw4 skate tap2: at least one wrong choice still live
+PASS r_sw4 skate tap2: right answer not marked ('')
+PASS r_sw4 skate tap2: voice does not say the answer word []
+PASS r_fill tee(dots,r1): did not answer/advance
+PASS r_fill tee(dots,r1): right answer not hidden
+PASS r_fill tee(dots,r1): at least one wrong choice still live
+PASS r_fill tee(dots,r1): right answer not marked ('')
+PASS r_fill tee(dots,r1): voice does not say the answer word []
+PASS r_fill tee tap2: did not answer/advance
+PASS r_fill tee tap2: right answer not hidden
+PASS r_fill tee tap2: at least one wrong choice still live
+PASS r_fill tee tap2: right answer not marked ('')
+PASS r_fill tee tap2: voice does not say the answer word []
+PASS r_check lantern(sound,r1): did not answer/advance
+PASS r_check lantern(sound,r1): right answer not hidden
+PASS r_check lantern(sound,r1): at least one wrong choice still live
+PASS r_check lantern(sound,r1): right answer not marked ('')
+PASS r_check lantern(sound,r1): voice does not say the answer word []
+PASS r_check lantern tap2: did not answer/advance
+PASS r_check lantern tap2: right answer not hidden
+PASS r_check lantern tap2: at least one wrong choice still live
+PASS r_check lantern tap2: right answer not marked ('')
+PASS r_check lantern tap2: voice does not say the answer word []
+PASS r_pick coqui(sound,r1): did not answer/advance
+PASS r_pick coqui(sound,r1): right answer not hidden
+PASS r_pick coqui(sound,r1): at least one wrong choice still live
+PASS r_pick coqui(sound,r1): right answer not marked ('')
+PASS r_pick coqui(sound,r1): voice does not say the answer word []
+PASS r_pick coqui tap2: did not answer/advance
+PASS r_pick coqui tap2: right answer not hidden
+PASS r_pick coqui tap2: at least one wrong choice still live
+PASS r_pick coqui tap2: right answer not marked ('')
+PASS r_pick coqui tap2: voice does not say the answer word []
+PASS r_sentence sunkey(spot,r1): did not answer/advance
+PASS r_sentence sunkey(spot,r1): voice does not say the answer word []
+PASS r_sentence sunkey tap2: did not answer/advance
+PASS r_sentence sunkey tap2: voice does not say the answer word []
+PASS r_fix amulet(step,r1): did not answer/advance
+PASS r_fix amulet(step,r1): right answer not hidden
+PASS r_fix amulet(step,r1): at least one wrong choice still live
+PASS r_fix amulet(step,r1): right answer not marked ('')
+PASS r_fix amulet(step,r1): voice does not say the answer word []
+PASS r_fix amulet tap2: did not answer/advance
+PASS r_fix amulet tap2: right answer not hidden
+PASS r_fix amulet tap2: at least one wrong choice still live
+PASS r_fix amulet tap2: right answer not marked ('')
+PASS r_fix amulet tap2: voice does not say the answer word []
+PASS r_stories acorn(two,r1): did not answer/advance
+PASS r_stories acorn tap2: did not answer/advance
+PASS l_ppat prism(spot,r1): did not answer/advance
+PASS l_ppat prism(spot,r1): right answer not hidden
+PASS l_ppat prism(spot,r1): at least one wrong choice still live
+PASS l_ppat prism(spot,r1): right answer not marked ('')
+PASS l_ppat prism(spot,r1): voice does not say the answer word []
+PASS l_ppat prism tap2: did not answer/advance
+PASS l_ppat prism tap2: right answer not hidden
+PASS l_ppat prism tap2: at least one wrong choice still live
+PASS l_ppat prism tap2: right answer not marked ('')
+PASS l_ppat prism tap2: voice does not say the answer word []
+PASS l_npat torch(spot,r1): did not answer/advance
+PASS l_npat torch(spot,r1): right answer not hidden
+PASS l_npat torch(spot,r1): at least one wrong choice still live
+PASS l_npat torch(spot,r1): right answer not marked ('')
+PASS l_npat torch(spot,r1): voice does not say the answer []
+PASS l_npat torch tap2: did not answer/advance
+PASS l_npat torch tap2: right answer not hidden
+PASS l_npat torch tap2: at least one wrong choice still live
+PASS l_npat torch tap2: right answer not marked ('')
+PASS l_npat torch tap2: voice does not say the answer []
+PASS l_grow glacier(two,r1): did not answer/advance
+PASS l_grow glacier(two,r1): right answer not hidden
+PASS l_grow glacier(two,r1): at least one wrong choice still live
+PASS l_grow glacier(two,r1): right answer not marked ('')
+PASS l_grow glacier(two,r1): voice does not say the answer []
+PASS l_grow glacier tap2: did not answer/advance
+PASS l_grow glacier tap2: right answer not hidden
+PASS l_grow glacier tap2: at least one wrong choice still live
+PASS l_grow glacier tap2: right answer not marked ('')
+PASS l_grow glacier tap2: voice does not say the answer []
+PASS l_odd mirror(step,r1): did not answer/advance
+PASS l_odd mirror(step,r1): right answer not hidden
+PASS l_odd mirror(step,r1): at least one wrong choice still live
+PASS l_odd mirror(step,r1): right answer not marked ('')
+PASS l_odd mirror(step,r1): voice does not say the answer word []
+PASS l_odd mirror tap2: did not answer/advance
+PASS l_odd mirror tap2: right answer not hidden
+PASS l_odd mirror tap2: at least one wrong choice still live
+PASS l_odd mirror tap2: right answer not marked ('')
+PASS l_odd mirror tap2: voice does not say the answer word []
+PASS l_seq crown(spot,r1): did not answer/advance
+PASS l_seq crown(spot,r1): voice does not say the answer word []
+PASS l_seq crown tap2: did not answer/advance
+PASS l_seq crown tap2: voice does not say the answer word []
+PASS l_who3 lens(dots,r1): did not answer/advance
+PASS l_who3 lens tap2: did not answer/advance
+PASS l_who4 seed(dots,r1): did not answer/advance
+PASS l_who4 seed tap2: did not answer/advance
+PASS l_seats chip(step,r1): did not answer/advance
+PASS l_seats chip tap2: did not answer/advance
+PASS l_race tkey(spot,r1): did not answer/advance
+PASS l_race tkey(spot,r1): right answer not hidden
+PASS l_race tkey(spot,r1): at least one wrong choice still live
+PASS l_race tkey(spot,r1): right answer not marked ('')
+PASS l_race tkey(spot,r1): voice does not say the answer word []
+PASS l_race tkey tap2: did not answer/advance
+PASS l_race tkey tap2: right answer not hidden
+PASS l_race tkey tap2: at least one wrong choice still live
+PASS l_race tkey tap2: right answer not marked ('')
+PASS l_race tkey tap2: voice does not say the answer word []
+PASS l_psud spyglass(spot,r1): did not answer/advance
+PASS l_psud spyglass tap2: did not answer/advance
+PASS l_nsud coins(dots,r1): did not answer/advance
+PASS l_nsud coins tap2: did not answer/advance
+PASS l_detective hourglass(step,r1): did not answer/advance
+PASS l_detective hourglass tap2: did not answer/advance
+PASS s_num1 feather(sound,r1): did not answer/advance
+PASS s_num1 feather(sound,r1): right answer not hidden
+PASS s_num1 feather(sound,r1): at least one wrong choice still live
+PASS s_num1 feather(sound,r1): right answer not marked ('')
+PASS s_num1 feather tap2: did not answer/advance
+PASS s_num1 feather tap2: right answer not hidden
+PASS s_num1 feather tap2: at least one wrong choice still live
+PASS s_num1 feather tap2: right answer not marked ('')
+PASS s_num2 conch(sound,r1): did not answer/advance
+PASS s_num2 conch(sound,r1): right answer not hidden
+PASS s_num2 conch(sound,r1): at least one wrong choice still live
+PASS s_num2 conch(sound,r1): right answer not marked ('')
+PASS s_num2 conch tap2: did not answer/advance
+PASS s_num2 conch tap2: right answer not hidden
+PASS s_num2 conch tap2: at least one wrong choice still live
+PASS s_num2 conch tap2: right answer not marked ('')
+PASS s_colors locket(two,r1): did not answer/advance
+PASS s_colors locket(two,r1): right answer not hidden
+PASS s_colors locket(two,r1): at least one wrong choice still live
+PASS s_colors locket(two,r1): right answer not marked ('')
+PASS s_colors locket(two,r1): voice does not say the answer word []
+PASS s_colors locket tap2: did not answer/advance
+PASS s_colors locket tap2: right answer not hidden
+PASS s_colors locket tap2: at least one wrong choice still live
+PASS s_colors locket tap2: right answer not marked ('')
+PASS s_colors locket tap2: voice does not say the answer word []
+PASS s_animals astro(dots,r1): did not answer/advance
+PASS s_animals astro(dots,r1): right answer not hidden
+PASS s_animals astro(dots,r1): at least one wrong choice still live
+PASS s_animals astro(dots,r1): right answer not marked ('')
+PASS s_animals astro(dots,r1): voice does not say the answer word []
+PASS s_animals astro tap2: did not answer/advance
+PASS s_animals astro tap2: right answer not hidden
+PASS s_animals astro tap2: at least one wrong choice still live
+PASS s_animals astro tap2: right answer not marked ('')
+PASS s_animals astro tap2: voice does not say the answer word []
+PASS s_phrases rheart(step,r1): did not answer/advance
+PASS s_phrases rheart(step,r1): right answer not hidden
+PASS s_phrases rheart(step,r1): at least one wrong choice still live
+PASS s_phrases rheart(step,r1): right answer not marked ('')
+PASS s_phrases rheart(step,r1): voice does not say the answer word []
+PASS s_phrases rheart tap2: did not answer/advance
+PASS s_phrases rheart tap2: right answer not hidden
+PASS s_phrases rheart tap2: at least one wrong choice still live
+PASS s_phrases rheart tap2: right answer not marked ('')
+PASS s_phrases rheart tap2: voice does not say the answer word []
+PASS s_things sksilver(dots,r1): did not answer/advance
+PASS s_things sksilver(dots,r1): right answer not hidden
+PASS s_things sksilver(dots,r1): at least one wrong choice still live
+PASS s_things sksilver(dots,r1): right answer not marked ('')
+PASS s_things sksilver(dots,r1): voice does not say the answer word []
+PASS s_things sksilver tap2: did not answer/advance
+PASS s_things sksilver tap2: right answer not hidden
+PASS s_things sksilver tap2: at least one wrong choice still live
+PASS s_things sksilver tap2: right answer not marked ('')
+PASS s_things sksilver tap2: voice does not say the answer word []
+PASS s_match skstar(spot,r1): did not answer/advance
+PASS s_match skstar tap2: did not answer/advance
+PASS k_trace skwave(step,r1): did not answer/advance
+PASS k_trace skwave tap2: did not answer/advance
+PASS k_hunt skmaple(sound,r1): did not answer/advance
+PASS k_hunt skmaple(sound,r1): right answer not hidden
+PASS k_hunt skmaple(sound,r1): at least one wrong choice still live
+PASS k_hunt skmaple(sound,r1): right answer not marked ('')
+PASS k_hunt skmaple tap2: did not answer/advance
+PASS k_hunt skmaple tap2: right answer not hidden
+PASS k_hunt skmaple tap2: at least one wrong choice still live
+PASS k_hunt skmaple tap2: right answer not marked ('')
+PASS k_signs skaurora(two,r1): did not answer/advance
+PASS k_signs skaurora(two,r1): right answer not hidden
+PASS k_signs skaurora(two,r1): at least one wrong choice still live
+PASS k_signs skaurora(two,r1): right answer not marked ('')
+PASS k_signs skaurora(two,r1): voice does not say the answer word []
+PASS k_signs skaurora tap2: did not answer/advance
+PASS k_signs skaurora tap2: right answer not hidden
+PASS k_signs skaurora tap2: at least one wrong choice still live
+PASS k_signs skaurora tap2: right answer not marked ('')
+PASS k_signs skaurora tap2: voice does not say the answer word []
+PASS k_fairway ltag(spot,r2): did not answer/advance
+PASS k_fairway ltag tap2: did not answer/advance
+PASS k_rink wings(two,r2): did not answer/advance
+PASS k_rink wings tap2: did not answer/advance
+PASS k_trail taxilight(step,r2): did not answer/advance
+PASS k_trail taxilight tap2: did not answer/advance
+PASS k_baldwin pearlball(dots,r2): did not answer/advance
+PASS k_baldwin pearlball tap2: did not answer/advance
+PASS k_finish snowglobe(step,r2): did not answer/advance
+PASS k_finish snowglobe(step,r2): right answer not hidden
+PASS k_finish snowglobe(step,r2): at least one wrong choice still live
+PASS k_finish snowglobe(step,r2): right answer not marked ('')
+PASS k_finish snowglobe tap2: did not answer/advance
+PASS k_finish snowglobe tap2: right answer not hidden
+PASS k_finish snowglobe tap2: at least one wrong choice still live
+PASS k_finish snowglobe tap2: right answer not marked ('')
+PASS m_flash skypass(two,r2): did not answer/advance
+PASS m_flash skypass(two,r2): right answer not hidden
+PASS m_flash skypass(two,r2): at least one wrong choice still live
+PASS m_flash skypass(two,r2): right answer not marked ('')
+PASS m_flash skypass(two,r2): voice does not say the answer []
+PASS m_flash skypass tap2: did not answer/advance
+PASS m_flash skypass tap2: right answer not hidden
+PASS m_flash skypass tap2: at least one wrong choice still live
+PASS m_flash skypass tap2: right answer not marked ('')
+PASS m_flash skypass tap2: voice does not say the answer []
+PASS m_hop moonstone(sound,r2): did not answer/advance
+PASS m_hop moonstone(sound,r2): right answer not hidden
+PASS m_hop moonstone(sound,r2): at least one wrong choice still live
+PASS m_hop moonstone(sound,r2): right answer not marked ('')
+PASS m_hop moonstone(sound,r2): voice does not say the answer []
+PASS m_hop moonstone tap2: did not answer/advance
+PASS m_hop moonstone tap2: right answer not hidden
+PASS m_hop moonstone tap2: at least one wrong choice still live
+PASS m_hop moonstone tap2: right answer not marked ('')
+PASS m_hop moonstone tap2: voice does not say the answer []
+PASS m_base10 compass(spot,r2): did not answer/advance
+PASS m_base10 compass(spot,r2): right answer not hidden
+PASS m_base10 compass(spot,r2): at least one wrong choice still live
+PASS m_base10 compass(spot,r2): right answer not marked ('')
+PASS m_base10 compass(spot,r2): voice does not say the answer []
+PASS m_base10 compass tap2: did not answer/advance
+PASS m_base10 compass tap2: right answer not hidden
+PASS m_base10 compass tap2: at least one wrong choice still live
+PASS m_base10 compass tap2: right answer not marked ('')
+PASS m_base10 compass tap2: voice does not say the answer []
+PASS m_balance spoon(two,r2): did not answer/advance
+PASS m_balance spoon(two,r2): right answer not hidden
+PASS m_balance spoon(two,r2): at least one wrong choice still live
+PASS m_balance spoon(two,r2): right answer not marked ('')
+PASS m_balance spoon(two,r2): voice does not say the answer []
+PASS m_balance spoon tap2: did not answer/advance
+PASS m_balance spoon tap2: right answer not hidden
+PASS m_balance spoon tap2: at least one wrong choice still live
+PASS m_balance spoon tap2: right answer not marked ('')
+PASS m_balance spoon tap2: voice does not say the answer []
+PASS m_gator skate(step,r2): did not answer/advance
+PASS m_gator skate(step,r2): right answer not hidden
+PASS m_gator skate(step,r2): at least one wrong choice still live
+PASS m_gator skate(step,r2): right answer not marked ('')
+PASS m_gator skate tap2: did not answer/advance
+PASS m_gator skate tap2: right answer not hidden
+PASS m_gator skate tap2: at least one wrong choice still live
+PASS m_gator skate tap2: right answer not marked ('')
+PASS m_shop tee(dots,r2): did not answer/advance
+PASS m_shop tee(dots,r2): right answer not hidden
+PASS m_shop tee(dots,r2): at least one wrong choice still live
+PASS m_shop tee(dots,r2): right answer not marked ('')
+PASS m_shop tee(dots,r2): voice does not say the answer []
+PASS m_shop tee tap2: did not answer/advance
+PASS m_shop tee tap2: right answer not hidden
+PASS m_shop tee tap2: at least one wrong choice still live
+PASS m_shop tee tap2: right answer not marked ('')
+PASS m_shop tee tap2: voice does not say the answer []
+PASS m_sprint lantern(sound,r2): did not answer/advance
+PASS m_sprint lantern(sound,r2): right answer not hidden
+PASS m_sprint lantern(sound,r2): at least one wrong choice still live
+PASS m_sprint lantern(sound,r2): right answer not marked ('')
+PASS m_sprint lantern(sound,r2): voice does not say the answer []
+PASS m_sprint lantern tap2: did not answer/advance
+PASS m_sprint lantern tap2: right answer not hidden
+PASS m_sprint lantern tap2: at least one wrong choice still live
+PASS m_sprint lantern tap2: right answer not marked ('')
+PASS m_sprint lantern tap2: voice does not say the answer []
+PASS r_boxes coqui(sound,r2): did not answer/advance
+PASS r_boxes coqui(sound,r2): right answer not hidden
+PASS r_boxes coqui(sound,r2): at least one wrong choice still live
+PASS r_boxes coqui(sound,r2): right answer not marked ('')
+PASS r_boxes coqui(sound,r2): voice does not say the answer []
+PASS r_boxes coqui tap2: did not answer/advance
+PASS r_boxes coqui tap2: right answer not hidden
+PASS r_boxes coqui tap2: at least one wrong choice still live
+PASS r_boxes coqui tap2: right answer not marked ('')
+PASS r_boxes coqui tap2: voice does not say the answer []
+PASS r_train sunkey(spot,r2): did not answer/advance
+PASS r_train sunkey(spot,r2): right answer not hidden
+PASS r_train sunkey(spot,r2): at least one wrong choice still live
+PASS r_train sunkey(spot,r2): right answer not marked ('')
+PASS r_train sunkey tap2: did not answer/advance
+PASS r_train sunkey tap2: right answer not hidden
+PASS r_train sunkey tap2: at least one wrong choice still live
+PASS r_train sunkey tap2: right answer not marked ('')
+PASS l_grid amulet(step,r2): did not answer/advance
+PASS l_grid amulet(step,r2): right answer not hidden
+PASS l_grid amulet(step,r2): at least one wrong choice still live
+PASS l_grid amulet(step,r2): right answer not marked ('')
+PASS l_grid amulet(step,r2): voice does not say the answer word []
+PASS l_grid amulet tap2: did not answer/advance
+PASS l_grid amulet tap2: right answer not hidden
+PASS l_grid amulet tap2: at least one wrong choice still live
+PASS l_grid amulet tap2: right answer not marked ('')
+PASS l_grid amulet tap2: voice does not say the answer word []
+PASS m_mix acorn(two,r2): did not answer/advance
+PASS m_mix acorn(two,r2): right answer not hidden
+PASS m_mix acorn(two,r2): at least one wrong choice still live
+PASS m_mix acorn(two,r2): right answer not marked ('')
+PASS m_mix acorn(two,r2): voice does not say the answer word []
+PASS m_mix acorn tap2: did not answer/advance
+PASS m_mix acorn tap2: right answer not hidden
+PASS m_mix acorn tap2: at least one wrong choice still live
+PASS m_mix acorn tap2: right answer not marked ('')
+PASS m_mix acorn tap2: voice does not say the answer word []
+PASS t_swpass prism(spot,r2): did not answer/advance
+PASS t_swpass prism(spot,r2): right answer not hidden
+PASS t_swpass prism(spot,r2): at least one wrong choice still live
+PASS t_swpass prism(spot,r2): right answer not marked ('')
+PASS t_swpass prism(spot,r2): voice does not say the answer word []
+PASS t_swpass prism tap2: did not answer/advance
+PASS t_swpass prism tap2: right answer not hidden
+PASS t_swpass prism tap2: at least one wrong choice still live
+PASS t_swpass prism tap2: right answer not marked ('')
+PASS t_swpass prism tap2: voice does not say the answer word []
+PASS t_blend torch(spot,r2): did not answer/advance
+PASS t_blend torch(spot,r2): right answer not hidden
+PASS t_blend torch(spot,r2): at least one wrong choice still live
+PASS t_blend torch(spot,r2): right answer not marked ('')
+PASS t_blend torch(spot,r2): voice does not say the answer word []
+PASS t_blend torch tap2: did not answer/advance
+PASS t_blend torch tap2: right answer not hidden
+PASS t_blend torch tap2: at least one wrong choice still live
+PASS t_blend torch tap2: right answer not marked ('')
+PASS t_blend torch tap2: voice does not say the answer word []
+PASS t_cloud glacier(two,r2): did not answer/advance
+PASS t_cloud glacier(two,r2): right answer not hidden
+PASS t_cloud glacier(two,r2): at least one wrong choice still live
+PASS t_cloud glacier(two,r2): right answer not marked ('')
+PASS t_cloud glacier(two,r2): voice does not say the answer word []
+PASS t_cloud glacier tap2: did not answer/advance
+PASS t_cloud glacier tap2: right answer not hidden
+PASS t_cloud glacier tap2: at least one wrong choice still live
+PASS t_cloud glacier tap2: right answer not marked ('')
+PASS t_cloud glacier tap2: voice does not say the answer word []
+PASS t_sent mirror(step,r2): did not answer/advance
+PASS t_sent mirror(step,r2): right answer not hidden
+PASS t_sent mirror(step,r2): at least one wrong choice still live
+PASS t_sent mirror(step,r2): right answer not marked ('')
+PASS t_sent mirror(step,r2): voice does not say the answer word []
+PASS t_sent mirror tap2: did not answer/advance
+PASS t_sent mirror tap2: right answer not hidden
+PASS t_sent mirror tap2: at least one wrong choice still live
+PASS t_sent mirror tap2: right answer not marked ('')
+PASS t_sent mirror tap2: voice does not say the answer word []
+PASS t_order crown(spot,r2): did not answer/advance
+PASS t_order crown(spot,r2): voice does not say the answer word []
+PASS t_order crown tap2: did not answer/advance
+PASS t_order crown tap2: voice does not say the answer word []
+PASS t_sense lens(dots,r2): did not answer/advance
+PASS t_sense lens(dots,r2): right answer not hidden
+PASS t_sense lens(dots,r2): at least one wrong choice still live
+PASS t_sense lens(dots,r2): right answer not marked ('')
+PASS t_sense lens(dots,r2): voice does not say the answer word []
+PASS t_sense lens tap2: did not answer/advance
+PASS t_sense lens tap2: right answer not hidden
+PASS t_sense lens tap2: at least one wrong choice still live
+PASS t_sense lens tap2: right answer not marked ('')
+PASS t_sense lens tap2: voice does not say the answer word []
+PASS t_wfind seed(dots,r2): did not answer/advance
+PASS t_wfind seed tap2: did not answer/advance
+PASS t_wsud chip(step,r2): did not answer/advance
+PASS t_wsud chip tap2: did not answer/advance
+PASS t_ice tkey(spot,r2): did not answer/advance
+PASS t_ice tkey(spot,r2): right answer not hidden
+PASS t_ice tkey(spot,r2): at least one wrong choice still live
+PASS t_ice tkey(spot,r2): right answer not marked ('')
+PASS t_ice tkey(spot,r2): voice does not say the answer word []
+PASS t_ice tkey tap2: did not answer/advance
+PASS t_ice tkey tap2: right answer not hidden
+PASS t_ice tkey tap2: at least one wrong choice still live
+PASS t_ice tkey tap2: right answer not marked ('')
+PASS t_ice tkey tap2: voice does not say the answer word []
+PASS t_es spyglass(spot,r2): did not answer/advance
+PASS t_es spyglass(spot,r2): right answer not hidden
+PASS t_es spyglass(spot,r2): at least one wrong choice still live
+PASS t_es spyglass(spot,r2): right answer not marked ('')
+PASS t_es spyglass(spot,r2): voice does not say the answer word []
+PASS t_es spyglass tap2: did not answer/advance
+PASS t_es spyglass tap2: right answer not hidden
+PASS t_es spyglass tap2: at least one wrong choice still live
+PASS t_es spyglass tap2: right answer not marked ('')
+PASS t_es spyglass tap2: voice does not say the answer word []
+PASS t_bags coins(dots,r2): did not answer/advance
+PASS t_bags coins(dots,r2): right answer not hidden
+PASS t_bags coins(dots,r2): at least one wrong choice still live
+PASS t_bags coins(dots,r2): right answer not marked ('')
+PASS t_bags coins(dots,r2): voice does not say the answer []
+PASS t_bags coins tap2: did not answer/advance
+PASS t_bags coins tap2: right answer not hidden
+PASS t_bags coins tap2: at least one wrong choice still live
+PASS t_bags coins tap2: right answer not marked ('')
+PASS t_bags coins tap2: voice does not say the answer []
+PASS t_clock hourglass(step,r2): did not answer/advance
+PASS t_clock hourglass(step,r2): right answer not hidden
+PASS t_clock hourglass(step,r2): at least one wrong choice still live
+PASS t_clock hourglass(step,r2): right answer not marked ('')
+PASS t_clock hourglass(step,r2): voice does not say the answer word []
+PASS t_clock hourglass tap2: did not answer/advance
+PASS t_clock hourglass tap2: right answer not hidden
+PASS t_clock hourglass tap2: at least one wrong choice still live
+PASS t_clock hourglass tap2: right answer not marked ('')
+PASS t_clock hourglass tap2: voice does not say the answer word []
+PASS t_cab feather(sound,r2): did not answer/advance
+PASS t_cab feather(sound,r2): right answer not hidden
+PASS t_cab feather(sound,r2): at least one wrong choice still live
+PASS t_cab feather(sound,r2): right answer not marked ('')
+PASS t_cab feather(sound,r2): voice does not say the answer []
+PASS t_cab feather tap2: did not answer/advance
+PASS t_cab feather tap2: right answer not hidden
+PASS t_cab feather tap2: at least one wrong choice still live
+PASS t_cab feather tap2: right answer not marked ('')
+PASS t_cab feather tap2: voice does not say the answer []
+PASS t_runway conch(sound,r2): did not answer/advance
+PASS t_runway conch(sound,r2): right answer not hidden
+PASS t_runway conch(sound,r2): at least one wrong choice still live
+PASS t_runway conch(sound,r2): right answer not marked ('')
+PASS t_runway conch(sound,r2): voice does not say the answer []
+PASS t_runway conch tap2: did not answer/advance
+PASS t_runway conch tap2: right answer not hidden
+PASS t_runway conch tap2: at least one wrong choice still live
+PASS t_runway conch tap2: right answer not marked ('')
+PASS t_runway conch tap2: voice does not say the answer []
+PASS t_pattern locket(two,r2): did not answer/advance
+PASS t_pattern locket(two,r2): right answer not hidden
+PASS t_pattern locket(two,r2): at least one wrong choice still live
+PASS t_pattern locket(two,r2): right answer not marked ('')
+PASS t_pattern locket(two,r2): voice does not say the answer word []
+PASS t_pattern locket tap2: did not answer/advance
+PASS t_pattern locket tap2: right answer not hidden
+PASS t_pattern locket tap2: at least one wrong choice still live
+PASS t_pattern locket tap2: right answer not marked ('')
+PASS t_pattern locket tap2: voice does not say the answer word []
+PASS t_seats astro(dots,r2): did not answer/advance
+PASS t_seats astro(dots,r2): right answer not hidden
+PASS t_seats astro(dots,r2): at least one wrong choice still live
+PASS t_seats astro(dots,r2): right answer not marked ('')
+PASS t_seats astro(dots,r2): voice does not say the answer []
+PASS t_seats astro tap2: did not answer/advance
+PASS t_seats astro tap2: right answer not hidden
+PASS t_seats astro tap2: at least one wrong choice still live
+PASS t_seats astro tap2: right answer not marked ('')
+PASS t_seats astro tap2: voice does not say the answer []
+PASS t_bros rheart(step,r2): did not answer/advance
+PASS t_bros rheart(step,r2): right answer not hidden
+PASS t_bros rheart(step,r2): at least one wrong choice still live
+PASS t_bros rheart(step,r2): right answer not marked ('')
+PASS t_bros rheart tap2: did not answer/advance
+PASS t_bros rheart tap2: right answer not hidden
+PASS t_bros rheart tap2: at least one wrong choice still live
+PASS t_bros rheart tap2: right answer not marked ('')
+PASS t_golf sksilver(dots,r2): did not answer/advance
+PASS t_golf sksilver(dots,r2): right answer not hidden
+PASS t_golf sksilver(dots,r2): at least one wrong choice still live
+PASS t_golf sksilver(dots,r2): right answer not marked ('')
+PASS t_golf sksilver(dots,r2): voice does not say the answer []
+PASS t_golf sksilver tap2: did not answer/advance
+PASS t_golf sksilver tap2: right answer not hidden
+PASS t_golf sksilver tap2: at least one wrong choice still live
+PASS t_golf sksilver tap2: right answer not marked ('')
+PASS t_golf sksilver tap2: voice does not say the answer []
+PASS t_skate skstar(spot,r2): did not answer/advance
+PASS t_skate skstar(spot,r2): right answer not hidden
+PASS t_skate skstar(spot,r2): at least one wrong choice still live
+PASS t_skate skstar(spot,r2): right answer not marked ('')
+PASS t_skate skstar(spot,r2): voice does not say the answer []
+PASS t_skate skstar tap2: did not answer/advance
+PASS t_skate skstar tap2: right answer not hidden
+PASS t_skate skstar tap2: at least one wrong choice still live
+PASS t_skate skstar tap2: right answer not marked ('')
+PASS t_skate skstar tap2: voice does not say the answer []
+PASS t_sort skwave(step,r2): did not answer/advance
+PASS t_sort skwave(step,r2): right answer not hidden
+PASS t_sort skwave(step,r2): at least one wrong choice still live
+PASS t_sort skwave(step,r2): right answer not marked ('')
+PASS t_sort skwave(step,r2): voice does not say the answer word []
+PASS t_sort skwave tap2: did not answer/advance
+PASS t_sort skwave tap2: right answer not hidden
+PASS t_sort skwave tap2: at least one wrong choice still live
+PASS t_sort skwave tap2: right answer not marked ('')
+PASS t_sort skwave tap2: voice does not say the answer word []
+PASS t_map skmaple(sound,r2): did not answer/advance
+PASS t_map skmaple(sound,r2): right answer not hidden
+PASS t_map skmaple(sound,r2): at least one wrong choice still live
+PASS t_map skmaple(sound,r2): right answer not marked ('')
+PASS t_map skmaple(sound,r2): voice does not say the answer word []
+PASS t_map skmaple tap2: did not answer/advance
+PASS t_map skmaple tap2: right answer not hidden
+PASS t_map skmaple tap2: at least one wrong choice still live
+PASS t_map skmaple tap2: right answer not marked ('')
+PASS t_map skmaple tap2: voice does not say the answer word []
+PASS t_mix skaurora(two,r2): did not answer/advance
+PASS t_mix skaurora(two,r2): right answer not hidden
+PASS t_mix skaurora(two,r2): at least one wrong choice still live
+PASS t_mix skaurora(two,r2): right answer not marked ('')
+PASS t_mix skaurora tap2: did not answer/advance
+PASS t_mix skaurora tap2: right answer not hidden
+PASS t_mix skaurora tap2: at least one wrong choice still live
+PASS t_mix skaurora tap2: right answer not marked ('')
+PASS sk_sprint1 ltag(spot,r3): did not answer/advance
+PASS sk_sprint1 ltag(spot,r3): right answer not hidden
+PASS sk_sprint1 ltag(spot,r3): at least one wrong choice still live
+PASS sk_sprint1 ltag(spot,r3): right answer not marked ('')
+PASS sk_sprint1 ltag(spot,r3): voice does not say the answer []
+PASS sk_sprint1 ltag tap2: did not answer/advance
+PASS sk_sprint1 ltag tap2: right answer not hidden
+PASS sk_sprint1 ltag tap2: at least one wrong choice still live
+PASS sk_sprint1 ltag tap2: right answer not marked ('')
+PASS sk_sprint1 ltag tap2: voice does not say the answer []
+PASS sk_sprint2 wings(two,r3): did not answer/advance
+PASS sk_sprint2 wings(two,r3): right answer not hidden
+PASS sk_sprint2 wings(two,r3): at least one wrong choice still live
+PASS sk_sprint2 wings(two,r3): right answer not marked ('')
+PASS sk_sprint2 wings(two,r3): voice does not say the answer []
+PASS sk_sprint2 wings tap2: did not answer/advance
+PASS sk_sprint2 wings tap2: right answer not hidden
+PASS sk_sprint2 wings tap2: at least one wrong choice still live
+PASS sk_sprint2 wings tap2: right answer not marked ('')
+PASS sk_sprint2 wings tap2: voice does not say the answer []
+PASS sk_sprint3 taxilight(step,r3): did not answer/advance
+PASS sk_sprint3 taxilight(step,r3): right answer not hidden
+PASS sk_sprint3 taxilight(step,r3): at least one wrong choice still live
+PASS sk_sprint3 taxilight(step,r3): right answer not marked ('')
+PASS sk_sprint3 taxilight(step,r3): voice does not say the answer []
+PASS sk_sprint3 taxilight tap2: did not answer/advance
+PASS sk_sprint3 taxilight tap2: right answer not hidden
+PASS sk_sprint3 taxilight tap2: at least one wrong choice still live
+PASS sk_sprint3 taxilight tap2: right answer not marked ('')
+PASS sk_sprint3 taxilight tap2: voice does not say the answer []
+PASS sk_laps1 pearlball(dots,r3): did not answer/advance
+PASS sk_laps1 pearlball(dots,r3): right answer not hidden
+PASS sk_laps1 pearlball(dots,r3): at least one wrong choice still live
+PASS sk_laps1 pearlball(dots,r3): right answer not marked ('')
+PASS sk_laps1 pearlball(dots,r3): voice does not say the answer []
+PASS sk_laps1 pearlball tap2: did not answer/advance
+PASS sk_laps1 pearlball tap2: right answer not hidden
+PASS sk_laps1 pearlball tap2: at least one wrong choice still live
+PASS sk_laps1 pearlball tap2: right answer not marked ('')
+PASS sk_laps1 pearlball tap2: voice does not say the answer []
+PASS sk_laps2 snowglobe(step,r3): did not answer/advance
+PASS sk_laps2 snowglobe(step,r3): right answer not hidden
+PASS sk_laps2 snowglobe(step,r3): at least one wrong choice still live
+PASS sk_laps2 snowglobe(step,r3): right answer not marked ('')
+PASS sk_laps2 snowglobe tap2: did not answer/advance
+PASS sk_laps2 snowglobe tap2: right answer not hidden
+PASS sk_laps2 snowglobe tap2: at least one wrong choice still live
+PASS sk_laps2 snowglobe tap2: right answer not marked ('')
+PASS sk_laps3 skypass(two,r3): did not answer/advance
+PASS sk_laps3 skypass(two,r3): right answer not hidden
+PASS sk_laps3 skypass(two,r3): at least one wrong choice still live
+PASS sk_laps3 skypass(two,r3): right answer not marked ('')
+PASS sk_laps3 skypass(two,r3): voice does not say the answer []
+PASS sk_laps3 skypass tap2: did not answer/advance
+PASS sk_laps3 skypass tap2: right answer not hidden
+PASS sk_laps3 skypass tap2: at least one wrong choice still live
+PASS sk_laps3 skypass tap2: right answer not marked ('')
+PASS sk_laps3 skypass tap2: voice does not say the answer []
+PASS sk_score1 moonstone(sound,r3): did not answer/advance
+PASS sk_score1 moonstone(sound,r3): right answer not hidden
+PASS sk_score1 moonstone(sound,r3): at least one wrong choice still live
+PASS sk_score1 moonstone(sound,r3): right answer not marked ('')
+PASS sk_score1 moonstone(sound,r3): voice does not say the answer []
+PASS sk_score1 moonstone tap2: did not answer/advance
+PASS sk_score1 moonstone tap2: right answer not hidden
+PASS sk_score1 moonstone tap2: at least one wrong choice still live
+PASS sk_score1 moonstone tap2: right answer not marked ('')
+PASS sk_score1 moonstone tap2: voice does not say the answer []
+PASS sk_score2 compass(spot,r3): did not answer/advance
+PASS sk_score2 compass(spot,r3): right answer not hidden
+PASS sk_score2 compass(spot,r3): at least one wrong choice still live
+PASS sk_score2 compass(spot,r3): right answer not marked ('')
+PASS sk_score2 compass(spot,r3): voice does not say the answer []
+PASS sk_score2 compass tap2: did not answer/advance
+PASS sk_score2 compass tap2: right answer not hidden
+PASS sk_score2 compass tap2: at least one wrong choice still live
+PASS sk_score2 compass tap2: right answer not marked ('')
+PASS sk_score2 compass tap2: voice does not say the answer []
+PASS sk_score3 spoon(two,r3): did not answer/advance
+PASS sk_score3 spoon(two,r3): right answer not hidden
+PASS sk_score3 spoon(two,r3): at least one wrong choice still live
+PASS sk_score3 spoon(two,r3): right answer not marked ('')
+PASS sk_score3 spoon(two,r3): voice does not say the answer []
+PASS sk_score3 spoon tap2: did not answer/advance
+PASS sk_score3 spoon tap2: right answer not hidden
+PASS sk_score3 spoon tap2: at least one wrong choice still live
+PASS sk_score3 spoon tap2: right answer not marked ('')
+PASS sk_score3 spoon tap2: voice does not say the answer []
+PASS sk_spins1 skate(step,r3): did not answer/advance
+PASS sk_spins1 skate(step,r3): right answer not hidden
+PASS sk_spins1 skate(step,r3): at least one wrong choice still live
+PASS sk_spins1 skate(step,r3): right answer not marked ('')
+PASS sk_spins1 skate(step,r3): voice does not say the answer []
+PASS sk_spins1 skate tap2: did not answer/advance
+PASS sk_spins1 skate tap2: right answer not hidden
+PASS sk_spins1 skate tap2: at least one wrong choice still live
+PASS sk_spins1 skate tap2: right answer not marked ('')
+PASS sk_spins1 skate tap2: voice does not say the answer []
+PASS sk_spins2 tee(dots,r3): did not answer/advance
+PASS sk_spins2 tee(dots,r3): right answer not hidden
+PASS sk_spins2 tee(dots,r3): at least one wrong choice still live
+PASS sk_spins2 tee(dots,r3): right answer not marked ('')
+PASS sk_spins2 tee(dots,r3): voice does not say the answer []
+PASS sk_spins2 tee tap2: did not answer/advance
+PASS sk_spins2 tee tap2: right answer not hidden
+PASS sk_spins2 tee tap2: at least one wrong choice still live
+PASS sk_spins2 tee tap2: right answer not marked ('')
+PASS sk_spins2 tee tap2: voice does not say the answer []
+PASS sk_spins3 lantern(sound,r3): did not answer/advance
+PASS sk_spins3 lantern(sound,r3): right answer not hidden
+PASS sk_spins3 lantern(sound,r3): at least one wrong choice still live
+PASS sk_spins3 lantern(sound,r3): right answer not marked ('')
+PASS sk_spins3 lantern(sound,r3): voice does not say the answer []
+PASS sk_spins3 lantern tap2: did not answer/advance
+PASS sk_spins3 lantern tap2: right answer not hidden
+PASS sk_spins3 lantern tap2: at least one wrong choice still live
+PASS sk_spins3 lantern tap2: right answer not marked ('')
+PASS sk_spins3 lantern tap2: voice does not say the answer []
+PASS sk_cocoa1 coqui(sound,r3): did not answer/advance
+PASS sk_cocoa1 coqui(sound,r3): right answer not hidden
+PASS sk_cocoa1 coqui(sound,r3): at least one wrong choice still live
+PASS sk_cocoa1 coqui(sound,r3): right answer not marked ('')
+PASS sk_cocoa1 coqui(sound,r3): voice does not say the answer []
+PASS sk_cocoa1 coqui tap2: did not answer/advance
+PASS sk_cocoa1 coqui tap2: right answer not hidden
+PASS sk_cocoa1 coqui tap2: at least one wrong choice still live
+PASS sk_cocoa1 coqui tap2: right answer not marked ('')
+PASS sk_cocoa1 coqui tap2: voice does not say the answer []
+PASS sk_cocoa2 sunkey(spot,r3): did not answer/advance
+PASS sk_cocoa2 sunkey(spot,r3): right answer not hidden
+PASS sk_cocoa2 sunkey(spot,r3): at least one wrong choice still live
+PASS sk_cocoa2 sunkey(spot,r3): right answer not marked ('')
+PASS sk_cocoa2 sunkey(spot,r3): voice does not say the answer []
+PASS sk_cocoa2 sunkey tap2: did not answer/advance
+PASS sk_cocoa2 sunkey tap2: right answer not hidden
+PASS sk_cocoa2 sunkey tap2: at least one wrong choice still live
+PASS sk_cocoa2 sunkey tap2: right answer not marked ('')
+PASS sk_cocoa2 sunkey tap2: voice does not say the answer []
+PASS sk_cocoa3 amulet(step,r3): did not answer/advance
+PASS sk_cocoa3 amulet(step,r3): right answer not hidden
+PASS sk_cocoa3 amulet(step,r3): at least one wrong choice still live
+PASS sk_cocoa3 amulet(step,r3): right answer not marked ('')
+PASS sk_cocoa3 amulet(step,r3): voice does not say the answer []
+PASS sk_cocoa3 amulet tap2: did not answer/advance
+PASS sk_cocoa3 amulet tap2: right answer not hidden
+PASS sk_cocoa3 amulet tap2: at least one wrong choice still live
+PASS sk_cocoa3 amulet tap2: right answer not marked ('')
+PASS sk_cocoa3 amulet tap2: voice does not say the answer []
+PASS sk_bros1 acorn(two,r3): did not answer/advance
+PASS sk_bros1 acorn(two,r3): right answer not hidden
+PASS sk_bros1 acorn(two,r3): at least one wrong choice still live
+PASS sk_bros1 acorn(two,r3): right answer not marked ('')
+PASS sk_bros1 acorn(two,r3): voice does not say the answer []
+PASS sk_bros1 acorn tap2: did not answer/advance
+PASS sk_bros1 acorn tap2: right answer not hidden
+PASS sk_bros1 acorn tap2: at least one wrong choice still live
+PASS sk_bros1 acorn tap2: right answer not marked ('')
+PASS sk_bros1 acorn tap2: voice does not say the answer []
+PASS sk_bros2 prism(spot,r3): did not answer/advance
+PASS sk_bros2 prism(spot,r3): right answer not hidden
+PASS sk_bros2 prism(spot,r3): at least one wrong choice still live
+PASS sk_bros2 prism(spot,r3): right answer not marked ('')
+PASS sk_bros2 prism(spot,r3): voice does not say the answer []
+PASS sk_bros2 prism tap2: did not answer/advance
+PASS sk_bros2 prism tap2: right answer not hidden
+PASS sk_bros2 prism tap2: at least one wrong choice still live
+PASS sk_bros2 prism tap2: right answer not marked ('')
+PASS sk_bros2 prism tap2: voice does not say the answer []
+PASS sk_bros3 torch(spot,r3): did not answer/advance
+PASS sk_bros3 torch(spot,r3): right answer not hidden
+PASS sk_bros3 torch(spot,r3): at least one wrong choice still live
+PASS sk_bros3 torch(spot,r3): right answer not marked ('')
+PASS sk_bros3 torch(spot,r3): voice does not say the answer []
+PASS sk_bros3 torch tap2: did not answer/advance
+PASS sk_bros3 torch tap2: right answer not hidden
+PASS sk_bros3 torch tap2: at least one wrong choice still live
+PASS sk_bros3 torch tap2: right answer not marked ('')
+PASS sk_bros3 torch tap2: voice does not say the answer []
+PASS sk_order1 glacier(two,r3): did not answer/advance
+PASS sk_order1 glacier(two,r3): voice does not say the answer word []
+PASS sk_order1 glacier tap2: did not answer/advance
+PASS sk_order1 glacier tap2: voice does not say the answer word []
+PASS sk_order2 mirror(step,r3): did not answer/advance
+PASS sk_order2 mirror(step,r3): voice does not say the answer word []
+PASS sk_order2 mirror tap2: did not answer/advance
+PASS sk_order2 mirror tap2: voice does not say the answer word []
+PASS sk_order3 crown(spot,r3): did not answer/advance
+PASS sk_order3 crown(spot,r3): voice does not say the answer word []
+PASS sk_order3 crown tap2: did not answer/advance
+PASS sk_order3 crown tap2: voice does not say the answer word []
+PASS sk_clock1 lens(dots,r3): did not answer/advance
+PASS sk_clock1 lens(dots,r3): right answer not hidden
+PASS sk_clock1 lens(dots,r3): at least one wrong choice still live
+PASS sk_clock1 lens(dots,r3): right answer not marked ('')
+PASS sk_clock1 lens(dots,r3): voice does not say the answer word []
+PASS sk_clock1 lens tap2: did not answer/advance
+PASS sk_clock1 lens tap2: right answer not hidden
+PASS sk_clock1 lens tap2: at least one wrong choice still live
+PASS sk_clock1 lens tap2: right answer not marked ('')
+PASS sk_clock1 lens tap2: voice does not say the answer word []
+PASS sk_clock2 seed(dots,r3): did not answer/advance
+PASS sk_clock2 seed(dots,r3): right answer not hidden
+PASS sk_clock2 seed(dots,r3): at least one wrong choice still live
+PASS sk_clock2 seed(dots,r3): right answer not marked ('')
+PASS sk_clock2 seed(dots,r3): voice does not say the answer word []
+PASS sk_clock2 seed tap2: did not answer/advance
+PASS sk_clock2 seed tap2: right answer not hidden
+PASS sk_clock2 seed tap2: at least one wrong choice still live
+PASS sk_clock2 seed tap2: right answer not marked ('')
+PASS sk_clock2 seed tap2: voice does not say the answer word []
+PASS sk_clock3 chip(step,r3): did not answer/advance
+PASS sk_clock3 chip(step,r3): right answer not hidden
+PASS sk_clock3 chip(step,r3): at least one wrong choice still live
+PASS sk_clock3 chip(step,r3): right answer not marked ('')
+PASS sk_clock3 chip(step,r3): voice does not say the answer word []
+PASS sk_clock3 chip tap2: did not answer/advance
+PASS sk_clock3 chip tap2: right answer not hidden
+PASS sk_clock3 chip tap2: at least one wrong choice still live
+PASS sk_clock3 chip tap2: right answer not marked ('')
+PASS sk_clock3 chip tap2: voice does not say the answer word []
+PASS sk_sight1 tkey(spot,r3): did not answer/advance
+PASS sk_sight1 tkey(spot,r3): right answer not hidden
+PASS sk_sight1 tkey(spot,r3): at least one wrong choice still live
+PASS sk_sight1 tkey(spot,r3): right answer not marked ('')
+PASS sk_sight1 tkey(spot,r3): voice does not say the answer word []
+PASS sk_sight1 tkey tap2: did not answer/advance
+PASS sk_sight1 tkey tap2: right answer not hidden
+PASS sk_sight1 tkey tap2: at least one wrong choice still live
+PASS sk_sight1 tkey tap2: right answer not marked ('')
+PASS sk_sight1 tkey tap2: voice does not say the answer word []
+PASS sk_sight2 spyglass(spot,r3): did not answer/advance
+PASS sk_sight2 spyglass(spot,r3): right answer not hidden
+PASS sk_sight2 spyglass(spot,r3): at least one wrong choice still live
+PASS sk_sight2 spyglass(spot,r3): right answer not marked ('')
+PASS sk_sight2 spyglass(spot,r3): voice does not say the answer word []
+PASS sk_sight2 spyglass tap2: did not answer/advance
+PASS sk_sight2 spyglass tap2: right answer not hidden
+PASS sk_sight2 spyglass tap2: at least one wrong choice still live
+PASS sk_sight2 spyglass tap2: right answer not marked ('')
+PASS sk_sight2 spyglass tap2: voice does not say the answer word []
+PASS sk_sight3 coins(dots,r3): did not answer/advance
+PASS sk_sight3 coins(dots,r3): right answer not hidden
+PASS sk_sight3 coins(dots,r3): at least one wrong choice still live
+PASS sk_sight3 coins(dots,r3): right answer not marked ('')
+PASS sk_sight3 coins(dots,r3): voice does not say the answer word []
+PASS sk_sight3 coins tap2: did not answer/advance
+PASS sk_sight3 coins tap2: right answer not hidden
+PASS sk_sight3 coins tap2: at least one wrong choice still live
+PASS sk_sight3 coins tap2: right answer not marked ('')
+PASS sk_sight3 coins tap2: voice does not say the answer word []
+PASS sk_build1 hourglass(step,r3): did not answer/advance
+PASS sk_build1 hourglass(step,r3): voice does not say the answer word []
+PASS sk_build1 hourglass tap2: did not answer/advance
+PASS sk_build1 hourglass tap2: voice does not say the answer word []
+PASS sk_build2 feather(sound,r3): did not answer/advance
+PASS sk_build2 feather(sound,r3): voice does not say the answer word []
+PASS sk_build2 feather tap2: did not answer/advance
+PASS sk_build2 feather tap2: voice does not say the answer word []
+PASS sk_build3 conch(sound,r3): did not answer/advance
+PASS sk_build3 conch(sound,r3): voice does not say the answer word []
+PASS sk_build3 conch tap2: did not answer/advance
+PASS sk_build3 conch tap2: voice does not say the answer word []
+PASS sk_fix1 locket(two,r3): did not answer/advance
+PASS sk_fix1 locket(two,r3): right answer not hidden
+PASS sk_fix1 locket(two,r3): at least one wrong choice still live
+PASS sk_fix1 locket(two,r3): right answer not marked ('')
+PASS sk_fix1 locket(two,r3): voice does not say the answer word []
+PASS sk_fix1 locket tap2: did not answer/advance
+PASS sk_fix1 locket tap2: right answer not hidden
+PASS sk_fix1 locket tap2: at least one wrong choice still live
+PASS sk_fix1 locket tap2: right answer not marked ('')
+PASS sk_fix1 locket tap2: voice does not say the answer word []
+PASS sk_fix2 astro(dots,r3): did not answer/advance
+PASS sk_fix2 astro(dots,r3): right answer not hidden
+PASS sk_fix2 astro(dots,r3): at least one wrong choice still live
+PASS sk_fix2 astro(dots,r3): right answer not marked ('')
+PASS sk_fix2 astro(dots,r3): voice does not say the answer word []
+PASS sk_fix2 astro tap2: did not answer/advance
+PASS sk_fix2 astro tap2: right answer not hidden
+PASS sk_fix2 astro tap2: at least one wrong choice still live
+PASS sk_fix2 astro tap2: right answer not marked ('')
+PASS sk_fix2 astro tap2: voice does not say the answer word []
+PASS sk_fix3 rheart(step,r3): did not answer/advance
+PASS sk_fix3 rheart(step,r3): right answer not hidden
+PASS sk_fix3 rheart(step,r3): at least one wrong choice still live
+PASS sk_fix3 rheart(step,r3): right answer not marked ('')
+PASS sk_fix3 rheart(step,r3): voice does not say the answer word []
+PASS sk_fix3 rheart tap2: did not answer/advance
+PASS sk_fix3 rheart tap2: right answer not hidden
+PASS sk_fix3 rheart tap2: at least one wrong choice still live
+PASS sk_fix3 rheart tap2: right answer not marked ('')
+PASS sk_fix3 rheart tap2: voice does not say the answer word []
+PASS sk_read1 sksilver(dots,r3): did not answer/advance
+PASS sk_read1 sksilver tap2: did not answer/advance
+PASS sk_read2 skstar(spot,r3): did not answer/advance
+PASS sk_read2 skstar tap2: did not answer/advance
+PASS sk_read3 skwave(step,r3): did not answer/advance
+PASS sk_read3 skwave tap2: did not answer/advance
+PASS sk_wfind1 skmaple(sound,r3): did not answer/advance
+PASS sk_wfind1 skmaple tap2: did not answer/advance
+PASS sk_wfind2 skaurora(two,r3): did not answer/advance
+PASS sk_wfind2 skaurora tap2: did not answer/advance
+PASS sk_wfind3 ltag(spot,r4): did not answer/advance
+PASS sk_wfind3 ltag tap2: did not answer/advance
+PASS sk_vocab1 wings(two,r4): did not answer/advance
+PASS sk_vocab1 wings(two,r4): right answer not hidden
+PASS sk_vocab1 wings(two,r4): at least one wrong choice still live
+PASS sk_vocab1 wings(two,r4): right answer not marked ('')
+PASS sk_vocab1 wings(two,r4): voice does not say the answer word []
+PASS sk_vocab1 wings tap2: did not answer/advance
+PASS sk_vocab1 wings tap2: right answer not hidden
+PASS sk_vocab1 wings tap2: at least one wrong choice still live
+PASS sk_vocab1 wings tap2: right answer not marked ('')
+PASS sk_vocab1 wings tap2: voice does not say the answer word []
+PASS sk_vocab2 taxilight(step,r4): did not answer/advance
+PASS sk_vocab2 taxilight(step,r4): right answer not hidden
+PASS sk_vocab2 taxilight(step,r4): at least one wrong choice still live
+PASS sk_vocab2 taxilight(step,r4): right answer not marked ('')
+PASS sk_vocab2 taxilight(step,r4): voice does not say the answer word []
+PASS sk_vocab2 taxilight tap2: did not answer/advance
+PASS sk_vocab2 taxilight tap2: right answer not hidden
+PASS sk_vocab2 taxilight tap2: at least one wrong choice still live
+PASS sk_vocab2 taxilight tap2: right answer not marked ('')
+PASS sk_vocab2 taxilight tap2: voice does not say the answer word []
+PASS sk_vocab3 pearlball(dots,r4): did not answer/advance
+PASS sk_vocab3 pearlball(dots,r4): right answer not hidden
+PASS sk_vocab3 pearlball(dots,r4): at least one wrong choice still live
+PASS sk_vocab3 pearlball(dots,r4): right answer not marked ('')
+PASS sk_vocab3 pearlball(dots,r4): voice does not say the answer word []
+PASS sk_vocab3 pearlball tap2: did not answer/advance
+PASS sk_vocab3 pearlball tap2: right answer not hidden
+PASS sk_vocab3 pearlball tap2: at least one wrong choice still live
+PASS sk_vocab3 pearlball tap2: right answer not marked ('')
+PASS sk_vocab3 pearlball tap2: voice does not say the answer word []
+PASS sk_combo1 snowglobe(step,r4): did not answer/advance
+PASS sk_combo1 snowglobe(step,r4): right answer not hidden
+PASS sk_combo1 snowglobe(step,r4): at least one wrong choice still live
+PASS sk_combo1 snowglobe(step,r4): right answer not marked ('')
+PASS sk_combo1 snowglobe(step,r4): voice does not say the answer word []
+PASS sk_combo1 snowglobe tap2: did not answer/advance
+PASS sk_combo1 snowglobe tap2: right answer not hidden
+PASS sk_combo1 snowglobe tap2: at least one wrong choice still live
+PASS sk_combo1 snowglobe tap2: right answer not marked ('')
+PASS sk_combo1 snowglobe tap2: voice does not say the answer word []
+PASS sk_combo2 skypass(two,r4): did not answer/advance
+PASS sk_combo2 skypass(two,r4): right answer not hidden
+PASS sk_combo2 skypass(two,r4): at least one wrong choice still live
+PASS sk_combo2 skypass(two,r4): right answer not marked ('')
+PASS sk_combo2 skypass(two,r4): voice does not say the answer word []
+PASS sk_combo2 skypass tap2: did not answer/advance
+PASS sk_combo2 skypass tap2: right answer not hidden
+PASS sk_combo2 skypass tap2: at least one wrong choice still live
+PASS sk_combo2 skypass tap2: right answer not marked ('')
+PASS sk_combo2 skypass tap2: voice does not say the answer word []
+PASS sk_combo3 moonstone(sound,r4): did not answer/advance
+PASS sk_combo3 moonstone(sound,r4): right answer not hidden
+PASS sk_combo3 moonstone(sound,r4): at least one wrong choice still live
+PASS sk_combo3 moonstone(sound,r4): right answer not marked ('')
+PASS sk_combo3 moonstone(sound,r4): voice does not say the answer word []
+PASS sk_combo3 moonstone tap2: did not answer/advance
+PASS sk_combo3 moonstone tap2: right answer not hidden
+PASS sk_combo3 moonstone tap2: at least one wrong choice still live
+PASS sk_combo3 moonstone tap2: right answer not marked ('')
+PASS sk_combo3 moonstone tap2: voice does not say the answer word []
+PASS sk_who1 compass(spot,r4): did not answer/advance
+PASS sk_who1 compass tap2: did not answer/advance
+PASS sk_who2 spoon(two,r4): did not answer/advance
+PASS sk_who2 spoon tap2: did not answer/advance
+PASS sk_who3 skate(step,r4): did not answer/advance
+PASS sk_who3 skate tap2: did not answer/advance
+PASS sk_line1 tee(dots,r4): did not answer/advance
+PASS sk_line1 tee(dots,r4): right answer not hidden
+PASS sk_line1 tee(dots,r4): at least one wrong choice still live
+PASS sk_line1 tee(dots,r4): right answer not marked ('')
+PASS sk_line1 tee(dots,r4): voice does not say the answer word []
+PASS sk_line1 tee tap2: did not answer/advance
+PASS sk_line1 tee tap2: right answer not hidden
+PASS sk_line1 tee tap2: at least one wrong choice still live
+PASS sk_line1 tee tap2: right answer not marked ('')
+PASS sk_line1 tee tap2: voice does not say the answer word []
+PASS sk_line2 lantern(sound,r4): did not answer/advance
+PASS sk_line2 lantern(sound,r4): right answer not hidden
+PASS sk_line2 lantern(sound,r4): at least one wrong choice still live
+PASS sk_line2 lantern(sound,r4): right answer not marked ('')
+PASS sk_line2 lantern(sound,r4): voice does not say the answer word []
+PASS sk_line2 lantern tap2: did not answer/advance
+PASS sk_line2 lantern tap2: right answer not hidden
+PASS sk_line2 lantern tap2: at least one wrong choice still live
+PASS sk_line2 lantern tap2: right answer not marked ('')
+PASS sk_line2 lantern tap2: voice does not say the answer word []
+PASS sk_line3 coqui(sound,r4): did not answer/advance
+PASS sk_line3 coqui(sound,r4): right answer not hidden
+PASS sk_line3 coqui(sound,r4): at least one wrong choice still live
+PASS sk_line3 coqui(sound,r4): right answer not marked ('')
+PASS sk_line3 coqui(sound,r4): voice does not say the answer word []
+PASS sk_line3 coqui tap2: did not answer/advance
+PASS sk_line3 coqui tap2: right answer not hidden
+PASS sk_line3 coqui tap2: at least one wrong choice still live
+PASS sk_line3 coqui tap2: right answer not marked ('')
+PASS sk_line3 coqui tap2: voice does not say the answer word []
+PASS sk_sud1 sunkey(spot,r4): did not answer/advance
+PASS sk_sud1 sunkey tap2: did not answer/advance
+PASS sk_sud2 amulet(step,r4): did not answer/advance
+PASS sk_sud2 amulet tap2: did not answer/advance
+PASS sk_sud3 acorn(two,r4): did not answer/advance
+PASS sk_sud3 acorn tap2: did not answer/advance
+PASS sk_rink1 prism(spot,r4): did not answer/advance
+PASS sk_rink1 prism(spot,r4): right answer not hidden
+PASS sk_rink1 prism(spot,r4): at least one wrong choice still live
+PASS sk_rink1 prism(spot,r4): right answer not marked ('')
+PASS sk_rink1 prism(spot,r4): voice does not say the answer word []
+PASS sk_rink1 prism tap2: did not answer/advance
+PASS sk_rink1 prism tap2: right answer not hidden
+PASS sk_rink1 prism tap2: at least one wrong choice still live
+PASS sk_rink1 prism tap2: right answer not marked ('')
+PASS sk_rink1 prism tap2: voice does not say the answer word []
+PASS sk_rink2 torch(spot,r4): did not answer/advance
+PASS sk_rink2 torch(spot,r4): right answer not hidden
+PASS sk_rink2 torch(spot,r4): at least one wrong choice still live
+PASS sk_rink2 torch(spot,r4): right answer not marked ('')
+PASS sk_rink2 torch(spot,r4): voice does not say the answer word []
+PASS sk_rink2 torch tap2: did not answer/advance
+PASS sk_rink2 torch tap2: right answer not hidden
+PASS sk_rink2 torch tap2: at least one wrong choice still live
+PASS sk_rink2 torch tap2: right answer not marked ('')
+PASS sk_rink2 torch tap2: voice does not say the answer word []
+PASS sk_rink3 glacier(two,r4): did not answer/advance
+PASS sk_rink3 glacier(two,r4): right answer not hidden
+PASS sk_rink3 glacier(two,r4): at least one wrong choice still live
+PASS sk_rink3 glacier(two,r4): right answer not marked ('')
+PASS sk_rink3 glacier(two,r4): voice does not say the answer word []
+PASS sk_rink3 glacier tap2: did not answer/advance
+PASS sk_rink3 glacier tap2: right answer not hidden
+PASS sk_rink3 glacier tap2: at least one wrong choice still live
+PASS sk_rink3 glacier tap2: right answer not marked ('')
+PASS sk_rink3 glacier tap2: voice does not say the answer word []
+PASS sk_es1 mirror(step,r4): did not answer/advance
+PASS sk_es1 mirror(step,r4): right answer not hidden
+PASS sk_es1 mirror(step,r4): at least one wrong choice still live
+PASS sk_es1 mirror(step,r4): right answer not marked ('')
+PASS sk_es1 mirror(step,r4): voice does not say the answer word []
+PASS sk_es1 mirror tap2: did not answer/advance
+PASS sk_es1 mirror tap2: right answer not hidden
+PASS sk_es1 mirror tap2: at least one wrong choice still live
+PASS sk_es1 mirror tap2: right answer not marked ('')
+PASS sk_es1 mirror tap2: voice does not say the answer word []
+PASS sk_es2 crown(spot,r4): did not answer/advance
+PASS sk_es2 crown(spot,r4): right answer not hidden
+PASS sk_es2 crown(spot,r4): at least one wrong choice still live
+PASS sk_es2 crown(spot,r4): right answer not marked ('')
+PASS sk_es2 crown(spot,r4): voice does not say the answer word []
+PASS sk_es2 crown tap2: did not answer/advance
+PASS sk_es2 crown tap2: right answer not hidden
+PASS sk_es2 crown tap2: at least one wrong choice still live
+PASS sk_es2 crown tap2: right answer not marked ('')
+PASS sk_es2 crown tap2: voice does not say the answer word []
+PASS sk_es3 lens(dots,r4): did not answer/advance
+PASS sk_es3 lens(dots,r4): right answer not hidden
+PASS sk_es3 lens(dots,r4): at least one wrong choice still live
+PASS sk_es3 lens(dots,r4): right answer not marked ('')
+PASS sk_es3 lens(dots,r4): voice does not say the answer word []
+PASS sk_es3 lens tap2: did not answer/advance
+PASS sk_es3 lens tap2: right answer not hidden
+PASS sk_es3 lens tap2: at least one wrong choice still live
+PASS sk_es3 lens tap2: right answer not marked ('')
+PASS sk_es3 lens tap2: voice does not say the answer word []
+PASS sk_mix1 seed(dots,r4): did not answer/advance
+PASS sk_mix1 seed(dots,r4): right answer not hidden
+PASS sk_mix1 seed(dots,r4): at least one wrong choice still live
+PASS sk_mix1 seed(dots,r4): right answer not marked ('')
+PASS sk_mix1 seed(dots,r4): voice does not say the answer []
+PASS sk_mix1 seed tap2: did not answer/advance
+PASS sk_mix1 seed tap2: right answer not hidden
+PASS sk_mix1 seed tap2: at least one wrong choice still live
+PASS sk_mix1 seed tap2: right answer not marked ('')
+PASS sk_mix1 seed tap2: voice does not say the answer []
+PASS sk_mix2 chip(step,r4): did not answer/advance
+PASS sk_mix2 chip(step,r4): right answer not hidden
+PASS sk_mix2 chip(step,r4): at least one wrong choice still live
+PASS sk_mix2 chip(step,r4): right answer not marked ('')
+PASS sk_mix2 chip(step,r4): voice does not say the answer word []
+PASS sk_mix2 chip tap2: did not answer/advance
+PASS sk_mix2 chip tap2: right answer not hidden
+PASS sk_mix2 chip tap2: at least one wrong choice still live
+PASS sk_mix2 chip tap2: right answer not marked ('')
+PASS sk_mix2 chip tap2: voice does not say the answer word []
+PASS sk_mix3 tkey(spot,r4): did not answer/advance
+PASS sk_mix3 tkey(spot,r4): right answer not hidden
+PASS sk_mix3 tkey(spot,r4): at least one wrong choice still live
+PASS sk_mix3 tkey(spot,r4): right answer not marked ('')
+PASS sk_mix3 tkey(spot,r4): voice does not say the answer word []
+PASS sk_mix3 tkey tap2: did not answer/advance
+PASS sk_mix3 tkey tap2: right answer not hidden
+PASS sk_mix3 tkey tap2: at least one wrong choice still live
+PASS sk_mix3 tkey tap2: right answer not marked ('')
+PASS sk_mix3 tkey tap2: voice does not say the answer word []
+PASS kind spot: gave a visible hint or polite "cannot help" 43/43
+PASS kind two: gave a visible hint or polite "cannot help" 33/33
+PASS kind step: gave a visible hint or polite "cannot help" 42/42
+PASS kind dots: gave a visible hint or polite "cannot help" 32/32
+PASS kind sound: gave a visible hint or polite "cannot help" 27/27
+PASS t_swpass GiGi tap1: did not answer/advance
+PASS t_swpass GiGi tap1: right answer not hidden
+PASS t_swpass GiGi tap1: at least one wrong choice still live
+PASS t_swpass GiGi tap1: right answer not marked ('')
+PASS t_swpass GiGi tap1: voice does not say the answer word []
+PASS t_swpass GiGi tap2: did not answer/advance
+PASS t_swpass GiGi tap2: right answer not hidden
+PASS t_swpass GiGi tap2: at least one wrong choice still live
+PASS t_swpass GiGi tap2: right answer not marked ('')
+PASS t_swpass GiGi tap2: voice does not say the answer word []
+PASS t_swpass .thbtn.teri tap1: did not answer/advance
+PASS t_swpass .thbtn.teri tap1: right answer not hidden
+PASS t_swpass .thbtn.teri tap1: at least one wrong choice still live
+PASS t_swpass .thbtn.teri tap1: right answer not marked ('')
+PASS t_swpass .thbtn.teri tap1: voice does not say the answer word []
+PASS t_swpass .thbtn.teri tap2: did not answer/advance
+PASS t_swpass .thbtn.teri tap2: right answer not hidden
+PASS t_swpass .thbtn.teri tap2: at least one wrong choice still live
+PASS t_swpass .thbtn.teri tap2: right answer not marked ('')
+PASS t_swpass .thbtn.teri tap2: voice does not say the answer word []
+PASS t_seats GiGi tap1: did not answer/advance
+PASS t_seats GiGi tap1: right answer not hidden
+PASS t_seats GiGi tap1: at least one wrong choice still live
+PASS t_seats GiGi tap1: right answer not marked ('')
+PASS t_seats GiGi tap1: voice does not say the answer []
+PASS t_seats GiGi tap2: did not answer/advance
+PASS t_seats GiGi tap2: right answer not hidden
+PASS t_seats GiGi tap2: at least one wrong choice still live
+PASS t_seats GiGi tap2: right answer not marked ('')
+PASS t_seats GiGi tap2: voice does not say the answer []
+PASS t_seats .thbtn.gigi tap1: did not answer/advance
+PASS t_seats .thbtn.gigi tap1: right answer not hidden
+PASS t_seats .thbtn.gigi tap1: at least one wrong choice still live
+PASS t_seats .thbtn.gigi tap1: right answer not marked ('')
+PASS t_seats .thbtn.gigi tap1: voice does not say the answer []
+PASS t_seats .thbtn.gigi tap2: did not answer/advance
+PASS t_seats .thbtn.gigi tap2: right answer not hidden
+PASS t_seats .thbtn.gigi tap2: at least one wrong choice still live
+PASS t_seats .thbtn.gigi tap2: right answer not marked ('')
+PASS t_seats .thbtn.gigi tap2: voice does not say the answer []
