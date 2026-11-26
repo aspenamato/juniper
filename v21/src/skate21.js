@@ -39,7 +39,7 @@ const SK21 = (() => {
   WORLDS.skate = { name: 'Ice Skating World', short: 'Ice Skating', friend: 'teri', friend2: 'juniper', fname: 'Coach Juniper and Teri', stars: 0, bg: '#e3f4ff', sky: ['#9fd4ff', '#eaf8ff'], ground: '#ffffff',
     need: () => [1, 1], needTxt: 'lace up your skates',
     hello: "«¡Hola, Aspen!» I'm Teri, your biggest fan! Juniper is your skating coach, and Mama Fox is your coach too. We will skate at your home rinks in Vail, New York and San Jose, then at the most beautiful rinks in the world! Every time you land a trick, I will cheer!",
-    cheer: ['Lace up, Aspen!', 'Glide time, Aspen!', 'Skates on, brain on, Aspen!'],
+    cheer: ['Lace up, Aspen!', "Let's glide, Aspen!", 'Skates on, brain on, Aspen!'],
     secs: RK.map(r => ({ name: r.name, sub: r.sub, scene: 'pond', col: r.col, g1: '#eef6ff', g2: '#dcebff', level: r.level, nodes: r.ids.filter(id => C.BY[id]), lm: r.lm.map(a => L_(...a)) })) };
   { const w = WORLDS.skate; w.total = w.secs.reduce((a, s) => a + s.nodes.length, 0); }
   if (!WKEYS.includes('skate')) WKEYS.push('skate');
@@ -60,7 +60,7 @@ const SK21 = (() => {
     'skate:11': [['mamafox', 'Lake Tahoe, Aspen. The last rink of the whole journey.'], ['vaurora', 'Twinkle twinkle, I am the Aurora Trickster! My lights trick every skater. Can you see through my colors?'], ['teri', 'This is it, Aspen! Your biggest fan is cheering the loudest ever!']] });
   // ---------- bosses and the best relics yet ----------
   const NB = [
-    V_('skate:1', 'wobble', 'the Wobble Goblin', 'of Vail Village', 'sksilver', 8, "Wibble wobble, I'm the Wobble Goblin! I make skaters wobble, wobble, wobble. Think fast or you will wobble too!", 'Whoa, whoa, you never wobbled once! Take the Silver Snowflake Skate.', ['Oh no, you got it!', 'My knees are knocking!', 'You are steady as a rock!', 'No wobble at all!', 'Wobble wobble, right again!'], 'Wobble shield, wibble wobble!', 'Wobble wobble, try again!'),
+    V_('skate:1', 'wobble', 'the Wobble Goblin', 'of Vail Village', 'sksilver', 8, "Wibble wobble, I'm the Wobble Goblin! I make every skater wobble, wobble, wobble. Think fast or you will wobble too!", 'Whoa! You never wobbled even once! Take the Silver Snowflake Skate.', ['Oh no, you got it!', 'My knees are knocking!', 'You are steady as a rock!', 'No wobble at all!', 'Wobble wobble, right again!'], 'Wobble shield, wibble wobble!', 'Wobble wobble, try again!'),
     V_('skate:4', 'bumpy', 'the Bumpy Ice Bandit', 'of Bryant Park', 'skstar', 9, "Ha ha, I'm the Bumpy Ice Bandit! I made the rink all bumpy and swiped the Rainbow Star from the big tree. Glide past my puzzles!", 'Smooth as glass! Here is the Rockefeller Rainbow Star.', ['Bump bump, you got it!', 'My bumps are melting flat!', 'Smooth move!', 'You glided right over me!', 'No more bumps!'], 'Bumpy shield, bump bump!', 'Bumpity bump, try again!'),
     V_('skate:6', 'fog', 'the Fog Phantom', 'of Downtown Ice', 'skwave', 10, "Ooh, I'm the Fog Phantom. I float over the rink and fog up every answer. Can you see through my fog?", 'My fog is gone! The sun is out in San Jose. Take the Pacific Pearl Wave.', ['Oh my, you saw it!', 'My fog is thinning!', 'Too clear for me!', 'You can see right through me!', 'Oh no, right again!'], 'Fog shield, all foggy!', 'Lost in the fog! Try again!'),
     V_('skate:8', 'chomp', 'Captain Chomp', 'of the Rideau Canal', 'skmaple', 11, "Chomp chomp, I'm Captain Chomp, the beaver captain of the canal! I nibbled the Golden Maple Leaf. Can you outsmart my teeth?", 'No way, eh? You beat me! Take the Golden Maple Leaf.', ['Chomp chomp, you got it!', 'My teeth are chattering!', 'Timber! Good one!', 'You are too sharp for my teeth!', 'Chomp, right again!'], 'Log dam shield, chomp chomp!', 'Chomp chomp, try again!'),
@@ -80,7 +80,7 @@ const SK21 = (() => {
   // ---------- stickers: a new Ice Skating World page ----------
   if (!STK_PAGES.some(p => p.id === 'rinks')) STK_PAGES.splice(STK_PAGES.findIndex(p => p.id === 'friends'), 0, { id: 'rinks', name: 'Ice Skating World', short: 'Rinks', c1: '#e6f6ff', c2: '#a9d8ff', ic: 'sk_gskate' });
   Object.assign(STK_DEF, {
-    sk_cmom: ['rinks', 'holo', 'Coach Mama Fox'], sk_csof: ['rinks', 'puffy', 'Sofia on Ice'], sk_cval: ['rinks', 'puffy', 'Valentina on Ice'], sk_cnic: ['rinks', 'holo', "Old Nicolò's Cocoa"],
+    sk_cmom: ['rinks', 'holo', 'Coach Mama Fox'], sk_csof: ['rinks', 'puffy', 'Sofia on Ice'], sk_cval: ['rinks', 'puffy', 'Valentina on Ice'], sk_cnic: ['rinks', 'holo', "Old Nicolò's Hot Cocoa"],
     sk_coli: ['rinks', 'puffy', 'Olivia on Ice'], sk_clan: ['rinks', 'puffy', 'Landen on Ice'], sk_cnik: ['rinks', 'puffy', 'Nikko on Ice'], sk_cjun: ['rinks', 'gold', 'Coach Juniper', 'bob'],
     sk_cmar: ['rinks', 'holo', 'Marcus with Cocoa'], sk_cbro: ['rinks', 'holo', 'Finance Bro on Ice'], sk_cteri: ['rinks', 'gold', 'Teri, Biggest Fan', 'bob'], sk_casp: ['rinks', 'gold', 'Champion Aspen', 'twinkle'],
     sk_globe: ['rinks', 'holo', 'Rink Snow Globe'], sk_tree: ['rinks', 'gold', 'The Big Tree', 'twinkle'], sk_zam: ['rinks', 'puffy', 'Zippy the Ice Machine', 'bob'], sk_btail: ['rinks', 'puffy', 'Beaver Tail Treat'],
@@ -163,7 +163,7 @@ const SK21 = (() => {
     RK.forEach((r, si) => { if (pos < secEnd('skate', si)) return; const lv = secLevel(si); if (!s.em[r.k]) { s.em[r.k] = lv; s.cr += 3; fresh.push(r); if (r.stk) stkAward(r.stk); } else if (lv > s.em[r.k]) { s.cr += lv - s.em[r.k]; s.em[r.k] = lv; } });
     if (fresh.length) { save(); emReveal(fresh[0], () => { if (typeof stkReveal === 'function') stkReveal(); }); } }
   function emReveal(r, done) { const L = h('div', 'skemrev', `<div class="ser-card"><div class="ser-rays"></div><img class="ser-em em${S().em[r.k] || 1}" src="${SART.base}emblems/sk_${r.k}.webp" alt=""><b>${r.name}</b><small>New rink emblem · +3 ice crystals</small><button class="bigbtn go" id="serGo">${ICON.next || '➜'}</button></div>`);
-    document.body.appendChild(L); requestAnimationFrame(() => L.classList.add('on')); SND.fanfare(); confetti(); speak(`New rink emblem: ${r.name}!`, { who: null });
+    document.body.appendChild(L); requestAnimationFrame(() => L.classList.add('on')); SND.fanfare(); confetti(); speak(`New rink emblem for ${r.name}!`, { who: null });
     $('serGo').onclick = () => { SND.pop(); hush(); L.remove(); if (done) done(); }; }
   // ---------- forge: upgrade the skate relics with ice crystals (Legendary at most; Mythic only from a perfect boss) ----------
   const COST = [4, 6, 9];
@@ -202,7 +202,7 @@ const SK21 = (() => {
       B.querySelectorAll('.skg').forEach(b => b.onclick = () => { SND.tap(); SKX.hubGame = true; arcStart(b.dataset.g); }); }
     else if (v === 'album') { const s = S(); B.innerHTML = `<div class="skems">${RK.map(r => { const lv = s.em[r.k]; return `<button class="skem${lv ? ' got em' + lv : ''}" data-k="${r.k}"><img src="${SART.base}emblems/sk_${r.k}.webp" alt=""><b>${r.name}</b><small>${lv ? ['', 'Bronze', 'Silver', 'Gold'][lv] + ' emblem' : r.sub}</small></button>`; }).join('')}</div>
       <div class="skstks">${STK_IDS.filter(id => /^sk_/.test(id)).map(id => `<span class="skst${ST.stk && ST.stk.got[id] ? ' got' : ''}" data-id="${id}">${stkEl(id, { still: 1, ghost: !(ST.stk && ST.stk.got[id]) }).outerHTML}</span>`).join('')}</div><button class="bigbtn go skbook" id="skBook">Open Sticker Book</button>`;
-      B.querySelectorAll('.skem').forEach(b => b.onclick = () => { const r = RK.find(x => x.k === b.dataset.k), lv = s.em[r.k]; SND.pop(); sparkEl(b, 10); speak(lv ? `${r.name}! ${['', 'Bronze', 'Silver', 'Gold'][lv]} emblem!` : `Finish ${r.name} to win this emblem!`); });
+      B.querySelectorAll('.skem').forEach(b => b.onclick = () => { const r = RK.find(x => x.k === b.dataset.k), lv = s.em[r.k]; SND.pop(); sparkEl(b, 10); speak(lv ? `${['', 'Bronze', 'Silver', 'Gold'][lv]} emblem for ${r.name}!` : `Finish ${r.name} to win this emblem!`); });
       B.querySelectorAll('.skst').forEach(b => b.onclick = () => { const id = b.dataset.id; SND.pop(); speak(ST.stk && ST.stk.got[id] ? STK_DEF[id][2] + '!' : stkHow(id)); });
       $('skBook').onclick = () => { SND.tap(); openStickers('rinks'); }; }
     else if (v === 'forge') { const s = S(); B.innerHTML = `<div class="skforge">${NB.map(b => { const id = b.relic, has = hasRelic(id), r = has ? ST.relics[id] : 0, c = COST[r];
@@ -224,7 +224,7 @@ const SK21 = (() => {
   const _xv = extraVoLines; extraVoLines = function (add, gen) { _xv(add, gen);
     TERI_W.forEach(t => add(t, 'teri')); SKG.forEach(t => add(t, 'gigi')); SKT.forEach(t => add(t, 'teri')); SKTD.forEach(t => add(t, 'teri')); add('Two choices left! Look carefully and pick!', 'teri');
     CAST.forEach(([c, t]) => add(t, c === 'aspen' ? 'juniper' : c.replace(/[0-9]/g, ''))); Object.values(HUB_L).forEach(t => add(t)); add('Color the skating pages, Aspen! The rinks and the whole cast are waiting!');
-    RK.forEach(r => { add(`New rink emblem: ${r.name}!`); add(`Finish ${r.name} to win this emblem!`); ['Bronze', 'Silver', 'Gold'].forEach(m => add(`${r.name}! ${m} emblem!`)); });
+    RK.forEach(r => { add(`New rink emblem for ${r.name}!`); add(`Finish ${r.name} to win this emblem!`); ['Bronze', 'Silver', 'Gold'].forEach(m => add(`${m} emblem for ${r.name}!`)); });
     STK_IDS.filter(id => /^sk_/.test(id)).forEach(id => { add(STK_DEF[id][2] + '!'); add(stkHow(id)); });
     NB.forEach(b => { add(b.intro, b.ch); add(b.defeat, b.ch); const id = b.relic; add(`Beat ${bossThe(b)} to find this treasure!`); add(`Beat ${bossThe(b)} to open this part of the map!`); add(`${RELICS[id].power} is ready!`);
       for (let r = 0; r <= 4; r++) { add(`${relicName(id, r)}. ${RELICS[id].lore}`); add(`Your relic is now ${RAR[r].n}! ${relicName(id, r)}!`); add(`You found ${relicThe(id, r)}! It is ${RAR[r].n === 'Epic' ? 'an' : 'a'} ${RAR[r].n} relic!`); } });

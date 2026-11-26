@@ -1,0 +1,33 @@
+PASS old save kept
+PASS home tile #tSkate on screen [871.65625, 106.09375, 283.75, 165.125]
+PASS first tap -> meet card
+PASS meet voiced by Teri ['teri']
+PASS meet card is voice-only (no dialogue box)
+PASS Let's go -> skating hub
+PASS 6 hub cards
+PASS 10 cast taps speak in their own voice []
+PASS Rink Map opens
+PASS 63 stops on the map (63)
+PASS banner counts ['0/6', '0/7', '0/6', '0/6', '0/7', '0/6', '0/7', '0/5', '0/6', '0/4', '0/4', '0/4']
+PASS locked stop gives a voiced nudge, no error [['Finish the stops before this one first. Poco a poco!', 'juniper', False, 'map', 'juniper']]
+PASS Judge Oscar hosts his drill ['oscar']
+PASS Teri pops up and cheers in her voice after 3 right answers
+PASS Wobble Goblin beaten
+PASS Silver Snowflake Skate relic won
+PASS boss gives ice crystals (5)
+PASS boss sticker sk_globe
+PASS Pink Snowflake Scarf unlocked for dress-up
+PASS coloring pages unlocked (Dobson + Wollman)
+PASS forge upgrades the relic (2->3) and spends crystals
+PASS finishing Dobson awards its emblem + Mama Fox sticker
+PASS skate games listed
+PASS skcombo starts
+PASS skjudge starts
+PASS skrink starts
+PASS 12 emblems in the album
+PASS 63 practice drills
+PASS story has no text bubble
+PASS Juniper on the right side of a story is not mirrored (ear stays on viewer right)
+PASS reload keeps old + new progress
+PASS no page errors []
+RESULT PASS 0 []

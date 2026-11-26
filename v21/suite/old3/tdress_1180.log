@@ -1,0 +1,44 @@
+PASS 23 Juniper jewelry/clothes items
+PASS 24 Aspen items
+PASS each Aspen item tied to a different real boss
+PASS closet shows 87 items
+PASS j_pearls: worn on Juniper
+PASS j_beads: worn on Juniper
+PASS j_bowtie: worn on Juniper
+PASS j_daisy: worn on Juniper
+PASS j_rglasses: worn on Juniper
+PASS j_choker: worn on Juniper
+PASS j_bracelet: worn on Juniper
+PASS j_beret: worn on Juniper
+PASS j_lei: worn on Juniper
+PASS j_butterfly: worn on Juniper
+PASS j_bandana: worn on Juniper
+PASS j_wand: worn on Juniper
+PASS j_starband: worn on Juniper
+PASS j_catglasses: worn on Juniper
+PASS j_scarf: worn on Juniper
+PASS j_backpack: worn on Juniper
+PASS j_sunhat: worn on Juniper
+PASS j_rbow: worn on Juniper
+PASS j_locket: worn on Juniper
+PASS j_wings: worn on Juniper
+PASS j_tophat: worn on Juniper
+PASS j_unicorn: worn on Juniper
+PASS j_rcape: worn on Juniper
+PASS look shows on home
+PASS Dress Up Aspen button on closet
+PASS all Aspen items locked at start
+PASS locked labels say Beat <villain> to unlock
+PASS journal items say how to unlock
+PASS tapping locked item voices the boss
+PASS locked item not worn
+PASS boss reward shows the new Dress Up Aspen item
+PASS unlock voiced
+PASS all unlocked after bosses
+PASS Aspen wears 4 items (head, neck, hand, side)
+PASS Aspen visible on screen
+PASS items fit width
+PASS Aspen look saved
+PASS all wear art loads []
+PASS no page errors []
+FAILS 0

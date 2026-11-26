@@ -38,3 +38,11 @@ Push plan: 3-way merge shared /workspace/juniper-learn/src changes (other worker
 - 12:45 2b voice rewordings staged in sk21/src (NOT built yet; suite running on 2a build): emblem lines 'New rink emblem for X!' / 'Gold emblem for X!' (no lone 'Vail Village Rink!' fragment), sticker 'Old Nicolò's Hot Cocoa', 'Time to glide, Aspen!', 2 Wobble Goblin lines. All candidates pre-tested with Whisper base.en+small.en >=0.94
 - 12:55 suite 2a running (29/30 logs)
 - 13:18 suite 2a: all green except ttj 72/74 (pre-existing LIVE gap: shared tj21.js passport lines without clips; clips exist in vo_cache, will publish add-only) and a flaky tacad 1180 (rerun PASS). t16h still running
+- 13:20 PUSHED 2a 7556e8f4 (rebased on passport a22b1606; manifest union 15306 incl. passport clips; story PNGs kept out of git). Verifying
+- 13:24 2b built: emblem/sticker/cheer/villain rewordings, 66 new clips rendered add-only; whisper of new clips all >=0.86 (Marcus 'Time to glide' misheard -> 'Let's glide'). Running suite.
+- 13:27 2a VERIFIED live: verify_sk.sh index/sw/manifest/sheet all MATCH; live version 20261126123841-3e1a7d IS 2a's version (build stamp from the tested 12:38 2a build; rebase onto a22b1606 only merged manifest, index unchanged so no rebuild/bump needed). 2b local build 20261126132425-c82250; 2b suite (suite4.sh, 4-way, incl tskate/tfit/ttj) still running
+- 13:32 2b suite: 1180 batch mostly done, all green so far (ttj now 74/74 with passport clips); 390 batch running
+- 13:37 passport LIVE ddd6fc9e: copied shared src/pp21.js+pp21.css into sk21/src (build.py already has the pp21 hook). Test build /tmp/b2b == live ddd6fc9e index + only my 2b skate lines (diffed). 2b suite 390 batch finishing; then rebase onto ddd6fc9e, rebuild, run tpass/tpassfit/tskate/tfit both sizes, push
+- 13:45 2b+pp21 build (8822): tpass 87/87, tpassfit 0 fails, tskate 32/32, tfit 0 fails at both sizes. Waiting on last 390 suite logs (t15/t16h/texit/broqa)
+- 13:45 waiting on t16h (both sizes) + texit 390, all green so far
+- 14:00 2b suite DONE all green both sizes (t16h hit its 900s cap with 1501/1444 PASS, 0 FAIL as usual). Rebasing onto ddd6fc9e

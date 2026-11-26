@@ -1,0 +1,53 @@
+PASS home Arcade tile
+PASS 6 arcade games listed
+PASS kart: starts after ready-set-go
+PASS kart: relic hint does not answer
+PASS kart: relic shows a visual hint
+PASS kart: wrong tap = +2s
+PASS kart: finished all 10 (10 rounds)
+PASS kart: result saved {'med': 3, 'best': 8.2, 'plays': 1}
+PASS kart: stars awarded
+PASS kart: silver+ earns its sticker
+PASS mush: starts after ready-set-go
+PASS mush: relic hint does not answer
+PASS mush: relic shows a visual hint
+PASS mush: wrong tap = +2s
+PASS mush: finished all 10 (10 rounds)
+PASS mush: result saved {'med': 3, 'best': 8.6, 'plays': 1}
+PASS mush: stars awarded
+PASS mush: silver+ earns its sticker
+PASS blocks: starts after ready-set-go
+PASS blocks: relic hint does not answer
+PASS blocks: relic shows a visual hint
+PASS blocks: hint spotlights the picked block only
+PASS blocks: finished all 10 (10 rounds)
+PASS blocks: result saved {'med': 3, 'best': 6.2, 'plays': 1}
+PASS blocks: stars awarded
+PASS blocks: silver+ earns its sticker
+PASS cube: starts after ready-set-go
+PASS cube: relic hint does not answer
+PASS cube: relic shows a visual hint
+PASS cube: finished all 10 (13 rounds)
+PASS cube: result saved {'med': 3, 'best': 5.6, 'plays': 1}
+PASS cube: stars awarded
+PASS cube: silver+ earns its sticker
+PASS melon: starts after ready-set-go
+PASS melon: relic hint does not answer
+PASS melon: relic shows a visual hint
+PASS melon: wrong tap = +2s
+PASS melon: finished all 10 (10 rounds)
+PASS melon: result saved {'med': 3, 'best': 8.1, 'plays': 1}
+PASS melon: stars awarded
+PASS melon: silver+ earns its sticker
+PASS cart: starts after ready-set-go
+PASS cart: relic hint does not answer
+PASS cart: relic shows a visual hint
+PASS cart: wrong tap = +2s
+PASS cart: finished all 10 (10 rounds)
+PASS cart: result saved {'med': 3, 'best': 8.1, 'plays': 1}
+PASS cart: stars awarded
+PASS cart: silver+ earns its sticker
+PASS played all 6 -> Joystick sticker
+PASS level system works
+PASS no page errors []
+FAILS 0

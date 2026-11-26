@@ -1,3 +1,1 @@
-FAIL all 94 journal clips recorded (missing [['f3vsmad0mo', 'ter', 'This is your passport!'], ['2amrg6jqs50', 'ter', 'Every place you visit gets its own page, with your stamps, medals and drills.'], ['28x01iqh5cw', 'ter', 'Welcome back to your passport, Aspen!']])
-FAIL no device speech fallback in the journal (['This is your passport!'])
-ttj 390x844: 72/74 pass
+ttj 390x844: 74/74 pass

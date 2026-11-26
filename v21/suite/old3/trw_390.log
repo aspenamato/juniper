@@ -1,0 +1,36 @@
+PASS boot
+PASS home has treasure map button
+PASS no chest yet
+PASS 12 first-try answers earned a chest (1, cnt 0)
+PASS chest shows on home
+PASS chest/map buttons do not cover tiles []
+PASS chest gives gems and bonus stars
+PASS theatrical chest opening
+PASS chest opening voiced
+PASS 3rd chest reveals a treasure relic + map piece
+PASS one exotic relic owned
+PASS map shows 8 pieces, 1 found
+PASS trade 30 gems for next relic
+PASS whole map animates trail with 5 dig spots
+PASS dig spots on the map and on screen
+PASS X locked until all spots dug
+PASS hunt q0: 3 choices on screen
+PASS wrong dig -> Patience, Aspen
+PASS hunt q1: 3 choices on screen
+PASS hunt q2: 3 choices on screen
+PASS hunt q3: 3 choices on screen
+PASS hunt q4: 3 choices on screen
+PASS all 5 spots dug
+PASS grand relic awarded
+PASS vault shows 9 treasure relics
+PASS tkey: hint kind light
+PASS spyglass: hint kind light
+PASS coins: hint kind light
+PASS hourglass: hint kind show
+PASS feather: hint kind echo
+PASS conch: hint kind echo
+PASS locket: hint kind scoop
+PASS astro: hint kind light
+PASS rheart: hint kind show
+PASS no page errors []
+FAILS 0
