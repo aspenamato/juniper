@@ -65,3 +65,4 @@ Push plan: 3-way merge shared /workspace/juniper-learn/src changes (other worker
 - 15:34 new cheer 'Glide with me, Aspen!' rendered (11 voices; Winnie heard 'Aspen' by both models); scr re-taken
 - 15:35 one-time voice-cache refresh for the 40 re-recorded clips added to skate21.js (tested: old clip dropped, others kept, progress untouched). Built 20261126153453-067b61; running tests
 - 15:40 phase B tests: tpass 87/87, tpassfit 0, tfit 0, tstale 184, tdress 43 both sizes; tskate 390 PASS, 1180 one flaky cast-tap voice check under 4-way load, PASS on rerun. Pushing phase B
+- 15:41 phase B VERIFIED live 4f973c66 / 20261126153453-067b61 (index/sw/manifest/re-recorded clips MATCH, passport present, no page errors). Follow-ups DONE.
