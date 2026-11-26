@@ -120,3 +120,5 @@
 /* phase 2: skate meet card is voice-led (title only, no dialogue box); other worlds unchanged */
 #meet.sk-meet #meetTxt,#meet.sk-meet #meetName{display:none}
 #meet.sk-meet #meetChr{cursor:pointer}
+/* t106u canon (app-wide): never mirror Juniper — shared .st-b svg{scaleX(-1)} flipped her crooked LEFT ear to the viewer's left in every world's stories */
+.story .st-b.jun svg,.story .st-b.jun img{transform:none}

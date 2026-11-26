@@ -46,3 +46,13 @@ Push plan: 3-way merge shared /workspace/juniper-learn/src changes (other worker
 - 13:45 2b+pp21 build (8822): tpass 87/87, tpassfit 0 fails, tskate 32/32, tfit 0 fails at both sizes. Waiting on last 390 suite logs (t15/t16h/texit/broqa)
 - 13:45 waiting on t16h (both sizes) + texit 390, all green so far
 - 14:00 2b suite DONE all green both sizes (t16h hit its 900s cap with 1501/1444 PASS, 0 FAIL as usual). Rebasing onto ddd6fc9e
+- 14:00 PUSHED 2b 1cc269c6 (on passport ddd6fc9e; index == tested 8822 build; pp21 present). Verifying live
+- 14:01 2b VERIFIED live: version 20261126140028-7d00d2, index/sw/manifest MATCH, passport present, new clips 200, no page errors. Phase 2 polish DONE.
+- 14:06 follow-ups started: (1) app-wide Juniper mirror fix — qcjunmirror.py found mirrored Juniper on the right in trip/nyc/vail/sc stories (10 frames at 1180); added '.story .st-b.jun svg/img{transform:none}' to skate21.css; built. pp21 re-synced (identical).
+- 14:14 mirror fix verified: 16 Juniper-on-right frames per size (trip/nyc/vail/sc/skate), 0 mirrored after (1180+390). Sheets v21/qc/junmirror_1180.jpg (before/after) + junmirror_390.jpg. Aspen-pronunciation Whisper scan of all 680 'Aspen' clips running; win 'Let's glide, Aspen!' -> Aston confirmed only after encode (take variance)
+- 14:24 Aspen scan still running (680 clips); Teri cocoa: ò makes Ava say 'Nicolo S.' -> re-render from spoken 'Nicolo's' (rerender_say.py) queued
+- 14:32 Aspen scan: small.en missed 106/680, medium.en second pass running
+- 14:39 Aspen scan done: 67/680 clips where neither small.en nor medium.en hears 'Aspen' (British voices -> Aston/Ashton, Emma sentence-initial -> Espen, short 'Hi Aspen' -> ESPN/Yes Ben; Spanish 'Aspin' = natural es, left). Re-rendering 58 non-Spanish + 2 Teri cocoa clips in place (same key/text, best of 5 takes, Whisper-verified) via rerender_say.py
+- 14:44 re-render in progress (12/60)
+- 14:52 resumed: pp21 re-synced, rebuilt; phase A = mirror fix push (index only, re-render still running 36/60)
+- 14:56 phase A tests: tpass 87/87, tpassfit 0, tskate 32/32, tfit 0 both sizes; ttj errors on LIVE too (obsolete after passport moved journal) — not mine. Pushing phase A
