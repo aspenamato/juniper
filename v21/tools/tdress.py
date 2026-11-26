@@ -24,7 +24,7 @@ with sync_playwright() as p:
     J("JLP.openDress()"); pg.wait_for_timeout(500); pg.screenshot(path=f'v16/shots/T_jw_closet_{W}.png')
     ok(J("!!document.querySelector('#aspBtn')"), 'Dress Up Aspen button on closet'); said(); pg.click('#aspBtn'); pg.wait_for_timeout(900)
     NB=":not([data-id^=\"a_tj\"])"  # t106u: journal items say "Earn N Travel Journal stamps to unlock"
-    ok(J(f"document.querySelectorAll('#aspCl .aspit{NB}').length")==J('JLPDRESS.AI.length') and J(f"document.querySelectorAll('#aspCl .aspit.locked{NB}').length")==J('JLPDRESS.AI.length'), 'all Aspen items locked at start')
+    ok(J(f"document.querySelectorAll('#aspCl .aspit{NB}').length")==J(BI+'.length') and J(f"document.querySelectorAll('#aspCl .aspit.locked{NB}').length")==J(BI+'.length'), 'all Aspen items locked at start')
     ok(J(f"[...document.querySelectorAll('#aspCl .aspit.locked{NB} small')].every(e=>/^Beat .+ to unlock$/.test(e.textContent))"), 'locked labels say Beat <villain> to unlock')
     ok(J("[...document.querySelectorAll('#aspCl .aspit.locked[data-id^=\"a_tj\"] small')].every(e=>/Travel Journal stamps to unlock$/.test(e.textContent))"), 'journal items say how to unlock')
     pg.screenshot(path=f'v16/shots/T_asp_locked_{W}.png')

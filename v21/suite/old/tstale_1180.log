@@ -1,0 +1,186 @@
+48 juniper items
+PASS J scarf: spin set == dress-up ['scarf'] relic None (spin ['scarf'] None)
+PASS J scarf: every visible item drawn in the spin ['scarf']
+PASS J visor: spin set == dress-up ['visor'] relic None (spin ['visor'] None)
+PASS J visor: every visible item drawn in the spin ['visor']
+PASS J helmet: spin set == dress-up ['helmet'] relic None (spin ['helmet'] None)
+PASS J helmet: every visible item drawn in the spin ['helmet']
+PASS J skates: spin set == dress-up ['L_skate'] relic None (spin ['L_skate'] None)
+PASS J skates: every visible item drawn in the spin ['L_skate']
+PASS J tutu: spin set == dress-up ['L_tutu'] relic None (spin ['L_tutu'] None)
+PASS J tutu: every visible item drawn in the spin ['L_tutu']
+PASS J bow: spin set == dress-up ['bow'] relic None (spin ['bow'] None)
+PASS J bow: every visible item drawn in the spin ['bow']
+PASS J blades: spin set == dress-up ['L_blades'] relic None (spin ['L_blades'] None)
+PASS J blades: every visible item drawn in the spin ['L_blades']
+PASS J hightops: spin set == dress-up ['L_hightops'] relic None (spin ['L_hightops'] None)
+PASS J hightops: every visible item drawn in the spin ['L_hightops']
+PASS J golf: spin set == dress-up ['L_golf', 'visor'] relic None (spin ['L_golf', 'visor'] None)
+PASS J golf: every visible item drawn in the spin ['L_golf', 'visor']
+PASS J flowers: spin set == dress-up ['flowers'] relic None (spin ['flowers'] None)
+PASS J flowers: every visible item drawn in the spin ['flowers']
+PASS J glasses: spin set == dress-up ['glasses'] relic None (spin ['glasses'] None)
+PASS J glasses: every visible item drawn in the spin ['glasses']
+PASS J party: spin set == dress-up ['party'] relic None (spin ['party'] None)
+PASS J party: every visible item drawn in the spin ['party']
+PASS J cape: spin set == dress-up ['cape'] relic None (spin ['cape'] None)
+PASS J cape: every visible item drawn in the spin ['cape']
+PASS J medal: spin set == dress-up ['medal'] relic None (spin ['medal'] None)
+PASS J medal: every visible item drawn in the spin ['medal']
+PASS J crown: spin set == dress-up ['crown'] relic None (spin ['crown'] None)
+PASS J crown: every visible item drawn in the spin ['crown']
+PASS J ring: spin set == dress-up ['ring'] relic None (spin ['ring'] None)
+PASS J ring: every visible item drawn in the spin ['ring']
+PASS J tiara: spin set == dress-up ['tiara'] relic None (spin ['tiara'] None)
+PASS J tiara: every visible item drawn in the spin ['tiara']
+PASS J pinkgown: spin set == dress-up ['L_princess', 'tiara'] relic None (spin ['L_princess', 'tiara'] None)
+PASS J pinkgown: every visible item drawn in the spin ['L_princess', 'tiara']
+PASS J icegown: spin set == dress-up ['L_icegown', 'tiara'] relic None (spin ['L_icegown', 'tiara'] None)
+PASS J icegown: every visible item drawn in the spin ['L_icegown', 'tiara']
+PASS J goldgown: spin set == dress-up ['L_goldgown', 'tiara'] relic None (spin ['L_goldgown', 'tiara'] None)
+PASS J goldgown: every visible item drawn in the spin ['L_goldgown', 'tiara']
+PASS J rhelmet: spin set == dress-up ['rhelmet'] relic None (spin ['rhelmet'] None)
+PASS J rhelmet: every visible item drawn in the spin ['rhelmet']
+PASS J ghelmet: spin set == dress-up ['ghelmet'] relic None (spin ['ghelmet'] None)
+PASS J ghelmet: every visible item drawn in the spin ['ghelmet']
+PASS J rjacket: spin set == dress-up ['L_riding', 'rhelmet'] relic None (spin ['L_riding', 'rhelmet'] None)
+PASS J rjacket: every visible item drawn in the spin ['L_riding', 'rhelmet']
+PASS J rboots: spin set == dress-up ['L_riding', 'rhelmet'] relic None (spin ['L_riding', 'rhelmet'] None)
+PASS J rboots: every visible item drawn in the spin ['L_riding', 'rhelmet']
+PASS J rgloves: spin set == dress-up ['rgloves'] relic None (spin ['rgloves'] None)
+PASS J rgloves: every visible item drawn in the spin ['rgloves']
+PASS J j_pearls: spin set == dress-up ['j_pearls'] relic None (spin ['j_pearls'] None)
+PASS J j_pearls: every visible item drawn in the spin ['j_pearls']
+PASS J j_beads: spin set == dress-up ['j_beads'] relic None (spin ['j_beads'] None)
+PASS J j_beads: every visible item drawn in the spin ['j_beads']
+PASS J j_bowtie: spin set == dress-up ['j_bowtie'] relic None (spin ['j_bowtie'] None)
+PASS J j_bowtie: every visible item drawn in the spin ['j_bowtie']
+PASS J j_daisy: spin set == dress-up ['j_daisy'] relic None (spin ['j_daisy'] None)
+PASS J j_daisy: every visible item drawn in the spin ['j_daisy']
+PASS J j_rglasses: spin set == dress-up ['j_rglasses'] relic None (spin ['j_rglasses'] None)
+PASS J j_rglasses: every visible item drawn in the spin ['j_rglasses']
+PASS J j_choker: spin set == dress-up ['j_choker'] relic None (spin ['j_choker'] None)
+PASS J j_choker: every visible item drawn in the spin ['j_choker']
+PASS J j_bracelet: spin set == dress-up ['j_bracelet'] relic None (spin ['j_bracelet'] None)
+PASS J j_bracelet: every visible item drawn in the spin ['j_bracelet']
+PASS J j_beret: spin set == dress-up ['j_beret'] relic None (spin ['j_beret'] None)
+PASS J j_beret: every visible item drawn in the spin ['j_beret']
+PASS J j_lei: spin set == dress-up ['j_lei'] relic None (spin ['j_lei'] None)
+PASS J j_lei: every visible item drawn in the spin ['j_lei']
+PASS J j_butterfly: spin set == dress-up ['j_butterfly'] relic None (spin ['j_butterfly'] None)
+PASS J j_butterfly: every visible item drawn in the spin ['j_butterfly']
+PASS J j_bandana: spin set == dress-up ['j_bandana'] relic None (spin ['j_bandana'] None)
+PASS J j_bandana: every visible item drawn in the spin ['j_bandana']
+PASS J j_wand: spin set == dress-up ['j_wand'] relic None (spin ['j_wand'] None)
+PASS J j_wand: every visible item drawn in the spin ['j_wand']
+PASS J j_starband: spin set == dress-up ['j_starband'] relic None (spin ['j_starband'] None)
+PASS J j_starband: every visible item drawn in the spin ['j_starband']
+PASS J j_catglasses: spin set == dress-up ['j_catglasses'] relic None (spin ['j_catglasses'] None)
+PASS J j_catglasses: every visible item drawn in the spin ['j_catglasses']
+PASS J j_scarf: spin set == dress-up ['j_scarf'] relic None (spin ['j_scarf'] None)
+PASS J j_scarf: every visible item drawn in the spin ['j_scarf']
+PASS J j_backpack: spin set == dress-up ['j_backpack'] relic None (spin ['j_backpack'] None)
+PASS J j_backpack: every visible item drawn in the spin ['j_backpack']
+PASS J j_sunhat: spin set == dress-up ['j_sunhat'] relic None (spin ['j_sunhat'] None)
+PASS J j_sunhat: every visible item drawn in the spin ['j_sunhat']
+PASS J j_rbow: spin set == dress-up ['j_rbow'] relic None (spin ['j_rbow'] None)
+PASS J j_rbow: every visible item drawn in the spin ['j_rbow']
+PASS J j_locket: spin set == dress-up ['j_locket'] relic None (spin ['j_locket'] None)
+PASS J j_locket: every visible item drawn in the spin ['j_locket']
+PASS J j_wings: spin set == dress-up ['j_wings'] relic None (spin ['j_wings'] None)
+PASS J j_wings: every visible item drawn in the spin ['j_wings']
+PASS J j_tophat: spin set == dress-up ['j_tophat'] relic None (spin ['j_tophat'] None)
+PASS J j_tophat: every visible item drawn in the spin ['j_tophat']
+PASS J j_unicorn: spin set == dress-up ['j_unicorn'] relic None (spin ['j_unicorn'] None)
+PASS J j_unicorn: every visible item drawn in the spin ['j_unicorn']
+PASS J j_rcape: spin set == dress-up ['j_rcape'] relic None (spin ['j_rcape'] None)
+PASS J j_rcape: every visible item drawn in the spin ['j_rcape']
+PASS J combo {"body": "tutu", "head": "crown", "neck": "medal"}: spin set == dress-up ['L_tutu', 'crown', 'medal'] relic None (spin ['L_tutu', 'crown', 'medal'] None)
+PASS J combo {"body": "tutu", "head": "crown", "neck": "medal"}: every visible item drawn in the spin ['L_tutu', 'crown', 'medal']
+PASS J combo {"body": "pinkgown", "head": "j_unicorn", "neck": "j_pearls"}: spin set == dress-up ['L_princess', 'j_pearls', 'tiara'] relic None (spin ['L_princess', 'j_pearls', 'tiara'] None)
+PASS J combo {"body": "pinkgown", "head": "j_unicorn", "neck": "j_pearls"}: every visible item drawn in the spin ['L_princess', 'tiara', 'j_pearls']
+PASS J combo {"body": "rjacket", "feet": "rboots", "head": "ghelmet", "hands": "rgloves"}: spin set == dress-up ['L_riding', 'ghelmet', 'rgloves'] relic None (spin ['L_riding', 'ghelmet', 'rgloves'] None)
+PASS J combo {"body": "rjacket", "feet": "rboots", "head": "ghelmet", "hands": "rgloves"}: every visible item drawn in the spin ['L_riding', 'ghelmet', 'rgloves']
+PASS J combo {"hand": "golf", "head": "visor", "eyes": "glasses"}: spin set == dress-up ['L_golf', 'glasses', 'visor'] relic None (spin ['L_golf', 'glasses', 'visor'] None)
+PASS J combo {"hand": "golf", "head": "visor", "eyes": "glasses"}: every visible item drawn in the spin ['L_golf', 'visor', 'glasses']
+PASS J combo {"back": "j_rcape", "body": "cape", "neck": "scarf"}: spin set == dress-up ['cape', 'j_rcape', 'scarf'] relic None (spin ['cape', 'j_rcape', 'scarf'] None)
+PASS J combo {"back": "j_rcape", "body": "cape", "neck": "scarf"}: every visible item drawn in the spin ['cape', 'j_rcape', 'scarf']
+PASS J combo {"feet": "blades", "neck": "scarf", "head": "bow"}: spin set == dress-up ['L_blades', 'bow'] relic None (spin ['L_blades', 'bow'] None)
+PASS J combo {"feet": "blades", "neck": "scarf", "head": "bow"}: every visible item drawn in the spin ['L_blades', 'bow']
+PASS J combo {"feet": "hightops", "ring": "ring", "head": "flowers"}: spin set == dress-up ['L_hightops', 'flowers', 'ring'] relic None (spin ['L_hightops', 'flowers', 'ring'] None)
+PASS J combo {"feet": "hightops", "ring": "ring", "head": "flowers"}: every visible item drawn in the spin ['L_hightops', 'flowers', 'ring']
+PASS J relic crown + lei: spin set == dress-up ['j_lei'] relic crown (spin ['j_lei'] crown)
+PASS J relic crown + lei: every visible item drawn in the spin ['j_lei']
+PASS held relic drawn in the spin
+PASS live start unicorn: spin set == dress-up ['j_unicorn'] relic None (spin ['j_unicorn'] None)
+PASS live start unicorn: every visible item drawn in the spin ['j_unicorn']
+PASS live step 0 {"head": "j_unicorn", "neck": "j_scarf"}: spin set == dress-up ['j_scarf', 'j_unicorn'] relic None (spin ['j_scarf', 'j_unicorn'] None)
+PASS live step 0 {"head": "j_unicorn", "neck": "j_scarf"}: every visible item drawn in the spin ['j_scarf', 'j_unicorn']
+PASS live step 1 {"head": "j_tophat", "neck": "j_scarf"}: spin set == dress-up ['j_scarf', 'j_tophat'] relic None (spin ['j_scarf', 'j_tophat'] None)
+PASS live step 1 {"head": "j_tophat", "neck": "j_scarf"}: every visible item drawn in the spin ['j_scarf', 'j_tophat']
+PASS live step 2 {"neck": "j_scarf"}: spin set == dress-up ['j_scarf'] relic None (spin ['j_scarf'] None)
+PASS live step 2 {"neck": "j_scarf"}: every visible item drawn in the spin ['j_scarf']
+PASS live step 3 {"body": "tutu"}: spin set == dress-up ['L_tutu'] relic None (spin ['L_tutu'] None)
+PASS live step 3 {"body": "tutu"}: every visible item drawn in the spin ['L_tutu']
+PASS live step 4 {}: spin set == dress-up [] relic None (spin [] None)
+PASS live step 4 {}: every visible item drawn in the spin []
+saved outfit {'back': 'j_wings', 'head': 'j_daisy'}
+PASS outfit worn through the closet
+PASS after reload {"back": "j_wings", "head": "j_daisy"}: spin set == dress-up ['j_daisy', 'j_wings'] relic None (spin ['j_daisy', 'j_wings'] None)
+PASS after reload {"back": "j_wings", "head": "j_daisy"}: every visible item drawn in the spin ['j_wings', 'j_daisy']
+PASS reloaded spin wears the saved outfit ['j_wings', 'j_daisy']
+23 aspen items
+PASS A a_visor: spin set == dress-up ['a_visor'] relic None (spin ['a_visor'] None)
+PASS A a_visor: every visible item drawn in the spin ['a_visor']
+PASS A a_driver: spin set == dress-up ['a_driver'] relic None (spin ['a_driver'] None)
+PASS A a_driver: every visible item drawn in the spin ['a_driver']
+PASS A a_gbag: spin set == dress-up ['a_gbag'] relic None (spin ['a_gbag'] None)
+PASS A a_gbag: every visible item drawn in the spin []
+PASS A a_gneck: spin set == dress-up ['a_gneck'] relic None (spin ['a_gneck'] None)
+PASS A a_gneck: every visible item drawn in the spin ['a_gneck']
+PASS A a_gtrophy: spin set == dress-up ['a_gtrophy'] relic None (spin ['a_gtrophy'] None)
+PASS A a_gtrophy: every visible item drawn in the spin ['a_gtrophy']
+PASS A a_gcap: spin set == dress-up ['a_gcap'] relic None (spin ['a_gcap'] None)
+PASS A a_gcap: every visible item drawn in the spin ['a_gcap']
+PASS A a_helmet: spin set == dress-up ['a_helmet'] relic None (spin ['a_helmet'] None)
+PASS A a_helmet: every visible item drawn in the spin ['a_helmet']
+PASS A a_rosette: spin set == dress-up ['a_rosette'] relic None (spin ['a_rosette'] None)
+PASS A a_rosette: every visible item drawn in the spin ['a_rosette']
+PASS A a_brush: spin set == dress-up ['a_brush'] relic None (spin ['a_brush'] None)
+PASS A a_brush: every visible item drawn in the spin ['a_brush']
+PASS A a_saddle: spin set == dress-up ['a_saddle'] relic None (spin ['a_saddle'] None)
+PASS A a_saddle: every visible item drawn in the spin []
+PASS A a_shoe: spin set == dress-up ['a_shoe'] relic None (spin ['a_shoe'] None)
+PASS A a_shoe: every visible item drawn in the spin ['a_shoe']
+PASS A a_plush: spin set == dress-up ['a_plush'] relic None (spin ['a_plush'] None)
+PASS A a_plush: every visible item drawn in the spin []
+PASS A a_muffs: spin set == dress-up ['a_muffs'] relic None (spin ['a_muffs'] None)
+PASS A a_muffs: every visible item drawn in the spin ['a_muffs']
+PASS A a_scarf: spin set == dress-up ['a_scarf'] relic None (spin ['a_scarf'] None)
+PASS A a_scarf: every visible item drawn in the spin ['a_scarf']
+PASS A a_skates: spin set == dress-up ['a_skates'] relic None (spin ['a_skates'] None)
+PASS A a_skates: every visible item drawn in the spin ['a_skates']
+PASS A a_tiara: spin set == dress-up ['a_tiara'] relic None (spin ['a_tiara'] None)
+PASS A a_tiara: every visible item drawn in the spin ['a_tiara']
+PASS A a_smedal: spin set == dress-up ['a_smedal'] relic None (spin ['a_smedal'] None)
+PASS A a_smedal: every visible item drawn in the spin ['a_smedal']
+PASS A a_strophy: spin set == dress-up ['a_strophy'] relic None (spin ['a_strophy'] None)
+PASS A a_strophy: every visible item drawn in the spin []
+PASS A a_pscarf: spin set == dress-up ['a_pscarf'] relic None (spin ['a_pscarf'] None)
+PASS A a_pscarf: every visible item drawn in the spin ['a_pscarf']
+PASS A a_rmedal: spin set == dress-up ['a_rmedal'] relic None (spin ['a_rmedal'] None)
+PASS A a_rmedal: every visible item drawn in the spin ['a_rmedal']
+PASS A a_xmedal: spin set == dress-up ['a_xmedal'] relic None (spin ['a_xmedal'] None)
+PASS A a_xmedal: every visible item drawn in the spin ['a_xmedal']
+PASS A a_ascarf: spin set == dress-up ['a_ascarf'] relic None (spin ['a_ascarf'] None)
+PASS A a_ascarf: every visible item drawn in the spin ['a_ascarf']
+PASS A a_atiara: spin set == dress-up ['a_atiara'] relic None (spin ['a_atiara'] None)
+PASS A a_atiara: every visible item drawn in the spin ['a_atiara']
+PASS A saddle+helmet: spin set == dress-up ['a_helmet', 'a_saddle'] relic None (spin ['a_helmet', 'a_saddle'] None)
+PASS A saddle+helmet: every visible item drawn in the spin ['a_helmet']
+PASS saddle drawn beside her
+PASS A live swap to tiara: spin set == dress-up ['a_tiara'] relic None (spin ['a_tiara'] None)
+PASS A live swap to tiara: every visible item drawn in the spin ['a_tiara']
+PASS progress still saved
+PASS no page errors []
+FAILS 0 []

@@ -1,0 +1,32 @@
+PASS 93 stickers (>=60)
+TIERS {'gold': 23, 'common': 17, 'puffy': 27, 'holo': 26} ANIM 20
+PASS all four tiers used
+PASS every sticker has a skill-based way to earn it
+PASS old save kept (stars, bosses)
+PASS boss already beaten -> Oscar sticker owned after migration
+PASS home has Sticker Book tile
+PASS tile opens the book
+PASS all pages incl My Page
+PASS all sticker images load []
+PASS empty park page shows 8 silhouettes
+HIT ['q', '', 2.6228671073913574, 261.016357421875]
+PASS tap silhouette -> voiced hint ['Get a gold time in Sight Word Sprint to earn this sticker!']
+PASS trial clock starts after ready-set-go
+PASS wrong answer adds 3 second penalty
+PASS fast run = gold medal {'runs': 1, 'best': 6.6, 'med': 3}
+PASS gold earns bronze+silver+gold Plus Dash stickers
+PASS first gold time -> golds sticker
+PASS pack reveal plays
+PASS all reveals done
+PASS 45s Take-Away = silver + new personal best {'T': 45.00180000000074, 'med': 2, 'pb': True, 'fresh': ['flake', 'smedal']}
+PASS drag moves sticker (0.10->0.31)
+PASS pink handle resizes+rotates (0.20,-8)->(0.47,42)
+PASS drag from tray places sticker on My Page
+PASS My Page backdrop changes
+PASS streak of 5 earns gelato sticker
+PASS earned-in-game sticker reveals when back home
+PASS layout saved in localStorage after reload
+PASS stars kept
+PASS shelves tabs still render
+PASS no page errors []
+FAILS 0

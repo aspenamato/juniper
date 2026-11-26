@@ -1,0 +1,402 @@
+acts {'math': 'm_count', 'read': 'r_letters', 'logic': 'l_ppat', 'spanish': 's_num1', 'skate': 'k_hunt'}
+PASS ltag: shows in vault when earned
+PASS ltag: offered in read game r_letters
+PASS ltag: relic button glows ready
+PASS ltag: prompt voiced by teri
+PASS ltag: prompt glow on
+PASS ltag: relic button does not overlap answers
+PASS ltag: power works (spot: 0->3)
+PASS wings: shows in vault when earned
+PASS wings: offered in logic game l_ppat
+PASS wings: relic button glows ready
+PASS wings: prompt voiced by gigi
+PASS wings: prompt glow on
+PASS wings: relic button does not overlap answers
+PASS wings: power works (two: 0->19)
+PASS taxilight: shows in vault when earned
+PASS taxilight: offered in math game m_count
+PASS taxilight: relic button glows ready
+PASS taxilight: prompt voiced by teri
+PASS taxilight: prompt glow on
+PASS taxilight: relic button does not overlap answers
+PASS taxilight: power works (step: 0->106)
+PASS pearlball: shows in vault when earned
+PASS pearlball: offered in math game m_count
+PASS pearlball: relic button glows ready
+PASS pearlball: prompt voiced by winnie
+PASS pearlball: prompt glow on
+PASS pearlball: relic button does not overlap answers
+PASS pearlball: power works (dots: 0->106)
+PASS snowglobe: shows in vault when earned
+PASS snowglobe: offered in skate game k_hunt
+PASS snowglobe: relic button glows ready
+PASS snowglobe: prompt voiced by toulouse
+PASS snowglobe: prompt glow on
+PASS snowglobe: relic button does not overlap answers
+PASS snowglobe: power works (step: 0->100)
+PASS skypass: shows in vault when earned
+PASS skypass: offered in math game m_count
+PASS skypass: relic button glows ready
+PASS skypass: prompt voiced by gigi
+PASS skypass: prompt glow on
+PASS skypass: relic button does not overlap answers
+PASS skypass: power works (two: 0->10)
+PASS moonstone: shows in vault when earned
+PASS moonstone: offered in read game r_letters
+PASS moonstone: relic button glows ready
+PASS moonstone: prompt voiced by mamafox
+PASS moonstone: prompt glow on
+PASS moonstone: relic button does not overlap answers
+PASS moonstone: power works (sound: 0->103)
+PASS compass: shows in vault when earned
+PASS compass: offered in logic game l_ppat
+PASS compass: relic button glows ready
+PASS compass: prompt voiced by marcus
+PASS compass: prompt glow on
+PASS compass: relic button does not overlap answers
+PASS compass: power works (spot: 0->9)
+PASS spoon: shows in vault when earned
+PASS spoon: offered in spanish game s_num1
+PASS spoon: relic button glows ready
+PASS spoon: prompt voiced by nicolo
+PASS spoon: prompt glow on
+PASS spoon: relic button does not overlap answers
+PASS spoon: power works (two: 0->16)
+PASS skate: shows in vault when earned
+PASS skate: offered in skate game k_hunt
+PASS skate: relic button glows ready
+PASS skate: prompt voiced by toulouse
+PASS skate: prompt glow on
+PASS skate: relic button does not overlap answers
+PASS skate: power works (step: 0->100)
+PASS tee: shows in vault when earned
+PASS tee: offered in math game m_count
+PASS tee: relic button glows ready
+PASS tee: prompt voiced by winnie
+PASS tee: prompt glow on
+PASS tee: relic button does not overlap answers
+PASS tee: power works (dots: 0->106)
+PASS lantern: shows in vault when earned
+PASS lantern: offered in read game r_letters
+PASS lantern: relic button glows ready
+PASS lantern: prompt voiced by juniper
+PASS lantern: prompt glow on
+PASS lantern: relic button does not overlap answers
+PASS lantern: power works (sound: 0->103)
+PASS coqui: shows in vault when earned
+PASS coqui: offered in spanish game s_num1
+PASS coqui: relic button glows ready
+PASS coqui: prompt voiced by coqui
+PASS coqui: prompt glow on
+PASS coqui: relic button does not overlap answers
+PASS coqui: power works (sound: 0->106)
+PASS sunkey: shows in vault when earned
+PASS sunkey: offered in logic game l_ppat
+PASS sunkey: relic button glows ready
+PASS sunkey: prompt voiced by oscar
+PASS sunkey: prompt glow on
+PASS sunkey: relic button does not overlap answers
+PASS sunkey: power works (spot: 0->9)
+PASS amulet: shows in vault when earned
+PASS amulet: offered in logic game l_ppat
+PASS amulet: relic button glows ready
+PASS amulet: prompt voiced by juniper
+PASS amulet: prompt glow on
+PASS amulet: relic button does not overlap answers
+PASS amulet: power works (step: 0->109)
+PASS acorn: shows in vault when earned
+PASS acorn: offered in math game m_count
+PASS acorn: relic button glows ready
+PASS acorn: prompt voiced by rocco
+PASS acorn: prompt glow on
+PASS acorn: relic button does not overlap answers
+PASS acorn: power works (two: 0->16)
+PASS prism: shows in vault when earned
+PASS prism: offered in read game r_letters
+PASS prism: relic button glows ready
+PASS prism: prompt voiced by pearl
+PASS prism: prompt glow on
+PASS prism: relic button does not overlap answers
+PASS prism: power works (spot: 0->3)
+PASS torch: shows in vault when earned
+PASS torch: offered in spanish game s_num1
+PASS torch: relic button glows ready
+PASS torch: prompt voiced by oscar
+PASS torch: prompt glow on
+PASS torch: relic button does not overlap answers
+PASS torch: power works (spot: 0->6)
+PASS glacier: shows in vault when earned
+PASS glacier: offered in logic game l_ppat
+PASS glacier: relic button glows ready
+PASS glacier: prompt voiced by flurry
+PASS glacier: prompt glow on
+PASS glacier: relic button does not overlap answers
+PASS glacier: power works (two: 0->19)
+PASS mirror: shows in vault when earned
+PASS mirror: offered in read game r_letters
+PASS mirror: relic button glows ready
+PASS mirror: prompt voiced by pearl
+PASS mirror: prompt glow on
+PASS mirror: relic button does not overlap answers
+PASS mirror: power works (step: 0->103)
+PASS crown: shows in vault when earned
+PASS crown: offered in skate game k_hunt
+PASS crown: relic button glows ready
+PASS crown: prompt voiced by flurry
+PASS crown: prompt glow on
+PASS crown: relic button does not overlap answers
+PASS crown: power works (spot: 0->100)
+PASS lens: shows in vault when earned
+PASS lens: offered in math game m_count
+PASS lens: relic button glows ready
+PASS lens: prompt voiced by quinn
+PASS lens: prompt glow on
+PASS lens: relic button does not overlap answers
+PASS lens: power works (dots: 0->106)
+PASS seed: shows in vault when earned
+PASS seed: offered in math game m_count
+PASS seed: relic button glows ready
+PASS seed: prompt voiced by juniper
+PASS seed: prompt glow on
+PASS seed: relic button does not overlap answers
+PASS seed: power works (dots: 0->106)
+PASS chip: shows in vault when earned
+PASS chip: offered in math game m_count
+PASS chip: relic button glows ready
+PASS chip: prompt voiced by quinn
+PASS chip: prompt glow on
+PASS chip: relic button does not overlap answers
+PASS chip: power works (step: 0->106)
+PASS tkey: shows in vault when earned
+PASS tkey: offered in logic game l_ppat
+PASS tkey: relic button glows ready
+PASS tkey: prompt voiced by juniper
+PASS tkey: prompt glow on
+PASS tkey: relic button does not overlap answers
+PASS tkey: power works (light: 0->9)
+PASS spyglass: shows in vault when earned
+PASS spyglass: offered in logic game l_ppat
+PASS spyglass: relic button glows ready
+PASS spyglass: prompt voiced by juniper
+PASS spyglass: prompt glow on
+PASS spyglass: relic button does not overlap answers
+PASS spyglass: power works (light: 0->9)
+PASS coins: shows in vault when earned
+PASS coins: offered in math game m_count
+PASS coins: relic button glows ready
+PASS coins: prompt voiced by juniper
+PASS coins: prompt glow on
+PASS coins: relic button does not overlap answers
+PASS coins: power works (light: 0->6)
+PASS hourglass: shows in vault when earned
+PASS hourglass: offered in math game m_count
+PASS hourglass: relic button glows ready
+PASS hourglass: prompt voiced by juniper
+PASS hourglass: prompt glow on
+PASS hourglass: relic button does not overlap answers
+PASS hourglass: power works (show: 0->6)
+PASS feather: shows in vault when earned
+PASS feather: offered in read game r_letters
+PASS feather: relic button glows ready
+PASS feather: prompt voiced by juniper
+PASS feather: prompt glow on
+PASS feather: relic button does not overlap answers
+PASS feather: power works (echo: 0->3)
+PASS conch: shows in vault when earned
+PASS conch: offered in read game r_letters
+PASS conch: relic button glows ready
+PASS conch: prompt voiced by juniper
+PASS conch: prompt glow on
+PASS conch: relic button does not overlap answers
+PASS conch: power works (echo: 0->3)
+PASS locket: shows in vault when earned
+PASS locket: offered in math game m_count
+PASS locket: relic button glows ready
+PASS locket: prompt voiced by juniper
+PASS locket: prompt glow on
+PASS locket: relic button does not overlap answers
+PASS locket: power works (scoop: 0->6)
+PASS astro: shows in vault when earned
+PASS astro: offered in math game m_count
+PASS astro: relic button glows ready
+PASS astro: prompt voiced by juniper
+PASS astro: prompt glow on
+PASS astro: relic button does not overlap answers
+PASS astro: power works (light: 0->6)
+PASS rheart: shows in vault when earned
+PASS rheart: offered in math game m_count
+PASS rheart: relic button glows ready
+PASS rheart: prompt voiced by juniper
+PASS rheart: prompt glow on
+PASS rheart: relic button does not overlap answers
+PASS rheart: power works (show: 0->6)
+PASS sksilver: shows in vault when earned
+PASS sksilver: offered in math game m_count
+PASS sksilver: relic button glows ready
+PASS sksilver: prompt voiced by juniper
+PASS sksilver: prompt glow on
+PASS sksilver: relic button does not overlap answers
+PASS sksilver: power works (dots: 0->106)
+PASS skstar: shows in vault when earned
+PASS skstar: offered in read game r_letters
+PASS skstar: relic button glows ready
+PASS skstar: prompt voiced by juniper
+PASS skstar: prompt glow on
+PASS skstar: relic button does not overlap answers
+PASS skstar: power works (spot: 0->3)
+PASS skwave: shows in vault when earned
+PASS skwave: offered in logic game l_ppat
+PASS skwave: relic button glows ready
+PASS skwave: prompt voiced by juniper
+PASS skwave: prompt glow on
+PASS skwave: relic button does not overlap answers
+PASS skwave: power works (step: 0->109)
+PASS skmaple: shows in vault when earned
+PASS skmaple: offered in spanish game s_num1
+PASS skmaple: relic button glows ready
+PASS skmaple: prompt voiced by juniper
+PASS skmaple: prompt glow on
+PASS skmaple: relic button does not overlap answers
+PASS skmaple: power works (sound: 0->106)
+PASS skaurora: shows in vault when earned
+PASS skaurora: offered in math game m_count
+PASS skaurora: relic button glows ready
+PASS skaurora: prompt voiced by juniper
+PASS skaurora: prompt glow on
+PASS skaurora: relic button does not overlap answers
+PASS skaurora: power works (two: 0->10)
+PASS idle prompt fires by itself after 13s
+PASS boss relic moment at start ['Bag Finder is ready! Tap your relic, Asp']
+PASS boss relic glows
+PASS closet lists every relic
+PASS ltag: Juniper wears it
+PASS ltag: not over her face (jrelic jr-hand)
+PASS wings: Juniper wears it
+PASS wings: not over her face (jrelic jr-neck)
+PASS taxilight: Juniper wears it
+PASS taxilight: not over her face (jrelic jr-hand)
+PASS pearlball: Juniper wears it
+PASS pearlball: not over her face (jrelic jr-hand)
+PASS snowglobe: Juniper wears it
+PASS snowglobe: not over her face (jrelic jr-hand)
+PASS skypass: Juniper wears it
+PASS skypass: not over her face (jrelic jr-hand)
+PASS moonstone: Juniper wears it
+PASS moonstone: not over her face (jrelic jr-neck)
+PASS compass: Juniper wears it
+PASS compass: not over her face (jrelic jr-hand)
+PASS spoon: Juniper wears it
+PASS spoon: not over her face (jrelic jr-hand)
+PASS skate: Juniper wears it
+PASS skate: not over her face (jrelic jr-neck)
+PASS tee: Juniper wears it
+PASS tee: not over her face (jrelic jr-hand)
+PASS lantern: Juniper wears it
+PASS lantern: not over her face (jrelic jr-hand)
+PASS coqui: Juniper wears it
+PASS coqui: not over her face (jrelic jr-hand)
+PASS sunkey: Juniper wears it
+PASS sunkey: not over her face (jrelic jr-hand)
+PASS amulet: Juniper wears it
+PASS amulet: not over her face (jrelic jr-neck)
+PASS acorn: Juniper wears it
+PASS acorn: not over her face (jrelic jr-hand)
+PASS prism: Juniper wears it
+PASS prism: not over her face (jrelic jr-hand)
+PASS torch: Juniper wears it
+PASS torch: not over her face (jrelic jr-hand)
+PASS glacier: Juniper wears it
+PASS glacier: not over her face (jrelic jr-neck)
+PASS mirror: Juniper wears it
+PASS mirror: not over her face (jrelic jr-hand)
+PASS crown: Juniper wears it
+PASS crown: not over her face (jrelic jr-head)
+PASS lens: Juniper wears it
+PASS lens: not over her face (jrelic jr-hand)
+PASS seed: Juniper wears it
+PASS seed: not over her face (jrelic jr-hand)
+PASS chip: Juniper wears it
+PASS chip: not over her face (jrelic jr-hand)
+PASS tkey: Juniper wears it
+PASS tkey: not over her face (jrelic jr-hand)
+PASS spyglass: Juniper wears it
+PASS spyglass: not over her face (jrelic jr-hand)
+PASS coins: Juniper wears it
+PASS coins: not over her face (jrelic jr-hand)
+PASS hourglass: Juniper wears it
+PASS hourglass: not over her face (jrelic jr-hand)
+PASS feather: Juniper wears it
+PASS feather: not over her face (jrelic jr-hand)
+PASS conch: Juniper wears it
+PASS conch: not over her face (jrelic jr-hand)
+PASS locket: Juniper wears it
+PASS locket: not over her face (jrelic jr-hand)
+PASS astro: Juniper wears it
+PASS astro: not over her face (jrelic jr-hand)
+PASS rheart: Juniper wears it
+PASS rheart: not over her face (jrelic jr-hand)
+PASS sksilver: Juniper wears it
+PASS sksilver: not over her face (jrelic jr-hand)
+PASS skstar: Juniper wears it
+PASS skstar: not over her face (jrelic jr-hand)
+PASS skwave: Juniper wears it
+PASS skwave: not over her face (jrelic jr-hand)
+PASS skmaple: Juniper wears it
+PASS skmaple: not over her face (jrelic jr-hand)
+PASS skaurora: Juniper wears it
+PASS skaurora: not over her face (jrelic jr-hand)
+PASS combo tutu_amulet renders
+PASS combo blades_crown renders
+PASS combo helmet_crown renders
+PASS combo scarf_amulet renders
+PASS combo gown_skypass renders
+PASS combo skates_wings renders
+PASS worn relic persists after reload
+PASS relic on Juniper on home
+PASS relic on Juniper on map
+PASS relic on Juniper on park map
+PASS outfits still toggle
+PASS ride Marengo opens
+PASS t_swpass: GiGi help chip on flight stop
+PASS t_swpass: GiGi chip does not overlap answers
+PASS t_swpass: tap 1 removes a wrong choice, GiGi voice (0->10)
+PASS t_swpass: tap 2 worked step + glow (10->13) ['Here is my trick. Slow and steady. Look at the fir']
+PASS t_swpass: chip rests after 2 helps
+PASS t_swpass: chip fresh on next item
+PASS t_swpass: left play
+PASS t_seats: GiGi help chip on flight stop
+PASS t_seats: GiGi chip does not overlap answers
+PASS t_seats: tap 1 removes a wrong choice, GiGi voice (0->10)
+PASS t_seats: tap 2 worked step + glow (10->15) ['Let me show you a step, Aspen. Count by 3s!']
+PASS t_seats: chip rests after 2 helps
+PASS t_seats: chip fresh on next item
+PASS t_seats: left play
+PASS t_runway: GiGi help chip on flight stop
+PASS t_runway: GiGi chip does not overlap answers
+PASS t_runway: tap 1 removes a wrong choice, GiGi voice (0->10)
+PASS t_runway: tap 2 worked step + glow (10->15) ['Let me show you a step, Aspen. Poco a poco. Put yo']
+PASS t_runway: chip rests after 2 helps
+PASS t_runway: chip fresh on next item
+PASS t_runway: left play
+PASS t_cloud: GiGi help chip on flight stop
+PASS t_cloud: GiGi chip does not overlap answers
+PASS t_cloud: tap 1 removes a wrong choice, GiGi voice (0->10)
+PASS t_cloud: tap 2 worked step + glow (10->16) ['Watch, Aspen. Slow and steady. Rhyming words sound']
+PASS t_cloud: chip rests after 2 helps
+PASS t_cloud: chip fresh on next item
+PASS t_cloud: left play
+PASS t_bags: GiGi help chip on flight stop
+PASS t_bags: GiGi chip does not overlap answers
+PASS t_bags: tap 1 removes a wrong choice, GiGi voice (0->10)
+PASS t_bags: tap 2 worked step + glow (10->15) ['Watch, Aspen. Poco a poco. You can do it. Start at']
+PASS t_bags: chip rests after 2 helps
+PASS t_bags: chip fresh on next item
+PASS t_bags: left play
+PASS wrong answer: Marcus hint first, then GiGi offers help [('marcus', 'Patience, Aspen. Poco a poco. '), ('gigi', 'Tap my Heart Shades, Aspen! I ')]
+PASS GiGi chip glows after wrong answer
+PASS GiGi voice matches GiGi face [('gigi', 'gigi')]
+PASS GiGi cheers ~40% on flight (28/60)
+PASS no GiGi chip off the flight stops
+PASS no voice/face mismatches []
+PASS no page errors []
+FAILS 0

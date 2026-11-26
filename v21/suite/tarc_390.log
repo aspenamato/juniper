@@ -5,7 +5,7 @@ PASS kart: relic hint does not answer
 PASS kart: relic shows a visual hint
 PASS kart: wrong tap = +2s
 PASS kart: finished all 10 (10 rounds)
-PASS kart: result saved {'med': 3, 'best': 8.2, 'plays': 1}
+PASS kart: result saved {'med': 3, 'best': 8.1, 'plays': 1}
 PASS kart: stars awarded
 PASS kart: silver+ earns its sticker
 PASS mush: starts after ready-set-go
@@ -21,7 +21,7 @@ PASS blocks: relic hint does not answer
 PASS blocks: relic shows a visual hint
 PASS blocks: hint spotlights the picked block only
 PASS blocks: finished all 10 (10 rounds)
-PASS blocks: result saved {'med': 3, 'best': 6.2, 'plays': 1}
+PASS blocks: result saved {'med': 3, 'best': 6.1, 'plays': 1}
 PASS blocks: stars awarded
 PASS blocks: silver+ earns its sticker
 PASS cube: starts after ready-set-go

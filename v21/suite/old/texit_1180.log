@@ -1,0 +1,2 @@
+dbg [False, '1', ['ic-close:✕', 'bigbtn go ic-act:Ride again', 'bigbtn ic-done:All done'], True]
+PASS 832 FAILS 0
