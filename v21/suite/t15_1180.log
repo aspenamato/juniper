@@ -369,14 +369,14 @@ PASS ride Marengo opens
 PASS t_swpass: GiGi help chip on flight stop
 PASS t_swpass: GiGi chip does not overlap answers
 PASS t_swpass: tap 1 removes a wrong choice, GiGi voice (0->10)
-PASS t_swpass: tap 2 worked step + glow (10->13) ['Watch, Aspen. Poco a poco. You can do it. Look at ']
+PASS t_swpass: tap 2 worked step + glow (10->13) ['Watch, Aspen. Stop and check. Look at the first le']
 PASS t_swpass: chip rests after 2 helps
 PASS t_swpass: chip fresh on next item
 PASS t_swpass: left play
 PASS t_seats: GiGi help chip on flight stop
 PASS t_seats: GiGi chip does not overlap answers
 PASS t_seats: tap 1 removes a wrong choice, GiGi voice (0->10)
-PASS t_seats: tap 2 worked step + glow (10->15) ['Let me show you a step, Aspen. Count by 2s!']
+PASS t_seats: tap 2 worked step + glow (10->15) ['Let me show you a step, Aspen. Count by 10s!']
 PASS t_seats: chip rests after 2 helps
 PASS t_seats: chip fresh on next item
 PASS t_seats: left play
@@ -390,21 +390,21 @@ PASS t_runway: left play
 PASS t_cloud: GiGi help chip on flight stop
 PASS t_cloud: GiGi chip does not overlap answers
 PASS t_cloud: tap 1 removes a wrong choice, GiGi voice (0->10)
-PASS t_cloud: tap 2 worked step + glow (10->16) ['Let me show you a step, Aspen. Poco a poco. Rhymin']
+PASS t_cloud: tap 2 worked step + glow (10->16) ['Watch, Aspen. Poco a poco. Rhyming words sound the']
 PASS t_cloud: chip rests after 2 helps
 PASS t_cloud: chip fresh on next item
 PASS t_cloud: left play
 PASS t_bags: GiGi help chip on flight stop
 PASS t_bags: GiGi chip does not overlap answers
 PASS t_bags: tap 1 removes a wrong choice, GiGi voice (0->10)
-PASS t_bags: tap 2 worked step + glow (10->15) ['Here is my trick. Stop and check. Start at 9 and c']
+PASS t_bags: tap 2 worked step + glow (10->15) ['Watch, Aspen. Poco a poco. Start at 9 and count on']
 PASS t_bags: chip rests after 2 helps
 PASS t_bags: chip fresh on next item
 PASS t_bags: left play
 PASS wrong answer: Marcus hint first, then GiGi offers help [('marcus', 'Patience, Aspen. Poco a poco. '), ('gigi', 'Need a little help? Tap me, As')]
 PASS GiGi chip glows after wrong answer
 PASS GiGi voice matches GiGi face [('gigi', 'gigi')]
-PASS GiGi cheers ~40% on flight (21/60)
+PASS GiGi cheers ~40% on flight (25/60)
 PASS no GiGi chip off the flight stops
 PASS no voice/face mismatches []
 PASS no page errors []

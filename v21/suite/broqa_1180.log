@@ -1,7 +1,7 @@
 PASS voice=True: bro appears
 PASS voice=True: all answers clickable with bro on screen
 PASS voice=True: bro box does not overlap stage content
-PASS voice=True: bro auto-dismissed (4.2s)
+PASS voice=True: bro auto-dismissed (6.5s)
 PASS voice=False: bro appears
 PASS voice=False: all answers clickable with bro on screen
 PASS voice=False: bro box does not overlap stage content

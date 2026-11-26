@@ -32,7 +32,7 @@ PASS tap pinkgown then crown: crown is worn on the picture
 PASS tap golf then bow: bow is worn on the picture
 PASS tap rjacket then j_scarf: j_scarf is worn on the picture
 PASS riding helmet covers the unicorn headband: closet badge shown
-PASS covered item reason voiced [['Ta-da! Riding Jacket!', 'juniper', False, 'dress', 'juniper'], ["It's hiding under my riding helmet! Take off the riding outfit to see it.", 'juniper', False, 'dress', 'juniper']]
+PASS covered item reason voiced [['Ooh, Riding Jacket!', 'juniper', False, 'dress', 'juniper'], ["It's hiding under my riding helmet! Take off the riding outfit to see it.", 'juniper', False, 'dress', 'juniper']]
 PASS look shows on home
 PASS Dress Up Aspen button on closet
 PASS all Aspen items locked at start

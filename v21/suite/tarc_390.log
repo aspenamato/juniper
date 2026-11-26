@@ -36,7 +36,7 @@ PASS melon: relic hint does not answer
 PASS melon: relic shows a visual hint
 PASS melon: wrong tap = +2s
 PASS melon: finished all 10 (10 rounds)
-PASS melon: result saved {'med': 3, 'best': 8.1, 'plays': 1}
+PASS melon: result saved {'med': 3, 'best': 8, 'plays': 1}
 PASS melon: stars awarded
 PASS melon: silver+ earns its sticker
 PASS cart: starts after ready-set-go
@@ -44,7 +44,7 @@ PASS cart: relic hint does not answer
 PASS cart: relic shows a visual hint
 PASS cart: wrong tap = +2s
 PASS cart: finished all 10 (10 rounds)
-PASS cart: result saved {'med': 3, 'best': 8, 'plays': 1}
+PASS cart: result saved {'med': 3, 'best': 8.1, 'plays': 1}
 PASS cart: stars awarded
 PASS cart: silver+ earns its sticker
 PASS played all 6 -> Joystick sticker
