@@ -21,6 +21,7 @@ with sync_playwright() as p:
     pg.screenshot(path=S + f'home_{W}.png')
     pg.click('#tSkate'); pg.wait_for_timeout(1200)
     ok(J("document.getElementById('meet').classList.contains('on')"), 'first tap -> meet card'); s = said(); ok(any(x[1] == 'teri' for x in s), 'meet voiced by Teri ' + str([x[1] for x in s][:3]))
+    ok(J("['meetTxt','meetName'].every(id=>{const e=document.getElementById(id);return !e||getComputedStyle(e).display==='none'})"), 'meet card is voice-only (no dialogue box)')
     J("document.getElementById('meetGo').click()"); pg.wait_for_timeout(1200)
     ok(J("document.getElementById('skhub').classList.contains('on')"), 'Let\'s go -> skating hub'); ok(J("document.querySelectorAll('#skBody .skcard').length") == 6, '6 hub cards')
     pg.screenshot(path=S + f'hub_{W}.png'); said()
@@ -90,6 +91,12 @@ with sync_playwright() as p:
     # album + practice + coloring
     J("JLPSK.openHub('album')"); pg.wait_for_timeout(500); ok(J("document.querySelectorAll('#skBody .skem').length") == 12, '12 emblems in the album'); pg.screenshot(path=S + f'album_{W}.png')
     J("JLPSK.openHub('practice')"); pg.wait_for_timeout(500); ok(J("document.querySelectorAll('#skBody .skpa').length") == 63, '63 practice drills'); pg.screenshot(path=S + f'practice_{W}.png')
+    # phase 2: stories voice-only and Juniper never mirrored
+    J("JLP.goHome(); document.querySelectorAll('#infoov.on').forEach(e=>e.classList.remove('on')); JLP.playStory('skate',0,()=>{})"); pg.wait_for_timeout(600)
+    ok(J("getComputedStyle(document.getElementById('stBub')).display==='none'"), 'story has no text bubble')
+    J("(()=>{const L=document.getElementById('story');L.className='story on w-skate painted';const B=document.getElementById('stB');B.classList.add('jun');B.innerHTML=CHARS.svg('juniper')})()"); pg.wait_for_timeout(200)
+    ok(J("(()=>{const e=document.querySelector('#story.on .st-b.jun svg, #story.on .st-b.jun img');return !!e&&getComputedStyle(e).transform==='none'})()"), 'Juniper on the right side of a story is not mirrored (ear stays on viewer right)')
+    J("document.getElementById('story').className='story'")
     # reload keeps everything
     J("JLPSK.save()"); pg.reload(); pg.wait_for_timeout(1500)
     ok(J("JLP.ST.stars") >= 40 and J("!!JLP.ST.boss['park:0']") and J("!!JLP.ST.boss['skate:1']") and J("JLP.ST.relics.moonstone") == 2 and J("!!JLP.ST.sk.em.dobson"), 'reload keeps old + new progress')

@@ -1,7 +1,8 @@
 PASS old save kept
-PASS home tile #tSkate on screen [871.65625, 122.640625, 283.75, 136.46875]
+PASS home tile #tSkate on screen [871.65625, 120.421875, 283.75, 136.46875]
 PASS first tap -> meet card
 PASS meet voiced by Teri ['teri']
+PASS meet card is voice-only (no dialogue box)
 PASS Let's go -> skating hub
 PASS 6 hub cards
 PASS 10 cast taps speak in their own voice []
@@ -25,6 +26,8 @@ PASS skjudge starts
 PASS skrink starts
 PASS 12 emblems in the album
 PASS 63 practice drills
+PASS story has no text bubble
+PASS Juniper on the right side of a story is not mirrored (ear stays on viewer right)
 PASS reload keeps old + new progress
 PASS no page errors []
 RESULT PASS 0 []

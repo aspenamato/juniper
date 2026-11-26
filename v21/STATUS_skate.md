@@ -23,3 +23,18 @@ Push plan: 3-way merge shared /workspace/juniper-learn/src changes (other worker
 - 11:44 ALL GREEN on merged build both sizes: tskate 29/29, ttj 74/74, t15 409, t16h 1494/705+ 0 fail, tstk 29, tarc 52, tacad 67, trw 35, tdress 43 (after fix), texit 832, tlabel 9 screens, tspin 27, tstale 184, broqa 18. Pushing phase 1.
 - 11:44 PUSHED 037ca9cb to main (no force), gh switched back. Verifying live.
 - 11:46 LIVE VERIFIED 20261126111420-473f45: index/sw/manifest/art MATCH, 4 random new skate clips 200, live smoke: skate tile -> Teri/Juniper meet card, no page errors. Merged skate into SHARED src + build.py (after tj21 hooks) + voices.json; shared build == live except stamp. Phase 1 DONE.
+- 11:47 PHASE 2 start: story frame QC, 27 flagged clips + Spanish whisper, voice-only meet card/dialogue boxes
+- 11:53 story capture fixed (voice on + autoplay; stNext per frame; dismiss queued infocard first). Story layout fix: skaters lowered onto the ice with ice glow, title top, arrow corner (skate21.css). 37 frames each size.
+- 11:55 FOUND+FIXED: skate stories mirrored Juniper on the right side (crooked ear flipped to viewer's left) -> .st-b.jun no mirror (skate only; same shared rule affects other worlds' stories, not changed)
+- 11:58 meet card voice-led (title only; tap coaches to replay; class sk-meet, other worlds untouched). Probe of skate screens: only meet card had a visible dialogue box (chatbub/st-bub/#bubble already hidden). Next: voices
+- 12:00 reworded villain interjections (comma-merged so no lone 'Hmph/Shh/Oooh/Gnaw/Wibble' clips), skate villain title cheers override, palace courtyard / Valentina hello / Rhyming time / Time for Trick Combo. Harvest+render next
+- 12:02 rendered 50 new clips (fails 0). Whisper FULL check of all 2093 skate clips running (v21/tools/whisper_full.py -> v21/vo/whisper_full.json)
+- 12:07 Spanish runtime probe: skate Spanish options voiced by Juniper es (es-PR-Karina), Marcus hint Spanish in his native es-PR voice; 'Patience, Aspen.' present. whisper at 400/2093
+- 12:12 tskate +3 phase-2 checks (meet voice-only, no story bubble, Juniper not mirrored) PASS 1180. whisper 700/2093
+- 12:22 whisper 1400 39
+- 12:30 whisper 1800 46
+- 12:38 RESUME phase 2: live bbb0857c = shared src (tj21 updated, fit21) minus pp21 (verified by temp build). sk21/build.py now = shared build.py (S=sk21/src, OUT=wt21); synced tj21.js + fit21.*; pp21 NOT copied. Next: commit+rebase, build, tskate+tfit+suite, push 2a
+- 12:39 rebased onto bbb0857c -> bc11d161 (index rebuilt: tj21+skate21+fit21, no pp21 code). NOTE live tj21 already refs art/pp21/cover.webp (not in repo) — passport worker's, untouched. Running tests
+- 12:45 2b voice rewordings staged in sk21/src (NOT built yet; suite running on 2a build): emblem lines 'New rink emblem for X!' / 'Gold emblem for X!' (no lone 'Vail Village Rink!' fragment), sticker 'Old Nicolò's Hot Cocoa', 'Time to glide, Aspen!', 2 Wobble Goblin lines. All candidates pre-tested with Whisper base.en+small.en >=0.94
+- 12:55 suite 2a running (29/30 logs)
+- 13:18 suite 2a: all green except ttj 72/74 (pre-existing LIVE gap: shared tj21.js passport lines without clips; clips exist in vo_cache, will publish add-only) and a flaky tacad 1180 (rerun PASS). t16h still running

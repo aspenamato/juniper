@@ -18,7 +18,7 @@ PASS gold earns bronze+silver+gold Plus Dash stickers
 PASS first gold time -> golds sticker
 PASS pack reveal plays
 PASS all reveals done
-PASS 45s Take-Away = silver + new personal best {'T': 45.0095, 'med': 2, 'pb': True, 'fresh': ['flake', 'smedal']}
+PASS 45s Take-Away = silver + new personal best {'T': 45.002300000000744, 'med': 2, 'pb': True, 'fresh': ['flake', 'smedal']}
 PASS drag moves sticker (0.10->0.18)
 PASS pink handle resizes+rotates (0.20,-8)->(0.27,21)
 PASS drag from tray places sticker on My Page

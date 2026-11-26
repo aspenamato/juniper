@@ -245,12 +245,12 @@ PASS m_shapes hourglass(step,r0): did not answer/advance
 PASS m_shapes hourglass(step,r0): right answer not hidden
 PASS m_shapes hourglass(step,r0): at least one wrong choice still live
 PASS m_shapes hourglass(step,r0): right answer not marked ('')
-PASS m_shapes hourglass(step,r0): voice does not say the answer []
+PASS m_shapes hourglass(step,r0): voice does not say the answer word []
 PASS m_shapes hourglass tap2: did not answer/advance
 PASS m_shapes hourglass tap2: right answer not hidden
 PASS m_shapes hourglass tap2: at least one wrong choice still live
 PASS m_shapes hourglass tap2: right answer not marked ('')
-PASS m_shapes hourglass tap2: voice does not say the answer []
+PASS m_shapes hourglass tap2: voice does not say the answer word []
 PASS m_halves feather(sound,r0): did not answer/advance
 PASS m_halves feather(sound,r0): right answer not hidden
 PASS m_halves feather(sound,r0): at least one wrong choice still live
@@ -543,10 +543,12 @@ PASS s_num2 feather(sound,r1): did not answer/advance
 PASS s_num2 feather(sound,r1): right answer not hidden
 PASS s_num2 feather(sound,r1): at least one wrong choice still live
 PASS s_num2 feather(sound,r1): right answer not marked ('')
+PASS s_num2 feather(sound,r1): voice does not say the answer []
 PASS s_num2 feather tap2: did not answer/advance
 PASS s_num2 feather tap2: right answer not hidden
 PASS s_num2 feather tap2: at least one wrong choice still live
 PASS s_num2 feather tap2: right answer not marked ('')
+PASS s_num2 feather tap2: voice does not say the answer []
 PASS s_colors conch(sound,r1): did not answer/advance
 PASS s_colors conch(sound,r1): right answer not hidden
 PASS s_colors conch(sound,r1): at least one wrong choice still live
@@ -725,12 +727,12 @@ PASS m_mix sunkey(spot,r2): did not answer/advance
 PASS m_mix sunkey(spot,r2): right answer not hidden
 PASS m_mix sunkey(spot,r2): at least one wrong choice still live
 PASS m_mix sunkey(spot,r2): right answer not marked ('')
-PASS m_mix sunkey(spot,r2): voice does not say the answer word []
+PASS m_mix sunkey(spot,r2): voice does not say the answer []
 PASS m_mix sunkey tap2: did not answer/advance
 PASS m_mix sunkey tap2: right answer not hidden
 PASS m_mix sunkey tap2: at least one wrong choice still live
 PASS m_mix sunkey tap2: right answer not marked ('')
-PASS m_mix sunkey tap2: voice does not say the answer word []
+PASS m_mix sunkey tap2: voice does not say the answer []
 PASS t_swpass amulet(step,r2): did not answer/advance
 PASS t_swpass amulet(step,r2): right answer not hidden
 PASS t_swpass amulet(step,r2): at least one wrong choice still live
@@ -1397,12 +1399,12 @@ PASS sk_mix1 glacier(two,r4): did not answer/advance
 PASS sk_mix1 glacier(two,r4): right answer not hidden
 PASS sk_mix1 glacier(two,r4): at least one wrong choice still live
 PASS sk_mix1 glacier(two,r4): right answer not marked ('')
-PASS sk_mix1 glacier(two,r4): voice does not say the answer []
+PASS sk_mix1 glacier(two,r4): voice does not say the answer word []
 PASS sk_mix1 glacier tap2: did not answer/advance
 PASS sk_mix1 glacier tap2: right answer not hidden
 PASS sk_mix1 glacier tap2: at least one wrong choice still live
 PASS sk_mix1 glacier tap2: right answer not marked ('')
-PASS sk_mix1 glacier tap2: voice does not say the answer []
+PASS sk_mix1 glacier tap2: voice does not say the answer word []
 PASS sk_mix2 mirror(step,r4): did not answer/advance
 PASS sk_mix2 mirror(step,r4): right answer not hidden
 PASS sk_mix2 mirror(step,r4): at least one wrong choice still live
@@ -1458,63 +1460,3 @@ PASS t_seats GiGi tap2: right answer not hidden
 PASS t_seats GiGi tap2: at least one wrong choice still live
 PASS t_seats GiGi tap2: right answer not marked ('')
 PASS t_seats GiGi tap2: voice does not say the answer []
-PASS t_seats .thbtn.gigi tap1: did not answer/advance
-PASS t_seats .thbtn.gigi tap1: right answer not hidden
-PASS t_seats .thbtn.gigi tap1: at least one wrong choice still live
-PASS t_seats .thbtn.gigi tap1: right answer not marked ('')
-PASS t_seats .thbtn.gigi tap1: voice does not say the answer []
-PASS t_seats .thbtn.gigi tap2: did not answer/advance
-PASS t_seats .thbtn.gigi tap2: right answer not hidden
-PASS t_seats .thbtn.gigi tap2: at least one wrong choice still live
-PASS t_seats .thbtn.gigi tap2: right answer not marked ('')
-PASS t_seats .thbtn.gigi tap2: voice does not say the answer []
-PASS t_runway GiGi tap1: did not answer/advance
-PASS t_runway GiGi tap1: right answer not hidden
-PASS t_runway GiGi tap1: at least one wrong choice still live
-PASS t_runway GiGi tap1: right answer not marked ('')
-PASS t_runway GiGi tap1: voice does not say the answer []
-PASS t_runway GiGi tap2: did not answer/advance
-PASS t_runway GiGi tap2: right answer not hidden
-PASS t_runway GiGi tap2: at least one wrong choice still live
-PASS t_runway GiGi tap2: right answer not marked ('')
-PASS t_runway GiGi tap2: voice does not say the answer []
-PASS t_runway .thbtn.gigi tap1: did not answer/advance
-PASS t_runway .thbtn.gigi tap1: right answer not hidden
-PASS t_runway .thbtn.gigi tap1: at least one wrong choice still live
-PASS t_runway .thbtn.gigi tap1: right answer not marked ('')
-PASS t_runway .thbtn.gigi tap1: voice does not say the answer []
-PASS t_runway .thbtn.gigi tap2: did not answer/advance
-PASS t_runway .thbtn.gigi tap2: right answer not hidden
-PASS t_runway .thbtn.gigi tap2: at least one wrong choice still live
-PASS t_runway .thbtn.gigi tap2: right answer not marked ('')
-PASS t_runway .thbtn.gigi tap2: voice does not say the answer []
-PASS t_cloud GiGi tap1: did not answer/advance
-PASS t_cloud GiGi tap1: right answer not hidden
-PASS t_cloud GiGi tap1: at least one wrong choice still live
-PASS t_cloud GiGi tap1: right answer not marked ('')
-PASS t_cloud GiGi tap1: voice does not say the answer word []
-PASS t_cloud GiGi tap2: did not answer/advance
-PASS t_cloud GiGi tap2: right answer not hidden
-PASS t_cloud GiGi tap2: at least one wrong choice still live
-PASS t_cloud GiGi tap2: right answer not marked ('')
-PASS t_cloud GiGi tap2: voice does not say the answer word []
-PASS t_cloud .thbtn.teri tap1: did not answer/advance
-PASS t_cloud .thbtn.teri tap1: right answer not hidden
-PASS t_cloud .thbtn.teri tap1: at least one wrong choice still live
-PASS t_cloud .thbtn.teri tap1: right answer not marked ('')
-PASS t_cloud .thbtn.teri tap1: voice does not say the answer word []
-PASS t_bags GiGi tap1: did not answer/advance
-PASS t_bags GiGi tap1: right answer not hidden
-PASS t_bags GiGi tap1: at least one wrong choice still live
-PASS t_bags GiGi tap1: right answer not marked ('')
-PASS t_bags GiGi tap1: voice does not say the answer []
-PASS t_bags GiGi tap2: did not answer/advance
-PASS t_bags GiGi tap2: right answer not hidden
-PASS t_bags GiGi tap2: at least one wrong choice still live
-PASS t_bags GiGi tap2: right answer not marked ('')
-PASS t_bags GiGi tap2: voice does not say the answer []
-PASS t_bags .thbtn.gigi tap1: did not answer/advance
-PASS t_bags .thbtn.gigi tap1: right answer not hidden
-PASS t_bags .thbtn.gigi tap1: at least one wrong choice still live
-PASS t_bags .thbtn.gigi tap1: right answer not marked ('')
-PASS t_bags .thbtn.gigi tap1: voice does not say the answer []

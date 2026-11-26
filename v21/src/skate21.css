@@ -105,3 +105,18 @@
 
 @media (max-width:520px){#map.sk-map .maptitle{display:none}}
 @media (max-width:520px){.skclues{gap:2px}.skclues p{font-size:.8em;line-height:1.15}}
+/* phase 2: skate stories are voice-only scenes; skaters stand on the ice (lower stage + ice glow), title at top, arrow in the corner */
+.story.w-skate .st-card{width:min(1040px,100vw);height:100%;justify-content:flex-end;padding-bottom:max(64px,9vh);box-sizing:border-box}
+.story.w-skate .st-title{position:absolute;top:max(14px,3.5vh)}
+.story.w-skate .st-stage{height:min(52vh,430px);padding:0 4%;box-sizing:border-box}
+.story.w-skate .st-a,.story.w-skate .st-b{position:relative;width:36%}
+.story.w-skate .st-a:after,.story.w-skate .st-b:after{content:"";position:absolute;left:10%;right:10%;bottom:-12px;height:30px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.95),rgba(205,236,255,.55) 60%,rgba(205,236,255,0));z-index:-1}
+.story.w-skate .st-dots{position:absolute;bottom:max(18px,3vh);left:50%;transform:translateX(-50%)}
+.story.w-skate .st-next{position:fixed;right:max(14px,3vw);bottom:max(14px,3vh)}
+.story.w-skate.painted{background-position:center 30%}
+@media (max-width:520px){.story.w-skate .st-stage{height:min(46vh,380px);padding:0}.story.w-skate .st-a,.story.w-skate .st-b{width:46%}}
+.story.w-skate .st-b.jun svg,.story.w-skate .st-b.jun img{transform:none}/* never mirror Juniper: her crooked LEFT ear stays on the viewer's right */
+@media (max-width:520px){.story.w-skate .st-a.jun svg,.story.w-skate .st-b.jun svg{scale:1.08}}
+/* phase 2: skate meet card is voice-led (title only, no dialogue box); other worlds unchanged */
+#meet.sk-meet #meetTxt,#meet.sk-meet #meetName{display:none}
+#meet.sk-meet #meetChr{cursor:pointer}

@@ -13,12 +13,12 @@ HIT ['q', '', 2.6228671073913574, 261.016357421875]
 PASS tap silhouette -> voiced hint ['Get a gold time in Sight Word Sprint to earn this sticker!']
 PASS trial clock starts after ready-set-go
 PASS wrong answer adds 3 second penalty
-PASS fast run = gold medal {'runs': 1, 'best': 6.6, 'med': 3}
+PASS fast run = gold medal {'runs': 1, 'best': 6.8, 'med': 3}
 PASS gold earns bronze+silver+gold Plus Dash stickers
 PASS first gold time -> golds sticker
 PASS pack reveal plays
 PASS all reveals done
-PASS 45s Take-Away = silver + new personal best {'T': 45.001, 'med': 2, 'pb': True, 'fresh': ['flake', 'smedal']}
+PASS 45s Take-Away = silver + new personal best {'T': 45.00189999999851, 'med': 2, 'pb': True, 'fresh': ['flake', 'smedal']}
 PASS drag moves sticker (0.10->0.31)
 PASS pink handle resizes+rotates (0.20,-8)->(0.47,42)
 PASS drag from tray places sticker on My Page
