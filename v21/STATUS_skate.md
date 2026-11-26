@@ -21,3 +21,5 @@ Push plan: 3-way merge shared /workspace/juniper-learn/src changes (other worker
 - 11:25 suite in progress
 - 11:36 tdress fixed (shared test merge bug), PASS both sizes; ttj 74/74 both; tskate 29/29 both; waiting on 390 t15/t16h/broqa/texit/tspin/tstale
 - 11:44 ALL GREEN on merged build both sizes: tskate 29/29, ttj 74/74, t15 409, t16h 1494/705+ 0 fail, tstk 29, tarc 52, tacad 67, trw 35, tdress 43 (after fix), texit 832, tlabel 9 screens, tspin 27, tstale 184, broqa 18. Pushing phase 1.
+- 11:44 PUSHED 037ca9cb to main (no force), gh switched back. Verifying live.
+- 11:46 LIVE VERIFIED 20261126111420-473f45: index/sw/manifest/art MATCH, 4 random new skate clips 200, live smoke: skate tile -> Teri/Juniper meet card, no page errors. Merged skate into SHARED src + build.py (after tj21 hooks) + voices.json; shared build == live except stamp. Phase 1 DONE.
