@@ -78,3 +78,5 @@ Push plan: 3-way merge shared /workspace/juniper-learn/src changes (other worker
 - 16:43 whisper 146/217; tests running
 - 16:45 coq 'Yay, Aspen!' re-taken (both models OK); coq 'Hi Aspen!' + win 'Quick and calm!' medium.en OK, small.en not (kept). whisper 149/217
 - 16:46 tests green: tdress 0 / tstale 0 (new matrix), tskate 32/32, tfit 0, tpass 87/87, tpassfit 0, tspin 0 at both sizes; manifest covers every harvested line. Pushing
+- 16:47 PUSHED + VERIFIED 92833bd8 / 20261126162206-370dca (fit22 + passport present, new-voice clips 200, no page errors)
+- 16:57 Whisper of all 217 new clips: 109 Winnie/Teddy/Coquí — 98 both models >=0.8, 105 either; 'Aspen' heard by both in 26/27 (coq 'Hi Aspen!' medium-only). 68 others (villain cheers + jun/mar random lines) all >=0.8; 3 jun 'Aspen finished before X' heard 'has been finished' (Asspen re-take didn't help, kept). Done.
