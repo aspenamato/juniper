@@ -1,0 +1,19 @@
+juniper: skip,wave,cheer   (pose1 ear upright -> unused; poses 2,3 have the crooked ear on viewer's right)
+aspen: wave,cheer,skate
+mamafox: wave,cheer,point
+teri: wave,cheer,clap
+gigi: wave,cheer,point
+valentina: wave,cheer,clap
+nicco: wave,cheer,thumbs
+landen: wave,cheer,point
+olivia: wave,cheer,twirl
+sofia: wave,cheer,clap
+teddy: idle(sit),wave,cheer(jump)
+toulouse: idle,wave,cheer
+winnie: idle(sit),wave,cheer(jump)
+marcus: idle(cocoa),wave,think
+scramble: idle,wave,cheer
+pearl: idle,wave,cheer
+oscar: idle(star paddle),wave,point
+nicolo: idle(cocoa),wave,cheer
+bro: idle(tablet),thumbs,point

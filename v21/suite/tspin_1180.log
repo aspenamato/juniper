@@ -1,0 +1,28 @@
+PASS no spin frames loaded before the spin opens (lazy)
+PASS Spin button on Juniper dress-up
+PASS spin opens
+PASS spin voiced
+PASS spin frames load on open (34)
+PASS front draws worn items {'who': 'j', 'idx': 0, 'ang': '000', 'worn': ['j_rcape', 'j_pearls', 'j_unicorn'], 'visible': ['j_rcape', 'j_pearls', 'j_unicorn'], 'side': [], 'relic': None, 'flat': False, 'missing': [], 'drawn': ['j_rcape', 'j_pearls', 'j_unicorn']}
+PASS canvas painted
+PASS right arrow turns one view (045)
+PASS keyboard arrow turns
+PASS 135 back view draws cape+unicorn, hides pearls ['j_rcape', 'j_unicorn']
+PASS left arrows wrap around (315)
+PASS 180 back view draws cape+unicorn, hides pearls ['j_rcape', 'j_unicorn']
+PASS 225 back view draws cape+unicorn ['j_rcape', 'j_unicorn']
+PASS drag turns her (7->1)
+PASS 270 draws unicorn
+PASS butterfly drawn at 270 (ear kept in front)
+PASS beret hidden at 270 (would cover the crooked ear)
+PASS close button
+PASS Spin button on Aspen dress-up
+PASS Aspen spin painted
+PASS Aspen front draws worn items ['a_rosette', 'a_helmet', 'a_brush']
+PASS Aspen side draws items
+PASS Aspen 315 draws items
+PASS Aspen back hides rosette
+PASS progress still saved
+FAIL no missing art ['http://127.0.0.1:8821/art/tj21/journal.webp', 'http://127.0.0.1:8821/art/items/tjpass.webp', 'http://127.0.0.1:8821/art/wear/a_tjcase.webp']
+PASS no page errors []
+FAILS 1 ["no missing art ['http://127.0.0.1:8821/art/tj21/journal.webp', 'http://127.0.0.1:8821/art/items/tjpass.webp', 'http://127.0.0.1:8821/art/wear/a_tjcase.webp']"]

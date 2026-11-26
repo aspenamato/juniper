@@ -1,0 +1,77 @@
+sk_sprint1 ok 8 errs
+sk_sprint2 ok 8 errs
+sk_sprint3 ok 8 errs
+sk_laps1 ok 6 errs
+sk_laps2 ok 6 errs
+sk_laps3 ok 6 errs
+sk_score1 ok 6 errs
+sk_score2 ok 6 errs
+sk_score3 ok 6 errs
+sk_spins1 ok 6 errs
+sk_spins2 ok 6 errs
+sk_spins3 ok 6 errs
+sk_cocoa1 ok 5 errs
+sk_cocoa2 ok 5 errs
+sk_cocoa3 ok 5 errs
+sk_bros1 ok 6 errs
+sk_bros2 ok 6 errs
+sk_bros3 ok 6 errs
+sk_order1 ok 4 errs
+sk_order2 ok 4 errs
+sk_order3 ok 4 errs
+sk_clock1 ok 5 errs
+sk_clock2 ok 5 errs
+sk_clock3 ok 5 errs
+sk_sight1 ok 6 errs
+sk_sight2 ok 6 errs
+sk_sight3 ok 6 errs
+sk_build1 ok 4 errs
+sk_build2 ok 4 errs
+sk_build3 ok 4 errs
+sk_fix1 ok 5 errs
+sk_fix2 ok 5 errs
+sk_fix3 ok 5 errs
+sk_read1 ok 4 errs
+sk_read2 ok 5 errs
+sk_read3 ok 5 errs
+sk_wfind1 ok 1 errs
+sk_wfind2 ok 1 errs
+sk_wfind3 ok 1 errs
+sk_vocab1 ok 6 errs
+sk_vocab2 ok 6 errs
+sk_vocab3 ok 6 errs
+sk_combo1 ok 5 errs
+sk_combo2 ok 5 errs
+sk_combo3 ok 5 errs
+sk_who1 ok 1 errs
+sk_who2 ok 1 errs
+sk_who3 ok 1 errs
+sk_line1 ok 4 errs
+sk_line2 ok 4 errs
+AUDDIAG {"log":["130 manifest ok","532 ctx new #1 running","615 ctx running"],"st":"running","now":463481}
+DIAG {"ans":"Aspen","locked":false,"opts":["opt dim wrong:Sofia","opt:Landen","opt:Olivia","opt:Aspen"]}
+{"type":"choice","say":"Race on the ice! Landen skated faster than Aspen. Olivia skated faster than Sofia. Sofia skated faster than Landen. Who skated the slowest?","prompt":"<div class=\"skclues\"><p><div class=\"sent\"><span class=\"w\" data-say=\"Landen\">Landen</span> <span class=\"w\" data-say= null 0
+Landen skated faster than Aspen.
+
+Olivia skated faster than Sofia.
+
+Sofia skated faster than Landen.
+
+Teri
+Ice vision
+Sofia
+Landen
+Olivia
+Aspen
+STY [{"r":[33.625,528.5625,322.734375,84],"anim":"shake","chain":[".opt dim wrong:0.35/visible/flex/none",".opts col:1/visible/flex/none","stage.stage:1/visible/flex/none",".playmain:1/visible/flex/none","play.screen on:1/visible/flex/none",".:1/visible/block/none",".booted:1/visible/block/none"]}]
+EV ["L0i3k1 pointerdown:SPAN.wd@235,664","L0i3k1 pointerup:SPAN.wd@235,664","L0i3k1 click:SPAN.wd@234,664","LNaNi0 pointerdown:path.svg@195,558","LNaNi0 pointerup:path.svg@195,558","LNaNi0 click:path.svg@194,557","L0i0k0 pointerdown:SPAN.wd@198,572","L0i0k0 pointerup:SPAN.wd@198,572","L0i0k0 click:SPAN.wd@197,571","L0i0 pointerdown:HTML.booted@195,846","L0i0 pointerup:HTML.booted@195,846","L0i0 click:HTML.booted@194,845"]
+TOP opt dim wrong->wd | opt->wd | opt->wd | opt->null
+LASTCLICK [('#stage .opt[data-k="3"]', 195, 846)]
+ERRS ['console:Failed to load resource: the server responded with a status of 404 (File not found)']
+Traceback (most recent call last):
+  File "/workspace/juniper-learn/qa.py", line 144, in <module>
+    st=wait_adv(i)
+  File "/workspace/juniper-learn/qa.py", line 37, in wait_adv
+    pg.screenshot(path=f'shots/FAIL_{TAG}.png'); P('AUDDIAG', J("JSON.stringify({log:JAUD.AUD.log.slice(-12),st:JAUD.ctx&&JAUD.ctx.state,now:Math.round(performance.now())})")); P('DIAG', J("JSON.stringify({ans:JLP.cur().ans,locked:JLP.RUN.locked,opts:[...document.querySelectorAll('#stage .opt')].map(o=>o.className+':'+o.innerText)})")); P(J("JSON.stringify(JLP.cur()).slice(0,300)"), J("JSON.stringify(JLP.RUN.traceScore||null)"), J("JSON.stringify(JLP.RUN.tracePts?JLP.RUN.tracePts().length:0)")); P(J("document.getElementById('stage').innerText.slice(0,300)")); P('STY', J("JSON.stringify([...document.querySelectorAll('#stage .opt')].slice(0,1).map(o=>{const c=getComputedStyle(o),r=o.getBoundingClientRect();let a=[];for(let e=o;e;e=e.parentElement){const k=getComputedStyle(e);a.push(e.id+'.'+e.className+':'+k.opacity+'/'+k.visibility+'/'+k.display+'/'+k.transform)}return {r:[r.x,r.y,r.width,r.height],anim:c.animationName,chain:a}}))")); P('EV', J("JSON.stringify(__ev)")); P('TOP', J("(()=>{const o=document.querySelectorAll('#stage .opt, #stage .diebtn, #stage .bcell');return [...o].slice(0,4).map(e=>{const r=e.getBoundingClientRect();const t=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return e.className+'->'+(t&&(t.id||t.className))}).join(' | ')})()")); P('LASTCLICK', LASTXY); print('ERRS', errs); raise Exception('no advance')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Exception: no advance
