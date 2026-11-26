@@ -5,7 +5,7 @@ PASS meet voiced by Teri ['teri']
 PASS meet card is voice-only (no dialogue box)
 PASS Let's go -> skating hub
 PASS 6 hub cards
-FAIL 10 cast taps speak in their own voice [('teri', 'juniper')]
+PASS 10 cast taps speak in their own voice []
 PASS Rink Map opens
 PASS 63 stops on the map (63)
 PASS banner counts ['0/6', '0/7', '0/6', '0/6', '0/7', '0/6', '0/7', '0/5', '0/6', '0/4', '0/4', '0/4']
@@ -30,4 +30,4 @@ PASS story has no text bubble
 PASS Juniper on the right side of a story is not mirrored (ear stays on viewer right)
 PASS reload keeps old + new progress
 PASS no page errors []
-RESULT FAIL 1 ["10 cast taps speak in their own voice [('teri', 'juniper')]"]
+RESULT PASS 0 []

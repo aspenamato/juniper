@@ -1,0 +1,38 @@
+{
+ "ted_guy": [
+  "ted",
+  "en-US-GuyNeural",
+  "+10%",
+  "+34Hz"
+ ],
+ "ted_christopher": [
+  "ted",
+  "en-US-ChristopherNeural",
+  "+10%",
+  "+34Hz"
+ ],
+ "coq_aria": [
+  "coq",
+  "en-US-AriaNeural",
+  "+12%",
+  "+44Hz"
+ ],
+ "coq_michelle": [
+  "coq",
+  "en-US-MichelleNeural",
+  "+12%",
+  "+46Hz"
+ ],
+ "coq_ava": [
+  "coq",
+  "en-US-AvaNeural",
+  "+12%",
+  "+46Hz"
+ ],
+ "coq_jenny": [
+  "coq",
+  "en-US-JennyNeural",
+  "+14%",
+  "+50Hz"
+ ]
+}

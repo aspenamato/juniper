@@ -1,0 +1,30 @@
+win_ava en-US-AvaNeural +4% +10Hz 16/16 []
+win_michelle en-US-MichelleNeural +4% +8Hz 15/16 [['Lace up, Aston.', 'Lace up, Aspen.']]
+win_aria en-US-AriaNeural +4% +6Hz 16/16 []
+win_jennyhi en-US-JennyNeural +6% +18Hz 15/16 [['You can do it. Ask then.', 'You can do it, Aspen.']]
+ted_steffan en-US-SteffanNeural +8% +30Hz 16/16 []
+Traceback (most recent call last):
+  File "/workspace/wt21/v21/tools/audition.py", line 14, in <module>
+    asyncio.run(edge_tts.Communicate(s, voice, rate=rate, pitch=pitch).save(raw)); subprocess.run(['ffmpeg','-loglevel','error','-y','-i',raw,'-af',AF,'-ac','1','-ar','24000','-c:a','libmp3lame','-b:a','24k',f]); os.remove(raw)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/home/box/.local/lib/python3.13/site-packages/edge_tts/communicate.py", line 613, in save
+    async for message in self.stream():
+    ...<7 lines>...
+            metadata.write("\n")
+  File "/home/box/.local/lib/python3.13/site-packages/edge_tts/communicate.py", line 588, in stream
+    async for message in self.__stream():
+        yield message
+  File "/home/box/.local/lib/python3.13/site-packages/edge_tts/communicate.py", line 562, in __stream
+    raise NoAudioReceived(
+        "No audio was received. Please verify that your parameters are correct."
+    )
+edge_tts.exceptions.NoAudioReceived: No audio was received. Please verify that your parameters are correct.

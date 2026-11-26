@@ -297,7 +297,7 @@ const SK21 = (() => {
   // test hook (v21/tskate.py): boss with only tap-to-answer questions, so an automated run can win it
   { const _bi = bossItems; bossItems = function (b) { let a = _bi(b); if (SKX.tb && /^skate:/.test(b.id)) { a = a.filter(it => (it.type || 'choice') === 'choice'); while (a.length && a.length < b.hp) a = a.concat(a); a = a.slice(0, b.hp); } return a; }; }
   // phase 2: skate villains cheer on the title screen with clear words (the shared pool starts with 'Hmph!'/'Shh!' that do not voice well)
-  const SKV_CHEER = ['You are good, Aspen!', 'Okay, okay, you are clever!', 'Go, Aspen, go!', 'I am cheering for you too!'];
+  const SKV_CHEER = ['You are so good, Aspen!', 'Okay, okay, you are clever!', 'Go go go, Aspen!', 'I am cheering for you too!'];
   const SKVIL = ['vwobble', 'vbumpy', 'vfog', 'vchomp', 'vaurora'];
   { const _tl = titleLine; titleLine = function (n, k) { if (k !== 'greet' && SKVIL.includes(n)) return SKV_CHEER[Math.floor(Math.random() * SKV_CHEER.length)]; return _tl(n, k); }; }
   { const _x = extraVoLines; extraVoLines = function (add, gen) { _x(add, gen); SKVIL.forEach(n => SKV_CHEER.forEach(t => add(t, n))); }; }

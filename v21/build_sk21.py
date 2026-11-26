@@ -13,12 +13,15 @@ if os.path.exists(S+'skate21.js'): app=app.replace('\nbuildTitle(); bootWait();'
 if os.path.exists(S+'pp21.js'): app=app.replace('\nbuildTitle(); bootWait();','\n'+open(S+'pp21.js').read()+'\nbuildTitle(); bootWait();',1)
 # t108u label/banner fit (fit21): after pp21/skate so it can wrap renderMap. Keep this hook.
 if os.path.exists(S+'fit21.js'): app=app.replace('\nbuildTitle(); bootWait();','\n'+open(S+'fit21.js').read()+'\nbuildTitle(); bootWait();',1)
+# t109u worn-item fit (fit22): after fit21 so its juniperArt/renderDress wrappers are outermost. Keep this hook.
+if os.path.exists(S+'fit22.js'): app=app.replace('\nbuildTitle(); bootWait();','\n'+open(S+'fit22_data.js').read()+'\n'+open(S+'fit22.js').read()+'\nbuildTitle(); bootWait();',1)
 app=app.replace('/*VOICES*/{}',json.dumps(VO,separators=(',',':')))
 css=open(S+'style.css').read()+open(S+'v2.css').read()+(open(S+'v3.css').read() if os.path.exists(S+'v3.css') else '')+(open(S+'v4.css').read() if os.path.exists(S+'v4.css') else '')+open(S+'art.css').read()+open(S+'fx.css').read()+(open(S+'v6.css').read() if os.path.exists(S+'v6.css') else '')+(open(S+'v15.css').read() if os.path.exists(S+'v15.css') else '')+''.join(open(S+c).read() for c in ['v16.css','hints16.css','academy.css','arcade.css','stickers.css','rewards16.css','dress16.css','v17.css','v18.css','spin19.css'] if os.path.exists(S+c))
 css+=(open(S+'tj21.css').read() if os.path.exists(S+'tj21.css') else '')  # t106u Travel Journal
 css+=(open(S+'skate21.css').read() if os.path.exists(S+'skate21.css') else '')  # t106u Ice Skating World
 css+=(open(S+'pp21.css').read() if os.path.exists(S+'pp21.css') else '')  # t107u My Passport
 css+=(open(S+'fit21.css').read() if os.path.exists(S+'fit21.css') else '')  # t108u label/banner fit
+css+=(open(S+'fit22.css').read() if os.path.exists(S+'fit22.css') else '')  # t109u covered-item badge
 parts={'CSS':css,'ART':open(CS+'art.js').read(),'EXTRA':open(CS+'extra_stickers.js').read(),'VOICE':open(CS+'voice.js').read(),
  'ICONS':open(S+'icons.js').read(),'CHARS':open(S+'chars2.js').read().replace('//@@CHARS3',(open(S+'chars3.js').read() if os.path.exists(S+'chars3.js') else '')+(open(S+'chars4.js').read() if os.path.exists(S+'chars4.js') else '')+(open(S+'chars5.js').read() if os.path.exists(S+'chars5.js') else '')),'DATA':json.dumps(json.load(open('/workspace/juniper-learn/data/content.json')),ensure_ascii=False,separators=(',',':')),
  'CONTENT':open(S+'content.js').read().replace('//@@TRAVEL',open(S+'travel.js').read()+(open(S+'skate21c.js').read() if os.path.exists(S+'skate21c.js') else '')),'APP':app}

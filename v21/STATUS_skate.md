@@ -66,3 +66,15 @@ Push plan: 3-way merge shared /workspace/juniper-learn/src changes (other worker
 - 15:35 one-time voice-cache refresh for the 40 re-recorded clips added to skate21.js (tested: old clip dropped, others kept, progress untouched). Built 20261126153453-067b61; running tests
 - 15:40 phase B tests: tpass 87/87, tpassfit 0, tfit 0, tstale 184, tdress 43 both sizes; tskate 390 PASS, 1180 one flaky cast-tap voice check under 4-way load, PASS on rerun. Pushing phase B
 - 15:41 phase B VERIFIED live 4f973c66 / 20261126153453-067b61 (index/sw/manifest/re-recorded clips MATCH, passport present, no page errors). Follow-ups DONE.
+- 15:47 NEW TASK: switch Winnie/Teddy/Coquí to American voices. Clip key = hash(voice CONFIG + text) so new voices => new keys for every line (no stale cache possible; old clips stay, add-only). Auditioning 12 en-US configs
+- 15:52 audition running (1/12); ttj retired in favor of tpass/tpassfit (COORD noted)
+- 15:56 audition 3/12
+- 16:07 audition round 2 0/6 (round 1: win Ava 16/16, Aria 16/16, Michelle 15/16, Jenny 15/16; ted Steffan 16/16; AndrewMultilingual no audio w/ pitch)
+- 16:17 CHOSEN: Winnie en-US-AriaNeural +4% +6Hz (16/16), Teddy en-US-SteffanNeural +8% +30Hz (16/16), Coquí en-US-MichelleNeural +12% +46Hz (15/16). Updated shared + sk21 src/voices.json (backup v21/vo/voices.pre_american.json). Spanish ewin/eted/ecoq unchanged
+- 16:18 rebased on ASP-7 5a0261a7 (fit22 + spin19 synced into sk21, build.py = shared + S/OUT), harvest N=300: win 63 / ted 28 / coq 18 English lines => 109 new-voice clips (+98 pre-existing random-line gaps for jun/mar/gig/bro). Rendered add-only
+- 16:22 skate villain cheers reworded ('You are so good, Aspen!', 'Go go go, Aspen!' — both models hear Aspen in all 5 skate villain voices); built+rendered
+- 16:23 confirmed: rebased on 5a0261a7, built index contains fit22, manifest keeps all 15397 live keys (+217 mine). Whisper of new clips running
+- 16:33 whisper 105/217; starting tests
+- 16:43 whisper 146/217; tests running
+- 16:45 coq 'Yay, Aspen!' re-taken (both models OK); coq 'Hi Aspen!' + win 'Quick and calm!' medium.en OK, small.en not (kept). whisper 149/217
+- 16:46 tests green: tdress 0 / tstale 0 (new matrix), tskate 32/32, tfit 0, tpass 87/87, tpassfit 0, tspin 0 at both sizes; manifest covers every harvested line. Pushing

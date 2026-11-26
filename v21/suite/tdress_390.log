@@ -25,6 +25,14 @@ PASS j_wings: worn on Juniper
 PASS j_tophat: worn on Juniper
 PASS j_unicorn: worn on Juniper
 PASS j_rcape: worn on Juniper
+PASS look x accessory matrix: 374 combos, 42 explicitly covered, bad []
+PASS tap goldgown then j_unicorn: j_unicorn is worn on the picture
+PASS tap icegown then j_starband: j_starband is worn on the picture
+PASS tap pinkgown then crown: crown is worn on the picture
+PASS tap golf then bow: bow is worn on the picture
+PASS tap rjacket then j_scarf: j_scarf is worn on the picture
+PASS riding helmet covers the unicorn headband: closet badge shown
+PASS covered item reason voiced [['Ta-da! Riding Jacket!', 'juniper', False, 'dress', 'juniper'], ["It's hiding under my riding helmet! Take off the riding outfit to see it.", 'juniper', False, 'dress', 'juniper']]
 PASS look shows on home
 PASS Dress Up Aspen button on closet
 PASS all Aspen items locked at start
